@@ -11,6 +11,10 @@
 
 ### Idea 3
 
+**HTA Approval (dpark20):** Idea approved (Pollster) contingent on your suggestion page algorithm being fairly complex. Make sure to fill your info in on this README, not on a separate pdf! 
+
+Good idea!
+
 **Mentor TA:** _Put your mentor TA's name and email here once you're assigned one!_
 
 ## Meetings
