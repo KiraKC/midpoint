@@ -1,29 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f45990bc-4f4b-435b-a74d-3e79ca42d7c6" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/peek/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/peek/src/main/java/com/cs32/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/term-project-ehong9-jzhan204-kteramot-xchai1.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/src/main/java/com/cs32/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/peek/src/main/java/com/cs32/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/classes/com/cs32/app/App.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/maven-archiver/pom.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/inputFiles.lst" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/peek-1.0-SNAPSHOT.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/surefire-reports/TEST-com.cs32.app.AppTest.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/surefire-reports/com.cs32.app.AppTest.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/target/test-classes/com/cs32/app/AppTest.class" beforeDir="false" />
-    </list>
+    <list default="true" id="f45990bc-4f4b-435b-a74d-3e79ca42d7c6" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
