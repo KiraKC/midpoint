@@ -6,11 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="peek" />
+        <module name="peek_backend" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="peek" target="1.7" />
+      <module name="peek_backend" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>
