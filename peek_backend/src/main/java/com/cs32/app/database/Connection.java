@@ -25,8 +25,12 @@ public class Connection {
     MongoCollection<Document> collection = mongoDatabase.getCollection("user");
     System.out.println(collection);
     System.out.println("adding new document");
-    Document user = new Document("_id", "jeeeeo1sdfsdfsdfsfdsdf11");
-    user.append("name", "Jo Bloggs");
-    collection.insertOne(user);
+    try {
+      Document user = new Document("_id", "jeeesdfsasaeo1sdf11");
+      user.append("name", "Jo Bloggs");
+      collection.insertOne(user);
+    } catch (Exception e) {
+      System.out.println("failed");
+    }
   }
 }
