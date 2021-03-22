@@ -1,31 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="d582ac83-f454-46b4-9a64-852df8947de5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/peek_backend/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/checkstyle-idea.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/jarRepositories.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/jarRepositories.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/libraries/Maven__junit_junit_4_11.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/libraries/Maven__junit_junit_4_11.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/libraries/Maven__net_sf_jopt_simple_jopt_simple_6_0_alpha_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/libraries/Maven__net_sf_jopt_simple_jopt_simple_6_0_alpha_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/peek.iml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/peek_backend.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/src/main/java/com/cs32/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/src/main/java/com/cs32/app/App.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/src/main/java/com/cs32/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/src/main/java/com/cs32/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/peek/src/test/java/com/cs32/app/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/peek_backend/src/test/java/com/cs32/app/AppTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="d582ac83-f454-46b4-9a64-852df8947de5" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -59,13 +49,15 @@
     </key>
   </component>
   <component name="RunManager" selected="JAR Application.peek-1.0-SNAPSHOT.jar (1)">
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -93,7 +85,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="f45990bc-4f4b-435b-a74d-3e79ca42d7c6" name="Default Changelist" comment="" />
+      <changelist id="d582ac83-f454-46b4-9a64-852df8947de5" name="Default Changelist" comment="" />
       <created>1616345764119</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -104,6 +96,7 @@
       <workItem from="1616361789335" duration="16000" />
       <workItem from="1616366583624" duration="80000" />
       <workItem from="1616366684312" duration="51000" />
+      <workItem from="1616384911010" duration="1918000" />
     </task>
     <servers />
   </component>
