@@ -43,6 +43,11 @@
       <artifactId>spark-core</artifactId>
       <version>2.9.3</version>
     </dependency>
+    <dependency>
+      <groupId>com.vaadin.external.google</groupId>
+      <artifactId>android-json</artifactId>
+      <version>0.0.20131108.vaadin1</version>
+    </dependency>
 
   </dependencies>
 
