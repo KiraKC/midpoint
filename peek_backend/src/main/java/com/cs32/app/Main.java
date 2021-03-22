@@ -26,5 +26,6 @@ public class Main {
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
     Spark.post("/get-suggested-polls", new GetSuggestedPollsHandler());
+    Spark.post("/user/new", new AddUserHandler());
   }
 }

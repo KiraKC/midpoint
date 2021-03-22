@@ -25,11 +25,11 @@
         -->
         <!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync -->
         <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
-        <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver-sync</artifactId>
-            <version>4.0.0</version>
-        </dependency>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-sync</artifactId>
+                <version>4.0.6</version>
+            </dependency>
 
         <!--
             Simple Logging Facade for Java is a logging tool for debugging.
