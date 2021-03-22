@@ -1,5 +1,10 @@
 package com.cs32.app;
 
+import joptsimple.OptionParser;
+import joptsimple.OptionSet;
+import spark.Request;
+import spark.Spark;
+
 public class Main {
 
   private static final int DEFAULT_PORT = 4567;
@@ -11,11 +16,12 @@ public class Main {
 
   public void run() {
     // Parse command line arguments
-//    OptionParser parser = new OptionParser();
-//    parser.accepts("gui");
-//    parser.accepts("port").withRequiredArg().ofType(Integer.class)
-//          .defaultsTo(DEFAULT_PORT);
-//    OptionSet options = parser.parse(args);
+//    Spark.get("/stars", null);
+    OptionParser parser = new OptionParser();
+    parser.accepts("gui");
+    parser.accepts("port").withRequiredArg().ofType(Integer.class)
+          .defaultsTo(DEFAULT_PORT);
+    OptionSet options = parser.parse(args);
     System.out.println("hi");
   }
 
