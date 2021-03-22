@@ -1,32 +1,28 @@
 package com.cs32.app;
 
-import joptsimple.OptionParser;
-import joptsimple.OptionSet;
-import spark.Request;
+import com.cs32.app.database.Connection;
 import spark.Spark;
+
+import java.net.UnknownHostException;
 
 public class Main {
 
   private static final int DEFAULT_PORT = 4567;
-  private String[] args;
+  private final String[] args;
 
   public Main(String[] args) {
     this.args = args;
   }
 
   public void run() {
-    // Parse command line arguments
-//    Spark.get("/stars", null);
-    OptionParser parser = new OptionParser();
-    parser.accepts("gui");
-    parser.accepts("port").withRequiredArg().ofType(Integer.class)
-          .defaultsTo(DEFAULT_PORT);
-    OptionSet options = parser.parse(args);
-    System.out.println("hi");
+    Connection conn = new Connection();
+    System.out.println("correctly executed");
     this.runSparkServer(DEFAULT_PORT);
   }
 
+
   private void runSparkServer(int port) {
+    System.out.println("running");
     Spark.port(port);
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());

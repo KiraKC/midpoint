@@ -1,5 +1,7 @@
 package com.cs32.app;
 
+import java.net.UnknownHostException;
+
 /**
  * Hello world!
  *
@@ -7,8 +9,11 @@ package com.cs32.app;
 public class App {
 
     public static void main( String[] args ) {
-        System.out.println("Making new Main");
-        new Main(args).run();
+        try {
+            new Main(args).run();
+        } catch (Exception e) {
+            System.exit(-1);
+        }
     }
 
 }
