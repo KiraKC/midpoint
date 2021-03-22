@@ -49,19 +49,6 @@
     </key>
   </component>
   <component name="RunManager" selected="JAR Application.peek-1.0-SNAPSHOT.jar (1)">
-    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="CLASS" />
-      <properties />
-      <listeners />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="my-app-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/target/my-app-1.0-SNAPSHOT.jar" />
       <method v="2" />
@@ -96,7 +83,8 @@
       <workItem from="1616361789335" duration="16000" />
       <workItem from="1616366583624" duration="80000" />
       <workItem from="1616366684312" duration="51000" />
-      <workItem from="1616384911010" duration="1918000" />
+      <workItem from="1616384911010" duration="2122000" />
+      <workItem from="1616387733608" duration="499000" />
     </task>
     <servers />
   </component>

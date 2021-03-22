@@ -23,9 +23,16 @@ public class CheckOffHandler implements Route {
    */
   @Override
   public Object handle(Request req, Response res) throws Exception {
-    JSONObject data = new JSONObject(req.body());
-    int pollID = Integer.parseInt(data.getString("pollid"));
-    int userID = Integer.parseInt(data.getString("userid"));
+    try {
+      JSONObject data = new JSONObject(req.body());
+      int pollID = Integer.parseInt(data.getString("pollid"));
+      int userID = Integer.parseInt(data.getString("userid"));
+      return null; // Change this to return some real stuffs
+    } catch (org.json.JSONException e) {
+      System.err.println("ERROR: Incorrect JSON object formatting");
+    } catch (NumberFormatException e) {
+      System.err.println("ERROR: Incorrect ID data type");
+    }
 
     return null;
   }
