@@ -38,13 +38,14 @@ public class GetSuggestedPollsHandler implements Route {
     } catch (JSONException e) {
       System.err.println("GetSuggestedPollsHandler JSON request not properly formatted");
       // TODO: send to failure response to frontend
+      return ("hihi");
     }
 
     // Query for user's Category Points
     // Query for 100 random polls
     // Sort these polls based on their relevancy score
     // Return the x most relevant polls to the frontend as a JSON
-    return null;
+//    return null;
   }
 
 }
