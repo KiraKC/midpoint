@@ -23,13 +23,18 @@ public class GetStatsHandler implements Route {
   public Object handle(Request req, Response res) throws Exception {
     try {
       JSONObject data = new JSONObject(req.body());
-      int pollID = Integer.parseInt(data.getString("pollid"));
+      int pollId = Integer.parseInt(data.getString("pollId"));
       String response = data.getString("response");
-      return null; // Change this to return some real stuffs
+      // TODO: Change this to return some real stuffs
+      return null;
     } catch (org.json.JSONException e) {
       System.err.println("ERROR: Incorrect JSON object formatting");
+      // TODO: send the error message to the frontend
+
     } catch (NumberFormatException e) {
       System.err.println("ERROR: Incorrect ID data type");
+      // TODO: send the error message to the frontend
+      
     }
 
     return null;
