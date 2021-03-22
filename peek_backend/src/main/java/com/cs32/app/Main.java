@@ -23,6 +23,7 @@ public class Main {
           .defaultsTo(DEFAULT_PORT);
     OptionSet options = parser.parse(args);
     System.out.println("hi");
+    this.runSparkServer(DEFAULT_PORT);
   }
 
   private void runSparkServer(int port) {

@@ -37,6 +37,7 @@ public class GetSuggestedPollsHandler implements Route {
       return null;
     } catch (JSONException e) {
       System.err.println("GetSuggestedPollsHandler JSON request not properly formatted");
+      // TODO: send to failure response to frontend
     }
 
     // Query for user's Category Points
