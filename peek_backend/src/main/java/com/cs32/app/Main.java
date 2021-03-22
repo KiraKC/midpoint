@@ -25,4 +25,9 @@ public class Main {
     System.out.println("hi");
   }
 
+  private void runSparkServer(int port) {
+    Spark.port(port);
+//    Spark.externalStaticFileLocation("src/main/resources/static");
+//    Spark.exception(Exception.class, new ExceptionPrinter());
+  }
 }
