@@ -1,20 +1,13 @@
-.App {
-  text-align: center;
+body,
+html {
+	background-color: #2f557c;
+	background-image: url("https://thumbs.gfycat.com/DimpledChubbyLamprey-max-1mb.gif");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
 }
 
-.App-space {
-  background-color: lightblue;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  font-size: calc(10px + 2vmin);
-  color: white;
+#website-wrapper {
+	width: 90vw;
+	margin-left: auto;
+	margin-right: auto;
 }
-
-.App-header {
-	width:90%;
-	min-height: 10vh;
-	margin: 2rem;
-  }
-  
-
