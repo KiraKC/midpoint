@@ -7,7 +7,7 @@ function Header() {
 			<a className="header-link" href="./app.tsx" target="_blank">Peak.io</a>
 			<div>
 				<button className="nav-link">Log in</button>
-				<button className="nav-link">Poll!</button>
+				<button className="nav-link">New Poll</button>
 			</div>
 		</div>
 	);
