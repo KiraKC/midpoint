@@ -1,3 +1,11 @@
-.MasonryPollWrapper {
-  
+.masonary-poll-wrapper {
+	border-radius: 10px;
+	padding: 20px;
+	color: white;
+}
+
+.masonary-poll-heading {
+	font-family: "Inter", sans-serif;
+	font-size: 2rem;
+	font-weight: 700;
 }

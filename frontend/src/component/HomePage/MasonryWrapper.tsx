@@ -9,42 +9,43 @@ import MasonryPoll from './MasonryPoll'
 
 function MasonryWrapper() {
   
+	
+
   var items = [
-    {id: 1, text: 'My First Item', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 2, text: 'Another item', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 3, text: 'Third Item', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 4, text: 'Here is the Fourth', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)},
-    {id: 5, text: 'High Five', backgroundColor: 'blue', height: Math.max(150, Math.random() * 500)}
+    {id: 1, text: "Should we get rid of Ratty's Chicken Finger Friday?", height: Math.max(150, Math.random() * 500)},
+    {id: 3, text: 'Third Item', height: Math.max(150, Math.random() * 500)},
+    {id: 4, text: 'Here is the Fourth', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
+    {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)}
   ];
 
   const divItems = items.map(function(item) {
-    return <div><MasonryPoll key={item.id} height={item.height} backgroundColor={item.backgroundColor} text={item.text} /></div>
+    return <div><MasonryPoll key={item.id} height={item.height} text={item.text} /></div>
     // return <MasonryPoll key={item.id} height={item.height} backgroundColor={item.backgroundColor} text={item.text} />
   });
 
