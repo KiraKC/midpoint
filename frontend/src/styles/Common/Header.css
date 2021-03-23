@@ -27,7 +27,7 @@
 .nav-link {
 	font-family: "Inter", sans-serif;
 	color: white;
-	background-color: #2f557c;
+	background-color: #1b446d;
 	border-radius: 100px;
 	text-decoration: none;
 	margin-right: 1rem;
@@ -39,9 +39,9 @@
 }
 
 .nav-link:hover {
-	background-color: #3a6c9e;
+	background-color: #4273a4;
 }
 
 .nav-link:active {
-	background-color: #2f557c;
+	background-color: #1b446d;
 }
