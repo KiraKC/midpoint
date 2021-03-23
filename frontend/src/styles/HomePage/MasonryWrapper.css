@@ -1,3 +1,7 @@
+.masonry-wrapper-wrapper {
+
+}
+
 .my-masonry-grid {
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */
@@ -8,7 +12,6 @@
 .my-masonry-grid_column {
   padding-left: 30px; /* gutter size */
   background-clip: padding-box;
-  margin-left: -15px; /* gutter size offset */
 }
  
 /* Style your items */

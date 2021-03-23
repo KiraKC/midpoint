@@ -58,7 +58,7 @@ function MasonryWrapper() {
   };
 
 	return (
-		<>
+		<div className="masonry-wrapper-wrapper">
 			<Masonry
         breakpointCols={breakpointColumnsObj}
         className="my-masonry-grid"
@@ -66,7 +66,7 @@ function MasonryWrapper() {
       >
         {divItems}
       </Masonry>
-		</>
+		</div>
 	);
 }
  
