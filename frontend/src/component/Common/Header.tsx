@@ -1,13 +1,16 @@
 import React from "react";
 import '../../styles/Common/Header.css'
 
-function Header() {
+interface IHeaderProps {
+	setIsModalOpen: any
+}
+function Header(props: IHeaderProps) {
 	return (
 		<div className="header">
 			<a className="header-link" href="./app.tsx" target="_blank">Peak.io</a>
 			<div>
 				<button className="nav-link">Log in</button>
-				<button className="nav-link">New Poll</button>
+				<button className="nav-link" onClick={() => props.setIsModalOpen(true)}>New Poll</button>
 			</div>
 		</div>
 	);

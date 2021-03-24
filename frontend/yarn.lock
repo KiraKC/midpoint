@@ -1919,6 +1919,13 @@
   dependencies:
     "@types/react" "*"
 
+"@types/react-modal@^3.12.0":
+  "integrity" "sha512-UnHu/YO73NZLwqFpju/c0tqiswR0UHIfeO16rkfLVJUIMfQsl7X0CBm99H5XXgBMe/PgtQ/Rkud72iuRBr1TeA=="
+  "resolved" "https://registry.npmjs.org/@types/react-modal/-/react-modal-3.12.0.tgz"
+  "version" "3.12.0"
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@^17.0.0":
   "integrity" "sha512-wYOUxIgs2HZZ0ACNiIayItyluADNbONl7kt8lkLjVK8IitMH5QMyAh75Fwhmo37r1m7L2JaFj03sIfxBVDvRAg=="
   "resolved" "https://registry.npmjs.org/@types/react/-/react-17.0.3.tgz"

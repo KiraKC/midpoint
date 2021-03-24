@@ -8,8 +8,6 @@ import MasonryPoll from './MasonryPoll'
 // }
 
 function MasonryWrapper() {
-  
-	
 
   var items = [
     {id: 1, text: "Should we get rid of Ratty's Chicken Finger Friday?", height: Math.max(150, Math.random() * 500)},
