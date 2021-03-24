@@ -9,7 +9,7 @@ import java.util.List;
 
 public class Poll {
   @Expose
-  private ObjectId id;
+  private String id;
   @Expose
   private String question;
   @Expose
@@ -17,24 +17,30 @@ public class Poll {
   @Expose
   private CategoryPoints categoryPoints;
   private List<String> responseIds;
+  private int numRenders;
+  private int numClicks;
 
   public Poll(String question, List<AnswerOption> answerOptions, CategoryPoints categoryPoints) {
-    this.id = new ObjectId();
+    this.id = new ObjectId().toString();
     this.question = question;
     this.answerOptions = answerOptions;
     this.categoryPoints = categoryPoints;
     this.responseIds = new ArrayList<>();
+    this.numRenders = 0;
+    this.numClicks = 0;
   }
 
-  public Poll(ObjectId id, String question, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
+  public Poll(String id, String question, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
     this.id = id;
     this.question = question;
     this.answerOptions = answerOptions;
     this.categoryPoints = categoryPoints;
     this.responseIds = responseIds;
+    this.numRenders = numRenders;
+    this.numClicks = numClicks;
   }
 
-  public ObjectId getId() {
+  public String getId() {
     return id;
   }
 
@@ -55,5 +61,13 @@ public class Poll {
 
   public List<String> getResponseIds() {
     return responseIds;
+  }
+
+  public int getNumRenders() {
+    return numRenders;
+  }
+
+  public int getNumClicks() {
+    return numClicks;
   }
 }

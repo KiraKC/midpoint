@@ -6,5 +6,5 @@ import java.util.List;
 
 public class Constants {
   public static final String[] ALL_CATEGORIES = {"politics", "sports", "funny", "culture", "entertainment", "food", "education", "serious", "relationship"};
-  public static final int INITIAL_NEW_POLL_CAT_PTS = 1000;
+  public static final Double INITIAL_NEW_POLL_CAT_PTS = 1000.0;
 }

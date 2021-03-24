@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class CategoryPoints {
   @Expose
-  Map<String, Integer> catPtsMap;
+  Map<String, Double> catPtsMap;
 
   // Constructor when creating CatPtsWrapper with only tagged categories from user
   public CategoryPoints(List<String> taggedCategories) {
@@ -18,8 +18,12 @@ public class CategoryPoints {
     }
     for(String category : Constants.ALL_CATEGORIES) {
       if (!catPtsMap.containsKey(category)) {
-        catPtsMap.put(category, 0);
+        catPtsMap.put(category, 0.0);
       }
     }
+  }
+
+  public Map<String, Double> getMap() {
+    return catPtsMap;
   }
 }

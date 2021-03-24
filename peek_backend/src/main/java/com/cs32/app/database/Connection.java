@@ -1,10 +1,16 @@
 package com.cs32.app.database;
 
-import com.mongodb.client.MongoClient;
-import com.mongodb.client.MongoClients;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
+import com.cs32.app.poll.Poll;
+import com.mongodb.client.*;
+import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Connection {
 
@@ -41,8 +47,15 @@ public class Connection {
     System.out.println("User 1: " + user.toJson());
   }
 
-//  public static List<Poll> getRandomPolls(int numPolls) {
-//
-//  }
+  // TODO:
+  public static List<Poll> getRandomPolls(int numPolls) {
+    List<Poll> randomPolls = new ArrayList<>();
+    AggregateIterable<Document> samples = pollCollection.aggregate(Arrays.asList(Aggregates.sample(numPolls)));
+    while (samples.iterator().hasNext()) {
+      Document document = samples.iterator().next();
+
+    }
+    return randomPolls;
+  }
 
 }
