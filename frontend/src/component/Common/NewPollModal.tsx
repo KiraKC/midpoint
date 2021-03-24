@@ -5,6 +5,7 @@ import CategoryButton from './CategoryButton';
 import 'emoji-mart/css/emoji-mart.css'
 import { Emoji, Picker } from 'emoji-mart'
 import { useState } from 'react';
+import axios from 'axios';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -20,7 +21,6 @@ const customStyles = {
 		marginRight: '-50%',
 		width: 'min(1000px, 85vw)',
 		height: 'max-content',
-		// height: '600px',
 		transform: 'translate(-50%, -50%)',
 		borderRadius: '20px',
 		border: '3px solid black',
@@ -60,9 +60,42 @@ function NewPollModal(props: INewPollModal) {
 		console.log(tempTextFieldValue)
 		setTextFieldValue([...tempTextFieldValue])
 	}
-	
+
 	const handleSubmit = () => {
-		
+		const toSend = {
+			creatorId: 123,
+			emoji: pollEmojiArray[0],
+			question: textFieldValue[0],
+			answerOptions:
+				[{
+					value: textFieldValue[1],
+					emoji: pollEmojiArray[1]
+				},
+				{
+					value: textFieldValue[1],
+					emoji: pollEmojiArray[1]
+				}],
+			taggedCategories: categories
+		}
+
+		console.log(toSend)
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+				'Access-Control-Allow-Origin': '*',
+			}
+		}
+		axios.post(
+			"http://localhost:4567/poll/new",
+			toSend,
+			config,
+		)
+			.then(response => {
+				return response.data;
+			})
+			.catch(e => {
+				console.log(e);
+			});
 	}
 
 	return (
@@ -74,15 +107,15 @@ function NewPollModal(props: INewPollModal) {
 				style={customStyles}>
 				<div className="poll-modal-wrapper-flex">
 					<div className="poll-modal-heading">Create New Poll</div>
-					<div style={{display: 'flex'}}>
-					<button className="poll-modal-close" onClick={() => props.setIsModalOpen(false)}>
-						<span className="material-icons">close</span>
-						<div className="poll-modal-close-text">CLOSE</div>
-					</button>
-					<button className="poll-modal-close" onClick={() => {props.setIsModalOpen(false); handleSubmit()}}>
-						<span className="material-icons" style={{marginRight: '3px'}}>poll</span>
-						<div className="poll-modal-close-text">SUBMIT</div>
-					</button>
+					<div style={{ display: 'flex' }}>
+						<button className="poll-modal-close" onClick={() => props.setIsModalOpen(false)}>
+							<span className="material-icons">close</span>
+							<div className="poll-modal-close-text">CLOSE</div>
+						</button>
+						<button className="poll-modal-close" onClick={() => { props.setIsModalOpen(false); handleSubmit() }}>
+							<span className="material-icons" style={{ marginRight: '3px' }}>poll</span>
+							<div className="poll-modal-close-text">SUBMIT</div>
+						</button>
 					</div>
 				</div>
 				<div className="poll-modal-input-module display-relative">
