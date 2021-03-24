@@ -81,7 +81,7 @@ public class Connection {
       }
 
       // Get category points
-      CategoryPoints categoryPoints = new CategoryPoints(new ArrayList<>());
+      CategoryPoints categoryPoints = new CategoryPoints();
       BasicDBList mongoCatPts = (BasicDBList) mongoPoll.get("catPts");
       for (Object object : mongoCatPts) {
         Document catPtsPair = (Document) object;

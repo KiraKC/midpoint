@@ -26,6 +26,13 @@ public class CategoryPoints {
   }
 
   /**
+   * Constructor when creating CatPtsWrapper from MongoDB Database.
+   */
+  public CategoryPoints() {
+    catPtsMap = new HashMap<>();
+  }
+
+  /**
    * Method for updating category points.
    * @param category category name
    * @param points category points
