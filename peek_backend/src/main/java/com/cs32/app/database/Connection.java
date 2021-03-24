@@ -4,6 +4,9 @@ import com.cs32.app.poll.Poll;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import java.util.ArrayList;
 import java.util.Arrays;

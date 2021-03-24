@@ -50,6 +50,11 @@
   </component>
   <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+<<<<<<< Updated upstream
+=======
+      <option name="ALTERNATIVE_JRE_PATH" value="11" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+>>>>>>> Stashed changes
       <option name="MAIN_CLASS_NAME" value="com.cs32.app.App" />
       <module name="peek" />
       <option name="VM_PARAMETERS" value="-Dmongodb.uri=&quot;mongodb+srv://xchai1:87581155Ab!!@peekproject.pqvjm.mongodb.net/main?retryWrites=true&amp;w=majority&quot;" />
@@ -117,6 +122,7 @@
       <workItem from="1616366684312" duration="51000" />
       <workItem from="1616384911010" duration="2122000" />
       <workItem from="1616387733608" duration="499000" />
+      <workItem from="1616556200393" duration="3743000" />
     </task>
     <servers />
   </component>
@@ -134,5 +140,19 @@
       </map>
     </option>
     <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-method">
+          <url>file://$PROJECT_DIR$/peek_backend/src/main/java/com/cs32/app/database/Connection.java</url>
+          <line>18</line>
+          <properties class="com.cs32.app.database.Connection" method="&lt;init&gt;">
+            <option name="EMULATED" value="true" />
+          </properties>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
