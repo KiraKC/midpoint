@@ -1,4 +1,4 @@
-package com.cs32.app;
+package com.cs32.app.handlers;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -45,7 +45,7 @@ public class GetSuggestedPollsHandler implements Route {
     // Query for 100 random polls
     // Sort these polls based on their relevancy score
     // Return the x most relevant polls to the frontend as a JSON
-//    return null;
+    // return null;
   }
 
 }

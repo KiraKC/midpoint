@@ -1,4 +1,4 @@
-package com.cs32.app;
+package com.cs32.app.handlers;
 
 import com.google.common.collect.ImmutableMap;
 import com.google.gson.Gson;

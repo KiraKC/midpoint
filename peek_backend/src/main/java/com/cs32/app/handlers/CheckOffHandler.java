@@ -1,4 +1,4 @@
-package com.cs32.app;
+package com.cs32.app.handlers;
 
 import spark.Request;
 import spark.Response;

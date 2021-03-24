@@ -1,9 +1,10 @@
 package com.cs32.app;
 
 import com.cs32.app.database.Connection;
+import com.cs32.app.handlers.AddPollHandler;
+import com.cs32.app.handlers.AddUserHandler;
+import com.cs32.app.handlers.GetSuggestedPollsHandler;
 import spark.Spark;
-
-import java.net.UnknownHostException;
 
 public class Main {
 
@@ -27,5 +28,6 @@ public class Main {
 //    Spark.exception(Exception.class, new ExceptionPrinter());
     Spark.post("/get-suggested-polls", new GetSuggestedPollsHandler());
     Spark.post("/user/new", new AddUserHandler());
+    Spark.post("/poll/new", new AddPollHandler());
   }
 }

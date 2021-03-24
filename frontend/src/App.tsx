@@ -7,7 +7,9 @@ import MasonryWrapper from './component/HomePage/MasonryWrapper'
 function App() {
 	return (
 		<div id="website-wrapper">
-			<Header />
+      <Header />
+      
+			
 			<MasonryWrapper />
 		</div>
 	);
