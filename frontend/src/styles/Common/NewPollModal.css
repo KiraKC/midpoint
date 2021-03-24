@@ -28,10 +28,24 @@
 	color: white;
 }
 
-.poll-modal-question-desc {
+.poll-modal-question-desc-emoji {
 	font-family: "Inter", sans-serif;
-	font-weight: 600;
+	font-weight: 800;
 	font-size: 0.9rem;
+	margin-top: 5px;
+	position: absolute;
+	top: 36px;
+	left: 0;
+}
+
+.poll-modal-question-desc-question {
+	font-family: "Inter", sans-serif;
+	font-weight: 800;
+	font-size: 0.9rem;
+	margin-top: 5px;
+	position: absolute;
+	top: 36px;
+	left: 60px;
 }
 
 .poll-modal-question-input {
@@ -43,7 +57,9 @@
 	color: black;
 	outline: none;
 	font-size: 1.6rem;
-	margin-top: 5px;
+	position: absolute;
+	top: 0;
+	left: 60px;
 }
 
 ::placeholder {
@@ -60,5 +76,29 @@
 }
 
 .poll-modal-input-module {
-	margin-top: 20px;
+	margin-top: 30px;
+}
+
+.display-flex {
+	display: flex;
+}
+
+.display-relative {
+	position: relative;
+	height: 65px;
+}
+
+.emoji-picker {
+	position: absolute;
+	top: 0;
+	left: 40px;
+	z-index: 100;
+}
+
+.emoji-picker-button {
+	background-color: transparent;
+	border: none;
+	outline: none;
+	padding-bottom: 3.5px;
+	border-bottom: 3px solid black;
 }

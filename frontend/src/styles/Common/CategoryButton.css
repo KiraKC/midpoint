@@ -1,0 +1,15 @@
+.category-button {
+	padding: 3px 10px;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	color: black;
+	outline: none;
+	border-radius: 90px;
+	border: 2px solid black;
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	font-size: 1rem;
+	margin-right: 10px;
+}
