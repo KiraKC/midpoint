@@ -1,11 +1,14 @@
 .masonary-poll-wrapper {
 	border-radius: 10px;
-	padding: 20px;
+	padding: 23px;
 	color: white;
+	height: max-content;
 }
 
 .masonary-poll-heading {
 	font-family: "Inter", sans-serif;
 	font-size: 2rem;
 	font-weight: 700;
+	margin-bottom: 20px;
+	margin-top: 7px;
 }

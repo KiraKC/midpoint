@@ -13,8 +13,8 @@ function MasonryWrapper() {
 
   var items = [
     {id: 1, text: "Should we get rid of Ratty's Chicken Finger Friday?", height: Math.max(150, Math.random() * 500)},
-    {id: 3, text: 'Third Item', height: Math.max(150, Math.random() * 500)},
-    {id: 4, text: 'Here is the Fourth', height: Math.max(150, Math.random() * 500)},
+    {id: 3, text: 'Trump Job Approval', height: Math.max(150, Math.random() * 500)},
+    {id: 4, text: 'Which Harry Potter house do you belong in?', height: Math.max(150, Math.random() * 500)},
     {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
     {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
     {id: 5, text: 'High Five', height: Math.max(150, Math.random() * 500)},
