@@ -5,15 +5,15 @@ import org.bson.types.ObjectId;
 
 public class AnswerOption {
   @Expose
-  private ObjectId id;
+  private String id;
   @Expose
   private String value;
   @Expose
   private String emoji;
 
   // TODO: probably need an overloaded constructor
-  public AnswerOption(int id, String value, String emoji) {
-    this.id = new ObjectId();
+  public AnswerOption(String value, String emoji) {
+    this.id = new ObjectId().toString();
     this.value = value;
     this.emoji = emoji;
   }
@@ -22,12 +22,12 @@ public class AnswerOption {
     return value;
   }
 
-  public String getEmoji() {
-    return emoji;
+  public String getId() {
+    return id;
   }
 
-  public ObjectId getId() {
-    return id;
+  public String getEmoji() {
+    return emoji;
   }
 
 }

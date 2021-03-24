@@ -48,10 +48,10 @@ public class AddPollHandler implements Route {
       answerOptions = new ArrayList<>();
       for (int i = 0; i < jsonAnswerOptions.length(); i++){
         JSONObject jsonAnswerObject = jsonAnswerOptions.getJSONObject(i);
-        int answerOptionId = jsonAnswerObject.getInt("id");
+//        int answerOptionId = jsonAnswerObject.getInt("id");
         String answerOptionString = jsonAnswerObject.getString("value");
         String answerOptionEmoji = jsonAnswerObject.getString("emoji");
-        answerOptions.add(new AnswerOption(answerOptionId, answerOptionString, answerOptionEmoji));
+        answerOptions.add(new AnswerOption(answerOptionString, answerOptionEmoji));
         System.out.println(answerOptions.get(i).getValue());
       }
 
@@ -64,7 +64,7 @@ public class AddPollHandler implements Route {
       System.out.println (taggedCategories);
       CategoryPoints newCategoryPoints = new CategoryPoints(taggedCategories);
 
-      //TODO: RANDOMIZE POLL ID LATER (HAVE THIS AS PART OF THE DB CONNECTION CLASS?)
+
       Poll newPoll = new Poll(question, answerOptions, newCategoryPoints);
 
       boolean databaseResponse = this.addToDatabase(newPoll);
@@ -94,16 +94,24 @@ public class AddPollHandler implements Route {
     }
 
     // TODO: add the support for category points
+    Map<String, Double> catPtsMap = poll.getCatPts().getMap();
+    List<Document> mongoCatPts = new ArrayList<>();
+    for (Map.Entry<String,Double> entry : catPtsMap.entrySet()) {
+      mongoCatPts.add(new Document("categoryName", entry.getKey())
+            .append("points", entry.getValue()));
+    }
+
     // preparing main poll BSON object
     Document mongoPoll = new Document("_id", poll.getId().toString());
     mongoPoll.append("question", poll.getQuestion())
-        .append("answerOptions", mongoAnswers)
-//            .append("catPts", poll.getCatPts())
-        .append("responseIds", poll.getResponseIds());
+          .append("answerOptions", mongoAnswers)
+          .append("catPts", mongoCatPts)
+          .append("responseIds", poll.getResponseIds())
+          .append("numClicks", poll.getNumClicks())
+          .append("numRenders", poll.getNumRenders());
     try {
       pollCollection.insertOne(mongoPoll);
       System.out.println("adding com.cs32.app.poll to db was SUCCESSFUL");
-
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("adding com.cs32.app.poll to db failed");
