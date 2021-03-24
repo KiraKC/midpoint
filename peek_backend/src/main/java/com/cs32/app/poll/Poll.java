@@ -13,6 +13,8 @@ public class Poll {
   @Expose
   private String question;
   @Expose
+  private String emoji;
+  @Expose
   private List<AnswerOption> answerOptions;
   @Expose
   private CategoryPoints categoryPoints;
@@ -20,9 +22,10 @@ public class Poll {
   private int numRenders;
   private int numClicks;
 
-  public Poll(String question, List<AnswerOption> answerOptions, CategoryPoints categoryPoints) {
+  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints) {
     this.id = new ObjectId().toString();
     this.question = question;
+    this.emoji = emoji;
     this.answerOptions = answerOptions;
     this.categoryPoints = categoryPoints;
     this.responseIds = new ArrayList<>();
@@ -30,7 +33,7 @@ public class Poll {
     this.numClicks = 0;
   }
 
-  public Poll(String id, String question, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
+  public Poll(String id, String question, String pollEmoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
     this.id = id;
     this.question = question;
     this.answerOptions = answerOptions;
@@ -49,6 +52,7 @@ public class Poll {
     return question;
   }
 
+  public String getEmoji() { return emoji; }
 
   public List<AnswerOption> getAnswerOptions() {
     return answerOptions;

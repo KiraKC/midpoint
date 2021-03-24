@@ -35,20 +35,21 @@ public class AddPollHandler implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    boolean status; int userId; String question; List<AnswerOption> answerOptions; List<String> taggedCategories;
+    boolean status; int userId; String question; String emoji; List<AnswerOption> answerOptions; List<String> taggedCategories;
     Map<String, Object> variables = new HashMap<>();
     // Parse request
     try {
       JSONObject jsonReqObject = new JSONObject(request.body());
+      //TODO: add pollId to user's created polls field in database (so user can see all polls they created)
       userId = jsonReqObject.getInt("creatorId");
       question = jsonReqObject.getString("question");
+      emoji = jsonReqObject.getString("emoji");
 
       // create ArrayList of AnswerOption objects
       JSONArray jsonAnswerOptions = jsonReqObject.getJSONArray("answerOptions");
       answerOptions = new ArrayList<>();
       for (int i = 0; i < jsonAnswerOptions.length(); i++){
         JSONObject jsonAnswerObject = jsonAnswerOptions.getJSONObject(i);
-//        int answerOptionId = jsonAnswerObject.getInt("id");
         String answerOptionString = jsonAnswerObject.getString("value");
         String answerOptionEmoji = jsonAnswerObject.getString("emoji");
         answerOptions.add(new AnswerOption(answerOptionString, answerOptionEmoji));
@@ -64,8 +65,7 @@ public class AddPollHandler implements Route {
       System.out.println (taggedCategories);
       CategoryPoints newCategoryPoints = new CategoryPoints(taggedCategories);
 
-
-      Poll newPoll = new Poll(question, answerOptions, newCategoryPoints);
+      Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints);
 
       boolean databaseResponse = this.addToDatabase(newPoll);
 
@@ -93,7 +93,6 @@ public class AddPollHandler implements Route {
       mongoAnswers.add(pollOptions);
     }
 
-    // TODO: add the support for category points
     Map<String, Double> catPtsMap = poll.getCatPts().getMap();
     List<Document> mongoCatPts = new ArrayList<>();
     for (Map.Entry<String,Double> entry : catPtsMap.entrySet()) {
@@ -104,6 +103,7 @@ public class AddPollHandler implements Route {
     // preparing main poll BSON object
     Document mongoPoll = new Document("_id", poll.getId().toString());
     mongoPoll.append("question", poll.getQuestion())
+          .append("emoji", poll.getEmoji())
           .append("answerOptions", mongoAnswers)
           .append("catPts", mongoCatPts)
           .append("responseIds", poll.getResponseIds())
