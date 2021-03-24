@@ -10,8 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="peek" target="1.7" />
-      <module name="peek_backend" target="1.7" />
+      <module name="peek" target="11" />
     </bytecodeTargetLevel>
   </component>
 </project>
