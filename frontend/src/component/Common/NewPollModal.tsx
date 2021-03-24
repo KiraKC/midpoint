@@ -69,7 +69,7 @@ function NewPollModal(props: INewPollModal) {
 				</div>
 				<div className="poll-modal-input-module display-relative">
 					<button className="emoji-picker-button" onClick={() => handleEmojiOpen(0)}><Emoji emoji={pollEmojiArray[0]} set='apple' size={25} /></button>
-					{isEmojiOpenArray ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji, event) => handlePollEmoji(emoji, 0)} /></div> : ''}
+					{isEmojiOpenArray[0] ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji, event) => handlePollEmoji(emoji, 0)} /></div> : ''}
 					<div className="poll-modal-question-desc-emoji">EMOJI</div>
 					<input className="poll-modal-question-input" type="text"
 						placeholder="What's on your curious mind?"></input>
@@ -78,7 +78,7 @@ function NewPollModal(props: INewPollModal) {
 
 				<div className="poll-modal-input-module display-relative">
 					<button className="emoji-picker-button" onClick={() => handleEmojiOpen(1)}><Emoji emoji={pollEmojiArray[1]} set='apple' size={25} /></button>
-					{isEmojiOpenArray ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji, event) => handlePollEmoji(emoji, 1)} /></div> : ''}
+					{isEmojiOpenArray[1] ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji, event) => handlePollEmoji(emoji, 1)} /></div> : ''}
 					<div className="poll-modal-question-desc-emoji">EMOJI</div>
 					<input className="poll-modal-question-input" type="text"
 						placeholder="What's on your curious mind?"></input>
@@ -87,7 +87,7 @@ function NewPollModal(props: INewPollModal) {
 
 				<div className="poll-modal-input-module display-relative">
 					<button className="emoji-picker-button" onClick={() => handleEmojiOpen(2)}><Emoji emoji={pollEmojiArray[2]} set='apple' size={25} /></button>
-					{isEmojiOpenArray ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji, event) => handlePollEmoji(emoji, 2)} /></div> : ''}
+					{isEmojiOpenArray[2] ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji, event) => handlePollEmoji(emoji, 2)} /></div> : ''}
 					<div className="poll-modal-question-desc-emoji">EMOJI</div>
 					<input className="poll-modal-question-input" type="text"
 						placeholder="What's on your curious mind?"></input>
