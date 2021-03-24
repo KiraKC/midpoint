@@ -1,6 +1,6 @@
-package poll;
+package com.cs32.app.poll;
 
-import com.cs32.app.CatPts;
+import com.cs32.app.CategoryPoints;
 import com.google.gson.annotations.Expose;
 import org.bson.types.ObjectId;
 
@@ -15,22 +15,22 @@ public class Poll {
   @Expose
   private List<AnswerOption> answerOptions;
   @Expose
-  private CatPts catPts;
+  private CategoryPoints categoryPoints;
   private List<String> responseIds;
 
-  public Poll(ObjectId id, String question, List<AnswerOption> answerOptions, CatPts catPts) {
-    this.id = id;
+  public Poll(String question, List<AnswerOption> answerOptions, CategoryPoints categoryPoints) {
+    this.id = new ObjectId();
     this.question = question;
     this.answerOptions = answerOptions;
-    this.catPts = catPts;
+    this.categoryPoints = categoryPoints;
     this.responseIds = new ArrayList<>();
   }
 
-  public Poll(ObjectId id, String question, List<AnswerOption> answerOptions, CatPts catPts, List<String> responseIds) {
+  public Poll(ObjectId id, String question, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
     this.id = id;
     this.question = question;
     this.answerOptions = answerOptions;
-    this.catPts = catPts;
+    this.categoryPoints = categoryPoints;
     this.responseIds = responseIds;
   }
 
@@ -49,8 +49,8 @@ public class Poll {
   }
 
 
-  public CatPts getCatPts() {
-    return catPts;
+  public CategoryPoints getCatPts() {
+    return categoryPoints;
   }
 
   public List<String> getResponseIds() {

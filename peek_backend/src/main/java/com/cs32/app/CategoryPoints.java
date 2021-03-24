@@ -6,12 +6,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CatPts {
+public class CategoryPoints {
   @Expose
   Map<String, Integer> catPtsMap;
 
   // Constructor when creating CatPtsWrapper with only tagged categories from user
-  public CatPts(List<String> taggedCategories) {
+  public CategoryPoints(List<String> taggedCategories) {
     catPtsMap = new HashMap<>();
     for(String taggedCategory : taggedCategories) {
       catPtsMap.put(taggedCategory, Constants.INITIAL_NEW_POLL_CAT_PTS/taggedCategories.size());

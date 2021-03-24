@@ -1,15 +1,14 @@
 package com.cs32.app.handlers;
 
-import com.cs32.app.CatPts;
+import com.cs32.app.CategoryPoints;
 import org.bson.Document;
-import org.bson.types.ObjectId;
-import poll.AnswerOption;
+import com.cs32.app.poll.AnswerOption;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import poll.Poll;
+import com.cs32.app.poll.Poll;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -63,10 +62,10 @@ public class AddPollHandler implements Route {
         taggedCategories.add(jsonTaggedCategories.getString(i));
       }
       System.out.println (taggedCategories);
-      CatPts newCatPts = new CatPts(taggedCategories);
+      CategoryPoints newCategoryPoints = new CategoryPoints(taggedCategories);
 
       //TODO: RANDOMIZE POLL ID LATER (HAVE THIS AS PART OF THE DB CONNECTION CLASS?)
-      Poll newPoll = new Poll(new ObjectId(), question, answerOptions, newCatPts);
+      Poll newPoll = new Poll(question, answerOptions, newCategoryPoints);
 
       boolean databaseResponse = this.addToDatabase(newPoll);
 
@@ -84,16 +83,30 @@ public class AddPollHandler implements Route {
   }
 
   private boolean addToDatabase(Poll poll) {
+    // preparing answer options array
+    List<AnswerOption> answerOptions = poll.getAnswerOptions();
+    List<Document> mongoAnswers = new ArrayList<>();
+    for (AnswerOption answerOption : answerOptions) {
+      Document pollOptions = new Document("optionId", answerOption.getId().toString())
+          .append("emoji", answerOption.getEmoji())
+          .append("value", answerOption.getValue());
+      mongoAnswers.add(pollOptions);
+    }
+
+    // TODO: add the support for category points
+    // preparing main poll BSON object
+    Document mongoPoll = new Document("_id", poll.getId().toString());
+    mongoPoll.append("question", poll.getQuestion())
+        .append("answerOptions", mongoAnswers)
+//            .append("catPts", poll.getCatPts())
+        .append("responseIds", poll.getResponseIds());
     try {
-      Document mongoPoll = new Document("_id", poll.getId());
-      mongoPoll.append("question", poll.getQuestion())
-            .append("answerOptions", poll.getAnswerOptions())
-            .append("catPts", poll.getCatPts())
-            .append("responseIds", poll.getResponseIds());
       pollCollection.insertOne(mongoPoll);
+      System.out.println("adding com.cs32.app.poll to db was SUCCESSFUL");
+
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("adding poll to db failed");
+      System.out.println("adding com.cs32.app.poll to db failed");
       return false;
     }
     return true;
