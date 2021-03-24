@@ -81,6 +81,8 @@
 
 .display-flex {
 	display: flex;
+	width: min(80%, 700px);
+	flex-wrap: wrap;
 }
 
 .display-relative {
