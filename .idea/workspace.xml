@@ -48,7 +48,32 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="JAR Application.peek-1.0-SNAPSHOT.jar (1)">
+  <component name="RunManager" selected="Application.App">
+    <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.cs32.app.App" />
+      <module name="peek" />
+      <option name="VM_PARAMETERS" value="-Dmongodb.uri=&quot;mongodb+srv://xchai1:87581155Ab!!@peekproject.pqvjm.mongodb.net/main?retryWrites=true&amp;w=majority&quot;" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.cs32.app.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+      <option name="arquillianRunConfiguration">
+        <value>
+          <option name="containerStateName" value="" />
+        </value>
+      </option>
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="my-app-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/target/my-app-1.0-SNAPSHOT.jar" />
       <method v="2" />
@@ -61,8 +86,15 @@
       <option name="JAR_PATH" value="$PROJECT_DIR$/target/peek-1.0-SNAPSHOT.jar" />
       <method v="2" />
     </configuration>
+    <list>
+      <item itemvalue="Application.App" />
+      <item itemvalue="JAR Application.my-app-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar" />
+      <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar (1)" />
+    </list>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.App" />
         <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar (1)" />
         <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar" />
         <item itemvalue="JAR Application.my-app-1.0-SNAPSHOT.jar" />
