@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "emoji-mart": "^3.0.1",
     "react-modal": "^3.12.1"
   },

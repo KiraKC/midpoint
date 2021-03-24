@@ -1,5 +1,64 @@
-.poll-model-close {
-	position: absolute;
-	right: 100px;
-	top: 20px;
+.poll-modal-wrapper-flex {
+	display: flex;
+	justify-content: space-between;
+}
+
+.poll-modal-heading {
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	font-size: 2rem;
+}
+
+.poll-modal-close {
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	font-size: 1rem;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 5px 15px 5px 10px;
+	background-color: transparent;
+	border: 3px solid black;
+	outline: none;
+	border-radius: 10px;
+}
+
+.poll-modal-close:hover {
+	background-color: black;
+	color: white;
+}
+
+.poll-modal-question-desc {
+	font-family: "Inter", sans-serif;
+	font-weight: 600;
+	font-size: 0.9rem;
+}
+
+.poll-modal-question-input {
+	width: min(80%, 600px);
+	height: 30px;
+	border: none;
+	border-bottom: 3px solid black;
+	font-family: "Inter", sans-serif;
+	color: black;
+	outline: none;
+	font-size: 1.6rem;
+	margin-top: 5px;
+}
+
+::placeholder {
+	color: black;
+	opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder {
+	color: black;
+}
+
+::-ms-input-placeholder {
+	color: black;
+}
+
+.poll-modal-input-module {
+	margin-top: 20px;
 }
