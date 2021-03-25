@@ -7,9 +7,8 @@ import com.mongodb.BasicDBList;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+
+import java.util.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -50,7 +49,6 @@ public class Connection {
     System.out.println("User 1: " + user.toJson());
   }
 
-  // TODO: Test if this works
   /**
    * Method for generating random polls.
    * @param numPolls num of polls to generate
@@ -61,10 +59,10 @@ public class Connection {
 
     // Randomly sample from the MongoDB collection
     AggregateIterable<Document> mongoRandomPolls = pollCollection.aggregate(Arrays.asList(Aggregates.sample(numPolls)));
-
+    Iterator<Document> aggregateIterable = mongoRandomPolls.iterator();
     // Transform MongoDB documents into poll objects
-    while (mongoRandomPolls.iterator().hasNext()) {
-      Document mongoPoll = mongoRandomPolls.iterator().next();
+    while (aggregateIterable.hasNext()) {
+      Document mongoPoll = aggregateIterable.next();
 
       // Get question
       String question = mongoPoll.getString("question");
@@ -74,18 +72,16 @@ public class Connection {
 
       // Get answer options
       List<AnswerOption> answerOptions = new ArrayList<>();
-      BasicDBList mongoAnswerOptions = (BasicDBList) mongoPoll.get("answerOptions");
-      for (Object object : mongoAnswerOptions) {
-        Document option = (Document) object;
-        answerOptions.add(new AnswerOption(option.getString("value"), option.getString("emoji")));
+      List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
+      for (Document doc : mongoAnswerOptions) {
+        answerOptions.add(new AnswerOption(doc.getString("value"), doc.getString("emoji")));
       }
 
       // Get category points
       CategoryPoints categoryPoints = new CategoryPoints();
-      BasicDBList mongoCatPts = (BasicDBList) mongoPoll.get("catPts");
-      for (Object object : mongoCatPts) {
-        Document catPtsPair = (Document) object;
-        categoryPoints.updateCatPts(catPtsPair.getString("categoryName"), catPtsPair.getDouble("points"));
+      List<Document> mongoCatPts = (List<Document>) mongoPoll.get("catPts");
+      for (Document doc : mongoCatPts) {
+        categoryPoints.updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
       }
 
       // Create and add poll

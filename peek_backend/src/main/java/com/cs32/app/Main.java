@@ -42,7 +42,7 @@ public class Main {
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
-    Spark.post("/get-suggested-polls", new GetSuggestedPollsHandler());
+    Spark.get("/get-suggested-polls", new GetSuggestedPollsHandler());
     Spark.post("/user/new", new AddUserHandler());
     Spark.post("/poll/new", new AddPollHandler());
   }
