@@ -1,6 +1,11 @@
 package com.cs32.app.handlers;
 
+import com.cs32.app.CategoryPoints;
+import com.cs32.app.Constants;
+import com.cs32.app.algorithm.PollAndRelevancePair;
+import com.cs32.app.algorithm.PollComparator;
 import com.cs32.app.database.Connection;
+import com.cs32.app.poll.Poll;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
@@ -10,8 +15,7 @@ import spark.Response;
 import spark.Route;
 import org.json.JSONObject;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 public class GetSuggestedPollsHandler implements Route {
@@ -31,19 +35,41 @@ public class GetSuggestedPollsHandler implements Route {
     Map<String, Object> variables = new HashMap<>();
     int userId;
     int numPollsRequested;
-    int[] seenPollIds;
+    Set seenPollIds;
     boolean status;
+    List<Poll> pollsToSend = new ArrayList<>();
     // Parse request
     try {
       JSONObject JSONReqObject = new JSONObject(request.body());
 //      userId = JSONReqObject.getInt("userId");
       numPollsRequested = JSONReqObject.getInt("numPollsRequested");
 //      JSONArray JSONSeenPollIds = JSONReqObject.getJSONArray("seenPollIds");
-//      seenPollIds = new int[JSONSeenPollIds.length()];
+//      seenPollIds = new HashSet();
 //      for (int i = 0; i< JSONSeenPollIds.length(); i++){
-//        seenPollIds[i] = JSONSeenPollIds.getJSONObject(i).getInt("pollid");
+//        seenPollIds.add(JSONSeenPollIds.getJSONObject(i).getInt("pollid"));
 //      }
-      variables.put("suggestedPolls", Connection.getRandomPolls(numPollsRequested));
+
+      // Query for user's Category Points
+      CategoryPoints userCatPts = new CategoryPoints(new ArrayList<>(Arrays.asList(Constants.ALL_CATEGORIES[0], Constants.ALL_CATEGORIES[1], Constants.ALL_CATEGORIES[2])));
+
+//      while(pollsToSend.size() < numPollsRequested) {
+        // Query for random polls
+        List<Poll> randomPolls = Connection.getRandomPolls(Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+
+        // Sort these polls based on their relevancy score
+        List<PollAndRelevancePair> pollAndRelevancePairList = new ArrayList<>();
+        for (Poll poll : randomPolls) {
+          pollAndRelevancePairList.add(new PollAndRelevancePair(poll, userCatPts));
+        }
+
+        Collections.sort(pollAndRelevancePairList, new PollComparator(userCatPts));
+      System.out.println(pollAndRelevancePairList.get(0).getPoll().getQuestion());
+        pollsToSend.add(pollAndRelevancePairList.get(0).getPoll());
+
+//      }
+
+      // Return the x most relevant polls to the frontend as a JSON
+      variables.put("suggestedPolls", pollsToSend);
       status = true;
     } catch (JSONException e) {
       System.err.println("GetSuggestedPollsHandler JSON request not properly formatted");
@@ -51,11 +77,7 @@ public class GetSuggestedPollsHandler implements Route {
       status = false;
     }
 
-    // Query for user's Category Points
-    // Query for 100 random polls
-    // Sort these polls based on their relevancy score
-    // Return the x most relevant polls to the frontend as a JSON
-    // return null;
+
     variables.put("status", status);
     return GSON.toJson(variables);
   }
