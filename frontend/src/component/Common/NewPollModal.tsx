@@ -57,6 +57,8 @@ function NewPollModal(props: INewPollModal) {
 		}
 		return optionArray
 	}
+
+	// TODO: check whether data is valid
 	const handleSubmit = () => {
 		const toSend = {
 			creatorId: 123,
@@ -154,7 +156,7 @@ function NewPollModal(props: INewPollModal) {
 					</div>
 
 					<div className="poll-section-heading">Enter a question</div>
-					<div className="poll-modal-input-module display-relative">
+					<div className="poll-modal-input-module display-relative" style={{marginTop: '15px'}}>
 						<button className="emoji-picker-button" onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}><Emoji emoji={questionEmoji} set='apple' size={25} /></button>
 						{questionEmojiOpen ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
 						<div className="poll-modal-question-desc-emoji">EMOJI</div>
@@ -164,8 +166,8 @@ function NewPollModal(props: INewPollModal) {
 					</div>
 
 					<div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-						<div className="poll-section-heading">Provide some options</div>
-						<div style={{display: 'flex', marginBottom: '15px', marginRight: '5px'}}>
+						<div className="poll-section-heading" style={{ marginBottom: '2px'}}>Provide some options</div>
+						<div style={{display: 'flex', marginBottom: '2px', marginRight: '5px'}}>
 							<OptionButton text={'add'} handler={handleIncrement} />
 							<OptionButton text={'remove'} handler={handleDecrement} />
 						</div>
