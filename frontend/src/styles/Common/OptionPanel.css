@@ -1,0 +1,28 @@
+.option-panel-button {
+	background-color: transparent;
+	outline: none;
+	border: none;
+	height: 35px;
+	width: 35px;
+	padding: 0;
+}
+
+.option-panel-button:hover {
+	background-color: black;
+	outline: none;
+	border: none;
+	color: white;
+}
+
+.option-panel-button:active {
+	background-color: rgb(87, 87, 87);
+	outline: none;
+	border: none;
+	color: white;
+}
+
+.option-botton-wrapper {
+	display: flex;
+	width: calc(min(88%, 600px) + 70px);
+	justify-content: flex-end;
+}

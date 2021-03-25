@@ -50,7 +50,7 @@
 }
 
 .poll-modal-question-input {
-	width: min(80%, 600px);
+	width: min(88%, 600px);
 	height: 30px;
 	border: none;
 	border-bottom: 3px solid black;
@@ -77,12 +77,12 @@
 }
 
 .poll-modal-input-module {
-	margin-top: 30px;
+	margin-top: 10px;
 }
 
 .display-flex {
 	display: flex;
-	width: min(80%, 700px);
+	width: 100%;
 	flex-wrap: wrap;
 }
 
@@ -99,9 +99,25 @@
 }
 
 .emoji-picker-button {
-	background-color: transparent;
+	background-color: white;
 	border: none;
 	outline: none;
 	padding-bottom: 3.5px;
 	border-bottom: 3px solid black;
+}
+
+.poll-section-heading {
+	font-family: "Inter", sans-serif;
+	font-weight: 650;
+	margin-top: 30px;
+	margin-bottom: 15px;
+	font-size: 1.6rem;
+}
+
+.poll-modal-wrapper {
+	height: max-content;
+	max-height: 700px;
+	width: 100%;
+	padding-right: 20px;
+	overflow-y: auto;
 }
