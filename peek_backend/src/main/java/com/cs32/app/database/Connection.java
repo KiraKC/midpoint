@@ -1,6 +1,9 @@
 package com.cs32.app.database;
 
+import com.cs32.app.CategoryPoints;
+import com.cs32.app.poll.AnswerOption;
 import com.cs32.app.poll.Poll;
+import com.mongodb.BasicDBList;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
@@ -47,14 +50,48 @@ public class Connection {
     System.out.println("User 1: " + user.toJson());
   }
 
-  // TODO:
+  // TODO: Test if this works
+  /**
+   * Method for generating random polls.
+   * @param numPolls num of polls to generate
+   * @return a List of polls
+   */
   public static List<Poll> getRandomPolls(int numPolls) {
     List<Poll> randomPolls = new ArrayList<>();
-    AggregateIterable<Document> samples = pollCollection.aggregate(Arrays.asList(Aggregates.sample(numPolls)));
-    while (samples.iterator().hasNext()) {
-      Document document = samples.iterator().next();
 
+    // Randomly sample from the MongoDB collection
+    AggregateIterable<Document> mongoRandomPolls = pollCollection.aggregate(Arrays.asList(Aggregates.sample(numPolls)));
+
+    // Transform MongoDB documents into poll objects
+    while (mongoRandomPolls.iterator().hasNext()) {
+      Document mongoPoll = mongoRandomPolls.iterator().next();
+
+      // Get question
+      String question = mongoPoll.getString("question");
+
+      // Get emoji
+      String emoji = mongoPoll.getString("emoji");
+
+      // Get answer options
+      List<AnswerOption> answerOptions = new ArrayList<>();
+      BasicDBList mongoAnswerOptions = (BasicDBList) mongoPoll.get("answerOptions");
+      for (Object object : mongoAnswerOptions) {
+        Document option = (Document) object;
+        answerOptions.add(new AnswerOption(option.getString("value"), option.getString("emoji")));
+      }
+
+      // Get category points
+      CategoryPoints categoryPoints = new CategoryPoints();
+      BasicDBList mongoCatPts = (BasicDBList) mongoPoll.get("catPts");
+      for (Object object : mongoCatPts) {
+        Document catPtsPair = (Document) object;
+        categoryPoints.updateCatPts(catPtsPair.getString("categoryName"), catPtsPair.getDouble("points"));
+      }
+
+      // Create and add poll
+      randomPolls.add(new Poll(question, emoji, answerOptions, categoryPoints));
     }
+
     return randomPolls;
   }
 

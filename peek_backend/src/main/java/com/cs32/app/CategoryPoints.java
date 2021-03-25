@@ -10,7 +10,9 @@ public class CategoryPoints {
   @Expose
   Map<String, Double> catPtsMap;
 
-  // Constructor when creating CatPtsWrapper with only tagged categories from user
+  /**
+   * Constructor when creating CatPtsWrapper with only tagged categories from user.
+   */
   public CategoryPoints(List<String> taggedCategories) {
     catPtsMap = new HashMap<>();
     for(String taggedCategory : taggedCategories) {
@@ -23,6 +25,26 @@ public class CategoryPoints {
     }
   }
 
+  /**
+   * Constructor when creating CatPtsWrapper from MongoDB Database.
+   */
+  public CategoryPoints() {
+    catPtsMap = new HashMap<>();
+  }
+
+  /**
+   * Method for updating category points.
+   * @param category category name
+   * @param points category points
+   */
+  public void updateCatPts (String category, double points) {
+    catPtsMap.put(category, points);
+  }
+
+  /**
+   * Getter method for the map.
+   * @return
+   */
   public Map<String, Double> getMap() {
     return catPtsMap;
   }
