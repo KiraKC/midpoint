@@ -14,6 +14,11 @@ interface INewPollModal {
 	setIsModalOpen: any
 }
 
+interface IPollOption {
+	value: string,
+	emoji: string
+}
+
 const customStyles = {
 	content: {
 		top: '50%',
@@ -48,12 +53,13 @@ function NewPollModal(props: INewPollModal) {
 	const [numOfOptions, setNumOfOptions]: [number, any] = useState(2);
 
 	const getOptionsArray = () => {
-		const optionArray = [];
+		const optionArray: IPollOption[] = [];
 		for (let i = 0; i < numOfOptions; i++) {
-			optionArray.push({
+			let option: IPollOption = {
 				value: textFieldValue[i],
 				emoji: pollEmojiArray[i]
-			})
+			}
+			optionArray.push(option)
 		}
 		return optionArray
 	}
