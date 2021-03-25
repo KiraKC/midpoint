@@ -9,7 +9,9 @@ interface IOptionItemProps {
 	isEmojiOpenArray: boolean[],
 	setIsEmojiOpenArray: any,
 	textFieldValue: string[],
-	setTextFieldValue: any
+	setTextFieldValue: any,
+	optionHint: string[],
+	setOptionHint: any
 }
 
 function OptionItem(props: IOptionItemProps) {
@@ -42,19 +44,26 @@ function OptionItem(props: IOptionItemProps) {
 	const handleTextChange = (e: any, index: number) => {
 		let tempTextFieldValue = textFieldValue;
 		tempTextFieldValue[index] = e.target.value;
-		console.log(tempTextFieldValue)
+		if (props.optionHint[index] !== "ANSWER") {
+			let tempHint = props.optionHint;
+			tempHint[index] = "ANSWER";
+			props.setOptionHint([...tempHint])
+		}
 		setTextFieldValue([...tempTextFieldValue])
 	}
 
 	return (
 		<div className="poll-modal-input-module display-relative">
 			<button className="emoji-picker-button"
-			 onClick={() => handleEmojiOpen(index)}><Emoji emoji={pollEmojiArray[index]} set='apple' size={25} /></button>
+				onClick={() => handleEmojiOpen(index)}><Emoji emoji={pollEmojiArray[index]} set='apple' size={25} /></button>
 			{isEmojiOpenArray[index] ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => handlePollEmoji(emoji, index)} /></div> : ''}
 			<div className="poll-modal-question-desc-emoji">EMOJI</div>
 			<input className="poll-modal-question-input" type="text"
 				placeholder={`Enter Option ${props.optionIndex + 1}`} onChange={(e) => { handleTextChange(e, index) }}></input>
-			<div className="poll-modal-question-desc-question">ANSWER</div>
+			<div className="poll-modal-question-desc-question"
+				style={{ color: (props.optionHint[index] == 'ANSWER' ? 'black' : '#F24443') }}>
+				{props.optionHint[index]}
+			</div>
 		</div>
 	);
 }

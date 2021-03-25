@@ -11,7 +11,9 @@ interface IOptionPanelProps {
 	isEmojiOpenArray: boolean[],
 	setIsEmojiOpenArray: any,
 	textFieldValue: string[],
-	setTextFieldValue: any
+	setTextFieldValue: any,
+	optionHint: string[],
+	setOptionHint: any
 }
 
 function OptionPanel(props: IOptionPanelProps) {
@@ -26,18 +28,15 @@ function OptionPanel(props: IOptionPanelProps) {
 		setIsEmojiOpenArray: props.setIsEmojiOpenArray,
 		textFieldValue: props.textFieldValue,
 		setTextFieldValue: props.setTextFieldValue,
+		optionHint: props.optionHint,
+		setOptionHint: props.setOptionHint
 	}
-
-
 
 	return (
 		<div>
 			{range(0, props.numOfOptions - 1, 1).map((option) => (
 				<OptionItem key={option} optionIndex={option} {...itemProps} />
 			))}
-			<div className="option-botton-wrapper">
-			
-			</div>
 		</div>
 	);
 }

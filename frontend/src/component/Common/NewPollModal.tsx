@@ -44,10 +44,12 @@ function NewPollModal(props: INewPollModal) {
 	const [pollEmojiArray, setPollEmojiArray]: [string[], any] = useState(['watermelon', 'smile']);
 	const [isEmojiOpenArray, setIsEmojiOpenArray]: [boolean[], any] = useState([false, false]);
 	const [textFieldValue, setTextFieldValue]: [string[], any] = useState(['', '']);
+	const [optionHint, setOptionHint]: [string[], any] = useState(['ANSWER', 'ANSWER'])
 
 	const [questionText, setQuestionText]: [string, any] = useState('');
 	const [questionEmoji, setQuestionEmoji]: [string, any] = useState('earth_asia')
 	const [questionEmojiOpen, setQuestionEmojiOpen]: [boolean, any] = useState(false)
+	const [questionHint, setQuestionHint]: [string, any] = useState('QUESTION')
 
 	const [categories, setCategories]: [string[], any] = useState([])
 	const [numOfOptions, setNumOfOptions]: [number, any] = useState(2);
@@ -63,6 +65,37 @@ function NewPollModal(props: INewPollModal) {
 		}
 		return optionArray
 	}
+
+	const isSubmissionValid = () => {
+		let isValid = true;
+		if (questionText === '') {
+			setQuestionHint("QUESTION CANNOT BE EMPTY")
+			isValid = false;
+		}
+		for (let i = 0; i < textFieldValue.length; i++) {
+			if (textFieldValue[i] === '') {
+				let tempHint = optionHint;
+				tempHint[i] = "CANNOT HAVE EMPTY OPTION";
+				setOptionHint([...tempHint])
+				isValid = false;
+			}
+		}
+		return isValid;
+	}
+
+	const cleanUpData = () => {
+		setPollEmojiArray(['watermelon', 'smile']);
+		setIsEmojiOpenArray([false, false]);
+		setTextFieldValue(['', '']);
+		setOptionHint(['ANSWER', 'ANSWER'])
+		setQuestionText('')
+		setQuestionEmoji('earth_asia')
+		setQuestionEmojiOpen(false)
+		setCategories([])
+		setNumOfOptions(2)
+		setQuestionHint("QUESTION")
+	}
+
 	const handleSubmit = () => {
 		const toSend = {
 			creatorId: 123,
@@ -78,17 +111,22 @@ function NewPollModal(props: INewPollModal) {
 				'Access-Control-Allow-Origin': '*',
 			}
 		}
-		axios.post(
-			"http://localhost:4567/poll/new",
-			toSend,
-			config,
-		)
-			.then(response => {
-				return response.data;
-			})
-			.catch(e => {
-				console.log(e);
-			});
+		console.log(isSubmissionValid())
+		if (isSubmissionValid()) {
+			props.setIsModalOpen(false);
+			axios.post(
+				"http://localhost:4567/poll/new",
+				toSend,
+				config,
+			)
+				.then(response => {
+					cleanUpData()
+					return response.data;
+				})
+				.catch(e => {
+					console.log(e);
+				});
+		}
 	}
 
 	const optionPanelProp = {
@@ -99,7 +137,9 @@ function NewPollModal(props: INewPollModal) {
 		textFieldValue: textFieldValue,
 		setTextFieldValue: setTextFieldValue,
 		numOfOptions: numOfOptions,
-		setNumOfOptions: setNumOfOptions
+		setNumOfOptions: setNumOfOptions,
+		optionHint: optionHint,
+		setOptionHint: setOptionHint
 	}
 
 	const handleIncrement = () => {
@@ -117,7 +157,6 @@ function NewPollModal(props: INewPollModal) {
 		} else {
 			// TODO: error message somewhere
 		}
-
 	}
 
 	const handleDecrement = () => {
@@ -148,11 +187,11 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-modal-wrapper-flex">
 						<div className="poll-modal-heading">Create New Poll</div>
 						<div style={{ display: 'flex' }}>
-							<button className="poll-modal-close" onClick={() => props.setIsModalOpen(false)}>
+							<button className="poll-modal-close" onClick={() => {props.setIsModalOpen(false); cleanUpData()}}>
 								<span className="material-icons">close</span>
 								<div className="poll-modal-close-text">CLOSE</div>
 							</button>
-							<button className="poll-modal-close" onClick={() => { props.setIsModalOpen(false); handleSubmit() }}>
+							<button className="poll-modal-close" onClick={() => { handleSubmit() }}>
 								<span className="material-icons" style={{ marginRight: '3px' }}>poll</span>
 								<div className="poll-modal-close-text">SUBMIT</div>
 							</button>
@@ -162,16 +201,19 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-section-heading">Enter a question</div>
 					<div className="poll-modal-input-module display-relative">
 						<button className="emoji-picker-button" onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}><Emoji emoji={questionEmoji} set='apple' size={25} /></button>
-						{questionEmojiOpen ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
+						{questionEmojiOpen ? <div className="emoji-picker"><Picker perLine={11} title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
 						<div className="poll-modal-question-desc-emoji">EMOJI</div>
 						<input className="poll-modal-question-input" type="text"
-							placeholder="What's on your curious mind?" onChange={(e) => { setQuestionText(e.target.value) }}></input>
-						<div className="poll-modal-question-desc-question">QUESTION</div>
+							placeholder="What's on your curious mind?" 
+							onChange={(e) => { setQuestionText(e.target.value); setQuestionHint("QUESTION") }}></input>
+						<div className="poll-modal-question-desc-question"
+						style={{ color: (questionHint == 'QUESTION' ? 'black' : '#F24443') }}
+						>{questionHint}</div>
 					</div>
 
 					<div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-end' }}>
 						<div className="poll-section-heading">Provide some options</div>
-						<div style={{display: 'flex', marginBottom: '15px', marginRight: '5px'}}>
+						<div style={{display: 'flex', marginRight: '5px'}}>
 							<OptionButton text={'add'} handler={handleIncrement} />
 							<OptionButton text={'remove'} handler={handleDecrement} />
 						</div>
