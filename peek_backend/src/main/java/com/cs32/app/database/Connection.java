@@ -49,7 +49,6 @@ public class Connection {
     System.out.println("User 1: " + user.toJson());
   }
 
-  // TODO: Test if this works
   /**
    * Method for generating random polls.
    * @param numPolls num of polls to generate
