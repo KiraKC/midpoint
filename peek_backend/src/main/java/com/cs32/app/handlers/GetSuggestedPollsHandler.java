@@ -51,10 +51,16 @@ public class GetSuggestedPollsHandler implements Route {
 
       // Query for user's Category Points
       CategoryPoints userCatPts = new CategoryPoints(new ArrayList<>(Arrays.asList(Constants.ALL_CATEGORIES[0], Constants.ALL_CATEGORIES[1], Constants.ALL_CATEGORIES[2])));
-
+      System.out.println(userCatPts.getNormPts(Constants.ALL_CATEGORIES[0], userCatPts.getTotalPts()));
 //      while(pollsToSend.size() < numPollsRequested) {
         // Query for random polls
-        List<Poll> randomPolls = Connection.getRandomPolls(Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+        List<Poll> randomPolls = Connection.getRandomPolls(numPollsRequested*Constants.QUERY_RAND_POLLS_NUM_BATCH);
+
+        List<Poll> byClickrate = randomPolls.subList(0, Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+
+        List<Poll> byRelevancy = randomPolls.subList(Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ, 2*Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+
+        List<Poll> byRandom = randomPolls.subList(2*Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ, 3*Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
 
         // Sort these polls based on their relevancy score
         List<PollAndRelevancePair> pollAndRelevancePairList = new ArrayList<>();
@@ -62,11 +68,23 @@ public class GetSuggestedPollsHandler implements Route {
           pollAndRelevancePairList.add(new PollAndRelevancePair(poll, userCatPts));
         }
 
-        Collections.sort(pollAndRelevancePairList, new PollComparator(userCatPts));
-      System.out.println(pollAndRelevancePairList.get(0).getPoll().getQuestion());
-        pollsToSend.add(pollAndRelevancePairList.get(0).getPoll());
 
+
+        Collections.sort(pollAndRelevancePairList, new PollComparator(userCatPts));
+
+        for (PollAndRelevancePair p : pollAndRelevancePairList) {
+          System.out.println(p.getPoll().getQuestion());
+          System.out.println(p.getCategoryDisparity());
+        }
+
+//      System.out.println(pollAndRelevancePairList.get(0).getPoll().getQuestion());
+        pollsToSend.add(pollAndRelevancePairList.get(0).getPoll());
+        pollsToSend.add(pollAndRelevancePairList.get(1).getPoll());
+        pollsToSend.add(pollAndRelevancePairList.get(2).getPoll());
+        pollsToSend.add(pollAndRelevancePairList.get(3).getPoll());
+        pollsToSend.add(pollAndRelevancePairList.get(4).getPoll());
 //      }
+
 
       // Return the x most relevant polls to the frontend as a JSON
       variables.put("suggestedPolls", pollsToSend);
