@@ -29,7 +29,7 @@ public class PollAndRelevancePair {
     Double pollTotal = poll.getCatPts().getTotalPts();
     System.out.println("Pollcatpts:" + pollTotal + poll.getQuestion());
     for(String category : Constants.ALL_CATEGORIES) {
-      categoryDisparity += userCatPts.getNormPts(category, userTotal) - poll.getCatPts().getNormPts(category, pollTotal);
+      categoryDisparity += Math.abs(userCatPts.getNormPts(category, userTotal) - poll.getCatPts().getNormPts(category, pollTotal));
     }
     this.categoryDisparity = (1-clickrate) * categoryDisparity;
   }
