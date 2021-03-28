@@ -50,6 +50,7 @@ public class CategoryPoints {
     return catPtsMap;
   }
 
+  // TODO: use getTotalPts()
   public Double getNormPts(String category, Double totalPts) {
     return catPtsMap.get(category)/totalPts;
   }
