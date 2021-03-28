@@ -22,6 +22,7 @@ function MasonryPoll(props: MasonryPollProps) {
 
 	return (
 		<div className="masonary-poll-wrapper" style={{
+			backgroundColor: `${selectedColor}`
 		}}>
 			<Emoji emoji='cop' set='apple' size={35} />
 			<div className="masonary-poll-heading">{props.text}</div>
