@@ -48,10 +48,10 @@ function MasonryWrapper() {
 	});
 
 	const breakpointColumnsObj = {
-		default: 6,
-		1700: 5,
-		1200: 4,
-		1000: 3,
+		default: 4,
+		1700: 3,
+		1200: 3,
+		1000: 2,
 		700: 2,
 		600: 1
 	};
