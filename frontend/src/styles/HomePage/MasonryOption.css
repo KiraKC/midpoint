@@ -11,6 +11,8 @@
 	box-shadow: 0 3px rgb(197, 197, 197);
 	border: none;
 	outline: none;
+	z-index: 4;
+	position: relative;
 
 }
 

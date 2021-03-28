@@ -2,19 +2,19 @@
   display: -webkit-box; /* Not needed if autoprefixing */
   display: -ms-flexbox; /* Not needed if autoprefixing */
   display: flex;
-  margin-left: -20px; /* gutter size offset */
+  margin-left: -25px; /* gutter size offset */
   width: auto;
-  margin-top: 30px;
+  margin-top: 25px;
   
 }
 
 .my-masonry-grid_column {
-  padding-left: 20px; /* gutter size */
+  padding-left: 25px; /* gutter size */
   background-clip: padding-box;
 }
  
 /* Style your items */
 .my-masonry-grid_column > div { /* change div to reference your elements you put in <Masonry> */
-  margin-bottom: 20px;
+  margin-bottom: 25px;
 }
 

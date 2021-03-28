@@ -1,14 +1,16 @@
 body,
 html {
-	background-color: #1B1B1B;
+	background-color: white;
+	background-image: url("https://i.ibb.co/8xWS490/448138-PEVTIZ-120.jpg");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
 }
 
 .bg-image {
 	width: 100vw;
 	height: 100vh;
-	background-repeat: no-repeat;
-	background-attachment: fixed;
-	background-size: cover;
+
 	z-index: -1;
 	filter: blur(10px);
 	-webkit-filter: blur(10px);
@@ -16,6 +18,7 @@ html {
 	top: 0;
 	left: 0;
 }
+
 #website-wrapper {
 	width: min(90vw, 1400px);
 	margin-left: auto;
