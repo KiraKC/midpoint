@@ -12,7 +12,7 @@ function App() {
 
 	return (
 		<>
-		{console.log(isModalOpen)}
+		<div className="bg-image"></div>
 			<NewPollModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
 			<div id="website-wrapper">
 				<Header setIsModalOpen={setIsModalOpen} />
