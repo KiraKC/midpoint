@@ -13,7 +13,6 @@
 	outline: none;
 	z-index: 4;
 	position: relative;
-
 }
 
 .option-wrapper:hover {background-color: white}

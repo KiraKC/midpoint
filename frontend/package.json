@@ -12,11 +12,13 @@
     "@types/react-dom": "^17.0.3",
     "axios": "^0.21.1",
     "emoji-mart": "^3.0.1",
+    "history": "^5.0.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-masonry-css": "^1.0.14",
     "react-modal": "^3.12.1",
-    "react-router-dom": "^5.2.0",
+    "react-router": "^6.0.0-alpha.5",
+    "react-router-dom": "^6.0.0-beta.0",
     "react-scripts": "4.0.3",
     "styled-components": "^5.2.1",
     "typescript": "^4.1.2",
@@ -48,7 +50,6 @@
   },
   "devDependencies": {
     "@types/emoji-mart": "^3.0.4",
-    "@types/react-modal": "^3.12.0",
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-modal": "^3.12.0"
   }
 }

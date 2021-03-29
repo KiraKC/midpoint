@@ -60,3 +60,16 @@
 .nav-link:active {
 	background-color: black;
 }
+
+.nav-text-link {
+	z-index: 1;
+	font-family: "Inter", sans-serif;
+	font-size: 1.3rem;
+	font-weight: 500;
+	margin-left: 30px;
+	cursor: pointer;
+}
+
+.nav-text-link:hover {
+	color:rgba(0, 0, 0, 0.829)
+}

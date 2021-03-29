@@ -5,6 +5,7 @@ import MasonryWrapper from './component/HomePage/MasonryWrapper'
 import Modal from 'react-modal';
 import { useState } from 'react';
 import NewPollModal from './component/Common/NewPollModal';
+import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 
 
 function App() {
@@ -12,12 +13,17 @@ function App() {
 
 	return (
 		<>
-		<div className="bg-image"></div>
 			<NewPollModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+			<BrowserRouter>
 			<div id="website-wrapper">
 				<Header setIsModalOpen={setIsModalOpen} />
-				<MasonryWrapper />
+				<Routes>
+					<Route element={<Navigate to="home" />} />
+					<Route path="/home" element={<MasonryWrapper />} />
+					<Route path="/game" element={<MasonryWrapper />} />
+				</Routes>
 			</div>
+			</BrowserRouter>
 		</>
 	);
 }
