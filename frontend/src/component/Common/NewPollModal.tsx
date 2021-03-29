@@ -30,12 +30,12 @@ const customStyles = {
 		height: 'max-content',
 		transform: 'translate(-50%, -50%)',
 		borderRadius: '40px',
-		border: '3px solid black',
 		paddingTop: '30px',
 		paddingBottom: '30px',
 		paddingLeft: '30px',
 		backgroundColor: 'rgba(255,255,255, 0.6)',
-		backdropFilter: 'blur(20px)'
+		backdropFilter: 'blur(20px)',
+		boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.462), inset 0px 3px 12px rgba(255, 255, 255, 0.243)'
 	}
 };
 
