@@ -200,7 +200,7 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-section-heading">Enter a question</div>
 					<div className="poll-modal-input-module display-relative">
 						<button className="emoji-picker-button" onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}><Emoji emoji={questionEmoji} set='apple' size={25} /></button>
-						{questionEmojiOpen ? <div className="emoji-picker"><Picker perLine={11} title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
+						{questionEmojiOpen ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
 						<div className="poll-modal-question-desc-emoji">EMOJI</div>
 						<input className="poll-modal-question-input" type="text"
 							placeholder="What's on your curious mind?"
