@@ -7,8 +7,9 @@ interface IHeaderProps {
 function Header(props: IHeaderProps) {
 	return (
 		<div className="header">
-			<a className="header-link" href="./app.tsx" target="_blank">midpoint.fun</a>
-			<div>
+			<div className="header-background"></div>
+			<a className="header-link" href="./app.tsx">midpoint.</a>
+			<div style={{position: 'relative'}}>
 				<button className="nav-link">Log in</button>
 				<button className="nav-link" onClick={() => props.setIsModalOpen(true)}>New Poll</button>
 			</div>

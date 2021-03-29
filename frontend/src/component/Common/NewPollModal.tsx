@@ -29,11 +29,13 @@ const customStyles = {
 		width: 'min(650px, 85vw)',
 		height: 'max-content',
 		transform: 'translate(-50%, -50%)',
-		borderRadius: '20px',
+		borderRadius: '40px',
 		border: '3px solid black',
 		paddingTop: '30px',
 		paddingBottom: '30px',
-		paddingLeft: '30px'
+		paddingLeft: '30px',
+		backgroundColor: 'rgba(255,255,255, 0.6)',
+		backdropFilter: 'blur(20px)'
 	}
 };
 
@@ -187,13 +189,10 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-modal-wrapper-flex">
 						<div className="poll-modal-heading">Create New Poll</div>
 						<div style={{ display: 'flex' }}>
-							<button className="poll-modal-close" onClick={() => {props.setIsModalOpen(false); cleanUpData()}}>
+							<button className="poll-modal-close" onClick={() => { props.setIsModalOpen(false); cleanUpData() }}>
 								<span className="material-icons">close</span>
 								<div className="poll-modal-close-text">CLOSE</div>
-							</button>
-							<button className="poll-modal-close" onClick={() => { handleSubmit() }}>
-								<span className="material-icons" style={{ marginRight: '3px' }}>poll</span>
-								<div className="poll-modal-close-text">SUBMIT</div>
+
 							</button>
 						</div>
 					</div>
@@ -204,24 +203,23 @@ function NewPollModal(props: INewPollModal) {
 						{questionEmojiOpen ? <div className="emoji-picker"><Picker perLine={11} title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
 						<div className="poll-modal-question-desc-emoji">EMOJI</div>
 						<input className="poll-modal-question-input" type="text"
-							placeholder="What's on your curious mind?" 
+							placeholder="What's on your curious mind?"
 							onChange={(e) => { setQuestionText(e.target.value); setQuestionHint("QUESTION") }}></input>
 						<div className="poll-modal-question-desc-question"
-						style={{ color: (questionHint == 'QUESTION' ? 'black' : '#F24443') }}
+							style={{ color: (questionHint == 'QUESTION' ? 'black' : '#F24443') }}
 						>{questionHint}</div>
 					</div>
 
 					<div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-end' }}>
 						<div className="poll-section-heading">Provide some options</div>
-						<div style={{display: 'flex', marginRight: '5px'}}>
+						<div style={{ display: 'flex', marginRight: '5px' }}>
 							<OptionButton text={'add'} handler={handleIncrement} />
 							<OptionButton text={'remove'} handler={handleDecrement} />
 						</div>
 
 					</div>
 					<OptionPanel {...optionPanelProp} />
-
-					<div style={{ marginTop: '15px', marginBottom: '20px' }} className="poll-section-heading">Finally, choose (several) categories</div>
+					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">Finally, choose (several) categories</div>
 					<div className="poll-modal-input-module display-flex">
 						<CategoryButton emoji="basketball" text="sports" highlightColor={"#74AEBB"} categories={categories} setCategories={setCategories} />
 						<CategoryButton emoji="mega" text="politics" highlightColor={"#D83282"} categories={categories} setCategories={setCategories} />
@@ -233,6 +231,10 @@ function NewPollModal(props: INewPollModal) {
 						<CategoryButton emoji="thinking_face" text="serious" highlightColor={"#B4154E"} categories={categories} setCategories={setCategories} />
 						<CategoryButton emoji="cupid" text="relationship" highlightColor={"#C18FD2"} categories={categories} setCategories={setCategories} />
 					</div>
+					<button className="poll-modal-submit" onClick={() => { handleSubmit() }}>
+						<span className="material-icons" style={{ marginRight: '3px' }}>done</span>
+						<div className="poll-modal-close-text">Let's Go!</div>
+					</button>
 				</div>
 			</Modal>
 		</div>
