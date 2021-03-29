@@ -1,12 +1,12 @@
 package com.cs32.app.database;
 
-import com.cs32.app.CategoryPoints;
-import com.cs32.app.poll.AnswerOption;
+import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
-import com.mongodb.BasicDBList;
+import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 
 import java.util.*;
 
@@ -62,33 +62,21 @@ public class Connection {
     Iterator<Document> aggregateIterable = mongoRandomPolls.iterator();
     // Transform MongoDB documents into poll objects
     while (aggregateIterable.hasNext()) {
-      Document mongoPoll = aggregateIterable.next();
-
-      // Get question
-      String question = mongoPoll.getString("question");
-
-      // Get emoji
-      String emoji = mongoPoll.getString("emoji");
-
-      // Get answer options
-      List<AnswerOption> answerOptions = new ArrayList<>();
-      List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
-      for (Document doc : mongoAnswerOptions) {
-        answerOptions.add(new AnswerOption(doc.getString("value"), doc.getString("emoji")));
-      }
-
-      // Get category points
-      CategoryPoints categoryPoints = new CategoryPoints();
-      List<Document> mongoCatPts = (List<Document>) mongoPoll.get("catPts");
-      for (Document doc : mongoCatPts) {
-        categoryPoints.updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
-      }
-
       // Create and add poll
-      randomPolls.add(new Poll(question, emoji, answerOptions, categoryPoints));
+      randomPolls.add(new Poll(aggregateIterable.next()));
     }
 
     return randomPolls;
   }
 
+
+  public static Poll getPollById(String pollId) throws MissingDBObjectException {
+    BasicDBObject query = new BasicDBObject();
+    query.put("_id", new ObjectId(pollId));
+    MongoCursor<Document> cursor = pollCollection.find(query).limit(1).iterator();
+    if (!cursor.hasNext()) {
+      throw new MissingDBObjectException("Poll", "_id", pollId, "poll");
+    }
+    return (new Poll(cursor.next()));
+  }
 }
