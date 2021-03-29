@@ -178,6 +178,12 @@ function NewPollModal(props: INewPollModal) {
 		}
 	}
 
+	const categoryArray = [
+		{ emoji: "basketball", text: "sports", highlightColor: "#74AEBB"},
+		{ emoji: "basketball", text: "sports", highlightColor: "#74AEBB"},
+
+	]
+
 	return (
 		<div>
 			<Modal
@@ -221,6 +227,8 @@ function NewPollModal(props: INewPollModal) {
 					<OptionPanel {...optionPanelProp} />
 					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">Finally, choose (several) categories</div>
 					<div className="poll-modal-input-module display-flex">
+
+
 						<CategoryButton emoji="basketball" text="sports" highlightColor={"#74AEBB"} categories={categories} setCategories={setCategories} />
 						<CategoryButton emoji="mega" text="politics" highlightColor={"#D83282"} categories={categories} setCategories={setCategories} />
 						<CategoryButton emoji="joy" text="funny" highlightColor={"#1D5110"} categories={categories} setCategories={setCategories} />

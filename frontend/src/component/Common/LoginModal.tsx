@@ -34,7 +34,10 @@ function LoginModal(props: INewPollModal) {
 				isOpen={props.isModalOpen}
 				// onRequestClose={() => props.setIsModalOpen(false)}
 				contentLabel="Example Modal"
-				style={customStyles} />
+				style={customStyles} >
+					<input placeholder="username"></input>
+					<input placeholder="password"></input>
+					</Modal>
 		</div>
 	);
 }

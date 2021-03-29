@@ -3,11 +3,14 @@ import './App.css';
 import Header from './component/Common/Header';
 import MasonryWrapper from './component/HomePage/MasonryWrapper'
 import Modal from 'react-modal';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import NewPollModal from './component/Common/NewPollModal';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import LoginModal from './component/Common/LoginModal';
-
+import "firebase/auth";
+import { FirebaseAuthProvider } from '@react-firebase/auth';
+import firebase from "firebase/app";
+import firebaseConfig from "./firebase/FirebaseIndex"
 
 function App() {
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
@@ -19,14 +22,18 @@ function App() {
 			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} />
 
 			<BrowserRouter>
-			<div id="website-wrapper">
-				<Header setIsPollModalOpen={setIsPollModalOpen} setIsLoginModalOpen={setIsLoginModalOpen}/>
-				<Routes>
-					<Route element={<Navigate to="home" />} />
-					<Route path="/home" element={<MasonryWrapper />} />
-					<Route path="/game" element={<MasonryWrapper />} />
-				</Routes>
-			</div>
+				{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}> */}
+
+					<div id="website-wrapper">
+						<Header setIsPollModalOpen={setIsPollModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} />
+						<Routes>
+							<Route element={<Navigate to="home" />} />
+							<Route path="/home" element={<MasonryWrapper />} />
+							<Route path="/game" element={<MasonryWrapper />} />
+						</Routes>
+					</div>
+				{/* </FirebaseAuthProvider> */}
+
 			</BrowserRouter>
 		</>
 	);
