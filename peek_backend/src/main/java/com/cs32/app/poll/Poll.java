@@ -2,6 +2,7 @@ package com.cs32.app.poll;
 
 import com.cs32.app.CategoryPoints;
 import com.google.gson.annotations.Expose;
+import org.bson.Document;
 import org.bson.types.ObjectId;
 
 import java.util.ArrayList;
@@ -33,14 +34,46 @@ public class Poll {
     this.numClicks = 0;
   }
 
-  public Poll(String id, String question, String pollEmoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
+  public Poll(String id, String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
     this.id = id;
     this.question = question;
+    this.emoji = emoji;
     this.answerOptions = answerOptions;
     this.categoryPoints = categoryPoints;
     this.responseIds = responseIds;
     this.numRenders = numRenders;
     this.numClicks = numClicks;
+  }
+
+  public Poll(Document mongoPoll) {
+    // Get question
+    question = mongoPoll.getString("question");
+
+    // Get emoji
+    emoji = mongoPoll.getString("emoji");
+
+    // Get answer options
+    answerOptions = new ArrayList<>();
+    List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
+    for (Document doc : mongoAnswerOptions) {
+      answerOptions.add(new AnswerOption(doc.getString("value"), doc.getString("emoji")));
+    }
+
+    // Get category points
+    categoryPoints = new CategoryPoints();
+    List<Document> mongoCatPts = (List<Document>) mongoPoll.get("catPts");
+    for (Document doc : mongoCatPts) {
+      categoryPoints.updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
+    }
+
+    // Get responseIds
+    responseIds = (ArrayList<String>) mongoPoll.get("responseIds");
+
+    // Get numRenders
+    numRenders = mongoPoll.getInteger("numRenders");
+
+    // Get numClicks
+    numClicks = mongoPoll.getInteger("numClicks");
   }
 
   public String getId() {

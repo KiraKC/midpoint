@@ -85,9 +85,9 @@ public class GetSuggestedPollsHandler implements Route {
         pollsToSend.add(pollAndRelevancePairList.get(4).getPoll());
 //      }
 
-
       // Return the x most relevant polls to the frontend as a JSON
       variables.put("suggestedPolls", pollsToSend);
+      // TODO: update poll's numRenders
       status = true;
     } catch (JSONException e) {
       System.err.println("GetSuggestedPollsHandler JSON request not properly formatted");
