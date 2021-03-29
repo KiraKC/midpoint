@@ -180,7 +180,36 @@ function NewPollModal(props: INewPollModal) {
 
 	const categoryArray = [
 		{ emoji: "basketball", text: "sports", highlightColor: "#74AEBB"},
-		{ emoji: "basketball", text: "sports", highlightColor: "#74AEBB"},
+		{ emoji: "mega", text: "politics", highlightColor: "#D83282"},
+		{ emoji: "joy", text: "funny", highlightColor: "#1D5110"},
+		{ emoji: "classical_building", text: "culture", highlightColor: "#2ABC88"},
+		{ emoji: "dancer", text: "entertainment", highlightColor: "#905A00"},
+		{ emoji: "hamburger", text: "food", highlightColor: "#494848"},
+		{ emoji: "school_satchel", text: "education", highlightColor: "#F24343"},
+		{ emoji: "thinking_face", text: "serious", highlightColor: '#B4154E'},
+		{ emoji: "cupid", text: "relationship", highlightColor: '#C18FD2'},
+
+		{ emoji: "heart_eyes", text: "cute", highlightColor:"#FF8D24"},
+		{ emoji: "house_with_garden", text: "lifestyle", highlightColor:"#1D5110"},
+		{ emoji: "newspaper", text: "news", highlightColor:"#0B5EA9"},
+		{ emoji: "frog", text: "nature", highlightColor:"#328F1A"},
+
+		{ emoji: "woman_cartwheeling", text: "health & fitness", highlightColor:"#86BBEC"},
+		{ emoji: "nail_care", text: "beauty", highlightColor: '#FE7EAC'},
+		{ emoji: "file_folder", text: "entrepreneurship", highlightColor: '#264779'},
+		{ emoji: "video_game", text: "gaming", highlightColor: '#74AEBB'},
+		{ emoji: "clapper", text: "movies", highlightColor: '#EF8E96'},
+		{ emoji: "sunglasses", text: "celebrities", highlightColor: '#FFE817'},
+		{ emoji: "microscope", text: "science", highlightColor: '#494848'},
+		{ emoji: "briefcase", text: "business", highlightColor: '#905A00'},
+		{ emoji: "books", text: "books", highlightColor: '#FA8920'},
+		{ emoji: "art", text: "design", highlightColor: '#A6D5FF'},
+
+		{ emoji: "mechanical_arm", text: "technology", highlightColor: '#FFA8EC'},
+		{ emoji: "womans_hat", text: "fashion", highlightColor: '#FFA61B'},
+		{ emoji: "scroll", text: "history", highlightColor: '#C18FD2'},
+		{ emoji: "musical_note", text: "music", highlightColor: '#B4154E'},
+		{ emoji: "speech_balloon", text: "languages", highlightColor: '#F43030'},
 
 	]
 
@@ -228,16 +257,15 @@ function NewPollModal(props: INewPollModal) {
 					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">Finally, choose (several) categories</div>
 					<div className="poll-modal-input-module display-flex">
 
-
-						<CategoryButton emoji="basketball" text="sports" highlightColor={"#74AEBB"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="mega" text="politics" highlightColor={"#D83282"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="joy" text="funny" highlightColor={"#1D5110"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="classical_building" text="culture" highlightColor={"#2ABC88"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="dancer" text="entertainment" highlightColor={"#905A00"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="hamburger" text="food" highlightColor={"#494848"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="school_satchel" text="education" highlightColor={"#F24343"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="thinking_face" text="serious" highlightColor={"#B4154E"} categories={categories} setCategories={setCategories} />
-						<CategoryButton emoji="cupid" text="relationship" highlightColor={"#C18FD2"} categories={categories} setCategories={setCategories} />
+					{categoryArray.map((e, i) => (
+                    <CategoryButton
+                        emoji={e.emoji}
+                        text={e.text}
+						highlightColor={e.highlightColor}
+						categories={categories} 
+						setCategories={setCategories}
+                    />
+                ))}
 					</div>
 					<button className="poll-modal-submit" onClick={() => { handleSubmit() }}>
 						<span className="material-icons" style={{ marginRight: '3px' }}>done</span>
