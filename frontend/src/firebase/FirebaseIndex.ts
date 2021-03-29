@@ -3,19 +3,21 @@ import 'firebase/auth'
 import 'firebase/app'
 
 const firebaseConfig = {
-	apiKey: "AIzaSyCkuxygyT37m7BUlRqJz7pwclwQeYePSwo",
-	authDomain: "midpoint-38ef0.firebaseapp.com",
-	projectId: "midpoint-38ef0",
-	storageBucket: "midpoint-38ef0.appspot.com",
-	messagingSenderId: "962616729704",
-	appId: "1:962616729704:web:069bf831465ad86a371bdd",
-	measurementId: "G-CGKNC3TDRY"
+	apiKey: "AIzaSyDkeKCChrlvYYcfrZwSGgersr5IXtgoHRQ",
+    authDomain: "midpoint-b4a3c.firebaseapp.com",
+    projectId: "midpoint-b4a3c",
+    storageBucket: "midpoint-b4a3c.appspot.com",
+    messagingSenderId: "602541675119",
+    appId: "1:602541675119:web:0f978eda079ccb43ee739a",
+    measurementId: "G-WBL2CW78F0",
+	databaseURL: "https://midpoint-b4a3c-default-rtdb.firebaseio.com/"
   };
 // Initialize Firebase
-// if (!firebase.apps.length) {
-//     firebase.initializeApp(firebaseConfig);
-//     firebase.analytics();
-// 	firebase.auth();
-// }
+if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+	firebase.auth();
+}
 
 export default firebaseConfig; 
+
