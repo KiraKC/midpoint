@@ -6,17 +6,21 @@ import Modal from 'react-modal';
 import { useState } from 'react';
 import NewPollModal from './component/Common/NewPollModal';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
+import LoginModal from './component/Common/LoginModal';
 
 
 function App() {
-	const [isModalOpen, setIsModalOpen]: [boolean, any] = useState(false);
+	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
+	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
 
 	return (
 		<>
-			<NewPollModal isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
+			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} />
+
 			<BrowserRouter>
 			<div id="website-wrapper">
-				<Header setIsModalOpen={setIsModalOpen} />
+				<Header setIsPollModalOpen={setIsPollModalOpen} setIsLoginModalOpen={setIsLoginModalOpen}/>
 				<Routes>
 					<Route element={<Navigate to="home" />} />
 					<Route path="/home" element={<MasonryWrapper />} />
