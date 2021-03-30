@@ -238,7 +238,7 @@ function NewPollModal(props: INewPollModal) {
 						</div>
 					</div>
 
-					<div className="poll-section-heading">Enter a question</div>
+					<div className="poll-section-heading">1. Enter a question</div>
 					<div className="poll-modal-input-module display-relative">
 						<button className="emoji-picker-button" onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}><Emoji emoji={questionEmoji} set='apple' size={25} /></button>
 						{questionEmojiOpen ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
@@ -252,7 +252,7 @@ function NewPollModal(props: INewPollModal) {
 					</div>
 
 					<div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-						<div className="poll-section-heading">Provide some options</div>
+						<div className="poll-section-heading">2. Provide some options</div>
 						<div style={{ display: 'flex', marginRight: '5px' }}>
 							<OptionButton text={'add'} handler={handleIncrement} />
 							<OptionButton text={'remove'} handler={handleDecrement} />
@@ -260,7 +260,7 @@ function NewPollModal(props: INewPollModal) {
 
 					</div>
 					<OptionPanel {...optionPanelProp} />
-					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">Finally, choose (several) categories</div>
+					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">3.Finally, choose (several) categories</div>
 					<div className="poll-modal-input-module display-flex">
 
 					{categoryArray.map((e, i) => (
@@ -273,11 +273,14 @@ function NewPollModal(props: INewPollModal) {
                     />
                 ))}
 					</div>
+					<div className="on-the-right">
 					<button className="poll-modal-submit" onClick={() => { handleSubmit() }}>
 						<span className="material-icons" style={{ marginRight: '3px' }}>done</span>
 						<div className="poll-modal-close-text">Let's Go!</div>
 					</button>
+					</div>
 				</div>
+
 			</Modal>
 		</div>
 	);

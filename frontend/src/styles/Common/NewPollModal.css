@@ -6,7 +6,7 @@
 .poll-modal-heading {
 	font-family: "Inter", sans-serif;
 	font-weight: 700;
-	font-size: 2rem;
+	font-size: 1.5rem;
 }
 
 .poll-modal-close {
@@ -27,19 +27,23 @@
 	padding-bottom: 0;
 }
 
+.on-the-right {
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+}
 .poll-modal-submit {
 	font-family: "Inter", sans-serif;
 	font-weight: 700;
 	font-size: 1rem;
 	display: flex;
-	justify-content: center;
+	justify-content: flex-end;
 	align-items: center;
 	padding: 5px 8px;
 	background-color: transparent;
 	border: 2px solid black;
 	outline: none;
 	border-radius: 10px;
-	margin-top: 15px;
 }
 
 .poll-modal-submit:hover {
@@ -55,7 +59,7 @@
 .poll-modal-question-desc-emoji {
 	font-family: "Inter", sans-serif;
 	font-weight: 800;
-	font-size: 0.9rem;
+	font-size: 0.7rem;
 	margin-top: 5px;
 	position: absolute;
 	top: 36px;
@@ -65,7 +69,7 @@
 .poll-modal-question-desc-question {
 	font-family: "Inter", sans-serif;
 	font-weight: 800;
-	font-size: 0.9rem;
+	font-size: 0.7rem;
 	margin-top: 5px;
 	position: absolute;
 	top: 36px;
@@ -80,7 +84,7 @@
 	font-family: "Inter", sans-serif;
 	color: black;
 	outline: none;
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	position: absolute;
 	top: 0;
 	left: 60px;
@@ -134,12 +138,12 @@
 	font-family: "Inter", sans-serif;
 	font-weight: 650;
 	margin-top: 20px;
-	font-size: 1.6rem;
+	font-size: 1.3rem;
 }
 
 .poll-modal-wrapper {
 	height: max-content;
-	max-height: 800px;
+	max-height: min(800px, 90vh);
 	width: 100%;
 	padding-right: 20px;
 	overflow-y: auto;
