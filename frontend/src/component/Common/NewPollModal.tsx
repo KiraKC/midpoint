@@ -43,7 +43,7 @@ function NewPollModal(props: INewPollModal) {
 
 	Modal.setAppElement("#root")
 
-	const [pollEmojiArray, setPollEmojiArray]: [string[], any] = useState(['watermelon', 'smile']);
+	const [pollEmojiArray, setPollEmojiArray]: [string[], any] = useState(['thumbsup', 'thumbsdown']);
 	const [isEmojiOpenArray, setIsEmojiOpenArray]: [boolean[], any] = useState([false, false]);
 	const [textFieldValue, setTextFieldValue]: [string[], any] = useState(['', '']);
 	const [optionHint, setOptionHint]: [string[], any] = useState(['ANSWER', 'ANSWER'])
@@ -86,7 +86,7 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	const cleanUpData = () => {
-		setPollEmojiArray(['watermelon', 'smile']);
+		setPollEmojiArray(['thumbsup', 'thumbsdown']);
 		setIsEmojiOpenArray([false, false]);
 		setTextFieldValue(['', '']);
 		setOptionHint(['ANSWER', 'ANSWER'])
@@ -154,7 +154,7 @@ function NewPollModal(props: INewPollModal) {
 			tempTextFieldValue.push('');
 			setTextFieldValue([...tempTextFieldValue])
 			let tempPollEmojiArray = pollEmojiArray;
-			tempPollEmojiArray.push('star-struck');
+			tempPollEmojiArray.push('star-struck', 'face_with_cowboy_hat', 'see_no_evil', 'eyes', 'crystal_ball', 'doughnut');
 			setPollEmojiArray([...tempPollEmojiArray])
 			let tempOptionHint = optionHint;
 			tempOptionHint.push('ANSWER');
