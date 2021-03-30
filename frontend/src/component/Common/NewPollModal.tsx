@@ -32,7 +32,7 @@ const customStyles = {
 		borderRadius: '30px',
 		paddingTop: '30px',
 		paddingBottom: '30px',
-		paddingLeft: '30px',
+		paddingLeft: '40px',
 		backgroundColor: 'rgba(255,255,255, 0.6)',
 		backdropFilter: 'blur(20px)',
 		boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.462), inset 0px 3px 12px rgba(255, 255, 255, 0.243)'
@@ -240,7 +240,7 @@ function NewPollModal(props: INewPollModal) {
 
 					<div className="poll-section-heading">1. Enter a question</div>
 					<div className="poll-modal-input-module display-relative">
-						<button className="emoji-picker-button" onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}><Emoji emoji={questionEmoji} set='apple' size={25} /></button>
+						<button className="emoji-picker-button" onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}><Emoji emoji={questionEmoji} set='apple' size={23} /></button>
 						{questionEmojiOpen ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
 						<div className="poll-modal-question-desc-emoji">EMOJI</div>
 						<input className="poll-modal-question-input" type="text"
@@ -260,7 +260,7 @@ function NewPollModal(props: INewPollModal) {
 
 					</div>
 					<OptionPanel {...optionPanelProp} />
-					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">3.Finally, choose (several) categories</div>
+					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">3. Finally, choose (several) categories</div>
 					<div className="poll-modal-input-module display-flex">
 
 					{categoryArray.map((e, i) => (
