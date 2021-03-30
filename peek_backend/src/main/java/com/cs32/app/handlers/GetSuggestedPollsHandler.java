@@ -60,17 +60,16 @@ public class GetSuggestedPollsHandler implements Route {
           numPollsRequested * Constants.QUERY_RAND_POLLS_NUM_BATCH);
 
       // Get polls with highest relevancy from the first batch
-      List<Poll> byRelevancy = randomPolls.subList(0, Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
-      Collections.sort(byRelevancy, new RelevancyComparator(userCatPts));
+      List<Poll> batch = randomPolls.subList(0, Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+      Collections.sort(batch, new RelevancyComparator(userCatPts));
       int numRelevancy = (int) Math.floor(numPollsRequested * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
-      byRelevancy = byRelevancy.subList(0, numRelevancy);
+      List<Poll> byRelevancy = batch.subList(0, numRelevancy);
 
       // Get polls with highest click rate from the second batch
-      List<Poll> byClickRate = randomPolls.subList(Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ,
-          2 * Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
-      Collections.sort(byClickRate, new ClickRateComparator());
+      batch = randomPolls.subList(Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ, 2 * Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+      Collections.sort(batch, new ClickRateComparator());
       int numClickRate = (int) Math.floor(numPollsRequested * Constants.QUERY_RAND_POLLS_CLICK_RATE_PORTION);
-      byClickRate = byClickRate.subList(0, numClickRate);
+      List<Poll> byClickRate = batch.subList(0, numClickRate);
 
       // Get polls randomly from the third batch
       int numRandom = numPollsRequested - numRelevancy - numClickRate;
