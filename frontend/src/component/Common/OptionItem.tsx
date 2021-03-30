@@ -36,9 +36,11 @@ function OptionItem(props: IOptionItemProps) {
 
 	const handleEmojiOpen = (index: number) => {
 		let tempEmojiOpenArray = isEmojiOpenArray;
-		tempEmojiOpenArray[index] = !tempEmojiOpenArray[index];
+		// close all other emoji picker
+		for (let i = 0; i < tempEmojiOpenArray.length; i++) {
+			index !== i ? tempEmojiOpenArray[i] = false : tempEmojiOpenArray[index] = !tempEmojiOpenArray[index];
+		}
 		setIsEmojiOpenArray([...tempEmojiOpenArray])
-		console.log(tempEmojiOpenArray)
 	}
 
 	const handleTextChange = (e: any, index: number) => {
