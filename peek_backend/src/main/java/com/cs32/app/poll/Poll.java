@@ -1,6 +1,7 @@
 package com.cs32.app.poll;
 
 import com.cs32.app.CategoryPoints;
+import com.cs32.app.Constants;
 import com.google.gson.annotations.Expose;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -80,7 +81,6 @@ public class Poll {
     return id;
   }
 
-
   public String getQuestion() {
     return question;
   }
@@ -90,7 +90,6 @@ public class Poll {
   public List<AnswerOption> getAnswerOptions() {
     return answerOptions;
   }
-
 
   public CategoryPoints getCatPts() {
     return categoryPoints;
@@ -106,5 +105,50 @@ public class Poll {
 
   public int getNumClicks() {
     return numClicks;
+  }
+
+  /**
+   * Getter method for click rate.
+   * @return
+   */
+  public double getClickRate() {
+    if (numRenders == 0) {
+      return Constants.STARTING_CLICKRATE;
+    } else {
+      return numClicks / numRenders;
+    }
+  }
+
+  /**
+   * Method for calculating disparity between the poll and a given user's category points.
+   * The lower the disparity, the more relevant the poll is to the user.
+   * @param userCatPts a given user's category points
+   * @return disparity
+   */
+  public double calculateDisparity(CategoryPoints userCatPts) {
+    double categoryDisparity = 0;
+    double clickRate = this.getClickRate();
+    Double userTotal = userCatPts.getTotalPts();
+    System.out.println("USERCATPTS:" + userTotal);
+    Double pollTotal = categoryPoints.getTotalPts();
+    System.out.println("Pollcatpts:" + question + pollTotal);
+    for(String category : Constants.ALL_CATEGORIES) {
+      categoryDisparity += Math.abs(userCatPts.getNormPts(category, userTotal) - categoryPoints.getNormPts(category, pollTotal));
+    }
+    return (1-clickRate) * categoryDisparity;
+  }
+
+  /**
+   * Method for increasing num of renders by 1 when the poll is rendered.
+   */
+  public void rendered() {
+    numRenders += 1;
+  }
+
+  /**
+   * Method for increasing num of clicks by 1 when the poll is clicked.
+   */
+  public void clicked() {
+    numClicks += 1;
   }
 }
