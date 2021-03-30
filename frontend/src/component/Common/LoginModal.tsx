@@ -21,7 +21,7 @@ const customStyles = {
 		width: 'min(650px, 85vw)',
 		height: 'max-content',
 		transform: 'translate(-50%, -50%)',
-		borderRadius: '40px',
+		borderRadius: '30px',
 		border: '3px solid black',
 		paddingTop: '30px',
 		paddingBottom: '30px',
@@ -42,46 +42,26 @@ function LoginModal(props: INewPollModal) {
 				style={customStyles} >
 				<input placeholder="username"></input>
 				<input placeholder="password"></input>
+				<button onClick={() => props.setIsModalOpen(false)}>CLOSE </button>
 				<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 					<div>
-						<button
-							data-testid="signin-anon"
-							onClick={() => {
-								firebase.auth().signInAnonymously();
-							}}
-						>
-							Sign In Anonymously
-        </button>
-						<button
-							onClick={() => {
-								firebase.auth().signOut();
-							}}
-						>
-							Sign Out
-        </button>
+						<button onClick={() => { firebase.auth().signInAnonymously(); }}>
+							Sign In Anonymously</button>
+						<button onClick={() => { firebase.auth().signOut(); }}>
+							Sign Out</button>
 						<FirebaseAuthConsumer>
-							{({ isSignedIn, user, providerId }) => {
-								return (
-									<pre style={{ height: 300, overflow: "auto" }}>
-										{JSON.stringify({ isSignedIn, user, providerId }, null, 2)}
-									</pre>
-								);
+							{({ isSignedIn, firebase }) => {
+								if (isSignedIn === true) {
+									return (
+										<div></div>
+									);
+								} else {
+									return (
+										<div></div>
+									);
+								}
 							}}
 						</FirebaseAuthConsumer>
-						<div>
-							<IfFirebaseAuthed>
-								{() => {
-									return <div>You are authenticated</div>;
-								}}
-							</IfFirebaseAuthed>
-							<IfFirebaseAuthedAnd
-								filter={({ providerId }) => providerId !== "anonymous"}
-							>
-								{({ providerId }) => {
-									return <div>You are authenticated with {providerId}</div>;
-								}}
-							</IfFirebaseAuthedAnd>
-						</div>
 					</div>
 				</FirebaseAuthProvider>
 			</Modal>

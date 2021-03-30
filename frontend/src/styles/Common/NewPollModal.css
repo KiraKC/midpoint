@@ -139,7 +139,7 @@
 
 .poll-modal-wrapper {
 	height: max-content;
-	max-height: 700px;
+	max-height: 800px;
 	width: 100%;
 	padding-right: 20px;
 	overflow-y: auto;

@@ -19,20 +19,6 @@ function App() {
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
 	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
 
-	var user = firebase.auth().currentUser;
-	var name, email, photoUrl, uid, emailVerified;
-	
-	if (user != null) {
-	  name = user.displayName;
-	  email = user.email;
-	  photoUrl = user.photoURL;
-	  emailVerified = user.emailVerified;
-	  uid = user.uid;  // The user's ID, unique to the Firebase project. Do NOT use
-					   // this value to authenticate with your backend server, if
-					   // you have one. Use User.getToken() instead.
-					   console.log(uid)
-	}
-
 	return (
 		<>
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
@@ -40,15 +26,6 @@ function App() {
 
 			<BrowserRouter>
 				<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
-					<FirebaseAuthConsumer>
-						{({ isSignedIn, user, providerId }) => {
-							return (
-								<pre style={{ height: 300, overflow: "auto" }}>
-									{JSON.stringify({ isSignedIn, user, providerId }, null, 2)}
-								</pre>
-							);
-						}}
-					</FirebaseAuthConsumer>
 					<div id="website-wrapper">
 						<Header setIsPollModalOpen={setIsPollModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} />
 						<Routes>

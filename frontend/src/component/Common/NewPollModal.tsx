@@ -29,7 +29,7 @@ const customStyles = {
 		width: 'min(650px, 85vw)',
 		height: 'max-content',
 		transform: 'translate(-50%, -50%)',
-		borderRadius: '40px',
+		borderRadius: '30px',
 		paddingTop: '30px',
 		paddingBottom: '30px',
 		paddingLeft: '30px',
@@ -156,6 +156,9 @@ function NewPollModal(props: INewPollModal) {
 			let tempPollEmojiArray = pollEmojiArray;
 			tempPollEmojiArray.push('star-struck');
 			setPollEmojiArray([...tempPollEmojiArray])
+			let tempOptionHint = optionHint;
+			tempOptionHint.push('ANSWER');
+			setOptionHint([...tempOptionHint])
 		} else {
 			// TODO: error message somewhere
 		}
@@ -173,6 +176,9 @@ function NewPollModal(props: INewPollModal) {
 			let tempPollEmojiArray = pollEmojiArray;
 			tempPollEmojiArray.pop();
 			setPollEmojiArray([...tempPollEmojiArray])
+			let tempOptionHint = optionHint;
+			tempOptionHint.pop();
+			setOptionHint([...tempOptionHint])
 		} else {
 			// TODO: error message somewhere
 		}
@@ -194,12 +200,12 @@ function NewPollModal(props: INewPollModal) {
 		{ emoji: "newspaper", text: "news", highlightColor:"#0B5EA9"},
 		{ emoji: "frog", text: "nature", highlightColor:"#328F1A"},
 
-		{ emoji: "woman_cartwheeling", text: "health & fitness", highlightColor:"#86BBEC"},
+		{ emoji: "carrot", text: "health & fitness", highlightColor:"#86BBEC"},
 		{ emoji: "nail_care", text: "beauty", highlightColor: '#FE7EAC'},
 		{ emoji: "file_folder", text: "entrepreneurship", highlightColor: '#264779'},
 		{ emoji: "video_game", text: "gaming", highlightColor: '#74AEBB'},
 		{ emoji: "clapper", text: "movies", highlightColor: '#EF8E96'},
-		{ emoji: "sunglasses", text: "celebrities", highlightColor: '#FFE817'},
+		{ emoji: "sunglasses", text: "celebrities", highlightColor: '#F7017B'},
 		{ emoji: "microscope", text: "science", highlightColor: '#494848'},
 		{ emoji: "briefcase", text: "business", highlightColor: '#905A00'},
 		{ emoji: "books", text: "books", highlightColor: '#FA8920'},
