@@ -2,8 +2,8 @@ package com.cs32.app.handlers;
 
 import com.cs32.app.CategoryPoints;
 import com.cs32.app.Constants;
-import com.cs32.app.algorithm.PollAndRelevancePair;
-import com.cs32.app.algorithm.PollComparator;
+import com.cs32.app.algorithm.ClickRateComparator;
+import com.cs32.app.algorithm.RelevancyComparator;
 import com.cs32.app.database.Connection;
 import com.cs32.app.poll.Poll;
 import com.google.gson.Gson;
@@ -38,63 +38,64 @@ public class GetSuggestedPollsHandler implements Route {
     Set seenPollIds;
     boolean status;
     List<Poll> pollsToSend = new ArrayList<>();
-    // Parse request
+
     try {
+      // Parse request
       JSONObject JSONReqObject = new JSONObject(request.body());
-//      userId = JSONReqObject.getInt("userId");
       numPollsRequested = JSONReqObject.getInt("numPollsRequested");
+//      userId = JSONReqObject.getInt("userId");
 //      JSONArray JSONSeenPollIds = JSONReqObject.getJSONArray("seenPollIds");
 //      seenPollIds = new HashSet();
 //      for (int i = 0; i< JSONSeenPollIds.length(); i++){
 //        seenPollIds.add(JSONSeenPollIds.getJSONObject(i).getInt("pollid"));
 //      }
 
-      // Query for user's Category Points
-      CategoryPoints userCatPts = new CategoryPoints(new ArrayList<>(Arrays.asList(Constants.ALL_CATEGORIES[0], Constants.ALL_CATEGORIES[1], Constants.ALL_CATEGORIES[2])));
+      // TODO: Query for the user's Category Points
+      CategoryPoints userCatPts = new CategoryPoints(new ArrayList<>(Arrays.asList(Constants.ALL_CATEGORIES[0],
+          Constants.ALL_CATEGORIES[1], Constants.ALL_CATEGORIES[2])));
       System.out.println(userCatPts.getNormPts(Constants.ALL_CATEGORIES[0], userCatPts.getTotalPts()));
-//      while(pollsToSend.size() < numPollsRequested) {
-        // Query for random polls
-        List<Poll> randomPolls = Connection.getRandomPolls(numPollsRequested*Constants.QUERY_RAND_POLLS_NUM_BATCH);
 
-        List<Poll> byClickrate = randomPolls.subList(0, Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+      // Query for random polls
+      List<Poll> randomPolls = Connection.getRandomPolls(
+          numPollsRequested * Constants.QUERY_RAND_POLLS_NUM_BATCH);
 
-        List<Poll> byRelevancy = randomPolls.subList(Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ, 2*Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+      // Get polls with highest relevancy from the first batch
+      List<Poll> batch = randomPolls.subList(0, Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+      Collections.sort(batch, new RelevancyComparator(userCatPts));
+      int numRelevancy = (int) Math.floor(numPollsRequested * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
+      List<Poll> byRelevancy = batch.subList(0, numRelevancy);
 
-        List<Poll> byRandom = randomPolls.subList(2*Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ, 3*Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+      // Get polls with highest click rate from the second batch
+      batch = randomPolls.subList(Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ, 2 * Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ);
+      Collections.sort(batch, new ClickRateComparator());
+      int numClickRate = (int) Math.floor(numPollsRequested * Constants.QUERY_RAND_POLLS_CLICK_RATE_PORTION);
+      List<Poll> byClickRate = batch.subList(0, numClickRate);
 
-        // Sort these polls based on their relevancy score
-        List<PollAndRelevancePair> pollAndRelevancePairList = new ArrayList<>();
-        for (Poll poll : randomPolls) {
-          pollAndRelevancePairList.add(new PollAndRelevancePair(poll, userCatPts));
-        }
+      // Get polls randomly from the third batch
+      int numRandom = numPollsRequested - numRelevancy - numClickRate;
+      List<Poll> byRandom = randomPolls.subList(2 * Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ,
+          2 * Constants.ALGORITHM_RANDOM_POLL_BATCH_SZ + numRandom);
 
+      // Put the three sets of polls together and shuffle them
+      pollsToSend.addAll(byRelevancy);
+      pollsToSend.addAll(byClickRate);
+      pollsToSend.addAll(byRandom);
+      Collections.shuffle(pollsToSend);
 
-
-        Collections.sort(pollAndRelevancePairList, new PollComparator(userCatPts));
-
-        for (PollAndRelevancePair p : pollAndRelevancePairList) {
-          System.out.println(p.getPoll().getQuestion());
-          System.out.println(p.getCategoryDisparity());
-        }
-
-//      System.out.println(pollAndRelevancePairList.get(0).getPoll().getQuestion());
-        pollsToSend.add(pollAndRelevancePairList.get(0).getPoll());
-        pollsToSend.add(pollAndRelevancePairList.get(1).getPoll());
-        pollsToSend.add(pollAndRelevancePairList.get(2).getPoll());
-        pollsToSend.add(pollAndRelevancePairList.get(3).getPoll());
-        pollsToSend.add(pollAndRelevancePairList.get(4).getPoll());
-//      }
-
-      // Return the x most relevant polls to the frontend as a JSON
+      // Return the polls to the frontend as a JSON
       variables.put("suggestedPolls", pollsToSend);
-      // TODO: update poll's numRenders
+
+      // Update the polls' num of renders
+      for (Poll poll : pollsToSend) {
+        poll.rendered();
+      }
+
       status = true;
     } catch (JSONException e) {
-      System.err.println("GetSuggestedPollsHandler JSON request not properly formatted");
-      // TODO: send to failure response to frontend
+      System.err.println("ERROR: GetSuggestedPollsHandler JSON request not properly formatted");
+      // TODO: send a failure response to frontend
       status = false;
     }
-
 
     variables.put("status", status);
     return GSON.toJson(variables);
