@@ -6,6 +6,7 @@ import com.google.gson.annotations.Expose;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
+import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -124,7 +125,7 @@ public class Poll {
     Double userTotal = userCatPts.getTotalPts();
     System.out.println("USERCATPTS:" + userTotal);
     Double pollTotal = categoryPoints.getTotalPts();
-    System.out.println("Pollcatpts:" + question + pollTotal);
+    System.out.println("POLLCATPTS:" + question + pollTotal);
     for(String category : Constants.ALL_CATEGORIES) {
       categoryDisparity += Math.abs(userCatPts.getNormPts(category, userTotal) - categoryPoints.getNormPts(category, pollTotal));
     }

@@ -233,7 +233,6 @@ function NewPollModal(props: INewPollModal) {
 							<button className="poll-modal-close" onClick={() => { props.setIsModalOpen(false); cleanUpData() }}>
 								<span className="material-icons">close</span>
 								<div className="poll-modal-close-text">CLOSE</div>
-
 							</button>
 						</div>
 					</div>

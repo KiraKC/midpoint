@@ -36,55 +36,66 @@ const customStyles = {
 function LoginModal(props: INewPollModal) {
 	const firebaseInstance = firebase;
 	return (
-		<div>
-			<Modal
-				isOpen={props.isModalOpen}
-				// onRequestClose={() => props.setIsModalOpen(false)}
-				contentLabel="Example Modal"
-				style={customStyles} >
-
-				<div className="on-the-right">
-					<button className="login-modal-close" onClick={() => props.setIsModalOpen(false)}>CLOSE </button>
-				</div>
-
+		<Modal
+			isOpen={props.isModalOpen}
+			contentLabel="Login Modal"
+			style={customStyles}>
+			<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 				<div className="login-modal-wrapper-grid">
-
 					<div>
 						<div className="login-section-heading">What is <br /> midpoint.fun?</div>
 						<div className="login-modal-description">
 							MidPoint is a platform where you can create custom surveys.
 							<br />The statistics help you learn about the ideas and opinions
 				 			of the wider community.
-				 	</div>
+				 		</div>
 					</div>
-
 					<div>
-					<div className="login-modal-input-module">
-						<div className="login-modal-heading">Sign In</div>
-						<input className="login-modal-user-input" placeholder="hello@midpoint.fun" ></input>
-						<input className="login-modal-user-input" placeholder="enter your secure password"></input>
+						<div className="login-modal-flex-wrapper">
+							<div className="login-modal-heading">Sign In</div>
+							<button className="login-modal-close" onClick={() => { props.setIsModalOpen(false) }}>
+								<span className="material-icons">close</span>
+								<div className="poll-modal-close-text">CLOSE</div>
+							</button>
 						</div>
-
-					<div className="login-details">
-						<a>Forgot Password?</a>
-					<div className="login-buttons-wrapper-flex">
-						<button className="login-modal-submit" onClick={() => { }}>
-							<div className="login-modal-close-text">Sign in with Google</div>
-						</button>
-						<button className="login-modal-submit" onClick={() => { }}>
-							<div className="login-modal-close-text">Sign In</div>
-						</button>
+						<div className="login-modal-info-wrapper">
+							<div className="login-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
+								<input className="login-modal-user-input" type="text"
+									placeholder="hello@midpoint.fun"
+									onChange={(e) => { }}></input>
+								<div className="login-modal-question-desc-question"
+									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+								>EMAIL</div>
+							</div>
+							<div className="login-modal-input-module">
+								<input className="login-modal-user-input" type="text"
+									placeholder="Enter your secure password"
+									onChange={(e) => { }}></input>
+								<div className="login-modal-question-desc-question"
+									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+								>PASSWORD</div>
+							</div>
+							<div className="login-details">
+								<a className="login-modal-fineprint"
+									style={{ marginBottom: '10px', marginTop: '3px' }}>Forgot Password?</a>
+								<div className="login-buttons-wrapper-flex">
+									<div className="login-modal-submit" onClick={() => { }}>
+										<img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+										<div className="login-modal-close-text">Sign In with Google</div>
+									</div>
+									<button className="login-modal-submit" onClick={() => { }}>
+										<span className="material-icons-outlined" style={{ marginRight: '7px' }}>email</span>
+										<div className="login-modal-close-text">Email Sign In</div>
+									</button>
+								</div>
+								<div className="login-modal-fineprint">Don't have an account? <span>Create your account</span></div>
+							</div>
+						</div>
 					</div>
-					<a>Don't have an account? Create your account</a>
-					</div>
-
-					</div>
-
 				</div>
+			</FirebaseAuthProvider>
 
-
-
-				{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+			{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 					<div>
 						<button onClick={() => { firebase.auth().signInAnonymously(); }}>
 							Sign In Anonymously</button>
@@ -107,8 +118,7 @@ function LoginModal(props: INewPollModal) {
 				</FirebaseAuthProvider> */}
 
 
-			</Modal>
-		</div>
+		</Modal >
 	);
 }
 

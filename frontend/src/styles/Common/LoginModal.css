@@ -5,7 +5,8 @@
 
 .login-modal-wrapper-grid {
 	display: grid;
-	grid-template-columns: 0.6fr 1fr;
+	grid-template-columns: 0.5fr 1fr;
+	column-gap: min(30px, 4vw);
 }
 
 .big {
@@ -15,19 +16,15 @@
 .login-modal-heading {
 	font-family: "Inter", sans-serif;
 	font-weight: 700;
-	font-size: 1.9rem;
+	font-size: 1.6rem;
 }
 
 .login-details {
-	margin-left: 60px;
-
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: column;
-	margin-left: 1rem;
 	align-items: flex-end;
 	row-gap: 0.5rem;
-	font-size: 0.8rem;
 }
 
 .login-buttons-wrapper-flex {
@@ -45,20 +42,21 @@
 	align-items: center;
 	background-color: transparent;
 	outline: none;
-	border-radius: 15px;
+	border-radius: 10px;
 	margin-left: 10px;
 	border: none;
-	padding-left: 15px;
-	padding-right: 15px;
-	padding-top: 10;
-	padding-bottom: 10;
+	padding-left: 8px;
+	padding-right: 11px;
+	padding-top: 5px;
+	padding-bottom: 5px;
 }
 
-.on-the-right {
+.login-modal-flex-wrapper {
 	display: flex;
-	justify-content: flex-end;
+	justify-content:space-between;
 	align-items: flex-end;
 }
+
 .login-modal-submit {
 	font-family: "Inter", sans-serif;
 	font-weight: 700;
@@ -72,6 +70,7 @@
 	outline: none;
 	border-radius: 10px;
 	margin-left: 0.6rem;
+	cursor: pointer;
 }
 
 .login-modal-submit:hover {
@@ -106,21 +105,40 @@
 
 .login-modal-description {
 	font-family: "Inter", sans-serif;
-	font-size: 0.9rem;
-	margin-top: 5px;
+	font-size: 1rem;
+	margin-top: 10px;
+}
+
+.login-modal-input-module {
+	position: relative;
+	width: 100%;
 }
 
 .login-modal-user-input {
-	width: min(88%, 600px);
+	width: 100%;
 	height: 30px;
 	border: none;
 	border-bottom: 3px solid black;
 	font-family: "Inter", sans-serif;
 	color: black;
 	outline: none;
-	font-size: 0.8rem;
-	left: 60px;
+	font-size: 1.2rem;
 	background-color: rgba(255, 255, 255, 0);
+	margin-top: 10px;
+}
+
+.login-modal-question-desc-question {
+	font-family: "Inter", sans-serif;
+	font-weight: 800;
+	font-size: 0.8rem;
+	margin-top: 5px;
+	position: absolute;
+	top: 45px;
+	left: 0px;
+}
+
+.login-modal-info-wrapper {
+	width: 95%;
 }
 
 ::placeholder {
@@ -134,11 +152,6 @@
 
 ::-ms-input-placeholder {
 	color: black;
-}
-
-.login-modal-input-module {
-	display: block;
-	margin-left: 1rem;
 }
 
 .display-flex {
@@ -170,8 +183,8 @@
 .login-section-heading {
 	font-family: "Inter", sans-serif;
 	font-weight: 650;
-	margin-top: 20px;
-	font-size: 1.3rem;
+	margin-top: 5px;
+	font-size: 1.2rem;
 }
 
 .login-modal-wrapper {
@@ -180,4 +193,17 @@
 	width: 100%;
 	padding-right: 20px;
 	overflow-y: auto;
+}
+
+.login-modal-fineprint {
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+/* Google Login */
+.google-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 7px;
 }

@@ -50,11 +50,8 @@
   </component>
   <component name="RunManager" selected="Application.App">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-<<<<<<< Updated upstream
-=======
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
->>>>>>> Stashed changes
       <option name="MAIN_CLASS_NAME" value="com.cs32.app.App" />
       <module name="peek" />
       <option name="VM_PARAMETERS" value="-Dmongodb.uri=&quot;mongodb+srv://xchai1:87581155Ab!!@peekproject.pqvjm.mongodb.net/main?retryWrites=true&amp;w=majority&quot;" />
@@ -147,7 +144,7 @@
         <line-breakpoint enabled="true" type="java-method">
           <url>file://$PROJECT_DIR$/peek_backend/src/main/java/com/cs32/app/database/Connection.java</url>
           <line>18</line>
-          <properties class="com.cs32.app.database.Connection" method="&lt;init&gt;">
+          <properties class="com.cs32.app.database.Connection">
             <option name="EMULATED" value="true" />
           </properties>
           <option name="timeStamp" value="1" />
