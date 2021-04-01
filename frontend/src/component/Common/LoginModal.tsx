@@ -40,12 +40,9 @@ function LoginModal(props: INewPollModal) {
 			<Modal
 				isOpen={props.isModalOpen}
 				// onRequestClose={() => props.setIsModalOpen(false)}
-				contentLabel="Example Modal"
-				style={customStyles} >
+				contentLabel="Login Modal"
+				style={customStyles}>
 
-				<div className="on-the-right">
-					<button className="login-modal-close" onClick={() => props.setIsModalOpen(false)}>CLOSE </button>
-				</div>
 
 				<div className="login-modal-wrapper-grid">
 
@@ -59,25 +56,45 @@ function LoginModal(props: INewPollModal) {
 					</div>
 
 					<div>
-					<div className="login-modal-input-module">
-						<div className="login-modal-heading">Sign In</div>
-						<input className="login-modal-user-input" placeholder="hello@midpoint.fun" ></input>
-						<input className="login-modal-user-input" placeholder="enter your secure password"></input>
+
+						<div className="login-modal-flex-wrapper">
+							<div className="login-modal-heading">Sign In</div>
+							<button className="login-modal-close" onClick={() => { props.setIsModalOpen(false) }}>
+								<span className="material-icons">close</span>
+								<div className="poll-modal-close-text">CLOSE</div>
+							</button>
 						</div>
+						<div className="login-modal-info-wrapper">
 
-					<div className="login-details">
-						<a>Forgot Password?</a>
-					<div className="login-buttons-wrapper-flex">
-						<button className="login-modal-submit" onClick={() => { }}>
-							<div className="login-modal-close-text">Sign in with Google</div>
-						</button>
-						<button className="login-modal-submit" onClick={() => { }}>
-							<div className="login-modal-close-text">Sign In</div>
-						</button>
-					</div>
-					<a>Don't have an account? Create your account</a>
-					</div>
-
+							<div className="login-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
+								<input className="login-modal-user-input" type="text"
+									placeholder="hello@midpoint.fun"
+									onChange={(e) => { }}></input>
+								<div className="login-modal-question-desc-question"
+									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+								>EMAIL</div>
+							</div>
+							<div className="login-modal-input-module">
+								<input className="login-modal-user-input" type="text"
+									placeholder="Enter your secure password"
+									onChange={(e) => { }}></input>
+								<div className="login-modal-question-desc-question"
+									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+								>PASSWORD</div>
+							</div>
+							<div className="login-details">
+								<a>Forgot Password?</a>
+								<div className="login-buttons-wrapper-flex">
+									<button className="login-modal-submit" onClick={() => { }}>
+										<div className="login-modal-close-text">Sign in with Google</div>
+									</button>
+									<button className="login-modal-submit" onClick={() => { }}>
+										<div className="login-modal-close-text">Sign In</div>
+									</button>
+								</div>
+								<a>Don't have an account? Create your account</a>
+							</div>
+						</div>
 					</div>
 
 				</div>
