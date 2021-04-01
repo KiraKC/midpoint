@@ -155,7 +155,8 @@ function SignUpModal(props: INewPollModal) {
 				</div>
 
 
-				<div className="signup-details">
+				<div className="signup-details login-modal-fineprint">
+					
 					<a>Already have an account? Sign in.</a>
 				</div>
 
