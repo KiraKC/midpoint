@@ -7,12 +7,14 @@
 	display: grid;
 	grid-template-columns: 0.5fr 1fr;
 	column-gap: min(30px, 4vw);
+
 }
 
 .signup-modal-wrapper-grid {
 	display: grid;
 	grid-template-columns: 1fr 1fr;
-	column-gap: min(30px, 4vw);
+	column-gap: min(30px, 4vw);	
+	align-items: auto;
 }
 
 .big {

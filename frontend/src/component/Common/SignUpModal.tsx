@@ -104,7 +104,7 @@ function SignUpModal(props: INewPollModal) {
 				 	</div>
 				<div className="signup-modal-wrapper-grid">
 
-					<div>
+					<div style={{ marginTop: '20px', marginBottom: '15px' }}>
 						<div className="login-section-heading">Required</div>
 						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
 							<input className="login-modal-user-input" type="text"
@@ -132,13 +132,10 @@ function SignUpModal(props: INewPollModal) {
 						</div>
 					</div>
 
-					<div>
-						<div className="login-modal-info-wrapper">
+					<div style={{ marginTop: '20px', marginBottom: '15px' }}>
 							<div className="login-section-heading">Optional</div>
 							stuff goes here.
 
-
-						</div>
 					</div>
 
 				</div>
