@@ -83,16 +83,22 @@ function LoginModal(props: INewPollModal) {
 								>PASSWORD</div>
 							</div>
 							<div className="login-details">
-								<a>Forgot Password?</a>
+								<a className="login-modal-fineprint"
+									style={{ marginBottom: '10px', marginTop: '3px' }}>Forgot Password?</a>
 								<div className="login-buttons-wrapper-flex">
+
+
+									<div className="login-modal-submit" onClick={() => { }}>
+										<img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
+										<div className="login-modal-close-text">Sign In with Google</div>
+
+									</div>
 									<button className="login-modal-submit" onClick={() => { }}>
-										<div className="login-modal-close-text">Sign in with Google</div>
-									</button>
-									<button className="login-modal-submit" onClick={() => { }}>
-										<div className="login-modal-close-text">Sign In</div>
+										<span className="material-icons-outlined" style={{ marginRight: '7px' }}>email</span>
+										<div className="login-modal-close-text">Email Sign In</div>
 									</button>
 								</div>
-								<a>Don't have an account? Create your account</a>
+								<div className="login-modal-fineprint">Don't have an account? <span>Create your account</span></div>
 							</div>
 						</div>
 					</div>

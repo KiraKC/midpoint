@@ -20,14 +20,11 @@
 }
 
 .login-details {
-	margin-left: 60px;
 	margin-top: 1rem;
 	display: flex;
 	flex-direction: column;
-	margin-left: 1rem;
 	align-items: flex-end;
 	row-gap: 0.5rem;
-	font-size: 0.8rem;
 }
 
 .login-buttons-wrapper-flex {
@@ -73,6 +70,7 @@
 	outline: none;
 	border-radius: 10px;
 	margin-left: 0.6rem;
+	cursor: pointer;
 }
 
 .login-modal-submit:hover {
@@ -107,8 +105,8 @@
 
 .login-modal-description {
 	font-family: "Inter", sans-serif;
-	font-size: 0.9rem;
-	margin-top: 5px;
+	font-size: 1rem;
+	margin-top: 10px;
 }
 
 .login-modal-input-module {
@@ -185,8 +183,8 @@
 .login-section-heading {
 	font-family: "Inter", sans-serif;
 	font-weight: 650;
-	margin-top: 20px;
-	font-size: 1.3rem;
+	margin-top: 5px;
+	font-size: 1.2rem;
 }
 
 .login-modal-wrapper {
@@ -195,4 +193,17 @@
 	width: 100%;
 	padding-right: 20px;
 	overflow-y: auto;
+}
+
+.login-modal-fineprint {
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+	font-weight: 500;
+}
+
+/* Google Login */
+.google-icon {
+	width: 20px;
+	height: 20px;
+	margin-right: 7px;
 }
