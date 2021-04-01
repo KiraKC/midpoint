@@ -16,6 +16,7 @@ import {
 	FirebaseAuthConsumer
 } from "@react-firebase/auth";
 import SignUpModal from './component/Common/SignUpModal';
+import GameStart from './component/Game/GameStart';
 
 function App() {
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
@@ -35,7 +36,7 @@ function App() {
 						<Routes>
 							<Route element={<Navigate to="home" />} />
 							<Route path="/home" element={<MasonryWrapper />} />
-							<Route path="/game" element={<MasonryWrapper />} />
+							<Route path="/game" element={<GameStart />} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>
