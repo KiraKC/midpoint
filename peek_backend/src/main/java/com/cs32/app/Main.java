@@ -3,6 +3,7 @@ package com.cs32.app;
 import com.cs32.app.database.Connection;
 import com.cs32.app.handlers.AddPollHandler;
 import com.cs32.app.handlers.AddUserHandler;
+import com.cs32.app.handlers.GetStatsHandler;
 import com.cs32.app.handlers.GetSuggestedPollsHandler;
 import spark.Spark;
 
@@ -45,5 +46,6 @@ public class Main {
     Spark.get("/get-suggested-polls", new GetSuggestedPollsHandler());
     Spark.post("/user/new", new AddUserHandler());
     Spark.post("/poll/new", new AddPollHandler());
+    Spark.get("/stats", new GetStatsHandler());
   }
 }

@@ -2,6 +2,7 @@ package com.cs32.app.database;
 
 import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
+import com.cs32.app.poll.PollResponse;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
@@ -79,4 +80,30 @@ public class Connection {
     }
     return (new Poll(cursor.next()));
   }
+
+
+  public static List<PollResponse> getResponses(String pollId) {
+    BasicDBObject query = new BasicDBObject();
+    query.put("pollId", pollId);
+    MongoCursor<Document> cursor = pollCollection.find(query).iterator();
+    List<PollResponse> listOfResponses = new ArrayList<>();
+    while(cursor.hasNext()) {
+      listOfResponses.add(new PollResponse(cursor.next()));
+    }
+    return listOfResponses;
+  }
+
+
+  public static boolean addPollResponseToDB(PollResponse pollResponse) {
+    try {
+      pollCollection.insertOne(pollResponse.toBSON());
+      System.out.println("adding com.cs32.app.pollResponse to db was SUCCESSFUL");
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("adding com.cs32.app.pollResponse to db failed");
+      return false;
+    }
+    return true;
+  }
+
 }

@@ -9,6 +9,7 @@ import org.bson.types.ObjectId;
 import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Poll {
   @Expose
@@ -21,7 +22,6 @@ public class Poll {
   private List<AnswerOption> answerOptions;
   @Expose
   private CategoryPoints categoryPoints;
-  private List<String> responseIds;
   private int numRenders;
   private int numClicks;
 
@@ -31,23 +31,23 @@ public class Poll {
     this.emoji = emoji;
     this.answerOptions = answerOptions;
     this.categoryPoints = categoryPoints;
-    this.responseIds = new ArrayList<>();
     this.numRenders = 0;
     this.numClicks = 0;
   }
 
-  public Poll(String id, String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, List<String> responseIds) {
+  public Poll(String id, String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, int numRenders, int numClicks) {
     this.id = id;
     this.question = question;
     this.emoji = emoji;
     this.answerOptions = answerOptions;
     this.categoryPoints = categoryPoints;
-    this.responseIds = responseIds;
     this.numRenders = numRenders;
     this.numClicks = numClicks;
   }
 
   public Poll(Document mongoPoll) {
+    id = mongoPoll.getString("_id");
+
     // Get question
     question = mongoPoll.getString("question");
 
@@ -58,7 +58,7 @@ public class Poll {
     answerOptions = new ArrayList<>();
     List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
     for (Document doc : mongoAnswerOptions) {
-      answerOptions.add(new AnswerOption(doc.getString("value"), doc.getString("emoji")));
+      answerOptions.add(new AnswerOption(doc.getString("answerOptionId"), doc.getString("value"), doc.getString("emoji")));
     }
 
     // Get category points
@@ -67,9 +67,6 @@ public class Poll {
     for (Document doc : mongoCatPts) {
       categoryPoints.updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
     }
-
-    // Get responseIds
-    responseIds = (ArrayList<String>) mongoPoll.get("responseIds");
 
     // Get numRenders
     numRenders = mongoPoll.getInteger("numRenders");
@@ -94,10 +91,6 @@ public class Poll {
 
   public CategoryPoints getCatPts() {
     return categoryPoints;
-  }
-
-  public List<String> getResponseIds() {
-    return responseIds;
   }
 
   public int getNumRenders() {
@@ -152,4 +145,31 @@ public class Poll {
   public void clicked() {
     numClicks += 1;
   }
+
+  public Document toBSON() {
+    List<Document> mongoAnswers = new ArrayList<>();
+    for (AnswerOption answerOption : answerOptions) {
+      Document pollOptions = new Document("answerOptionId", answerOption.getId())
+            .append("emoji", answerOption.getEmoji())
+            .append("value", answerOption.getValue());
+      mongoAnswers.add(pollOptions);
+    }
+
+    List<Document> mongoCatPts = new ArrayList<>();
+    for (Map.Entry<String,Double> entry : categoryPoints.getMap().entrySet()) {
+      mongoCatPts.add(new Document("categoryName", entry.getKey())
+            .append("points", entry.getValue()));
+    }
+
+    // preparing main poll BSON object
+    Document mongoPoll = new Document("_id", id);
+    mongoPoll.append("question", question)
+          .append("emoji", emoji)
+          .append("answerOptions", mongoAnswers)
+          .append("catPts", mongoCatPts)
+          .append("numClicks", numClicks)
+          .append("numRenders", numRenders);
+    return mongoPoll;
+  }
+
 }
