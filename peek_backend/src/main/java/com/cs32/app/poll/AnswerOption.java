@@ -18,6 +18,12 @@ public class AnswerOption {
     this.emoji = emoji;
   }
 
+  public AnswerOption(String answerOptionId, String value, String emoji) {
+    this.id = answerOptionId;
+    this.value = value;
+    this.emoji = emoji;
+  }
+
   public String getValue() {
     return value;
   }

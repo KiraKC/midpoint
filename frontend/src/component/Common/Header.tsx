@@ -8,7 +8,9 @@ import { isLoggedIn } from '../../firebase/AuthMethods'
 
 interface IHeaderProps {
 	setIsPollModalOpen: any,
-	setIsLoginModalOpen: any
+	setIsLoginModalOpen: any,
+	setIsSignupModalOpen: any,
+
 }
 
 function Header(props: IHeaderProps) {
@@ -36,6 +38,8 @@ function Header(props: IHeaderProps) {
 			<div style={{ position: 'relative' }}>
 				<button className="nav-link" onClick={() => props.setIsLoginModalOpen(true)}>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
 				<button className="nav-link" onClick={() => props.setIsPollModalOpen(true)}>New Poll</button>
+				<button className="nav-link" onClick={() => props.setIsSignupModalOpen(true)}>Sign Up</button>
+
 			</div>
 		</div>
 	);

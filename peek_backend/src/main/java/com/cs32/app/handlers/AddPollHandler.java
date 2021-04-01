@@ -1,7 +1,6 @@
 package com.cs32.app.handlers;
 
 import com.cs32.app.CategoryPoints;
-import org.bson.Document;
 import com.cs32.app.poll.AnswerOption;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -19,8 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cs32.app.database.Connection.pollCollection;
-
-//import static com.cs32.app.database.Connection.addPoll;
 
 public class AddPollHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -62,16 +59,13 @@ public class AddPollHandler implements Route {
       for (int i = 0; i < jsonTaggedCategories.length(); i++) {
         taggedCategories.add(jsonTaggedCategories.getString(i));
       }
-      System.out.println (taggedCategories);
+      System.out.println(taggedCategories);
       CategoryPoints newCategoryPoints = new CategoryPoints(taggedCategories);
 
       Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints);
 
-      boolean databaseResponse = this.addToDatabase(newPoll);
-
-
       System.out.println(newPoll);
-      status = databaseResponse;
+      status = this.addPollToDB(newPoll);
       variables.put("newPoll", newPoll);
     } catch (JSONException e) {
       e.printStackTrace();
@@ -82,35 +76,9 @@ public class AddPollHandler implements Route {
     return GSON.toJson(variables);
   }
 
-  private boolean addToDatabase(Poll poll) {
-    // preparing answer options array
-    List<AnswerOption> answerOptions = poll.getAnswerOptions();
-    List<Document> mongoAnswers = new ArrayList<>();
-    for (AnswerOption answerOption : answerOptions) {
-      Document pollOptions = new Document("optionId", answerOption.getId().toString())
-          .append("emoji", answerOption.getEmoji())
-          .append("value", answerOption.getValue());
-      mongoAnswers.add(pollOptions);
-    }
-
-    Map<String, Double> catPtsMap = poll.getCatPts().getMap();
-    List<Document> mongoCatPts = new ArrayList<>();
-    for (Map.Entry<String,Double> entry : catPtsMap.entrySet()) {
-      mongoCatPts.add(new Document("categoryName", entry.getKey())
-            .append("points", entry.getValue()));
-    }
-
-    // preparing main poll BSON object
-    Document mongoPoll = new Document("_id", poll.getId().toString());
-    mongoPoll.append("question", poll.getQuestion())
-          .append("emoji", poll.getEmoji())
-          .append("answerOptions", mongoAnswers)
-          .append("catPts", mongoCatPts)
-          .append("responseIds", poll.getResponseIds())
-          .append("numClicks", poll.getNumClicks())
-          .append("numRenders", poll.getNumRenders());
+  private boolean addPollToDB(Poll poll) {
     try {
-      pollCollection.insertOne(mongoPoll);
+      pollCollection.insertOne(poll.toBSON());
       System.out.println("adding com.cs32.app.poll to db was SUCCESSFUL");
     } catch (Exception e) {
       e.printStackTrace();
