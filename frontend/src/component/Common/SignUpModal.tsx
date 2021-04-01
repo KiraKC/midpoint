@@ -14,7 +14,6 @@ interface INewPollModal {
 	setIsModalOpen: any
 }
 
-
 const customStyles = {
 	content: {
 		top: '50%',
