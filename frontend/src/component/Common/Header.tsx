@@ -4,13 +4,12 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router";
 import firebaseConfig from "../../firebase/FirebaseIndex";
 import '../../styles/Common/Header.css'
-import { isLoggedIn } from '../../firebase/AuthMethods'
+import { signOut } from '../../firebase/AuthMethods'
 
 interface IHeaderProps {
 	setIsPollModalOpen: any,
 	setIsLoginModalOpen: any,
 	setIsSignupModalOpen: any,
-
 }
 
 function Header(props: IHeaderProps) {
@@ -26,6 +25,16 @@ function Header(props: IHeaderProps) {
 			setIsLoggedIn(false)
 		}
 	});
+
+	function handleSignInStatus() {
+		if (isLoggedIn) {
+			signOut();
+			setIsLoggedIn(false)
+		} else {
+			props.setIsLoginModalOpen(true)
+		}
+	}
+
 	return (
 		<div className="header">
 			<div className="header-background"></div>
@@ -36,10 +45,9 @@ function Header(props: IHeaderProps) {
 
 			</div>
 			<div style={{ position: 'relative' }}>
-				<button className="nav-link" onClick={() => props.setIsLoginModalOpen(true)}>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
+				<button className="nav-link" onClick={() => handleSignInStatus() }>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
 				<button className="nav-link" onClick={() => props.setIsPollModalOpen(true)}>New Poll</button>
 				<button className="nav-link" onClick={() => props.setIsSignupModalOpen(true)}>Sign Up</button>
-
 			</div>
 		</div>
 	);
