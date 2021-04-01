@@ -7,7 +7,6 @@
 	display: grid;
 	grid-template-columns: 0.5fr 1fr;
 	column-gap: min(30px, 4vw);
-
 }
 
 .signup-modal-wrapper-grid {
@@ -28,14 +27,12 @@
 }
 
 .login-details {
-	margin-top: 1rem;
+	margin-top: 45px;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
 	row-gap: 0.5rem;
 }
-
-
 
 .signup-details {
 	margin-top: 1rem;	
@@ -85,6 +82,7 @@
 	padding-right: 11px;
 	padding-top: 5px;
 	padding-bottom: 5px;
+	margin-right: 6px;
 }
 
 .login-modal-flex-wrapper {
@@ -109,8 +107,6 @@
 	cursor: pointer;
 }
 
-
-
 .login-modal-submit:hover {
 	background-color: black;
 	color: white;
@@ -121,24 +117,15 @@
 	color: white;
 }
 
-.login-modal-question-desc-emoji {
+.login-modal-forgot-password {
 	font-family: "Inter", sans-serif;
 	font-weight: 800;
-	font-size: 0.7rem;
+	font-size: 0.8rem;
 	margin-top: 5px;
 	position: absolute;
-	top: 36px;
-	left: 0;
-}
-
-.login-modal-question-desc-question {
-	font-family: "Inter", sans-serif;
-	font-weight: 800;
-	font-size: 0.7rem;
-	margin-top: 5px;
-	position: absolute;
-	top: 36px;
-	left: 60px;
+	top: 45px;
+	right: 0;
+	cursor: pointer;
 }
 
 .login-modal-description {
@@ -259,7 +246,7 @@
 .login-modal-fineprint {
 	font-family: "Inter", sans-serif;
 	font-size: 1rem;
-	font-weight: 500;
+	font-weight: 450;
 }
 
 /* Google Login */
