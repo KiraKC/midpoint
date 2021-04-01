@@ -9,6 +9,12 @@
 	column-gap: min(30px, 4vw);
 }
 
+.signup-modal-wrapper-grid {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	column-gap: min(30px, 4vw);
+}
+
 .big {
 	font-size: 5rem;
 }
@@ -25,6 +31,34 @@
 	flex-direction: column;
 	align-items: flex-end;
 	row-gap: 0.5rem;
+}
+
+
+
+.signup-details {
+	margin-top: 1rem;	
+	margin-bottom: 1rem;
+
+	font-size: 0.8rem;
+}
+
+.signup-modal-submit {
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	font-size: 1rem;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	padding: 5px 8px;
+	background-color: transparent;
+	border: 2px solid black;
+	outline: none;
+	border-radius: 10px;
+}
+
+.signup-modal-submit:hover {
+	background-color: black;
+	color: white;
 }
 
 .login-buttons-wrapper-flex {
@@ -73,6 +107,8 @@
 	cursor: pointer;
 }
 
+
+
 .login-modal-submit:hover {
 	background-color: black;
 	color: white;
@@ -109,10 +145,33 @@
 	margin-top: 10px;
 }
 
+.signup-modal-description {
+	font-family: "Inter", sans-serif;
+	font-size: 0.9rem;
+	margin-top: 5px;
+	margin-right: 13rem;
+}
+
 .login-modal-input-module {
 	position: relative;
 	width: 100%;
 }
+
+.signup-modal-input-module {
+	position: relative;
+	width: 100%;
+	margin-top: 5px;
+}
+
+.signup-interests-input-module {
+	position: relative;
+	width: 100%;
+	overflow-y: scroll;
+	height: 8rem;
+
+}
+
+
 
 .login-modal-user-input {
 	width: 100%;
