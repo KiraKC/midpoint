@@ -33,8 +33,31 @@ const customStyles = {
 	}
 };
 
+
 function LoginModal(props: INewPollModal) {
-	const firebaseInstance = firebase;
+
+	function handleGoogleLogin() {
+		var provider = new firebase.auth.GoogleAuthProvider();
+	
+		firebase.auth()
+			.signInWithPopup(provider)
+			.then((result) => {
+				/** @type {firebase.auth.OAuthCredential} */
+				var credential: any = result.credential;
+				// This gives you a Google Access Token. You can use it to access the Google API.
+				var token = credential.accessToken;
+				// The signed-in user info.
+				var user = result.user;
+				console.log(user.uid)
+			})
+			.then(
+				props.setIsModalOpen(false)
+			).catch((error) => {
+				var errorCode = error.code;
+				console.log(errorCode)
+			});
+	}
+
 	return (
 		<Modal
 			isOpen={props.isModalOpen}
@@ -59,7 +82,7 @@ function LoginModal(props: INewPollModal) {
 							</button>
 						</div>
 						<div className="login-modal-info-wrapper">
-							<div className="login-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
+							<div className="login-modal-input-module" style={{ marginBottom: '20px', marginTop: '15px' }}>
 								<input className="login-modal-user-input" type="text"
 									placeholder="hello@midpoint.fun"
 									onChange={(e) => { }}></input>
@@ -79,7 +102,7 @@ function LoginModal(props: INewPollModal) {
 								<a className="login-modal-fineprint"
 									style={{ marginBottom: '10px', marginTop: '3px' }}>Forgot Password?</a>
 								<div className="login-buttons-wrapper-flex">
-									<div className="login-modal-submit" onClick={() => { }}>
+									<div className="login-modal-submit" onClick={() => { handleGoogleLogin() }}>
 										<img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
 										<div className="login-modal-close-text">Sign In with Google</div>
 									</div>
