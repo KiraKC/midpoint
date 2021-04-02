@@ -44,7 +44,7 @@ public class Main {
     });
 
     // Connections class for MongoDB related queries
-    Connection conn = new Connection();
+//    Connection conn = new Connection();
 
     // Authentication using Firebase
     try {
