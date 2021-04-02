@@ -77,6 +77,7 @@ function SignUpModal(props: INewPollModal) {
 	firebase.auth().onAuthStateChanged(function (user) {
 		if (user) {
 			user.getIdToken().then(token => {
+				console.log(user.uid)
 				setUidToken(token)
 			})
 		}
