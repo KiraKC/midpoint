@@ -6,6 +6,7 @@ import firebase from 'firebase';
 import "firebase/auth";
 import firebaseConfig from "../../firebase/FirebaseIndex"
 import '../../styles/Common/LoginModal.css'
+import Spinner from './Spinner';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -40,8 +41,19 @@ function LoginModal(props: INewPollModal) {
 	const [emailDescription, setEmailDescription]: [string, any] = useState('EMAIL');
 	const [passwordDescription, setPasswordDescription]: [string, any] = useState('PASSWORD');
 	const [forgetPasswordDescription, setForgetPasswordDescription]: [string, any] = useState('FORGOT PASSWORD?');
+	const [loading, setLoading]: [boolean, any] = useState(false);
+
+	function cleanUp() {
+		setEmail('');
+		setPassword('');
+		setEmailDescription('EMAIL');
+		setPasswordDescription('PASSWORD');
+		setForgetPasswordDescription('FORGOT PASSWORD?');
+		setLoading(false);
+	}
 
 	function handleGoogleLogin() {
+		setLoading(true);
 		let provider = new firebase.auth.GoogleAuthProvider();
 		firebase.auth()
 			.signInWithPopup(provider)
@@ -53,17 +65,19 @@ function LoginModal(props: INewPollModal) {
 				// The signed-in user info.
 				var user = result.user;
 				console.log(user.uid)
-				setEmailDescription("EMAIL");
-				setPasswordDescription("PASSWORD");
-				props.setIsModalOpen(false)
+				props.setIsModalOpen(false);
+				setLoading(false);
+				cleanUp();
 			})
 			.catch((error) => {
 				var errorCode = error.code;
+				setLoading(false);
 				console.log(errorCode)
 			});
 	}
 
 	function handleEmailLogin() {
+		setLoading(true);
 		setEmailDescription("EMAIL");
 		setPasswordDescription("PASSWORD");
 		firebase.auth().signInWithEmailAndPassword(email, password)
@@ -71,13 +85,16 @@ function LoginModal(props: INewPollModal) {
 				// Signed in
 				let user = userCredential.user;
 				console.log(user.uid)
-				props.setIsModalOpen(false)
 				console.log(userCredential)
 				setEmailDescription("EMAIL");
 				setPasswordDescription("PASSWORD");
+				setLoading(false);
+				props.setIsModalOpen(false);
+				cleanUp();
 			})
 			.catch((error) => {
 				let errorCode = error.code;
+				setLoading(false);
 				if (errorCode === 'auth/too-many-requests') {
 					setPasswordDescription("TOO MANY LOGIN REQUESTS");
 					return;
@@ -123,6 +140,8 @@ function LoginModal(props: INewPollModal) {
 			isOpen={props.isModalOpen}
 			contentLabel="Login Modal"
 			style={customStyles}>
+			{loading ?
+				(<Spinner color="white" type="spin" />) : ''}
 			<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 				<div className="login-modal-wrapper-grid">
 					<div>
@@ -137,9 +156,8 @@ function LoginModal(props: INewPollModal) {
 						<div className="login-modal-flex-wrapper">
 							<div className="login-modal-heading">Sign In</div>
 							<button className="login-modal-close" onClick={() => {
-								props.setIsModalOpen(false)
-								setEmailDescription("EMAIL");
-								setPasswordDescription("PASSWORD");
+								props.setIsModalOpen(false);
+								cleanUp();
 							}}>
 								<span className="material-icons">close</span>
 								<div className="poll-modal-close-text">CLOSE</div>
@@ -181,6 +199,7 @@ function LoginModal(props: INewPollModal) {
 								<span style={{ cursor: 'pointer', textDecoration: 'underline' }}
 										onClick={() => {
 											props.setIsModalOpen(false);
+											cleanUp();
 											props.setIsSignupModalOpen(true)
 										}}>
 										Sign Up</span></div>

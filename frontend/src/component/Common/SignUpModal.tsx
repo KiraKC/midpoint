@@ -12,7 +12,7 @@ import categoryArray from '../../constants/Category';
 import OptionSelector from './OptionSelector';
 import { registerNewUser } from '../../firebase/AuthMethods';
 import axios from 'axios';
-import ReactLoading from 'react-loading';
+import Spinner from './Spinner';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -93,20 +93,25 @@ function SignUpModal(props: INewPollModal) {
 	}
 
 	const handleRegister = () => {
+		setCredentialDescription('ALL FIELDS REQUIRED');
+		setInfoDescription('* INDICATES REQUIRED FIELD');
+		setEmailDescription('EMAIL');
+		setPasswordDescription('PASSWORD');
+		setLoading(true)
 		if (isSubmissionValid()) {
 			firebase.auth().createUserWithEmailAndPassword(email, password)
-				.then(async res => {
-					console.log(res)
+				.then(async (res) => {
+					setLoading(false)
 					let status: boolean = await addUserToMongo();
 					if (status) {
+						cleanUpData()
 						props.setIsModalOpen(false);
 					}
-
 				})
 				.catch(err => {
+					setLoading(false)
 					let errorCode = err.code;
 					console.log(errorCode)
-
 					if (errorCode === 'auth/too-many-requests') {
 						setPasswordDescription("TOO MANY LOGIN REQUESTS");
 						return;
@@ -123,18 +128,20 @@ function SignUpModal(props: INewPollModal) {
 						setPasswordDescription("STRONGER PASSWORD REQUIRED");
 						return;
 					}
+					if (errorCode === 'auth/email-already-in-use') {
+						setEmailDescription("EMAIL ALREADY IN USE");
+						return;
+					}
 				})
+		} else {
+			setLoading(false)
 		}
 	}
-
-	const Example = ({ type, color }) => (
-		<ReactLoading type={type} color={color} height={'50px'} width={'50px'} className="loader" />
-	);
 
 	function calculateAge() {
 		let datetimeBirthday = new Date(birthday);
 		var ageDifMs = Date.now() - datetimeBirthday.getTime();
-		var ageDate = new Date(ageDifMs); // miliseconds from epoch
+		var ageDate = new Date(ageDifMs);
 		return Math.abs(ageDate.getUTCFullYear() - 1970);
 	}
 
@@ -184,7 +191,6 @@ function SignUpModal(props: INewPollModal) {
 					config,
 				)
 					.then(response => {
-						cleanUpData()
 						status = true;
 						setLoading(false);
 					})
@@ -207,10 +213,7 @@ function SignUpModal(props: INewPollModal) {
 				contentLabel="Login Modal"
 				style={customStyles}>
 				{loading ?
-					(<>
-						<div className="loading-overlay"></div>
-						<Example type="spin" color="white" />
-					</>) : ''}
+					(<Spinner color="white" type="spin" />) : ''}
 				<div className="login-modal-wrapper">
 					<div className="login-modal-flex-wrapper">
 						<div className="login-modal-heading">Join MidPoint</div>
@@ -309,6 +312,7 @@ function SignUpModal(props: INewPollModal) {
 						<div>Already have an account?&nbsp;
 						<span style={{ textDecoration: 'underline', cursor: 'pointer' }}
 								onClick={() => {
+									cleanUpData();
 									props.setIsModalOpen(false);
 									props.setIsLoginModalOpen(true);
 								}}>Sign In</span>
