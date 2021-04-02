@@ -9,6 +9,7 @@ import '../../styles/Common/LoginModal.css'
 import CategoryButton from './CategoryButton';
 import OptionPanel from './OptionPanel';
 import categoryArray from '../../constants/Category';
+import OptionSelector from './OptionSelector';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -40,10 +41,6 @@ function SignUpModal(props: INewPollModal) {
 
 	const [categories, setCategories]: [string[], any] = useState([])
 
-	
-
-
-	const firebaseInstance = firebase;
 	return (
 		<div>
 			<Modal
@@ -51,28 +48,23 @@ function SignUpModal(props: INewPollModal) {
 				// onRequestClose={() => props.setIsModalOpen(false)}
 				contentLabel="Login Modal"
 				style={customStyles}>
-
-
-
 				<div className="login-modal-flex-wrapper">
-					<div className="login-modal-heading">Join Midpoint</div>
+					<div className="login-modal-heading">Join MidPoint</div>
 					<button className="login-modal-close" onClick={() => { props.setIsModalOpen(false) }}>
-
 						<span className="material-icons">close</span>
 						<div className="poll-modal-close-text">CLOSE</div>
 					</button>
 				</div>
 				<div className="signup-modal-description">
 					We are thrilled to have you here.
-					MidPoint is an ananomized community for idea sharing.
+					MidPoint is an anonymized community for idea sharing.
 					At MidPoint, you will have the opportunity to see how the world thinks.
 					Now, we are collecting some information to create your account.
 				 	</div>
 				<div className="signup-modal-wrapper-grid">
-
-					<div style={{ marginTop: '20px', marginBottom: '15px' }}>
-						<div className="login-section-heading">Required</div>
-						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
+					<div>
+						<div className="login-section-heading">Login Info</div>
+						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '0' }}>
 							<input className="login-modal-user-input" type="text"
 								placeholder="hello@midpoint.fun"
 								onChange={(e) => { }}></input>
@@ -90,7 +82,7 @@ function SignUpModal(props: INewPollModal) {
 						</div>
 						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
 							<input className="login-modal-user-input" type="text"
-								placeholder="flyindragon"
+								placeholder="happyelephant"
 								onChange={(e) => { }}></input>
 							<div className="login-modal-question-desc-question"
 								style={{ color: (1 === 1 ? 'black' : '#F24443') }}
@@ -98,38 +90,72 @@ function SignUpModal(props: INewPollModal) {
 						</div>
 					</div>
 
-					<div style={{ marginTop: '20px', marginBottom: '15px' }}>
-							<div className="login-section-heading">Optional</div>
-							stuff goes here.
+					<div>
+						<div className="login-section-heading">Personal Profile</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Date of Birth</div>
+							<input type="date" />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Gender</div>
+							<OptionSelector optionArray={['Male', 'Female', 'Others']} />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Marital Status</div>
+							<OptionSelector optionArray={['Undisclosed', 'Married', 'Unmarried']} />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Education</div>
+							<OptionSelector optionArray={['Primary School', 'Middle School', 'High School', 'College', 'Masters', 'PhD']} />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Political Leaning</div>
+							<input type="range" list="tickmarks" />
 
+								<datalist id="tickmarks">
+									<option value="0" label="0%"></option>
+									<option value="10"></option>
+									<option value="20"></option>
+									<option value="30"></option>
+									<option value="40"></option>
+									<option value="50" label="50%"></option>
+									<option value="60"></option>
+									<option value="70"></option>
+									<option value="80"></option>
+									<option value="90"></option>
+									<option value="100" label="100%"></option>
+								</datalist>
+						</div>
+							<div className="login-option-flex-wrapper">
+								<div className="login-option-title">Occupation</div>
+								<OptionSelector optionArray={['hello']} />
+							</div>
+						</div>
 					</div>
 
-				</div>
+					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="login-section-heading">Choose at least 3 interests</div>
+					<div className="signup-interests-input-module display-flex">
 
-				<div style={{ marginTop: '20px', marginBottom: '15px' }} className="login-section-heading">Interests (Minimum: 3)</div>
-				<div className="signup-interests-input-module display-flex">
-
-					{categoryArray.map((e, i) => (
-						<CategoryButton
-							emoji={e.emoji}
-							text={e.text}
-							highlightColor={e.highlightColor}
-							categories={categories}
-							setCategories={setCategories}
-						/>
-					))}
-				</div>
+						{categoryArray.map((e, i) => (
+							<CategoryButton
+								emoji={e.emoji}
+								text={e.text}
+								highlightColor={e.highlightColor}
+								categories={categories}
+								setCategories={setCategories}
+							/>
+						))}
+					</div>
 
 
-				<div className="signup-details login-modal-fineprint">
-					
-					<a>Already have an account? Sign in.</a>
-				</div>
+					<div className="signup-details login-modal-fineprint">
+						<a>Already have an account? Sign in.</a>
+					</div>
 
-				<button className="signup-modal-submit" onClick={() => { }}>
-					<div className="login-modal-close-text">Register</div>
-				</button>
-				{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+					<button className="signup-modal-submit" onClick={() => { }}>
+						<div className="login-modal-close-text">Register</div>
+					</button>
+					{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 					<div>
 						<button onClick={() => { firebase.auth().signInAnonymously(); }}>
 							Sign In Anonymously</button>

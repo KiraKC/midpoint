@@ -14,6 +14,8 @@
 	grid-template-columns: 1fr 1fr;
 	column-gap: min(30px, 4vw);	
 	align-items: auto;
+	margin-top: 20px;
+	margin-bottom: 15px;
 }
 
 .big {
@@ -136,9 +138,9 @@
 
 .signup-modal-description {
 	font-family: "Inter", sans-serif;
-	font-size: 0.9rem;
-	margin-top: 5px;
-	margin-right: 13rem;
+	font-size: 1rem;
+	margin-top: 10px;
+	width: 72%;
 }
 
 .login-modal-input-module {
@@ -254,4 +256,19 @@
 	width: 20px;
 	height: 20px;
 	margin-right: 7px;
+}
+
+.login-option-flex-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 11px;
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+}
+
+.login-option-title {
+	font-family: "Inter", sans-serif;
+	font-size: 1.1rem;
+	font-weight: 400;
 }
