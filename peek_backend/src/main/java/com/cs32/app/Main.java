@@ -1,10 +1,7 @@
 package com.cs32.app;
 
 import com.cs32.app.database.Connection;
-import com.cs32.app.handlers.AddPollHandler;
-import com.cs32.app.handlers.AddUserHandler;
-import com.cs32.app.handlers.GetStatsHandler;
-import com.cs32.app.handlers.GetSuggestedPollsHandler;
+import com.cs32.app.handlers.*;
 import spark.Spark;
 
 public class Main {
@@ -17,7 +14,6 @@ public class Main {
   }
 
   public void run() {
-    Connection conn = new Connection();
     System.out.println("correctly executed");
     this.runSparkServer(DEFAULT_PORT);
   }
@@ -39,13 +35,15 @@ public class Main {
 
       return "OK";
     });
-
+    Connection conn = new Connection();
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
+    // TODO: @Jacqueline: once Connection has been changed to non-static, we need to pass 'conn' into each handler
     Spark.get("/get-suggested-polls", new GetSuggestedPollsHandler());
     Spark.post("/user/new", new AddUserHandler());
     Spark.post("/poll/new", new AddPollHandler());
     Spark.get("/stats", new GetStatsHandler());
+    Spark.post("/anon-answer", new AnonymousAnswerHandler());
   }
 }

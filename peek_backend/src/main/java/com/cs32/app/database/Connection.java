@@ -23,6 +23,9 @@ public class Connection {
   public static MongoCollection<Document> pollCollection;
   public static MongoCollection<Document> responseCollection;
 
+  // TODO: @Jacqueline Change connection from static class to regular non-static class that needs to be instantiated and passed around like a normal class.
+  // this change allows us to have a test and production version of our Connection class. (rmbr to change both instance variables and methods to non-static)
+
   public Connection() {
     String connectionString = System.getProperty("mongodb.uri");
     mongoClient = MongoClients.create(connectionString);
@@ -82,6 +85,7 @@ public class Connection {
   }
 
 
+  // TODO: test this
   public static List<PollResponse> getResponses(String pollId) {
     BasicDBObject query = new BasicDBObject();
     query.put("pollId", pollId);

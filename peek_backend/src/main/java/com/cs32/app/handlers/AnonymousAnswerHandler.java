@@ -40,15 +40,16 @@ public class AnonymousAnswerHandler implements Route {
         }
      */
 
+    // TODO: @Jacqueline check to see if PollResponses are being sent to the database properly (use postman to send http POST req)
     // update database with new response
     JSONObject jsonReqObject = new JSONObject(request.body());
     PollResponse pollResponse = new PollResponse(jsonReqObject);
-    Connection.addPollResponseToDB(pollResponse);
     status = Connection.addPollResponseToDB(pollResponse);
 
-    // TODO: get mini-stats (NOTE: STATUS SHOULD BE UPDATED TO REFLECT MINI-STATS SUCCESS/FAILURE)
+    // TODO: @Jacqueline get mini-stats (NOTE: STATUS SHOULD BE UPDATED TO REFLECT MINI-STATS SUCCESS/FAILURE)
+    // *note, send percentages
 
-
+    // TODO: @Jacqueline send mini-stats to front end and check that ministats are working
     variables.put("status", status);
     return GSON.toJson(variables);
   }
