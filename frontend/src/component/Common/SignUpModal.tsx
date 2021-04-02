@@ -45,6 +45,7 @@ function SignUpModal(props: INewPollModal) {
 	const [categoryDescription, setCategoryDescription]: [string, any] = useState('PLEASE CHOOSE AT LEAST 3 ✓')
 	const [email, setEmail]: [string, any] = useState('');
 	const [password, setPassword]: [string, any] = useState('');
+	const [uidToken, setUidToken]: [string, any] = useState('')
 	const [birthday, setBirthday]: [string, any] = useState('');
 	const [gender, setGender]: [string, any] = useState('');
 	const [maritalStatus, setMaritalStatus]: [string, any] = useState('')
@@ -73,9 +74,17 @@ function SignUpModal(props: INewPollModal) {
 		})
 	}
 
+	firebase.auth().onAuthStateChanged(function (user) {
+		if (user) {
+			user.getIdToken().then(token => {
+				setUidToken(token)
+			})
+		}
+	});
+
 	const addUserToMongo = () => {
 		const toSend = {
-			userIdToken: firebase.auth().currentUser.getIdToken(),
+			userIdToken: uidToken,
 			userMetaData: [
 				{key: 'age', value: '28'}
 			],
