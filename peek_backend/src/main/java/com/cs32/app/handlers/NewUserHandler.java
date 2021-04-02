@@ -1,9 +1,11 @@
 package com.cs32.app.handlers;
 
+import com.cs32.app.User;
+import com.cs32.app.database.Connection;
 import com.google.common.collect.ImmutableMap;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import spark.Request;
@@ -12,9 +14,7 @@ import spark.Route;
 
 import java.util.Map;
 
-import static com.cs32.app.database.Connection.dummyAddQuery;
-
-public class AddUserHandler implements Route {
+public class NewUserHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
   /**
@@ -27,17 +27,21 @@ public class AddUserHandler implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    int userId; String password; boolean status;
+    boolean status;
     // Parse request
     try {
-      JSONObject JSONReqObject = new JSONObject(request.body());
-      userId = JSONReqObject.getInt("userId");
-      password = JSONReqObject.getString("password");
-      dummyAddQuery(password);
-      status = true;
+      JSONObject jsonReqObject = new JSONObject(request.body());
+      User user = new User(jsonReqObject);
+
+      // add user to database
+      status = Connection.addUserToDB(user);
     } catch (JSONException e) {
       e.printStackTrace();
-      System.err.println("JSON request not properly formatted");
+      System.out.println("JSON request not properly formatted");
+      status = false;
+    } catch (FirebaseAuthException e) {
+      e.printStackTrace();
+      System.out.println("Firebase Auth Exception");
       status = false;
     }
     Map<String, Boolean> variables = ImmutableMap.of(

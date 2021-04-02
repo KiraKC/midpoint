@@ -1,5 +1,6 @@
 package com.cs32.app.database;
 
+import com.cs32.app.User;
 import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
@@ -102,6 +103,18 @@ public class Connection {
     try {
       pollCollection.insertOne(pollResponse.toBSON());
       System.out.println("adding com.cs32.app.pollResponse to db was SUCCESSFUL");
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("adding com.cs32.app.pollResponse to db failed");
+      return false;
+    }
+    return true;
+  }
+
+  public static boolean addUserToDB(User user) {
+    try {
+      userCollection.insertOne(user.toBSON());
+      System.out.println("adding com.cs32.app.user to db was SUCCESSFUL");
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("adding com.cs32.app.pollResponse to db failed");
