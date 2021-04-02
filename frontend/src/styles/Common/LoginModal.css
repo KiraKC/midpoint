@@ -11,9 +11,11 @@
 
 .signup-modal-wrapper-grid {
 	display: grid;
-	grid-template-columns: 1fr 1fr;
-	column-gap: min(30px, 4vw);	
+	grid-template-columns: 0.8fr 1fr;
+	column-gap: min(40px, 4vw);
 	align-items: auto;
+	margin-top: 20px;
+	margin-bottom: 15px;
 }
 
 .big {
@@ -35,9 +37,8 @@
 }
 
 .signup-details {
-	margin-top: 1rem;	
-	margin-bottom: 1rem;
-
+	margin-top: 1.2rem;
+	margin-bottom: 10px;
 	font-size: 0.8rem;
 }
 
@@ -65,7 +66,6 @@
 	justify-content: space-between;
 }
 
-
 .login-modal-close {
 	font-family: "Inter", sans-serif;
 	font-weight: 700;
@@ -87,7 +87,7 @@
 
 .login-modal-flex-wrapper {
 	display: flex;
-	justify-content:space-between;
+	justify-content: space-between;
 	align-items: flex-end;
 }
 
@@ -136,9 +136,9 @@
 
 .signup-modal-description {
 	font-family: "Inter", sans-serif;
-	font-size: 0.9rem;
-	margin-top: 5px;
-	margin-right: 13rem;
+	font-size: 1rem;
+	margin-top: 10px;
+	width: 72%;
 }
 
 .login-modal-input-module {
@@ -157,10 +157,7 @@
 	width: 100%;
 	overflow-y: scroll;
 	height: 8rem;
-
 }
-
-
 
 .login-modal-user-input {
 	width: 100%;
@@ -254,4 +251,56 @@
 	width: 20px;
 	height: 20px;
 	margin-right: 7px;
+}
+
+.login-option-flex-wrapper {
+	display: flex;
+	align-items: flex-end;
+	justify-content: space-between;
+	margin-bottom: 9px;
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+	margin-right: 5px;
+}
+
+.login-option-title {
+	font-family: "Inter", sans-serif;
+	font-size: 1.15rem;
+	font-weight: 500;
+}
+
+.option-selector {
+	-webkit-appearance: none;
+	padding: 2px 0px 2px 0px;
+	width: 150px;
+	border: none;
+	border-bottom: 3px solid black;
+	background: transparent;
+	cursor: pointer;
+	font-family: inherit;
+	font-size: 1rem;
+	transition: all 150ms ease;
+	outline: none;
+}
+
+select option[value=""][disabled] {
+	display: none;
+}
+
+.login-option-date-picker {
+	border: none;
+	outline: none;
+	width: 150px;
+	background-color: transparent;
+	font-family: "Inter", sans-serif;
+	font-size: 1rem;
+	border-bottom: 3px solid black;
+}
+
+.register-modal-desc {
+	font-family: "Inter", sans-serif;
+	font-weight: 800;
+	font-size: 0.8rem;
+	margin-top: 5px;
+	margin-bottom: 15px;
 }

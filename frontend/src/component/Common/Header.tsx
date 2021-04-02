@@ -39,17 +39,16 @@ function Header() {
 		<>
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
 			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} setIsSignupModalOpen={setIsSignupModalOpen} />
-			<SignUpModal isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} />
+			<SignUpModal isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} />
 			<div className="header">
 				<div className="header-background"></div>
 				<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
 					<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
 					<div className="nav-text-link" style={{ marginLeft: '45px' }} onClick={() => navigate('answer')}>Answer</div>
 					<div className="nav-text-link" onClick={() => navigate('game')}>Game</div>
-
 				</div>
 				<div style={{ position: 'relative' }}>
-					<button className="nav-link" onClick={() => setIsPollModalOpen(true)}>New Poll</button>
+					<button className="nav-link" onClick={() => {isLoggedIn ? setIsPollModalOpen(true) : setIsLoginModalOpen(true)}}>New Poll</button>
 					<button className="nav-link"
 						onClick={() => handleSignInStatus()}>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
 				</div>

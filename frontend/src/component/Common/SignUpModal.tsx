@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { FirebaseAuthConsumer, FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseAuthedAnd } from '@react-firebase/auth';
@@ -8,10 +8,13 @@ import firebaseConfig from "../../firebase/FirebaseIndex"
 import '../../styles/Common/LoginModal.css'
 import CategoryButton from './CategoryButton';
 import OptionPanel from './OptionPanel';
+import categoryArray from '../../constants/Category';
+import OptionSelector from './OptionSelector';
 
 interface INewPollModal {
 	isModalOpen: boolean,
-	setIsModalOpen: any
+	setIsModalOpen: any,
+	setIsLoginModalOpen: any
 }
 
 const customStyles = {
@@ -25,58 +28,33 @@ const customStyles = {
 		height: 'max-content',
 		transform: 'translate(-50%, -50%)',
 		borderRadius: '30px',
-		border: '3px solid black',
 		paddingTop: '30px',
 		paddingBottom: '30px',
 		paddingLeft: '30px',
 		backgroundColor: 'rgba(255,255,255, 0.6)',
-		backdropFilter: 'blur(20px)'
+		backdropFilter: 'blur(20px)',
+		boxShadow: 'rgb(0 0 0 / 46%) 0px 3px 6px, rgb(255 255 255 / 24%) 0px 3px 12px inset'
 	}
 };
-
 
 function SignUpModal(props: INewPollModal) {
 
 	const [categories, setCategories]: [string[], any] = useState([])
+	const [categoryDescription, setCategoryDescription]: [string, any] = useState('PLEASE CHOOSE AT LEAST 3 ✓')
 
+	useEffect(() => {
+		let arrayLength = categories.length;
+		if (arrayLength === 0) {
+			setCategoryDescription("PLEASE CHOOSE AT LEAST 3");
+		}
+		if (arrayLength > 0 && arrayLength < 3) {
+			setCategoryDescription("PLEASE CHOOSE AT LEAST 3 (" + arrayLength + "/3)");
+		}
+		if (arrayLength >= 3) {
+			setCategoryDescription("YOU'VE SELECTED " + arrayLength + ", CHOOSE MORE IF YOU WANT! ✓");
+		}
+	}, [categories])
 
-	const categoryArray = [
-		{ emoji: "basketball", text: "sports", highlightColor: "#74AEBB" },
-		{ emoji: "mega", text: "politics", highlightColor: "#D83282" },
-		{ emoji: "joy", text: "funny", highlightColor: "#1D5110" },
-		{ emoji: "classical_building", text: "culture", highlightColor: "#2ABC88" },
-		{ emoji: "dancer", text: "entertainment", highlightColor: "#905A00" },
-		{ emoji: "hamburger", text: "food", highlightColor: "#E498BD" },
-		{ emoji: "school_satchel", text: "education", highlightColor: "#F24343" },
-		{ emoji: "thinking_face", text: "serious", highlightColor: '#B4154E' },
-		{ emoji: "cupid", text: "relationship", highlightColor: '#C18FD2' },
-
-		{ emoji: "heart_eyes", text: "cute", highlightColor: "#A391E9" },
-		{ emoji: "house_with_garden", text: "lifestyle", highlightColor: "#1D5110" },
-		{ emoji: "newspaper", text: "news", highlightColor: "#0B5EA9" },
-		{ emoji: "frog", text: "nature", highlightColor: "#328F1A" },
-
-		{ emoji: "carrot", text: "health & fitness", highlightColor: "#86BBEC" },
-		{ emoji: "nail_care", text: "beauty", highlightColor: '#FE7EAC' },
-		{ emoji: "file_folder", text: "entrepreneurship", highlightColor: '#264779' },
-		{ emoji: "video_game", text: "gaming", highlightColor: '#74AEBB' },
-		{ emoji: "clapper", text: "movies", highlightColor: '#EF8E96' },
-		{ emoji: "sunglasses", text: "celebrities", highlightColor: '#F7017B' },
-		{ emoji: "microscope", text: "science", highlightColor: '#494848' },
-		{ emoji: "briefcase", text: "business", highlightColor: '#905A00' },
-		{ emoji: "books", text: "books", highlightColor: '#FA8920' },
-		{ emoji: "art", text: "design", highlightColor: '#A6D5FF' },
-
-		{ emoji: "mechanical_arm", text: "technology", highlightColor: '#FFA8EC' },
-		{ emoji: "womans_hat", text: "fashion", highlightColor: '#FFA61B' },
-		{ emoji: "scroll", text: "history", highlightColor: '#C18FD2' },
-		{ emoji: "musical_note", text: "music", highlightColor: '#B4154E' },
-		{ emoji: "speech_balloon", text: "languages", highlightColor: '#F43030' },
-
-	]
-
-
-	const firebaseInstance = firebase;
 	return (
 		<div>
 			<Modal
@@ -84,28 +62,23 @@ function SignUpModal(props: INewPollModal) {
 				// onRequestClose={() => props.setIsModalOpen(false)}
 				contentLabel="Login Modal"
 				style={customStyles}>
-
-
-
 				<div className="login-modal-flex-wrapper">
-					<div className="login-modal-heading">Join Midpoint</div>
+					<div className="login-modal-heading">Join MidPoint</div>
 					<button className="login-modal-close" onClick={() => { props.setIsModalOpen(false) }}>
-
 						<span className="material-icons">close</span>
 						<div className="poll-modal-close-text">CLOSE</div>
 					</button>
 				</div>
 				<div className="signup-modal-description">
 					We are thrilled to have you here.
-					MidPoint is an ananomized community for idea sharing.
+					MidPoint is an anonymized community for idea sharing.
 					At MidPoint, you will have the opportunity to see how the world thinks.
 					Now, we are collecting some information to create your account.
 				 	</div>
 				<div className="signup-modal-wrapper-grid">
-
-					<div style={{ marginTop: '20px', marginBottom: '15px' }}>
-						<div className="login-section-heading">Required</div>
-						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
+					<div>
+						<div className="login-section-heading">Login Info</div>
+						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '0' }}>
 							<input className="login-modal-user-input" type="text"
 								placeholder="hello@midpoint.fun"
 								onChange={(e) => { }}></input>
@@ -123,7 +96,7 @@ function SignUpModal(props: INewPollModal) {
 						</div>
 						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
 							<input className="login-modal-user-input" type="text"
-								placeholder="flyindragon"
+								placeholder="happyelephant"
 								onChange={(e) => { }}></input>
 							<div className="login-modal-question-desc-question"
 								style={{ color: (1 === 1 ? 'black' : '#F24443') }}
@@ -131,19 +104,39 @@ function SignUpModal(props: INewPollModal) {
 						</div>
 					</div>
 
-					<div style={{ marginTop: '20px', marginBottom: '15px' }}>
-							<div className="login-section-heading">Optional</div>
-							stuff goes here.
-
+					<div>
+						<div className="login-section-heading">Personal Profile</div>
+						<div className="login-option-flex-wrapper" style={{ marginTop: '10px' }}>
+							<div className="login-option-title">Birthday</div>
+							<input type="date" className="login-option-date-picker" />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Gender</div>
+							<OptionSelector optionArray={['Male', 'Female', 'Others']} />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Marital Status</div>
+							<OptionSelector optionArray={['Undisclosed', 'Married', 'Unmarried']} />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Education</div>
+							<OptionSelector optionArray={['Elementary School', 'Middle School', 'High School', 'Bachelor', 'Masters', 'PhD']} />
+						</div>
+						<div className="login-option-flex-wrapper">
+							<div className="login-option-title">Political Leaning</div>
+							<OptionSelector optionArray={['Left Leaning', 'Neutral', 'Right Leaning']} />
+						</div>
 					</div>
-
 				</div>
 
-				<div style={{ marginTop: '20px', marginBottom: '15px' }} className="login-section-heading">Interests (Minimum: 3)</div>
+				<div style={{ marginTop: '20px' }} className="login-section-heading">What topic interests you?</div>
+				<div className="register-modal-desc"
+					style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+				>{categoryDescription}</div>
 				<div className="signup-interests-input-module display-flex">
-
 					{categoryArray.map((e, i) => (
 						<CategoryButton
+							key={i}
 							emoji={e.emoji}
 							text={e.text}
 							highlightColor={e.highlightColor}
@@ -152,41 +145,20 @@ function SignUpModal(props: INewPollModal) {
 						/>
 					))}
 				</div>
-
-
 				<div className="signup-details login-modal-fineprint">
-					
-					<a>Already have an account? Sign in.</a>
+					<div>Already have an account?&nbsp;
+						<span style={{ textDecoration: 'underline', cursor: 'pointer' }}
+							onClick={() => {
+								props.setIsModalOpen(false);
+								props.setIsLoginModalOpen(true);
+						}}>Sign in here</span>
 				</div>
-
-				<button className="signup-modal-submit" onClick={() => { }}>
-					<div className="login-modal-close-text">Register</div>
-				</button>
-				{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
-					<div>
-						<button onClick={() => { firebase.auth().signInAnonymously(); }}>
-							Sign In Anonymously</button>
-						<button onClick={() => { firebase.auth().signOut(); }}>
-							Sign Out</button>
-						<FirebaseAuthConsumer>
-							{({ isSignedIn, firebase }) => {
-								if (isSignedIn === true) {
-									return (
-										<div></div>
-									);
-								} else {
-									return (
-										<div></div>
-									);
-								}
-							}}
-						</FirebaseAuthConsumer>
-					</div>
-				</FirebaseAuthProvider> */}
-
-
+				</div>
+			<button className="signup-modal-submit" onClick={() => { }}>
+				<div className="login-modal-close-text">Register</div>
+			</button>
 			</Modal>
-		</div>
+		</div >
 	);
 }
 

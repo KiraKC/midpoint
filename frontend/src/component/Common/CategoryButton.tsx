@@ -30,16 +30,16 @@ function CategoryButton(props: ICategoryButtonProps) {
 		if (!selected) {
 			tempCategories = props.categories;
 			tempCategories.push(props.text)
-			props.setCategories(tempCategories)
+			props.setCategories([...tempCategories])
 		} else {
 			const index = props.categories.indexOf(props.text);
 			if (index > -1) {
 				tempCategories = props.categories;
 				tempCategories.splice(index, 1);
 			}
-			props.setCategories(tempCategories);
+			props.setCategories([...tempCategories]);
 		}
-		console.log(tempCategories)
+		console.log(props.categories)
 		setSelected(!selected);
 	}
 	return (
