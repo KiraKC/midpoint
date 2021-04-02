@@ -1,6 +1,5 @@
 package com.cs32.app;
 
-import com.cs32.app.database.Connection;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -8,8 +7,6 @@ import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import java.util.List;
 
 public class User {
 
