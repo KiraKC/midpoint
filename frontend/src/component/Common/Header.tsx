@@ -45,9 +45,9 @@ function Header(props: IHeaderProps) {
 
 			</div>
 			<div style={{ position: 'relative' }}>
-				<button className="nav-link" onClick={() => handleSignInStatus() }>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
 				<button className="nav-link" onClick={() => props.setIsPollModalOpen(true)}>New Poll</button>
-				
+				<button className="nav-link" 
+				onClick={() => handleSignInStatus()}>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
 			</div>
 		</div>
 	);

@@ -9,7 +9,8 @@ import '../../styles/Common/LoginModal.css'
 
 interface INewPollModal {
 	isModalOpen: boolean,
-	setIsModalOpen: any
+	setIsModalOpen: any,
+	setIsSignupModalOpen: any
 }
 
 const customStyles = {
@@ -32,7 +33,6 @@ const customStyles = {
 	}
 };
 
-
 function LoginModal(props: INewPollModal) {
 
 	const [email, setEmail]: [string, any] = useState('');
@@ -54,10 +54,9 @@ function LoginModal(props: INewPollModal) {
 				console.log(user.uid)
 				setEmailDescription("EMAIL");
 				setPasswordDescription("PASSWORD");
-			})
-			.then(
 				props.setIsModalOpen(false)
-			).catch((error) => {
+			})
+			.catch((error) => {
 				var errorCode = error.code;
 				console.log(errorCode)
 			});
@@ -156,7 +155,13 @@ function LoginModal(props: INewPollModal) {
 										<div className="login-modal-close-text">Email Sign In</div>
 									</button>
 								</div>
-								<div className="login-modal-fineprint">Don't have an account? <span>Create your account</span></div>
+								<div className="login-modal-fineprint">Don't have an account?&nbsp; 
+								<span style={{ cursor: 'pointer', textDecoration: 'underline'}}
+								onClick={() => {
+									props.setIsModalOpen(false);
+									props.setIsSignupModalOpen(true)
+								}}>
+									Create your account</span></div>
 							</div>
 						</div>
 					</div>

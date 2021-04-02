@@ -26,7 +26,7 @@ function App() {
 	return (
 		<>
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
-			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} />
+			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} setIsSignupModalOpen={setIsSignupModalOpen} />
 			<SignUpModal isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} />
 
 			<BrowserRouter>
