@@ -14,7 +14,7 @@ const categoryArray = [
 	{ emoji: "newspaper", text: "news", highlightColor: "#0B5EA9" },
 	{ emoji: "frog", text: "nature", highlightColor: "#328F1A" },
 
-	{ emoji: "carrot", text: "health & fitness", highlightColor: "#86BBEC" },
+	{ emoji: "carrot", text: "health", highlightColor: "#86BBEC" },
 	{ emoji: "nail_care", text: "beauty", highlightColor: '#FE7EAC' },
 	{ emoji: "file_folder", text: "entrepreneurship", highlightColor: '#264779' },
 	{ emoji: "video_game", text: "gaming", highlightColor: '#74AEBB' },

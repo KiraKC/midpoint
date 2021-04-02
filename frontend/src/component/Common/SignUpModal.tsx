@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import { FirebaseAuthConsumer, FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseAuthedAnd } from '@react-firebase/auth';
@@ -13,7 +13,8 @@ import OptionSelector from './OptionSelector';
 
 interface INewPollModal {
 	isModalOpen: boolean,
-	setIsModalOpen: any
+	setIsModalOpen: any,
+	setIsLoginModalOpen: any
 }
 
 const customStyles = {
@@ -36,10 +37,23 @@ const customStyles = {
 	}
 };
 
-
 function SignUpModal(props: INewPollModal) {
 
 	const [categories, setCategories]: [string[], any] = useState([])
+	const [categoryDescription, setCategoryDescription]: [string, any] = useState('PLEASE CHOOSE AT LEAST 3 ✓')
+
+	useEffect(() => {
+		let arrayLength = categories.length;
+		if (arrayLength === 0) {
+			setCategoryDescription("PLEASE CHOOSE AT LEAST 3");
+		}
+		if (arrayLength > 0 && arrayLength < 3) {
+			setCategoryDescription("PLEASE CHOOSE AT LEAST 3 (" + arrayLength + "/3)");
+		}
+		if (arrayLength >= 3) {
+			setCategoryDescription("YOU'VE SELECTED " + arrayLength + ", CHOOSE MORE IF YOU WANT! ✓");
+		}
+	}, [categories])
 
 	return (
 		<div>
@@ -92,9 +106,9 @@ function SignUpModal(props: INewPollModal) {
 
 					<div>
 						<div className="login-section-heading">Personal Profile</div>
-						<div className="login-option-flex-wrapper">
-							<div className="login-option-title">Date of Birth</div>
-							<input type="date" />
+						<div className="login-option-flex-wrapper" style={{ marginTop: '10px' }}>
+							<div className="login-option-title">Birthday</div>
+							<input type="date" className="login-option-date-picker" />
 						</div>
 						<div className="login-option-flex-wrapper">
 							<div className="login-option-title">Gender</div>
@@ -106,34 +120,23 @@ function SignUpModal(props: INewPollModal) {
 						</div>
 						<div className="login-option-flex-wrapper">
 							<div className="login-option-title">Education</div>
-							<OptionSelector optionArray={['Primary School', 'Middle School', 'High School', 'College', 'Masters', 'PhD']} />
+							<OptionSelector optionArray={['Elementary School', 'Middle School', 'High School', 'Bachelor', 'Masters', 'PhD']} />
 						</div>
 						<div className="login-option-flex-wrapper">
 							<div className="login-option-title">Political Leaning</div>
-							<input type="range" list="tickmarks" />
-
-							<datalist id="tickmarks">
-								<option value="0" label="0%"></option>
-								<option value="10"></option>
-								<option value="20"></option>
-								<option value="30"></option>
-								<option value="40"></option>
-								<option value="50" label="50%"></option>
-								<option value="60"></option>
-								<option value="70"></option>
-								<option value="80"></option>
-								<option value="90"></option>
-								<option value="100" label="100%"></option>
-							</datalist>
+							<OptionSelector optionArray={['Left Leaning', 'Neutral', 'Right Leaning']} />
 						</div>
 					</div>
 				</div>
 
-				<div style={{ marginTop: '20px', marginBottom: '15px' }} className="login-section-heading">Choose at least 3 interests</div>
+				<div style={{ marginTop: '20px' }} className="login-section-heading">What topic interests you?</div>
+				<div className="register-modal-desc"
+					style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+				>{categoryDescription}</div>
 				<div className="signup-interests-input-module display-flex">
-
 					{categoryArray.map((e, i) => (
 						<CategoryButton
+							key={i}
 							emoji={e.emoji}
 							text={e.text}
 							highlightColor={e.highlightColor}
@@ -142,40 +145,20 @@ function SignUpModal(props: INewPollModal) {
 						/>
 					))}
 				</div>
-
-
 				<div className="signup-details login-modal-fineprint">
-					<a>Already have an account? Sign in.</a>
+					<div>Already have an account?&nbsp;
+						<span style={{ textDecoration: 'underline', cursor: 'pointer' }}
+							onClick={() => {
+								props.setIsModalOpen(false);
+								props.setIsLoginModalOpen(true);
+						}}>Sign in here</span>
 				</div>
-
-				<button className="signup-modal-submit" onClick={() => { }}>
-					<div className="login-modal-close-text">Register</div>
-				</button>
-				{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
-					<div>
-						<button onClick={() => { firebase.auth().signInAnonymously(); }}>
-							Sign In Anonymously</button>
-						<button onClick={() => { firebase.auth().signOut(); }}>
-							Sign Out</button>
-						<FirebaseAuthConsumer>
-							{({ isSignedIn, firebase }) => {
-								if (isSignedIn === true) {
-									return (
-										<div></div>
-									);
-								} else {
-									return (
-										<div></div>
-									);
-								}
-							}}
-						</FirebaseAuthConsumer>
-					</div>
-				</FirebaseAuthProvider> */}
-
-
+				</div>
+			<button className="signup-modal-submit" onClick={() => { }}>
+				<div className="login-modal-close-text">Register</div>
+			</button>
 			</Modal>
-		</div>
+		</div >
 	);
 }
 

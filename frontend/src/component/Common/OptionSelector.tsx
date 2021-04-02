@@ -14,11 +14,11 @@ interface IOptionSelectorProps {
 function OptionSelector(props: IOptionSelectorProps) {
 
 	return (
-		<select>
-			{props.optionArray.map((e, i) => (
-				<option value={e} key={i}>{e}</option>
-			))}
-		</select>
+			<select className="option-selector">
+				{props.optionArray.map((e, i) => (
+					<option value={e} key={i}>{e}</option>
+				))}
+			</select>
 	);
 }
 

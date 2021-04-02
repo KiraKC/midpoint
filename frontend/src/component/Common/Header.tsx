@@ -39,7 +39,7 @@ function Header() {
 		<>
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
 			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} setIsSignupModalOpen={setIsSignupModalOpen} />
-			<SignUpModal isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} />
+			<SignUpModal isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} />
 			<div className="header">
 				<div className="header-background"></div>
 				<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
