@@ -19,20 +19,14 @@ import SignUpModal from './component/Common/SignUpModal';
 import GameStart from './component/Game/GameStart';
 
 function App() {
-	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
-	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
-	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
+
 
 	return (
 		<>
-			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
-			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} setIsSignupModalOpen={setIsSignupModalOpen} />
-			<SignUpModal isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} />
-
 			<BrowserRouter>
 				<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 					<div id="website-wrapper">
-						<Header setIsPollModalOpen={setIsPollModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} setIsSignupModalOpen={setIsSignupModalOpen} />
+						<Header />
 						<Routes>
 							<Route element={<Navigate to="home" />} />
 							<Route path="/home" element={<MasonryWrapper />} />

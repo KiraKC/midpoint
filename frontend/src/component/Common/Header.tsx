@@ -5,16 +5,16 @@ import { useNavigate } from "react-router";
 import firebaseConfig from "../../firebase/FirebaseIndex";
 import '../../styles/Common/Header.css'
 import { signOut } from '../../firebase/AuthMethods'
+import NewPollModal from "./NewPollModal";
+import LoginModal from "./LoginModal";
+import SignUpModal from "./SignUpModal";
 
-interface IHeaderProps {
-	setIsPollModalOpen: any,
-	setIsLoginModalOpen: any,
-	setIsSignupModalOpen: any,
-}
-
-function Header(props: IHeaderProps) {
+function Header() {
 	const navigate = useNavigate()
 	const [isLoggedIn, setIsLoggedIn]: [boolean, any] = useState(false);
+	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
+	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
+	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
 
 	firebase.auth().onAuthStateChanged(function (user) {
 		if (user) {
@@ -31,25 +31,30 @@ function Header(props: IHeaderProps) {
 			signOut();
 			setIsLoggedIn(false)
 		} else {
-			props.setIsLoginModalOpen(true)
+			setIsLoginModalOpen(true)
 		}
 	}
 
 	return (
-		<div className="header">
-			<div className="header-background"></div>
-			<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-				<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
-				<div className="nav-text-link" style={{ marginLeft: '45px' }} onClick={() => navigate('answer')}>Answer</div>
-				<div className="nav-text-link" onClick={() => navigate('game')}>Game</div>
+		<>
+			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
+			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} setIsSignupModalOpen={setIsSignupModalOpen} />
+			<SignUpModal isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} />
+			<div className="header">
+				<div className="header-background"></div>
+				<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+					<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
+					<div className="nav-text-link" style={{ marginLeft: '45px' }} onClick={() => navigate('answer')}>Answer</div>
+					<div className="nav-text-link" onClick={() => navigate('game')}>Game</div>
 
+				</div>
+				<div style={{ position: 'relative' }}>
+					<button className="nav-link" onClick={() => setIsPollModalOpen(true)}>New Poll</button>
+					<button className="nav-link"
+						onClick={() => handleSignInStatus()}>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
+				</div>
 			</div>
-			<div style={{ position: 'relative' }}>
-				<button className="nav-link" onClick={() => props.setIsPollModalOpen(true)}>New Poll</button>
-				<button className="nav-link" 
-				onClick={() => handleSignInStatus()}>{isLoggedIn ? 'Log out' : 'Sign in'}</button>
-			</div>
-		</div>
+		</>
 	);
 }
 
