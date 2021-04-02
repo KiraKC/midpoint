@@ -10,6 +10,8 @@ import CategoryButton from './CategoryButton';
 import OptionPanel from './OptionPanel';
 import categoryArray from '../../constants/Category';
 import OptionSelector from './OptionSelector';
+import { registerNewUser } from '../../firebase/AuthMethods';
+import axios from 'axios';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -41,6 +43,11 @@ function SignUpModal(props: INewPollModal) {
 
 	const [categories, setCategories]: [string[], any] = useState([])
 	const [categoryDescription, setCategoryDescription]: [string, any] = useState('PLEASE CHOOSE AT LEAST 3 ✓')
+	const [email, setEmail]: [string, any] = useState('');
+	const [password, setPassword]: [string, any] = useState('');
+	const [birthday, setBirthday]: [string, any] = useState('');
+	const [gender, setGender]: [string, any] = useState('');
+	const [maritalStatus, setMaritalStatus]: [string, any] = useState('')
 
 	useEffect(() => {
 		let arrayLength = categories.length;
@@ -55,6 +62,49 @@ function SignUpModal(props: INewPollModal) {
 		}
 	}, [categories])
 
+	const handleRegister = () => {
+		firebase.auth().createUserWithEmailAndPassword(email, password)
+		.then(res => {
+			addUserToMongo();
+			props.setIsModalOpen(false);
+		})
+		.catch(err => {
+			console.error(err)
+		})
+	}
+
+	const addUserToMongo = () => {
+		const toSend = {
+			userIdToken: firebase.auth().currentUser.getIdToken(),
+			userMetaData: [
+				{key: 'age', value: '28'}
+			],
+			selectedCategories: categories
+		}
+		console.log(toSend)
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+				'Access-Control-Allow-Origin': '*',
+			}
+		}
+		// console.log(isSubmissionValid())
+		// if (isSubmissionValid()) {
+			axios.post(
+				"http://localhost:4567/user/new",
+				toSend,
+				config,
+			)
+				.then(response => {
+					// cleanUpData()
+					return response.data;
+				})
+				.catch(e => {
+					console.log(e);
+				});
+		// }
+	}
+
 	return (
 		<div>
 			<Modal
@@ -62,103 +112,97 @@ function SignUpModal(props: INewPollModal) {
 				// onRequestClose={() => props.setIsModalOpen(false)}
 				contentLabel="Login Modal"
 				style={customStyles}>
-				<div className="login-modal-flex-wrapper">
-					<div className="login-modal-heading">Join MidPoint</div>
-					<button className="login-modal-close" onClick={() => { props.setIsModalOpen(false) }}>
-						<span className="material-icons">close</span>
-						<div className="poll-modal-close-text">CLOSE</div>
+				<div className="login-modal-wrapper">
+					<div className="login-modal-flex-wrapper">
+						<div className="login-modal-heading">Join MidPoint</div>
+						<button className="login-modal-close" onClick={() => { props.setIsModalOpen(false) }}>
+							<span className="material-icons">close</span>
+							<div className="poll-modal-close-text">CLOSE</div>
+						</button>
+					</div>
+					<div className="signup-modal-description">
+						We are thrilled to have you here.
+						MidPoint is an anonymized community for idea sharing.
+						At MidPoint, you will have the opportunity to see how the world thinks.
+						Now, we are collecting some information to create your account.
+				 	</div>
+					<div className="signup-modal-wrapper-grid">
+						<div>
+							<div className="login-section-heading">Login Info</div>
+							<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '0' }}>
+								<input className="login-modal-user-input" type="text"
+									placeholder="hello@midpoint.fun"
+									onChange={(e) => {setEmail(e.target.value)}}></input>
+								<div className="login-modal-question-desc-question"
+									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+								>EMAIL</div>
+							</div>
+							<div className="signup-modal-input-module">
+								<input className="login-modal-user-input" type="password"
+									placeholder="Enter your secure password"
+									onChange={(e) => {setPassword(e.target.value)}}></input>
+								<div className="login-modal-question-desc-question"
+									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+								>PASSWORD</div>
+							</div>
+						</div>
+
+						<div>
+							<div className="login-section-heading">Personal Profile</div>
+							<div className="login-option-flex-wrapper" style={{ marginTop: '10px' }}>
+								<div className="login-option-title">Birthday</div>
+								<input type="date" className="login-option-date-picker" />
+							</div>
+							<div className="login-option-flex-wrapper">
+								<div className="login-option-title">Gender</div>
+								<OptionSelector optionArray={['Male', 'Female', 'Others']} />
+							</div>
+							<div className="login-option-flex-wrapper">
+								<div className="login-option-title">Marital Status</div>
+								<OptionSelector optionArray={['Undisclosed', 'Married', 'Unmarried']} />
+							</div>
+							<div className="login-option-flex-wrapper">
+								<div className="login-option-title">Education</div>
+								<OptionSelector optionArray={['Elementary School', 'Middle School', 'High School', 'Bachelor', 'Masters', 'PhD']} />
+							</div>
+							<div className="login-option-flex-wrapper">
+								<div className="login-option-title">Political Leaning</div>
+								<OptionSelector optionArray={['Left Leaning', 'Neutral', 'Right Leaning']} />
+							</div>
+						</div>
+					</div>
+
+					<div style={{ marginTop: '20px' }} className="login-section-heading">What topic interests you?</div>
+					<div className="register-modal-desc"
+						style={{ color: (1 === 1 ? 'black' : '#F24443') }}
+					>{categoryDescription}</div>
+					<div className="signup-interests-input-module display-flex">
+						{categoryArray.map((e, i) => (
+							<CategoryButton
+								key={i}
+								emoji={e.emoji}
+								text={e.text}
+								highlightColor={e.highlightColor}
+								categories={categories}
+								setCategories={setCategories}
+							/>
+						))}
+					</div>
+					<div className="signup-details login-modal-fineprint">
+						<div>Already have an account?&nbsp;
+						<span style={{ textDecoration: 'underline', cursor: 'pointer' }}
+								onClick={() => {
+									props.setIsModalOpen(false);
+									props.setIsLoginModalOpen(true);
+								}}>Sign In</span>
+						</div>
+					</div>
+					<button className="signup-modal-submit" onClick={() => {handleRegister()}}>
+						<div className="login-modal-close-text">Register</div>
 					</button>
 				</div>
-				<div className="signup-modal-description">
-					We are thrilled to have you here.
-					MidPoint is an anonymized community for idea sharing.
-					At MidPoint, you will have the opportunity to see how the world thinks.
-					Now, we are collecting some information to create your account.
-				 	</div>
-				<div className="signup-modal-wrapper-grid">
-					<div>
-						<div className="login-section-heading">Login Info</div>
-						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '0' }}>
-							<input className="login-modal-user-input" type="text"
-								placeholder="hello@midpoint.fun"
-								onChange={(e) => { }}></input>
-							<div className="login-modal-question-desc-question"
-								style={{ color: (1 === 1 ? 'black' : '#F24443') }}
-							>EMAIL</div>
-						</div>
-						<div className="signup-modal-input-module">
-							<input className="login-modal-user-input" type="text"
-								placeholder="Enter your secure password"
-								onChange={(e) => { }}></input>
-							<div className="login-modal-question-desc-question"
-								style={{ color: (1 === 1 ? 'black' : '#F24443') }}
-							>PASSWORD</div>
-						</div>
-						<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '15px' }}>
-							<input className="login-modal-user-input" type="text"
-								placeholder="happyelephant"
-								onChange={(e) => { }}></input>
-							<div className="login-modal-question-desc-question"
-								style={{ color: (1 === 1 ? 'black' : '#F24443') }}
-							>NICKNAME</div>
-						</div>
-					</div>
-
-					<div>
-						<div className="login-section-heading">Personal Profile</div>
-						<div className="login-option-flex-wrapper" style={{ marginTop: '10px' }}>
-							<div className="login-option-title">Birthday</div>
-							<input type="date" className="login-option-date-picker" />
-						</div>
-						<div className="login-option-flex-wrapper">
-							<div className="login-option-title">Gender</div>
-							<OptionSelector optionArray={['Male', 'Female', 'Others']} />
-						</div>
-						<div className="login-option-flex-wrapper">
-							<div className="login-option-title">Marital Status</div>
-							<OptionSelector optionArray={['Undisclosed', 'Married', 'Unmarried']} />
-						</div>
-						<div className="login-option-flex-wrapper">
-							<div className="login-option-title">Education</div>
-							<OptionSelector optionArray={['Elementary School', 'Middle School', 'High School', 'Bachelor', 'Masters', 'PhD']} />
-						</div>
-						<div className="login-option-flex-wrapper">
-							<div className="login-option-title">Political Leaning</div>
-							<OptionSelector optionArray={['Left Leaning', 'Neutral', 'Right Leaning']} />
-						</div>
-					</div>
-				</div>
-
-				<div style={{ marginTop: '20px' }} className="login-section-heading">What topic interests you?</div>
-				<div className="register-modal-desc"
-					style={{ color: (1 === 1 ? 'black' : '#F24443') }}
-				>{categoryDescription}</div>
-				<div className="signup-interests-input-module display-flex">
-					{categoryArray.map((e, i) => (
-						<CategoryButton
-							key={i}
-							emoji={e.emoji}
-							text={e.text}
-							highlightColor={e.highlightColor}
-							categories={categories}
-							setCategories={setCategories}
-						/>
-					))}
-				</div>
-				<div className="signup-details login-modal-fineprint">
-					<div>Already have an account?&nbsp;
-						<span style={{ textDecoration: 'underline', cursor: 'pointer' }}
-							onClick={() => {
-								props.setIsModalOpen(false);
-								props.setIsLoginModalOpen(true);
-						}}>Sign in here</span>
-				</div>
-				</div>
-			<button className="signup-modal-submit" onClick={() => { }}>
-				<div className="login-modal-close-text">Register</div>
-			</button>
 			</Modal>
-		</div >
+		</div>
 	);
 }
 

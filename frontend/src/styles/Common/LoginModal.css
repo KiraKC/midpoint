@@ -12,7 +12,7 @@
 .signup-modal-wrapper-grid {
 	display: grid;
 	grid-template-columns: 0.8fr 1fr;
-	column-gap: min(40px, 4vw);
+	column-gap: min(60px, 4.5vw);
 	align-items: auto;
 	margin-top: 20px;
 	margin-bottom: 15px;
@@ -283,10 +283,6 @@
 	outline: none;
 }
 
-select option[value=""][disabled] {
-	display: none;
-}
-
 .login-option-date-picker {
 	border: none;
 	outline: none;
@@ -303,4 +299,13 @@ select option[value=""][disabled] {
 	font-size: 0.8rem;
 	margin-top: 5px;
 	margin-bottom: 15px;
+}
+
+.login-modal-wrapper {
+	height: max-content;
+	max-height: min(800px, 85vh);
+	width: 100%;
+	padding-right: 20px;
+	overflow-y: auto;
+	overflow-x: hidden;
 }

@@ -1,7 +1,7 @@
 import firebase from 'firebase'
 import firebaseConfig from './FirebaseIndex'
 
-const signUp = (email, password) => {
+const registerNewUser = (email, password) => {
 	firebase.auth().createUserWithEmailAndPassword(email, password)
 		.then(res => {
 			console.log(res)
@@ -10,6 +10,7 @@ const signUp = (email, password) => {
 			console.error(err)
 		})
 };
+
 const signIn = (email, password) => {
 
 }
@@ -29,4 +30,4 @@ const isLoggedIn = () => {
 	}
 }
 
-export {signIn, signOut, isLoggedIn, signUp};
+export {signIn, signOut, isLoggedIn, registerNewUser};

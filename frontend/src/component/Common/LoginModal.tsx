@@ -155,7 +155,7 @@ function LoginModal(props: INewPollModal) {
 								>{emailDescription}</div>
 							</div>
 							<div className="login-modal-input-module">
-								<input className="login-modal-user-input" type="text"
+								<input className="login-modal-user-input" type="password"
 									placeholder="Enter your secure password"
 									onChange={(e) => { setPassword(e.target.value); setPasswordDescription("PASSWORD"); }}></input>
 								<div className="login-modal-question-desc-question"
@@ -177,13 +177,13 @@ function LoginModal(props: INewPollModal) {
 										<div className="login-modal-close-text">Email Sign In</div>
 									</button>
 								</div>
-								<div className="login-modal-fineprint">Don't have an account?&nbsp;
+								<div className="login-modal-fineprint" style={{ marginTop: '7px' }}>Don't have an account?&nbsp;
 								<span style={{ cursor: 'pointer', textDecoration: 'underline' }}
 										onClick={() => {
 											props.setIsModalOpen(false);
 											props.setIsSignupModalOpen(true)
 										}}>
-										Create your account</span></div>
+										Sign Up</span></div>
 							</div>
 						</div>
 					</div>
