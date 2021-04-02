@@ -39,6 +39,7 @@ function LoginModal(props: INewPollModal) {
 	const [password, setPassword]: [string, any] = useState('');
 	const [emailDescription, setEmailDescription]: [string, any] = useState('EMAIL');
 	const [passwordDescription, setPasswordDescription]: [string, any] = useState('PASSWORD');
+	const [forgetPasswordDescription, setForgetPasswordDescription]: [string, any] = useState('FORGOT PASSWORD?');
 
 	function handleGoogleLogin() {
 		let provider = new firebase.auth.GoogleAuthProvider();
@@ -96,6 +97,27 @@ function LoginModal(props: INewPollModal) {
 			});
 	}
 
+	function handleResetPassword() {
+		var auth = firebase.auth();
+
+		auth.sendPasswordResetEmail(email).then(function () {
+			setForgetPasswordDescription('RESET PASSWORD EMAIL SENT!')
+			setTimeout(function () {
+				setForgetPasswordDescription('FORGOT PASSWORD?')
+			}, 5000)
+		}).catch(function (error) {
+			// An error happened.
+			if (error.code === 'auth/invalid-email') {
+				setEmailDescription("INCORRECT EMAIL FORMAT");
+				return;
+			}
+			if (error.code === 'auth/user-not-found') {
+				setEmailDescription("EMAIL NOT REGISTERED");
+				return;
+			}
+		});
+	}
+
 	return (
 		<Modal
 			isOpen={props.isModalOpen}
@@ -127,7 +149,7 @@ function LoginModal(props: INewPollModal) {
 							<div className="login-modal-input-module" style={{ marginBottom: '20px', marginTop: '15px' }}>
 								<input className="login-modal-user-input" type="text"
 									placeholder="hello@midpoint.fun"
-									onChange={(e) => { setEmail(e.target.value) }}></input>
+									onChange={(e) => { setEmail(e.target.value); setEmailDescription("EMAIL"); }}></input>
 								<div className="login-modal-question-desc-question"
 									style={{ color: (emailDescription === 'EMAIL' ? 'black' : '#F24443') }}
 								>{emailDescription}</div>
@@ -135,16 +157,16 @@ function LoginModal(props: INewPollModal) {
 							<div className="login-modal-input-module">
 								<input className="login-modal-user-input" type="text"
 									placeholder="Enter your secure password"
-									onChange={(e) => { setPassword(e.target.value) }}></input>
+									onChange={(e) => { setPassword(e.target.value); setPasswordDescription("PASSWORD"); }}></input>
 								<div className="login-modal-question-desc-question"
 									style={{ color: (passwordDescription === 'PASSWORD' ? 'black' : '#F24443') }}
 								>{passwordDescription}</div>
 								<div className="login-modal-forgot-password"
-								onClick={() => {console.log('hello')}}
-									>FORGOT PASSWORD?</div>
+									onClick={() => { handleResetPassword() }}
+								>{forgetPasswordDescription}</div>
 							</div>
 							<div className="login-details">
-								
+
 								<div className="login-buttons-wrapper-flex">
 									<div className="login-modal-submit" onClick={() => { handleGoogleLogin() }}>
 										<img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
@@ -155,13 +177,13 @@ function LoginModal(props: INewPollModal) {
 										<div className="login-modal-close-text">Email Sign In</div>
 									</button>
 								</div>
-								<div className="login-modal-fineprint">Don't have an account?&nbsp; 
-								<span style={{ cursor: 'pointer', textDecoration: 'underline'}}
-								onClick={() => {
-									props.setIsModalOpen(false);
-									props.setIsSignupModalOpen(true)
-								}}>
-									Create your account</span></div>
+								<div className="login-modal-fineprint">Don't have an account?&nbsp;
+								<span style={{ cursor: 'pointer', textDecoration: 'underline' }}
+										onClick={() => {
+											props.setIsModalOpen(false);
+											props.setIsSignupModalOpen(true)
+										}}>
+										Create your account</span></div>
 							</div>
 						</div>
 					</div>
