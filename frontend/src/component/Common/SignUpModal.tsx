@@ -45,7 +45,7 @@ function SignUpModal(props: INewPollModal) {
 	const [categoryDescription, setCategoryDescription]: [string, any] = useState('PLEASE CHOOSE AT LEAST 3 ✓')
 	const [email, setEmail]: [string, any] = useState('');
 	const [password, setPassword]: [string, any] = useState('');
-	const [uidToken, setUidToken]: [string, any] = useState('')
+
 	const [birthday, setBirthday]: [string, any] = useState('');
 	const [gender, setGender]: [string, any] = useState('');
 	const [maritalStatus, setMaritalStatus]: [string, any] = useState('')
@@ -65,54 +65,51 @@ function SignUpModal(props: INewPollModal) {
 
 	const handleRegister = () => {
 		firebase.auth().createUserWithEmailAndPassword(email, password)
-		.then(res => {
-			addUserToMongo();
-			props.setIsModalOpen(false);
-		})
-		.catch(err => {
-			console.error(err)
-		})
+			.then(res => {
+				console.log(res)
+				addUserToMongo();
+				props.setIsModalOpen(false);
+			})
+			.catch(err => {
+				console.error(err)
+			})
 	}
 
-	firebase.auth().onAuthStateChanged(function (user) {
-		if (user) {
-			user.getIdToken().then(token => {
-				console.log(user.uid)
-				setUidToken(token)
-			})
-		}
-	});
-
 	const addUserToMongo = () => {
-		const toSend = {
-			userIdToken: uidToken,
-			userMetaData: [
-				{key: 'age', value: '28'}
-			],
-			selectedCategories: categories
-		}
-		console.log(toSend)
-		const config = {
-			headers: {
-				"Content-Type": "application/json",
-				'Access-Control-Allow-Origin': '*',
-			}
-		}
-		// console.log(isSubmissionValid())
-		// if (isSubmissionValid()) {
-			axios.post(
-				"http://localhost:4567/user/new",
-				toSend,
-				config,
-			)
-				.then(response => {
-					// cleanUpData()
-					return response.data;
-				})
-				.catch(e => {
-					console.log(e);
-				});
-		// }
+		firebase.auth().currentUser.getIdToken(true)
+			.then(function (idToken) {
+				const toSend = {
+					userIdToken: idToken,
+					userMetaData: [
+						{ key: 'age', value: '28' }
+					],
+					selectedCategories: categories
+				}
+				console.log(toSend)
+				const config = {
+					headers: {
+						"Content-Type": "application/json",
+						'Access-Control-Allow-Origin': '*',
+					}
+				}
+				// console.log(isSubmissionValid())
+				// if (isSubmissionValid()) {
+				axios.post(
+					"http://localhost:4567/user/new",
+					toSend,
+					config,
+				)
+					.then(response => {
+						// cleanUpData()
+						return response.data;
+					})
+					.catch(e => {
+						console.log(e);
+					});
+				// }
+			}).catch(function (error) {
+				// Handle error
+			});
 	}
 
 	return (
@@ -142,7 +139,7 @@ function SignUpModal(props: INewPollModal) {
 							<div className="signup-modal-input-module" style={{ marginBottom: '15px', marginTop: '0' }}>
 								<input className="login-modal-user-input" type="text"
 									placeholder="hello@midpoint.fun"
-									onChange={(e) => {setEmail(e.target.value)}}></input>
+									onChange={(e) => { setEmail(e.target.value) }}></input>
 								<div className="login-modal-question-desc-question"
 									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
 								>EMAIL</div>
@@ -150,7 +147,7 @@ function SignUpModal(props: INewPollModal) {
 							<div className="signup-modal-input-module">
 								<input className="login-modal-user-input" type="password"
 									placeholder="Enter your secure password"
-									onChange={(e) => {setPassword(e.target.value)}}></input>
+									onChange={(e) => { setPassword(e.target.value) }}></input>
 								<div className="login-modal-question-desc-question"
 									style={{ color: (1 === 1 ? 'black' : '#F24443') }}
 								>PASSWORD</div>
@@ -207,7 +204,7 @@ function SignUpModal(props: INewPollModal) {
 								}}>Sign In</span>
 						</div>
 					</div>
-					<button className="signup-modal-submit" onClick={() => {handleRegister()}}>
+					<button className="signup-modal-submit" onClick={() => { handleRegister() }}>
 						<div className="login-modal-close-text">Register</div>
 					</button>
 				</div>
