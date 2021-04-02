@@ -112,50 +112,46 @@ function SignUpModal(props: INewPollModal) {
 							<div className="login-option-title">Political Leaning</div>
 							<input type="range" list="tickmarks" />
 
-								<datalist id="tickmarks">
-									<option value="0" label="0%"></option>
-									<option value="10"></option>
-									<option value="20"></option>
-									<option value="30"></option>
-									<option value="40"></option>
-									<option value="50" label="50%"></option>
-									<option value="60"></option>
-									<option value="70"></option>
-									<option value="80"></option>
-									<option value="90"></option>
-									<option value="100" label="100%"></option>
-								</datalist>
-						</div>
-							<div className="login-option-flex-wrapper">
-								<div className="login-option-title">Occupation</div>
-								<OptionSelector optionArray={['hello']} />
-							</div>
+							<datalist id="tickmarks">
+								<option value="0" label="0%"></option>
+								<option value="10"></option>
+								<option value="20"></option>
+								<option value="30"></option>
+								<option value="40"></option>
+								<option value="50" label="50%"></option>
+								<option value="60"></option>
+								<option value="70"></option>
+								<option value="80"></option>
+								<option value="90"></option>
+								<option value="100" label="100%"></option>
+							</datalist>
 						</div>
 					</div>
+				</div>
 
-					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="login-section-heading">Choose at least 3 interests</div>
-					<div className="signup-interests-input-module display-flex">
+				<div style={{ marginTop: '20px', marginBottom: '15px' }} className="login-section-heading">Choose at least 3 interests</div>
+				<div className="signup-interests-input-module display-flex">
 
-						{categoryArray.map((e, i) => (
-							<CategoryButton
-								emoji={e.emoji}
-								text={e.text}
-								highlightColor={e.highlightColor}
-								categories={categories}
-								setCategories={setCategories}
-							/>
-						))}
-					</div>
+					{categoryArray.map((e, i) => (
+						<CategoryButton
+							emoji={e.emoji}
+							text={e.text}
+							highlightColor={e.highlightColor}
+							categories={categories}
+							setCategories={setCategories}
+						/>
+					))}
+				</div>
 
 
-					<div className="signup-details login-modal-fineprint">
-						<a>Already have an account? Sign in.</a>
-					</div>
+				<div className="signup-details login-modal-fineprint">
+					<a>Already have an account? Sign in.</a>
+				</div>
 
-					<button className="signup-modal-submit" onClick={() => { }}>
-						<div className="login-modal-close-text">Register</div>
-					</button>
-					{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+				<button className="signup-modal-submit" onClick={() => { }}>
+					<div className="login-modal-close-text">Register</div>
+				</button>
+				{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 					<div>
 						<button onClick={() => { firebase.auth().signInAnonymously(); }}>
 							Sign In Anonymously</button>
