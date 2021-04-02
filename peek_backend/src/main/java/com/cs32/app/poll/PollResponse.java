@@ -1,5 +1,6 @@
 package com.cs32.app.poll;
 
+import com.cs32.app.UserMetaData;
 import com.google.gson.annotations.Expose;
 import org.bson.Document;
 import org.json.JSONArray;
@@ -20,7 +21,7 @@ public class PollResponse {
   @Expose
   private String answerOptionId;
   @Expose
-  private Map<String, String> userMetaData;
+  private UserMetaData userMetaData;
 
   public PollResponse(Document mongoPollResponse) {
     id = mongoPollResponse.getString("_id");
@@ -28,33 +29,18 @@ public class PollResponse {
     answerOptionId = mongoPollResponse.getString("answerOptionId");
 
     // putting user metadata into hashmap
-    userMetaData = new HashMap<>();
-    List<Document> mongoMetaData = (List<Document>) mongoPollResponse.get("userMetaData");
-    for (Document doc : mongoMetaData) {
-      userMetaData.put(doc.getString("key"), doc.getString("value"));
-    }
+    userMetaData = new UserMetaData((List<Document>) mongoPollResponse.get("userMetaData"));
   }
 
   public PollResponse(JSONObject jsonReqObject) throws JSONException {
     id = jsonReqObject.getString("answerOptionId");
     pollId = jsonReqObject.getString("pollId");
     JSONArray jsonUserMetaDataArray = jsonReqObject.getJSONArray("userMetaData");
-    userMetaData = new HashMap<>();
-    for (int i = 0; i < jsonUserMetaDataArray.length(); i++){
-      JSONObject jsonUserMetaDataObject = jsonUserMetaDataArray.getJSONObject(i);
-      String key = jsonUserMetaDataObject.getString("key");
-      String value = jsonUserMetaDataObject.getString("value");
-      userMetaData.put(key, value);
-    }
+    userMetaData = new UserMetaData(jsonUserMetaDataArray);
   }
 
   public Document toBSON() {
-    List<Document> mongoUserMetaData = new ArrayList<>();
-    for (Map.Entry<String, String> entry : userMetaData.entrySet()) {
-      Document mongoUserMetaDatum = new Document("key", entry.getKey())
-            .append("value", entry.getValue());
-      mongoUserMetaData.add(mongoUserMetaDatum);
-    }
+    List<Document> mongoUserMetaData = userMetaData.toBSON();
 
     Document mongoPollResponse = new Document("_id", id);
     mongoPollResponse.append("pollId", pollId)

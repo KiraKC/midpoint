@@ -155,11 +155,7 @@ public class Poll {
       mongoAnswers.add(pollOptions);
     }
 
-    List<Document> mongoCatPts = new ArrayList<>();
-    for (Map.Entry<String,Double> entry : categoryPoints.getMap().entrySet()) {
-      mongoCatPts.add(new Document("categoryName", entry.getKey())
-            .append("points", entry.getValue()));
-    }
+    List<Document> mongoCatPts = categoryPoints.toBSON();
 
     // preparing main poll BSON object
     Document mongoPoll = new Document("_id", id);

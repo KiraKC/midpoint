@@ -2,7 +2,14 @@ package com.cs32.app;
 
 import com.cs32.app.database.Connection;
 import com.cs32.app.handlers.*;
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
+import io.github.cdimascio.dotenv.Dotenv;
 import spark.Spark;
+
+import java.io.FileInputStream;
+import java.io.IOException;
 
 public class Main {
 
@@ -35,15 +42,32 @@ public class Main {
 
       return "OK";
     });
+
+    // Connections class for MongoDB related queries
     Connection conn = new Connection();
+
+    // Authentication using Firebase
+    try {
+      FileInputStream serviceAccount =
+            new FileInputStream(Dotenv.load().get("PATH_TO_PRIVATE_KEY"));
+      FirebaseOptions options = FirebaseOptions.builder()
+            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+            .setDatabaseUrl("https://midpoint-b4a3c-default-rtdb.firebaseio.com")
+            .build();
+      FirebaseApp.initializeApp(options);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+
     Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
     // TODO: @Jacqueline: once Connection has been changed to non-static, we need to pass 'conn' into each handler
-    Spark.get("/get-suggested-polls", new GetSuggestedPollsHandler());
-    Spark.post("/user/new", new AddUserHandler());
-    Spark.post("/poll/new", new AddPollHandler());
-    Spark.get("/stats", new GetStatsHandler());
-    Spark.post("/anon-answer", new AnonymousAnswerHandler());
+    Spark.get("/user/get-suggested", new GetSuggestedPollsHandler());
+    Spark.post("/user/new", new NewUserHandler());
+    Spark.post("/poll/new", new NewPollHandler());
+    Spark.get("/poll/stats", new GetStatsHandler());
+    Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
   }
 }
