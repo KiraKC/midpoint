@@ -1,7 +1,7 @@
 body,
 html {
 	background-color: white;
-	background-image: url("https://mir-s3-cdn-cf.behance.net/project_modules/1400_opt_1/1a9cca99816403.5efdcbfd0469c.png");
+	background-image: url("https://i.pinimg.com/originals/04/c7/91/04c79100ee1ec8fd4af045f466ff520a.jpg");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
@@ -16,12 +16,14 @@ html {
 	position: fixed;
 	top: 0;
 	left: 0;
+
 }
 
 #website-wrapper {
 	width: min(90vw, 1400px);
 	margin-left: auto;
 	margin-right: auto;
+	
 }
 
 /* width */
