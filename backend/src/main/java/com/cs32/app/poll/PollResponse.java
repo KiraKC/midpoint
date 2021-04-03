@@ -3,6 +3,7 @@ package com.cs32.app.poll;
 import com.cs32.app.UserMetaData;
 import com.google.gson.annotations.Expose;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -33,10 +34,15 @@ public class PollResponse {
   }
 
   public PollResponse(JSONObject jsonReqObject) throws JSONException {
-    id = jsonReqObject.getString("answerOptionId");
+    id = new ObjectId().toString();
     pollId = jsonReqObject.getString("pollId");
+    answerOptionId = jsonReqObject.getString("answerOptionId");
     JSONArray jsonUserMetaDataArray = jsonReqObject.getJSONArray("userMetaData");
     userMetaData = new UserMetaData(jsonUserMetaDataArray);
+  }
+
+  public String getAnswerOptionId() {
+    return answerOptionId;
   }
 
   public Document toBSON() {

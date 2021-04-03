@@ -27,6 +27,7 @@ public class UserMetaData {
   }
 
   public UserMetaData(List<Document> mongoListUserMetaData) {
+    userMetaDataMap = new HashMap<>();
     for (Document doc : mongoListUserMetaData) {
       userMetaDataMap.put(doc.getString("key"), doc.getString("value"));
     }

@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/peek_backend/peek.iml" filepath="$PROJECT_DIR$/peek_backend/peek.iml" />
+      <module fileurl="file://$PROJECT_DIR$/backend/peek.iml" filepath="$PROJECT_DIR$/backend/peek.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/term-project-ehong9-jzhan204-kteramot-xchai1.iml" filepath="$PROJECT_DIR$/.idea/term-project-ehong9-jzhan204-kteramot-xchai1.iml" />
     </modules>
   </component>

@@ -5,8 +5,11 @@ import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
 import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
+
+import com.mongodb.client.model.Filters;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -69,26 +72,22 @@ public class Connection {
 
 
   public static Poll getPollById(String pollId) throws MissingDBObjectException {
-    BasicDBObject query = new BasicDBObject();
-    query.put("_id", new ObjectId(pollId));
-    MongoCursor<Document> cursor = pollCollection.find(query).limit(1).iterator();
-    if (!cursor.hasNext()) {
+    Document document = pollCollection.find(Filters.eq("_id", pollId)).first();
+    if (document != null) {
+      return (new Poll(document));
+    } else {
       throw new MissingDBObjectException("Poll", "_id", pollId, "poll");
     }
-    return (new Poll(cursor.next()));
   }
 
 
-  // TODO: test this
   public static List<PollResponse> getResponses(String pollId) {
-    BasicDBObject query = new BasicDBObject();
-    query.put("pollId", pollId);
-    MongoCursor<Document> cursor = responseCollection.find(query).iterator();
-    List<PollResponse> listOfResponses = new ArrayList<>();
+    MongoCursor<Document> cursor = responseCollection.find(Filters.eq("pollId", pollId)).iterator();
+    List<PollResponse> responses = new ArrayList<>();
     while(cursor.hasNext()) {
-      listOfResponses.add(new PollResponse(cursor.next()));
+      responses.add(new PollResponse(cursor.next()));
     }
-    return listOfResponses;
+    return responses;
   }
 
 

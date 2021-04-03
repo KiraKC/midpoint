@@ -1,6 +1,8 @@
 package com.cs32.app.handlers;
 
 import com.cs32.app.database.Connection;
+import com.cs32.app.poll.AnswerOption;
+import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,6 +12,7 @@ import spark.Response;
 import spark.Route;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -25,7 +28,8 @@ public class AnonymousAnswerHandler implements Route {
   public Object handle(Request request, Response response) throws Exception {
 
     Map<String, Object> variables = new HashMap<>();
-    boolean status;
+    Boolean status;
+
     /*
       Front end sends us the pollId, answerOptionId, userMetaData.
       userMetaData will come as a list of json objects like so:
@@ -40,16 +44,43 @@ public class AnonymousAnswerHandler implements Route {
         }
      */
 
-    // TODO: @Jacqueline check to see if PollResponses are being sent to the database properly (use postman to send http POST req)
-    // update database with new response
-    JSONObject jsonReqObject = new JSONObject(request.body());
-    PollResponse pollResponse = new PollResponse(jsonReqObject);
-    status = Connection.addPollResponseToDB(pollResponse);
+    try{
+      // Update database with new response
+      JSONObject jsonReqObject = new JSONObject(request.body());
+      PollResponse pollResponse = new PollResponse(jsonReqObject);
+      Connection.addPollResponseToDB(pollResponse);
 
-    // TODO: @Jacqueline get mini-stats (NOTE: STATUS SHOULD BE UPDATED TO REFLECT MINI-STATS SUCCESS/FAILURE)
-    // *note, send percentages
+      // Get all answer options and all responses
+      String pollId = jsonReqObject.getString("pollId");
+      List<AnswerOption> answerOptions = Connection.getPollById(pollId).getAnswerOptions();
+      List<PollResponse> allResponses = Connection.getResponses(pollId);
+      System.out.println("ANSWER OPTIONS SIZE:");
+      System.out.println(answerOptions.size());
+      System.out.println("ALLRESPONSES SIZE:");
+      System.out.println(allResponses.size());
 
-    // TODO: @Jacqueline send mini-stats to front end and check that ministats are working
+      // Initialize a map for counting the occurrence of every answer option
+      Map<String, Double> counts = new HashMap<>();
+      for (AnswerOption answerOption : answerOptions) {
+        counts.put(answerOption.getId(), 0.0);
+      }
+
+      // Count
+      for (PollResponse everyResponse : allResponses) {
+        counts.put(everyResponse.getAnswerOptionId(), counts.get(everyResponse.getAnswerOptionId()) + 1);
+      }
+
+      // Send mini-stats to front end
+      for (AnswerOption answerOption : answerOptions) {
+        double percentage = counts.get(answerOption.getId()) / allResponses.size();
+        variables.put(answerOption.getId(), percentage);
+      }
+      status = true;
+    } catch (Exception e) {
+      System.err.println(e.getMessage());
+      status = false;
+    }
+
     variables.put("status", status);
     return GSON.toJson(variables);
   }
