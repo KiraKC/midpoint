@@ -142,7 +142,8 @@
                     <artifactId>heroku-maven-plugin</artifactId>
                     <configuration>
                         <processTypes>
-                            <web>mvn exec:java -Dexec.mainClass=com.cs32.app.App</web>
+                            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* App</web>
+<!--                            <web>mvn exec:java -Dexec.mainClass=com.cs32.app.App</web>-->
                         </processTypes>
                     </configuration>
                 </plugin>

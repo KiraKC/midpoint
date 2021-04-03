@@ -1,1 +1,1 @@
-web: mvn exec:java -Dexec.mainClass=com.cs32.app.App
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* App
