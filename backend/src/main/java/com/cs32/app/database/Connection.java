@@ -32,7 +32,7 @@ public class Connection {
   // this change allows us to have a test and production version of our Connection class. (rmbr to change both instance variables and methods to non-static)
 
   public Connection() {
-    mongoClient = MongoClients.create(Dotenv.load().get("MONGODB_URI"));
+    mongoClient = MongoClients.create(System.getenv("MONGODB_URI"));
     mongoDatabase = mongoClient.getDatabase("main");
     userCollection = mongoDatabase.getCollection("user");
     pollCollection = mongoDatabase.getCollection("poll");

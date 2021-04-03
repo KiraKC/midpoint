@@ -13,7 +13,7 @@ import java.io.IOException;
 
 public class Main {
 
-  private static final int DEFAULT_PORT = 4567;
+  private static final int DEFAULT_PORT = Integer.parseInt(System.getenv("PORT"));
   private final String[] args;
 
   public Main(String[] args) {
@@ -49,7 +49,7 @@ public class Main {
     // Authentication using Firebase
     try {
       FileInputStream serviceAccount =
-            new FileInputStream(Dotenv.load().get("PATH_TO_PRIVATE_KEY"));
+            new FileInputStream(System.getenv("PATH_TO_PRIVATE_KEY"));
       FirebaseOptions options = FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
             .setDatabaseUrl("https://midpoint-b4a3c-default-rtdb.firebaseio.com")
