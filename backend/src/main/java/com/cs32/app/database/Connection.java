@@ -7,6 +7,7 @@ import com.cs32.app.poll.PollResponse;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
+import io.github.cdimascio.dotenv.Dotenv;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -28,8 +29,7 @@ public class Connection {
   // this change allows us to have a test and production version of our Connection class. (rmbr to change both instance variables and methods to non-static)
 
   public Connection() {
-    String connectionString = System.getProperty("mongodb.uri");
-    mongoClient = MongoClients.create(connectionString);
+    mongoClient = MongoClients.create(Dotenv.load().get("MONGODB_URI"));
     mongoDatabase = mongoClient.getDatabase("main");
     userCollection = mongoDatabase.getCollection("user");
     pollCollection = mongoDatabase.getCollection("poll");
