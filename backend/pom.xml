@@ -135,6 +135,18 @@
                         <showDeprecation>true</showDeprecation>
                     </configuration>
                 </plugin>
+
+                <!-- heroku -->
+                <plugin>
+                    <groupId>com.heroku.sdk</groupId>
+                    <artifactId>heroku-maven-plugin</artifactId>
+                    <configuration>
+                        <processTypes>
+                            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* Main</web>
+                        </processTypes>
+                    </configuration>
+                </plugin>
+
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->
                 <plugin>
                     <artifactId>maven-clean-plugin</artifactId>
