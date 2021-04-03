@@ -57,8 +57,10 @@ public class Connection {
     AggregateIterable<Document> mongoRandomPolls = pollCollection.aggregate(Arrays.asList(Aggregates.sample(numPolls)));
     Iterator<Document> aggregateIterable = mongoRandomPolls.iterator();
     // Transform MongoDB documents into poll objects
+    int i = 0;
     while (aggregateIterable.hasNext()) {
       // Create and add poll
+      System.out.println(i++);
       randomPolls.add(new Poll(aggregateIterable.next()));
     }
 
@@ -81,7 +83,7 @@ public class Connection {
   public static List<PollResponse> getResponses(String pollId) {
     BasicDBObject query = new BasicDBObject();
     query.put("pollId", pollId);
-    MongoCursor<Document> cursor = pollCollection.find(query).iterator();
+    MongoCursor<Document> cursor = responseCollection.find(query).iterator();
     List<PollResponse> listOfResponses = new ArrayList<>();
     while(cursor.hasNext()) {
       listOfResponses.add(new PollResponse(cursor.next()));
@@ -92,7 +94,7 @@ public class Connection {
 
   public static boolean addPollResponseToDB(PollResponse pollResponse) {
     try {
-      pollCollection.insertOne(pollResponse.toBSON());
+      responseCollection.insertOne(pollResponse.toBSON());
       System.out.println("adding com.cs32.app.pollResponse to db was SUCCESSFUL");
     } catch (Exception e) {
       e.printStackTrace();
@@ -117,4 +119,13 @@ public class Connection {
   }
 
 
+  public static User getUserById(String id) throws MissingDBObjectException {
+    BasicDBObject query = new BasicDBObject();
+    query.put("_id", new ObjectId(id));
+    MongoCursor<Document> cursor = userCollection.find(query).limit(1).iterator();
+    if (!cursor.hasNext()) {
+      throw new MissingDBObjectException("User", "_id", id, "user");
+    }
+    return (new User(cursor.next()));
+  }
 }

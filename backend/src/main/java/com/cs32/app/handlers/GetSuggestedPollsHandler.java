@@ -2,10 +2,13 @@ package com.cs32.app.handlers;
 
 import com.cs32.app.CategoryPoints;
 import com.cs32.app.Constants;
+import com.cs32.app.User;
 import com.cs32.app.algorithm.ClickRateComparator;
 import com.cs32.app.algorithm.RelevancyComparator;
 import com.cs32.app.database.Connection;
 import com.cs32.app.poll.Poll;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
@@ -33,48 +36,71 @@ public class GetSuggestedPollsHandler implements Route {
   @Override
   public Object handle(Request request, Response response) throws Exception {
     Map<String, Object> variables = new HashMap<>();
-    int userId;
     int numPollsRequested;
-    Set seenPollIds;
+
     boolean status;
     List<Poll> pollsToSend = new ArrayList<>();
 
     try {
       // Parse request
-      JSONObject JSONReqObject = new JSONObject(request.body());
-      numPollsRequested = JSONReqObject.getInt("numPollsRequested");
-//      userId = JSONReqObject.getInt("userId");
-//      JSONArray JSONSeenPollIds = JSONReqObject.getJSONArray("seenPollIds");
-//      seenPollIds = new HashSet();
-//      for (int i = 0; i< JSONSeenPollIds.length(); i++){
-//        seenPollIds.add(JSONSeenPollIds.getJSONObject(i).getInt("pollid"));
-//      }
+      JSONObject jsonReqObject = new JSONObject(request.body());
+      numPollsRequested = jsonReqObject.getInt("numPollsRequested");
 
-      // TODO: Query for the user's Category Points
-      CategoryPoints userCatPts = new CategoryPoints(new ArrayList<>(Arrays.asList(Constants.ALL_CATEGORIES[0],
-          Constants.ALL_CATEGORIES[1], Constants.ALL_CATEGORIES[2])));
-      System.out.println(userCatPts.getNormPts(Constants.ALL_CATEGORIES[0], userCatPts.getTotalPts()));
+      Set<String> seenPollIds = new HashSet<>();
+      JSONArray jsonSeenPollsArray = jsonReqObject.getJSONArray("seenPollIds");
+      for (int i = 0; i < jsonSeenPollsArray.length(); i++) {
+        System.out.println("SEEN POLL #" + i + " IS " + jsonSeenPollsArray.getString(i));
+        seenPollIds.add(jsonSeenPollsArray.getString(i));
+      }
+
+      boolean loggedIn = jsonReqObject.getString("loggedIn").equals("true");
+
+      // query for user and get their category points
+      CategoryPoints userCatPts;
+      if (loggedIn) {
+        String userIdToken = jsonReqObject.getString("userIdToken");
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
+        String userId = decodedToken.getUid();
+        User user = Connection.getUserById(userId);
+        userCatPts = user.getCategoryPoints();
+      } else {
+        userCatPts = new CategoryPoints(Arrays.asList(Constants.ALL_CATEGORIES));
+      }
 
       // Query for random polls
       List<Poll> randomPolls = Connection.getRandomPolls(
-          numPollsRequested * Constants.QUERY_RAND_POLLS_NUM_BATCH);
+          numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
+
+      // adjusted num requested in case numRequested > randomPolls.size()
+      int adjustedNumRequested = randomPolls.size() / Constants.NUM_QUERIED_POLLS_PER_REQUESTED;
+
+      System.out.println("randomPolls size: " + randomPolls.size());
+      System.out.println("adjustedNumRequested size: " + adjustedNumRequested);
+
+      int numRelevancyIndex = (int) Math.floor(randomPolls.size() * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
+      int numClickRateIndex = numRelevancyIndex + (int) Math.floor(randomPolls.size() * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
+      int numRandomIndex= randomPolls.size();
+
+      List<Poll> relevancyBatch = randomPolls.subList(0, numRelevancyIndex);
+      List<Poll> clickRateBatch = randomPolls.subList(numRelevancyIndex, numClickRateIndex);
+      List<Poll> randomBatch = randomPolls.subList(numClickRateIndex, numRandomIndex);
 
       // Get polls with highest relevancy from the first batch
-      List<Poll> batch = randomPolls.subList(0, numPollsRequested);
-      Collections.sort(batch, new RelevancyComparator(userCatPts));
-      int numRelevancy = (int) Math.floor(numPollsRequested * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
-      List<Poll> byRelevancy = batch.subList(0, numRelevancy);
+      int numFromRelevancyBatch = (int) Math.floor(adjustedNumRequested * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
+      System.out.println("numFromRelevancyBatch: " + numFromRelevancyBatch);
+      Collections.sort(relevancyBatch, new RelevancyComparator(userCatPts));
+      List<Poll> byRelevancy = relevancyBatch.subList(0, numFromRelevancyBatch);
 
       // Get polls with highest click rate from the second batch
-      batch = randomPolls.subList(numPollsRequested, 2 * numPollsRequested);
-      Collections.sort(batch, new ClickRateComparator());
-      int numClickRate = (int) Math.floor(numPollsRequested * Constants.QUERY_RAND_POLLS_CLICK_RATE_PORTION);
-      List<Poll> byClickRate = batch.subList(0, numClickRate);
+      int numFromClickRateBatch = (int) Math.floor(adjustedNumRequested * Constants.QUERY_RAND_POLLS_CLICK_RATE_PORTION);
+      System.out.println("numFromClickRateBatch: " + numFromClickRateBatch);
+      Collections.sort(clickRateBatch, new ClickRateComparator());
+      List<Poll> byClickRate = clickRateBatch.subList(0, numFromClickRateBatch);
 
       // Get polls randomly from the third batch
-      int numRandom = numPollsRequested - numRelevancy - numClickRate;
-      List<Poll> byRandom = randomPolls.subList(2 * numPollsRequested,
-          2 * numPollsRequested + numRandom);
+      int numFromRandomBatch = adjustedNumRequested - numFromRelevancyBatch - numFromClickRateBatch;
+      System.out.println("numFromRandomBatch: " + numFromRandomBatch);
+      List<Poll> byRandom = randomBatch.subList(0, numFromRandomBatch);
 
       // Put the three sets of polls together and shuffle them
       pollsToSend.addAll(byRelevancy);
@@ -90,8 +116,11 @@ public class GetSuggestedPollsHandler implements Route {
         poll.rendered();
       }
 
+      // TODO: update poll in database
+
       status = true;
     } catch (JSONException e) {
+      e.printStackTrace();
       System.err.println("ERROR: GetSuggestedPollsHandler JSON request not properly formatted");
       // TODO: send a failure response to frontend
       status = false;

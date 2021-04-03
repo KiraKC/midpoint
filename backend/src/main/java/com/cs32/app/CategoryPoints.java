@@ -50,6 +50,12 @@ public class CategoryPoints {
     }
   }
 
+  public void initializeFromMongo(List<Document> mongoCatPts) {
+    for (Document doc : mongoCatPts) {
+      updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
+    }
+  }
+
   /**
    * Constructor when creating CatPtsWrapper from MongoDB Database.
    */

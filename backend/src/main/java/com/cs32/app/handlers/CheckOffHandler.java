@@ -47,7 +47,6 @@ public class CheckOffHandler implements Route {
       Connection.getPollById(pollId);
 
 
-
       status = true;
     } catch (org.json.JSONException e) {
       System.err.println("ERROR: Incorrect JSON object formatting");

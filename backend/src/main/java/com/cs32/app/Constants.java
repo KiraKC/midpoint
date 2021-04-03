@@ -11,7 +11,7 @@ public class Constants {
   public static final Double UNTAGGED_CAT_STARTING_PTS = INITIAL_NEW_POLL_CAT_PTS/ALL_CATEGORIES.length;
 
   // Constants for generating poll feeds
-  public static final int QUERY_RAND_POLLS_NUM_BATCH = 3;
+  public static final int NUM_QUERIED_POLLS_PER_REQUESTED = 3;
   public static final Double QUERY_RAND_POLLS_RELEVANCY_PORTION = 0.5;
   public static final Double QUERY_RAND_POLLS_CLICK_RATE_PORTION = 0.25;
   public static final Double QUERY_RAND_POLLS_RANDOM_PORTION = 0.25;

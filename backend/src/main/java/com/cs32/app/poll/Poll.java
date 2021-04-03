@@ -20,7 +20,6 @@ public class Poll {
   private String emoji;
   @Expose
   private List<AnswerOption> answerOptions;
-  @Expose
   private CategoryPoints categoryPoints;
   private int numRenders;
   private int numClicks;
@@ -47,7 +46,6 @@ public class Poll {
 
   public Poll(Document mongoPoll) {
     id = mongoPoll.getString("_id");
-
     // Get question
     question = mongoPoll.getString("question");
 
@@ -57,16 +55,14 @@ public class Poll {
     // Get answer options
     answerOptions = new ArrayList<>();
     List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
+    System.out.println("MONGOANSWEROPTIONS:" + mongoAnswerOptions);
     for (Document doc : mongoAnswerOptions) {
       answerOptions.add(new AnswerOption(doc.getString("answerOptionId"), doc.getString("value"), doc.getString("emoji")));
     }
 
     // Get category points
     categoryPoints = new CategoryPoints();
-    List<Document> mongoCatPts = (List<Document>) mongoPoll.get("catPts");
-    for (Document doc : mongoCatPts) {
-      categoryPoints.updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
-    }
+    categoryPoints.initializeFromMongo((List<Document>) mongoPoll.get("catPts"));
 
     // Get numRenders
     numRenders = mongoPoll.getInteger("numRenders");
