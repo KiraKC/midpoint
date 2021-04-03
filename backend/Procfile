@@ -1,1 +1,1 @@
-web: ./run
+web: mvn clean \n mvn package \n ./run
