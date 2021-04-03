@@ -34,25 +34,16 @@ public class Connection {
     userCollection = mongoDatabase.getCollection("user");
     pollCollection = mongoDatabase.getCollection("poll");
     responseCollection = mongoDatabase.getCollection("response");
-    dummyGetQuery();
   }
 
-  public static void dummyAddQuery(String password) {
-    System.out.println("adding new document");
-    try {
-      Document user = new Document("_id", (int) (Math.random() * 100000));
-      user.append("password", password);
-      userCollection.insertOne(user);
-    } catch (Exception e) {
-      System.out.println("failed");
-    }
-    System.out.println("success in insertion");
-  }
-
-  public static void dummyGetQuery() {
-    Document user = userCollection.find(new Document("_id", 10003)).first();
-    System.out.println("User 1: " + user.toJson());
-  }
+//  public static void setUp() {
+//    String connectionString = System.getProperty("mongodb.uri");
+//    mongoClient = MongoClients.create(connectionString);
+//    mongoDatabase = mongoClient.getDatabase("main");
+//    userCollection = mongoDatabase.getCollection("user");
+//    pollCollection = mongoDatabase.getCollection("poll");
+//    responseCollection = mongoDatabase.getCollection("response");
+//  }
 
   /**
    * Method for generating random polls.
@@ -113,14 +104,17 @@ public class Connection {
 
   public static boolean addUserToDB(User user) {
     try {
+      System.out.println("USER: " + user.toBSON());
+      System.out.println("userCollection: " + userCollection);
       userCollection.insertOne(user.toBSON());
       System.out.println("adding com.cs32.app.user to db was SUCCESSFUL");
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("adding com.cs32.app.pollResponse to db failed");
+      System.out.println("adding com.cs32.app.user to db failed");
       return false;
     }
     return true;
   }
+
 
 }
