@@ -135,16 +135,29 @@
                         <showDeprecation>true</showDeprecation>
                     </configuration>
                 </plugin>
-
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-dependency-plugin</artifactId>
+                    <version>3.0.1</version>
+                    <executions>
+                        <execution>
+                            <id>copy-dependencies</id>
+                            <phase>package</phase>
+                            <goals><goal>copy-dependencies</goal></goals>
+                        </execution>
+                    </executions>
+                </plugin>
                 <!-- heroku -->
                 <plugin>
                     <groupId>com.heroku.sdk</groupId>
                     <artifactId>heroku-maven-plugin</artifactId>
                     <configuration>
                         <processTypes>
-                            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* App</web>
+                            <web>java $JAVA_OPTS -cp target/classes:target/dependency/* com.cs32.app.App</web>
 <!--                            <web>mvn exec:java -Dexec.mainClass=com.cs32.app.App</web>-->
                         </processTypes>
+                        <appName>midpoint-backend</appName>
+                        <jdkVersion>11</jdkVersion>
                     </configuration>
                 </plugin>
 
