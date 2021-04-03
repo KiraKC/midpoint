@@ -45,7 +45,7 @@
             <version>7.1.1</version>
         </dependency>
 
-        <!-- env file-->
+        <!-- .env file-->
         <dependency>
             <groupId>io.github.cdimascio</groupId>
             <artifactId>dotenv-java</artifactId>
