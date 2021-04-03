@@ -5,17 +5,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.cs32.app</groupId>
-    <artifactId>peek</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <artifactId>midpoint</artifactId>
+    <version>1.0</version>
 
-    <name>peek</name>
+    <name>midpoint</name>
     <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
+    <url>http://www.midpoint.fun</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-<!--        <maven.compiler.source>1.7</maven.compiler.source>-->
-<!--        <maven.compiler.target>1.7</maven.compiler.target>-->
     </properties>
 
     <!-- Dependencies section for libraries put all of your libraries in here -->
@@ -23,8 +21,6 @@
         <!--
             MongoDB Support
         -->
-        <!-- https://mvnrepository.com/artifact/org.mongodb/mongodb-driver-sync -->
-        <!-- https://mvnrepository.com/artifact/org.mongodb/mongo-java-driver -->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
@@ -68,13 +64,6 @@
             <version>2.0.0-alpha1</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>org.slf4j</groupId>-->
-<!--            <artifactId>slf4j-nop</artifactId>-->
-<!--            <version>1.7.30</version>-->
-<!--        </dependency>-->
-
-
         <!--
             junit is a testing framework.
             http://junit.org/junit4/.
@@ -116,11 +105,10 @@
             <artifactId>guava</artifactId>
             <version>28.2-jre</version>
         </dependency>
-
     </dependencies>
 
     <build>
-        <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
+        <pluginManagement>
             <plugins>
                 <!-- java 11 source and compiler-->
                 <plugin>
@@ -147,6 +135,7 @@
                         </execution>
                     </executions>
                 </plugin>
+
                 <!-- heroku -->
                 <plugin>
                     <groupId>com.heroku.sdk</groupId>
@@ -154,18 +143,10 @@
                     <configuration>
                         <processTypes>
                             <web>java $JAVA_OPTS -cp target/classes:target/dependency/* com.cs32.app.App</web>
-<!--                            <web>mvn exec:java -Dexec.mainClass=com.cs32.app.App</web>-->
                         </processTypes>
                         <appName>midpoint-backend</appName>
                         <jdkVersion>11</jdkVersion>
                     </configuration>
-                </plugin>
-
-                <!--  heroku maven -->
-                <plugin>
-                    <groupId>com.heroku.sdk</groupId>
-                    <artifactId>heroku-maven-plugin</artifactId>
-                    <version>3.0.3</version>
                 </plugin>
 
                 <!-- clean lifecycle, see https://maven.apache.org/ref/current/maven-core/lifecycles.html#clean_Lifecycle -->

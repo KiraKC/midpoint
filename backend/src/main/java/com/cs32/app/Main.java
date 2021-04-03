@@ -21,7 +21,6 @@ public class Main {
   }
 
   public void run() {
-    System.out.println("correctly executed");
     this.runSparkServer(DEFAULT_PORT);
   }
 
@@ -52,7 +51,7 @@ public class Main {
             new FileInputStream(System.getenv("PATH_TO_PRIVATE_KEY"));
       FirebaseOptions options = FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-            .setDatabaseUrl("https://midpoint-b4a3c-default-rtdb.firebaseio.com")
+            .setDatabaseUrl(System.getenv("FIREBASE_DB_URL"))
             .build();
       FirebaseApp.initializeApp(options);
     } catch (IOException e) {
@@ -64,10 +63,10 @@ public class Main {
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
     // TODO: @Jacqueline: once Connection has been changed to non-static, we need to pass 'conn' into each handler
-    Spark.get("/user/get-suggested", new GetSuggestedPollsHandler());
-    Spark.post("/user/new", new NewUserHandler());
-    Spark.post("/poll/new", new NewPollHandler());
-    Spark.get("/poll/stats", new GetStatsHandler());
-    Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
+    Spark.get("/api/user/get-suggested", new GetSuggestedPollsHandler());
+    Spark.post("/api/user/new", new NewUserHandler());
+    Spark.post("/api/poll/new", new NewPollHandler());
+    Spark.get("/api/poll/stats", new GetStatsHandler());
+    Spark.post("/api/poll/anon-answer", new AnonymousAnswerHandler());
   }
 }
