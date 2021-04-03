@@ -208,30 +208,6 @@ function LoginModal(props: INewPollModal) {
 					</div>
 				</div>
 			</FirebaseAuthProvider>
-
-			{/* <FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
-					<div>
-						<button onClick={() => { firebase.auth().signInAnonymously(); }}>
-							Sign In Anonymously</button>
-						<button onClick={() => { firebase.auth().signOut(); }}>
-							Sign Out</button>
-						<FirebaseAuthConsumer>
-							{({ isSignedIn, firebase }) => {
-								if (isSignedIn === true) {
-									return (
-										<div></div>
-									);
-								} else {
-									return (
-										<div></div>
-									);
-								}
-							}}
-						</FirebaseAuthConsumer>
-					</div>
-				</FirebaseAuthProvider> */}
-
-
 		</Modal >
 	);
 }

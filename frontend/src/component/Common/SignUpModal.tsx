@@ -103,6 +103,7 @@ function SignUpModal(props: INewPollModal) {
 				.then(async (res) => {
 					setLoading(false)
 					let status: boolean = await addUserToMongo();
+					console.log(status)
 					if (status) {
 						cleanUpData()
 						props.setIsModalOpen(false);
@@ -162,9 +163,8 @@ function SignUpModal(props: INewPollModal) {
 	}
 
 	const addUserToMongo = async () => {
-		let status = false;
 		setLoading(true)
-		firebase.auth().currentUser.getIdToken(true)
+		return firebase.auth().currentUser.getIdToken(true)
 			.then(function (idToken) {
 				const toSend = {
 					userIdToken: idToken,
@@ -185,25 +185,24 @@ function SignUpModal(props: INewPollModal) {
 						'Access-Control-Allow-Origin': '*',
 					}
 				}
-				axios.post(
+				return axios.post(
 					"http://localhost:4567/user/new",
 					toSend,
 					config,
 				)
 					.then(response => {
-						status = true;
 						setLoading(false);
+						return true;
 					})
 					.catch(e => {
 						setCredentialDescription('INTERNAL SERVER ERROR');
-						status = false;
 						setLoading(false);
+						return false;
 					});
 			}).catch(function (error) {
 				console.log(error)
+				return false;
 			});
-
-		return status;
 	}
 
 	return (
