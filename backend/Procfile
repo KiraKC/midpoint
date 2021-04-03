@@ -1,1 +1,1 @@
-web: ./run
+web: java $JAVA_OPTS -cp target/classes:target/dependency/* com.cs32.app.App
