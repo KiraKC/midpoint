@@ -72,18 +72,21 @@ public class GetSuggestedPollsHandler implements Route {
           numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
 
       // adjusted num requested in case numRequested > randomPolls.size()
-      int adjustedNumRequested = randomPolls.size() / Constants.NUM_QUERIED_POLLS_PER_REQUESTED;
+      int adjustedNumRequested = Math.min(numPollsRequested, randomPolls.size());
 
       System.out.println("randomPolls size: " + randomPolls.size());
       System.out.println("adjustedNumRequested size: " + adjustedNumRequested);
 
       int numRelevancyIndex = (int) Math.floor(randomPolls.size() * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
-      int numClickRateIndex = numRelevancyIndex + (int) Math.floor(randomPolls.size() * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
-      int numRandomIndex= randomPolls.size();
+      int numClickRateIndex = numRelevancyIndex + (int) Math.floor(randomPolls.size() * Constants.QUERY_RAND_POLLS_CLICK_RATE_PORTION);
+      int numRandomIndex = randomPolls.size();
 
       List<Poll> relevancyBatch = randomPolls.subList(0, numRelevancyIndex);
+      System.out.println("relevancyBatch size: " + relevancyBatch.size());
       List<Poll> clickRateBatch = randomPolls.subList(numRelevancyIndex, numClickRateIndex);
+      System.out.println("clickRateBatch size: " + clickRateBatch.size());
       List<Poll> randomBatch = randomPolls.subList(numClickRateIndex, numRandomIndex);
+      System.out.println("randomBatch size: " + randomBatch.size());
 
       // Get polls with highest relevancy from the first batch
       int numFromRelevancyBatch = (int) Math.floor(adjustedNumRequested * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);

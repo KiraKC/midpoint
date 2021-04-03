@@ -1,4 +1,4 @@
 ## To run: 
 mvn clean \
 mvn package \
-./run
+mvn exec:java -Dexec.mainClass=com.cs32.app.App
