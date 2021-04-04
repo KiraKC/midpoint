@@ -1,4 +1,5 @@
 target
 .mvn-classpath
 .env
-firebase_config.json
+firebase/firebase_config.json
+firebase

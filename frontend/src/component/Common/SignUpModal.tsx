@@ -186,7 +186,7 @@ function SignUpModal(props: INewPollModal) {
 					}
 				}
 				return axios.post(
-					"https://api.midpoint.fun/user/new",
+					"http://localhost:4567/user/new",
 					toSend,
 					config,
 				)
