@@ -43,7 +43,7 @@ public class User {
   public User(Document mongoUser) {
     id = mongoUser.getString("_id");
     categoryPoints = new CategoryPoints();
-    categoryPoints.initializeFromMongo((List<Document>) mongoUser.get("catPts"));
+    categoryPoints.initializeFromMongo((List<Document>) mongoUser.get("categoryPoints"));
   }
 
   public Document toBSON() {
