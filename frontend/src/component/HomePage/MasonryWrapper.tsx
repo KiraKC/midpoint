@@ -5,6 +5,7 @@ import MasonryPoll from './MasonryPoll'
 import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
 import axios from 'axios';
+import endpointUrl from '../../constants/Endpoint';
 
 function MasonryWrapper(props) {
 
@@ -53,7 +54,7 @@ function MasonryWrapper(props) {
 		}
 		console.log(toSend)
 		axios.post(
-			'http://localhost:4567/user/get-suggested', toSend, config)
+			endpointUrl + '/user/get-suggested', toSend, config)
 			.then(response => {
 				console.log(response.data.suggestedPolls)
 				updatePollArray(response.data.suggestedPolls)
