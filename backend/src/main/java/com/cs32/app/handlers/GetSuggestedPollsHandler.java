@@ -43,6 +43,7 @@ public class GetSuggestedPollsHandler implements Route {
 
     try {
       // Parse request
+      System.err.println(request.body());
       JSONObject jsonReqObject = new JSONObject(request.body());
       numPollsRequested = jsonReqObject.getInt("numPollsRequested");
 

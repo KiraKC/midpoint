@@ -9,6 +9,7 @@ import axios from 'axios';
 import OptionPanel from './OptionPanel';
 import OptionButton from './OptionButton';
 import categoryArray from '../../constants/Category';
+import endpointUrl from '../../constants/Endpoint';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -118,7 +119,7 @@ function NewPollModal(props: INewPollModal) {
 		if (isSubmissionValid()) {
 			props.setIsModalOpen(false);
 			axios.post(
-				"http://localhost:4567/poll/new",
+				endpointUrl + '/poll/new',
 				toSend,
 				config,
 			)

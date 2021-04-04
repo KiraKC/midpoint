@@ -63,10 +63,10 @@ public class Main {
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
     // TODO: @Jacqueline: once Connection has been changed to non-static, we need to pass 'conn' into each handler
-    Spark.get("/api/user/get-suggested", new GetSuggestedPollsHandler());
-    Spark.post("/api/user/new", new NewUserHandler());
-    Spark.post("/api/poll/new", new NewPollHandler());
-    Spark.get("/api/poll/stats", new GetStatsHandler());
-    Spark.post("/api/poll/anon-answer", new AnonymousAnswerHandler());
+    Spark.post("/user/get-suggested", new GetSuggestedPollsHandler());
+    Spark.post("/user/new", new NewUserHandler());
+    Spark.post("/poll/new", new NewPollHandler());
+    Spark.get("/poll/stats", new GetStatsHandler());
+    Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
   }
 }
