@@ -5,12 +5,10 @@ import MasonryPoll from './MasonryPoll'
 import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
 import axios from 'axios';
-import endpointUrl from '../../constants/Endpoint';
 
-function MasonryWrapper() {
+function MasonryWrapper(props) {
 
 	const [polls, setPolls]: [IPoll[], any] = useState([])
-	const [isLoggedIn, setIsLoggedIn]: [boolean, any] = useState(false);
 
 	useEffect(() => {
 		requestPolls();
@@ -21,19 +19,9 @@ function MasonryWrapper() {
 		setPolls([...tempPolls, ...newPolls]);
 	}
 
-	firebase.auth().onAuthStateChanged(function (user) {
-		if (user) {
-			// User is signed in.
-			setIsLoggedIn(true)
-		} else {
-			// No user is signed in.
-			setIsLoggedIn(false)
-		}
-	});
-
 	const requestPolls = () => {
 		let toSend;
-		if (isLoggedIn) {
+		if (props.isLoggedIn) {
 			console.log('logged in')
 			toSend = firebase.auth().currentUser.getIdToken(true)
 				.then(function (idToken) {

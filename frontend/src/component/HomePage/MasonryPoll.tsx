@@ -1,5 +1,4 @@
 import '../../styles/HomePage/MasonryPoll.css';
-import React from 'react';
 import MasonryOption from './MasonryOption';
 import { Emoji } from 'emoji-mart';
 import IOption from '../../interfaces/IOption';
