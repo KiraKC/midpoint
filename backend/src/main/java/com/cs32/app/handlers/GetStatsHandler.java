@@ -46,7 +46,6 @@ public class GetStatsHandler implements Route {
       System.err.println("ERROR: Incorrect JSON object formatting");
       status = false;
       // TODO: send the error message to the frontend
-
     }
     variables.put("status", status);
     return GSON.toJson(variables);

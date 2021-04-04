@@ -55,7 +55,7 @@ public class Poll {
     // Get answer options
     answerOptions = new ArrayList<>();
     List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
-    System.out.println("MONGOANSWEROPTIONS:" + mongoAnswerOptions);
+//    System.out.println("MONGOANSWEROPTIONS:" + mongoAnswerOptions);
     for (Document doc : mongoAnswerOptions) {
       answerOptions.add(new AnswerOption(doc.getString("answerOptionId"), doc.getString("value"), doc.getString("emoji")));
     }
@@ -119,9 +119,9 @@ public class Poll {
     double categoryDisparity = 0;
     double clickRate = this.getClickRate();
     Double userTotal = userCatPts.getTotalPts();
-    System.out.println("USERCATPTS:" + userTotal);
+//    System.out.println("USERCATPTS:" + userTotal);
     Double pollTotal = categoryPoints.getTotalPts();
-    System.out.println("POLLCATPTS:" + question + pollTotal);
+//    System.out.println("POLLCATPTS:" + question + pollTotal);
     for(String category : Constants.ALL_CATEGORIES) {
       categoryDisparity += Math.abs(userCatPts.getNormPts(category, userTotal) - categoryPoints.getNormPts(category, pollTotal));
     }

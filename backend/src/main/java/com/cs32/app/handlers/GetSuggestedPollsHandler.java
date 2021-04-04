@@ -43,14 +43,14 @@ public class GetSuggestedPollsHandler implements Route {
 
     try {
       // Parse request
-      System.err.println(request.body());
+//      System.err.println(request.body());
       JSONObject jsonReqObject = new JSONObject(request.body());
       numPollsRequested = jsonReqObject.getInt("numPollsRequested");
 
       Set<String> seenPollIds = new HashSet<>();
       JSONArray jsonSeenPollsArray = jsonReqObject.getJSONArray("seenPollIds");
       for (int i = 0; i < jsonSeenPollsArray.length(); i++) {
-        System.out.println("SEEN POLL #" + i + " IS " + jsonSeenPollsArray.getString(i));
+//        System.out.println("SEEN POLL #" + i + " IS " + jsonSeenPollsArray.getString(i));
         seenPollIds.add(jsonSeenPollsArray.getString(i));
       }
 
@@ -75,35 +75,35 @@ public class GetSuggestedPollsHandler implements Route {
       // adjusted num requested in case numRequested > randomPolls.size()
       int adjustedNumRequested = Math.min(numPollsRequested, randomPolls.size());
 
-      System.out.println("randomPolls size: " + randomPolls.size());
-      System.out.println("adjustedNumRequested size: " + adjustedNumRequested);
+//      System.out.println("randomPolls size: " + randomPolls.size());
+//      System.out.println("adjustedNumRequested size: " + adjustedNumRequested);
 
       int numRelevancyIndex = (int) Math.floor(randomPolls.size() * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
       int numClickRateIndex = numRelevancyIndex + (int) Math.floor(randomPolls.size() * Constants.QUERY_RAND_POLLS_CLICK_RATE_PORTION);
       int numRandomIndex = randomPolls.size();
 
       List<Poll> relevancyBatch = randomPolls.subList(0, numRelevancyIndex);
-      System.out.println("relevancyBatch size: " + relevancyBatch.size());
+//      System.out.println("relevancyBatch size: " + relevancyBatch.size());
       List<Poll> clickRateBatch = randomPolls.subList(numRelevancyIndex, numClickRateIndex);
-      System.out.println("clickRateBatch size: " + clickRateBatch.size());
+//      System.out.println("clickRateBatch size: " + clickRateBatch.size());
       List<Poll> randomBatch = randomPolls.subList(numClickRateIndex, numRandomIndex);
-      System.out.println("randomBatch size: " + randomBatch.size());
+//      System.out.println("randomBatch size: " + randomBatch.size());
 
       // Get polls with highest relevancy from the first batch
       int numFromRelevancyBatch = (int) Math.floor(adjustedNumRequested * Constants.QUERY_RAND_POLLS_RELEVANCY_PORTION);
-      System.out.println("numFromRelevancyBatch: " + numFromRelevancyBatch);
+//      System.out.println("numFromRelevancyBatch: " + numFromRelevancyBatch);
       Collections.sort(relevancyBatch, new RelevancyComparator(userCatPts));
       List<Poll> byRelevancy = relevancyBatch.subList(0, numFromRelevancyBatch);
 
       // Get polls with highest click rate from the second batch
       int numFromClickRateBatch = (int) Math.floor(adjustedNumRequested * Constants.QUERY_RAND_POLLS_CLICK_RATE_PORTION);
-      System.out.println("numFromClickRateBatch: " + numFromClickRateBatch);
+//      System.out.println("numFromClickRateBatch: " + numFromClickRateBatch);
       Collections.sort(clickRateBatch, new ClickRateComparator());
       List<Poll> byClickRate = clickRateBatch.subList(0, numFromClickRateBatch);
 
       // Get polls randomly from the third batch
       int numFromRandomBatch = adjustedNumRequested - numFromRelevancyBatch - numFromClickRateBatch;
-      System.out.println("numFromRandomBatch: " + numFromRandomBatch);
+//      System.out.println("numFromRandomBatch: " + numFromRandomBatch);
       List<Poll> byRandom = randomBatch.subList(0, numFromRandomBatch);
 
       // Put the three sets of polls together and shuffle them
