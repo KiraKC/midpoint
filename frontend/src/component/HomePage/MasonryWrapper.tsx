@@ -7,7 +7,11 @@ import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
 
-function MasonryWrapper(props) {
+interface MasonryWrapperProps {
+	isLoggedIn: boolean
+}
+
+function MasonryWrapper(props: MasonryWrapperProps) {
 
 	const [polls, setPolls]: [IPoll[], any] = useState([])
 
@@ -16,7 +20,7 @@ function MasonryWrapper(props) {
 			await requestPolls();
 		}
 		pollHandler();
-	}, [])
+	}, [props.isLoggedIn])
 
 	const updatePollArray = (newPolls: IPoll[]) => {
 		let tempPolls = polls;
@@ -26,7 +30,6 @@ function MasonryWrapper(props) {
 	const requestPolls = async () => {
 		let toSend;
 		if (props.isLoggedIn) {
-			console.log('logged in')
 			const idToken = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				userIdToken: idToken,
@@ -35,7 +38,6 @@ function MasonryWrapper(props) {
 				loggedIn: true
 			}
 		} else {
-			console.log('NOT logged in')
 			toSend = {
 				userIdToken: 'none',
 				numPollsRequested: 30,

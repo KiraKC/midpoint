@@ -26,14 +26,17 @@ function App() {
 
 	return (
 		<>
+		
 			<BrowserRouter>
 				<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 					<div id="website-wrapper">
 						<Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />
+						{console.log(isLoggedIn)}
+
 						<Routes>
 							<Route element={<Navigate to="home" />} />
-							<Route path="/home" element={<MasonryWrapper isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
-							<Route path="/game" element={<GameStart isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+							<Route path="/home" element={<MasonryWrapper isLoggedIn={isLoggedIn} />} />
+							<Route path="/game" element={<GameStart isLoggedIn={isLoggedIn} />} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>
