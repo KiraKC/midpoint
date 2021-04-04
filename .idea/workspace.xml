@@ -6,8 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d582ac83-f454-46b4-9a64-852df8947de5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CatPtsPair.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/algorithm/PollAndRelevancePair.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/AnonymousAnswerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/AnonymousAnswerHandler.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -57,6 +56,12 @@
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <envs>
+        <env name="MONGODB_URI" value="mongodb+srv://xchai1:87581155Ab!!@peekproject.pqvjm.mongodb.net/main?retryWrites=true&amp;w=majority&amp;ssl=true" />
+        <env name="PATH_TO_PRIVATE_KEY" value="./firebase_config.json" />
+        <env name="PORT" value="4567" />
+        <env name="FIREBASE_DB_URL" value="https://midpoint-b4a3c-default-rtdb.firebaseio.com" />
+      </envs>
       <option name="MAIN_CLASS_NAME" value="com.cs32.app.App" />
       <module name="peek" />
       <extension name="coverage">
@@ -69,13 +74,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
+    <configuration default="true" type="ArquillianTestNG" factoryName="" nameIsGenerated="true">
       <option name="arquillianRunConfiguration">
         <value>
           <option name="containerStateName" value="" />
         </value>
       </option>
-      <option name="TEST_OBJECT" value="class" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <properties />
+      <listeners />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -125,7 +132,8 @@
       <workItem from="1616387733608" duration="499000" />
       <workItem from="1616556200393" duration="3743000" />
       <workItem from="1617418948392" duration="5544000" />
-      <workItem from="1617439832894" duration="8518000" />
+      <workItem from="1617439832894" duration="8935000" />
+      <workItem from="1617506480011" duration="2766000" />
     </task>
     <servers />
   </component>

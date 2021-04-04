@@ -52,6 +52,7 @@ public class AnonymousAnswerHandler implements Route {
 
       // Get all answer options and all responses
       String pollId = jsonReqObject.getString("pollId");
+      variables.put("pollId", pollId);
       List<AnswerOption> answerOptions = Connection.getPollById(pollId).getAnswerOptions();
       List<PollResponse> allResponses = Connection.getResponses(pollId);
       System.out.println("ANSWER OPTIONS SIZE:");
@@ -71,10 +72,12 @@ public class AnonymousAnswerHandler implements Route {
       }
 
       // Send mini-stats to front end
+      Map<String, Double> miniStats = new HashMap<>();
       for (AnswerOption answerOption : answerOptions) {
         double percentage = counts.get(answerOption.getId()) / allResponses.size();
-        variables.put(answerOption.getId(), percentage);
+        miniStats.put(answerOption.getValue(), percentage);
       }
+      variables.put("miniStats", miniStats);
       status = true;
     } catch (Exception e) {
       System.err.println(e.getMessage());
