@@ -14,6 +14,8 @@ import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
 
+import static spark.route.HttpMethod.before;
+
 public class Main {
 
   private static final int DEFAULT_PORT = Integer.parseInt(System.getenv("PORT"));
@@ -41,10 +43,13 @@ public class Main {
       if (accessControlRequestMethod != null) {
         response.header("Access-Control-Allow-Methods", accessControlRequestMethod);
       }
-
       return "OK";
     });
-
+    Spark.before((request, response) -> {
+      response.header("Access-Control-Allow-Origin", "*");
+      response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+      response.header("Access-Control-Allow-Headers", "Content-Type, api_key, Authorization");
+    });
     // Connections class for MongoDB related queries
     Connection conn = new Connection();
 
@@ -66,9 +71,7 @@ public class Main {
       e.printStackTrace();
     }
 
-
-    Spark.before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
-//    Spark.externalStaticFileLocation("src/main/resources/static");
+    //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
     // TODO: @Jacqueline: once Connection has been changed to non-static, we need to pass 'conn' into each handler
     Spark.post("/user/get-suggested", new GetSuggestedPollsHandler());
