@@ -99,6 +99,7 @@ function SignUpModal(props: INewPollModal) {
 		setPasswordDescription('PASSWORD');
 		setLoading(true)
 		if (isSubmissionValid()) {
+			checkExists();
 			firebase.auth().createUserWithEmailAndPassword(email, password)
 				.then(async (res) => {
 					setLoading(false)
@@ -161,6 +162,15 @@ function SignUpModal(props: INewPollModal) {
 		setEmailDescription('EMAIL');
 		setPasswordDescription('PASSWORD');
 	}
+
+	function checkExists() {
+		firebase.auth()
+		.fetchSignInMethodsForEmail(email)
+		.then((result) => {
+			console.log('result', result);
+		});
+	}
+
 
 	const addUserToMongo = async () => {
 		setLoading(true)
