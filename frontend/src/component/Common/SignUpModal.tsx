@@ -185,6 +185,7 @@ function SignUpModal(props: INewPollModal) {
 						'Access-Control-Allow-Origin': '*',
 					}
 				}
+				console.log("CHAI'S NEW VERSION")
 				return axios.post(
 					"http://localhost:4567/user/new",
 					toSend,

@@ -10,6 +10,9 @@ import spark.Spark;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
+import java.net.URLConnection;
 
 public class Main {
 
@@ -47,10 +50,15 @@ public class Main {
 
     // Authentication using Firebase
     try {
-      FileInputStream serviceAccount =
-            new FileInputStream(System.getenv("PATH_TO_PRIVATE_KEY"));
+//      FileInputStream serviceAccount =
+//            new FileInputStream(System.getenv("PATH_TO_PRIVATE_KEY"));
+
+
+      URLConnection connection = new URL("https://www.midpoint.fun/firebase_config.json").openConnection();
+      InputStream response = connection.getInputStream();
+
       FirebaseOptions options = FirebaseOptions.builder()
-            .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+            .setCredentials(GoogleCredentials.fromStream(response))
             .setDatabaseUrl(System.getenv("FIREBASE_DB_URL"))
             .build();
       FirebaseApp.initializeApp(options);

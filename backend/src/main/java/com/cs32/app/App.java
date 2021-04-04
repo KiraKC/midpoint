@@ -12,6 +12,7 @@ public class App {
         try {
             new Main(args).run();
         } catch (Exception e) {
+            System.out.println(e);
             System.exit(-1);
         }
     }

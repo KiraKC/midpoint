@@ -108,11 +108,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory> [your folder here] </directory>
-            </resource>
-        </resources>
         <pluginManagement>
             <plugins>
                 <!-- java 11 source and compiler-->
