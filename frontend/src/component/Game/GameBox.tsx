@@ -17,7 +17,7 @@ function GameStart(props: IGameStartProps) {
 				<div className="start-rect">
 				<div className="start-section-heading">Hit the <br/> Midpoint Challenge</div>
 				<div className="start-details">
-				Midpoint is a platform where you can create custom surveys. 
+				MidPoint is a platform where you can create custom surveys. 
 				The statistics help you learn  about the ideas and opintions of the wider community.
 				</div>
 				<button className="start-button-submit"> Start</button>
