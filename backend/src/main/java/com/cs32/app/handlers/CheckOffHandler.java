@@ -38,12 +38,17 @@ public class CheckOffHandler implements Route {
       String userId = data.getString("userId");
 
       // TODO: update user's list of answered polls
+
+
       // TODO: update user's category points
 
 
       // TODO: update poll's list of responders
+
       // TODO: update poll's numClicks
+
       // TODO: update poll's category points
+
       Connection.getPollById(pollId);
 
 

@@ -1,7 +1,5 @@
 package com.cs32.app;
 
-import com.cs32.app.database.Connection;
-import com.cs32.app.exceptions.MissingDBObjectException;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.FirebaseToken;
@@ -9,7 +7,6 @@ import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.util.List;
 
 public class User {
@@ -17,6 +14,8 @@ public class User {
   private String id;
   private UserMetaData userMetaData;
   private CategoryPoints categoryPoints;
+  private AnsweredPolls answeredPolls;
+  private CreatedPolls createdPolls;
 
   /**
    * Constructor for creating entirely new user from registration
@@ -38,18 +37,30 @@ public class User {
 
     // userMetaData
     userMetaData = new UserMetaData(jsonReqObject.getJSONArray("userMetaData"));
+
+    // answeredPolls
+    answeredPolls = new AnsweredPolls();
+
+    // createdPolls
+    createdPolls = new CreatedPolls();
   }
 
   public User(Document mongoUser) {
     id = mongoUser.getString("_id");
     categoryPoints = new CategoryPoints();
     categoryPoints.initializeFromMongo((List<Document>) mongoUser.get("categoryPoints"));
+    answeredPolls = new AnsweredPolls();
+    answeredPolls.initializeFromMongo((List<String>) mongoUser.get("answeredPolls"));
+    createdPolls = new CreatedPolls();
+    createdPolls.initializeFromMongo((List<String>) mongoUser.get("createdPolls"));
   }
 
   public Document toBSON() {
     Document mongoUser = new Document("_id", id);
     mongoUser.append("categoryPoints", categoryPoints.toBSON())
-          .append("userMetaData", userMetaData.toBSON());
+          .append("userMetaData", userMetaData.toBSON())
+          .append("answeredPolls", answeredPolls.toBSON())
+          .append("createdPolls", createdPolls.toBSON());
     return mongoUser;
   }
 
