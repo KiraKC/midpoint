@@ -120,7 +120,7 @@ public class Connection {
 
   public static User getUserById(String id) throws MissingDBObjectException {
     BasicDBObject query = new BasicDBObject();
-    query.put("_id", new ObjectId(id));
+    query.put("_id", id);
     MongoCursor<Document> cursor = userCollection.find(query).limit(1).iterator();
     if (!cursor.hasNext()) {
       throw new MissingDBObjectException("User", "_id", id, "user");

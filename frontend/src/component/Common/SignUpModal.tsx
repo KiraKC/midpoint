@@ -185,7 +185,6 @@ function SignUpModal(props: INewPollModal) {
 						'Access-Control-Allow-Origin': '*',
 					}
 				}
-				console.log("CHAI'S NEW VERSION")
 				return axios.post(
 					"https://api.midpoint.fun/user/new",
 					toSend,

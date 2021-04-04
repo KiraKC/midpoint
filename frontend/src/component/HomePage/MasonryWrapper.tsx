@@ -12,7 +12,10 @@ function MasonryWrapper(props) {
 	const [polls, setPolls]: [IPoll[], any] = useState([])
 
 	useEffect(() => {
-		requestPolls();
+		async function pollHandler() {
+			await requestPolls();
+		}
+		pollHandler();
 	}, [])
 
 	const updatePollArray = (newPolls: IPoll[]) => {
@@ -20,25 +23,19 @@ function MasonryWrapper(props) {
 		setPolls([...tempPolls, ...newPolls]);
 	}
 
-	const requestPolls = () => {
+	const requestPolls = async () => {
 		let toSend;
 		if (props.isLoggedIn) {
 			console.log('logged in')
-			toSend = firebase.auth().currentUser.getIdToken(true)
-				.then(function (idToken) {
-					const userData = {
-						userIdToken: idToken,
-						numPollsRequested: 30,
-						seenPollIds: [],
-						loggedIn: true
-					}
-					return userData;
-				}).catch(function (error) {
-					console.log(error)
-				});
+			const idToken = await firebase.auth().currentUser.getIdToken(true);
+			toSend = {
+				userIdToken: idToken,
+				numPollsRequested: 30,
+				seenPollIds: [],
+				loggedIn: true
+			}
 		} else {
 			console.log('NOT logged in')
-
 			toSend = {
 				userIdToken: 'none',
 				numPollsRequested: 30,
@@ -46,17 +43,16 @@ function MasonryWrapper(props) {
 				loggedIn: false
 			}
 		}
+		console.log(toSend)
 		const config = {
 			headers: {
 				"Content-Type": "application/json",
 				'Access-Control-Allow-Origin': '*',
 			}
 		}
-		console.log(toSend)
 		axios.post(
 			endpointUrl + '/user/get-suggested', toSend, config)
 			.then(response => {
-				console.log(response.data.suggestedPolls)
 				updatePollArray(response.data.suggestedPolls)
 			})
 			.catch(e => {
