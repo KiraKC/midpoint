@@ -55,10 +55,6 @@ public class AnonymousAnswerHandler implements Route {
       variables.put("pollId", pollId);
       List<AnswerOption> answerOptions = Connection.getPollById(pollId).getAnswerOptions();
       List<PollResponse> allResponses = Connection.getResponses(pollId);
-      System.out.println("ANSWER OPTIONS SIZE:");
-      System.out.println(answerOptions.size());
-      System.out.println("ALLRESPONSES SIZE:");
-      System.out.println(allResponses.size());
 
       // Initialize a map for counting the occurrence of every answer option
       Map<String, Double> counts = new HashMap<>();

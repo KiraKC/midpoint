@@ -49,10 +49,8 @@ public class User {
     id = mongoUser.getString("_id");
     categoryPoints = new CategoryPoints();
     categoryPoints.initializeFromMongo((List<Document>) mongoUser.get("categoryPoints"));
-    answeredPolls = new AnsweredPolls();
-    answeredPolls.initializeFromMongo((List<String>) mongoUser.get("answeredPolls"));
-    createdPolls = new CreatedPolls();
-    createdPolls.initializeFromMongo((List<String>) mongoUser.get("createdPolls"));
+    answeredPolls = new AnsweredPolls((List<String>) mongoUser.get("answeredPolls"));
+    createdPolls = new CreatedPolls((List<String>) mongoUser.get("answeredPolls"));
   }
 
   public Document toBSON() {

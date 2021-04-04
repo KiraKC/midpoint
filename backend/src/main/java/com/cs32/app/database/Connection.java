@@ -39,14 +39,6 @@ public class Connection {
     responseCollection = mongoDatabase.getCollection("response");
   }
 
-//  public static void setUp() {
-//    String connectionString = System.getProperty("mongodb.uri");
-//    mongoClient = MongoClients.create(connectionString);
-//    mongoDatabase = mongoClient.getDatabase("main");
-//    userCollection = mongoDatabase.getCollection("user");
-//    pollCollection = mongoDatabase.getCollection("poll");
-//    responseCollection = mongoDatabase.getCollection("response");
-//  }
 
   /**
    * Method for generating random polls.

@@ -13,6 +13,7 @@ import OptionSelector from './OptionSelector';
 import { registerNewUser } from '../../firebase/AuthMethods';
 import axios from 'axios';
 import Spinner from './Spinner';
+import endpointUrl from '../../constants/Endpoint';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -186,7 +187,7 @@ function SignUpModal(props: INewPollModal) {
 					}
 				}
 				return axios.post(
-					"https://api.midpoint.fun/user/new",
+					endpointUrl + "/user/new",
 					toSend,
 					config,
 				)
