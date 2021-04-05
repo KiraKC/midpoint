@@ -78,8 +78,11 @@ public class GetSuggestedPollsHandler implements Route {
           System.out.println("considering poll: " + newPolls.get(i).getId());
           if (seenPollIds.contains(newPolls.get(i).getId())) {
             System.out.println("removed poll");
+            seenPollIds.add(newPolls.get(i).getId());
             newPolls.remove(i);
             i--;
+          } else {
+            seenPollIds.add(newPolls.get(i).getId());
           }
         }
         previousQuerySize = newPolls.size();
