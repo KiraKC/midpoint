@@ -6,35 +6,23 @@ import firebaseConfig from "../../firebase/FirebaseIndex";
 import '../../styles/Game/GameBox.css'
 
 import { signOut } from '../../firebase/AuthMethods'
-import GameQuestionArea from "../Game/GameQuestionArea"
-import OptionButton from "../Game/OptionButton"
-import PlayerDashboard from "../Game/PlayerDashboard"
 
 interface IGameBoxProps {
 
 }
 
-function GameBox(props: IGameBoxProps) {
+function PlayerDashboard(props: IGameBoxProps) {
 
 	return (
-			<div className="game-wrapper-flex">
+			<div className="start-wrapper-flex">
 				<div className="game-box-rect">
-				<div className="game-rect-heading">Hit the <br/> Midpoint Challenge</div>
-				<div className="game-rect-details">
+				<div className="start-section-heading">Hit the <br/> Midpoint Challenge</div>
+				<div className="start-details">
 				Try to choose the most popular option.
 				</div>
 
 				</div>
 				<div className="game-box-area">
-					<div className="game-option-grid">
-					<OptionButton />
-					<OptionButton />
-
-					<OptionButton />
-
-					<OptionButton />
-					</div>
-
 
 					details go here
 				</div>
@@ -45,4 +33,4 @@ function GameBox(props: IGameBoxProps) {
 	);
 }
 
-export default GameBox;
+export default PlayerDashboard;
