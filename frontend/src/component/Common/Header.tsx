@@ -31,7 +31,7 @@ function Header(props) {
 		polls: props.polls,
 		setPolls: props.setPolls,
 		seenPollIds: props.seenPollIds,
-		setSeenPollIds: props.seenPollIds
+		setSeenPollIds: props.setSeenPollIds
 	}
 
 	return (

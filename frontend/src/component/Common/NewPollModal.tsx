@@ -131,7 +131,18 @@ function NewPollModal(props: INewPollModal) {
 			)
 				.then(response => {
 					cleanUpData();
-					console.log(response)
+					const newPoll: IPoll = {
+						id: response.data.newPoll.id,
+						question: toSend.question,
+						emoji: toSend.emoji,
+						answerOptions: response.data.newPoll.answerOptions
+					}
+					let tempSeenIds = props.seenPollIds;
+					tempSeenIds.push(newPoll.id)
+					props.setSeenPollIds([...tempSeenIds])
+					let tempPoll = props.polls;
+					tempPoll.unshift(newPoll)
+					props.setPolls([...tempPoll])
 					props.setIsModalOpen(false);
 					return response.data;
 				})

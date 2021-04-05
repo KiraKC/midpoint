@@ -12,6 +12,7 @@ import {
 } from "@react-firebase/auth";
 import GameStart from './component/Game/GameStart';
 import IPoll from './interfaces/IPoll';
+import GameBox from './component/Game/GameBox';
 
 function App() {
 
@@ -37,9 +38,8 @@ function App() {
 		polls: polls,
 		setPolls: setPolls,
 		seenPollIds: seenPollIds,
-		setSeenPollIds: seenPollIds
+		setSeenPollIds: setSeenPollIds
 	}
-
 
 	return (
 		<>
@@ -55,7 +55,7 @@ function App() {
 							<Route path="/home" element={<MasonryWrapper
 								{...pollProps} isLoggedIn={isLoggedIn}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
-							<Route path="/game" element={<GameStart isLoggedIn={isLoggedIn} />} />
+							<Route path="/game" element={<GameBox/>} />
 							<Route path="/my-profile" />
 						</Routes>
 					</div>

@@ -74,14 +74,19 @@ public class GetSuggestedPollsHandler implements Route {
       int previousQuerySize = 1;
       while (randomPolls.size() < numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED && previousQuerySize != 0) {
         List<Poll> newPolls = Connection.getRandomPolls(numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
-        previousQuerySize = newPolls.size();
-        randomPolls.addAll(newPolls);
-        for(int i = 0; i<randomPolls.size(); i++) {
-          if (seenPollIds.contains(randomPolls.get(i).getId())) {
-            randomPolls.remove(i);
+        for(int i = 0; i<newPolls.size(); i++) {
+          System.out.println("considering poll: " + newPolls.get(i).getId());
+          if (seenPollIds.contains(newPolls.get(i).getId())) {
+            System.out.println("removed poll");
+            seenPollIds.add(newPolls.get(i).getId());
+            newPolls.remove(i);
             i--;
+          } else {
+            seenPollIds.add(newPolls.get(i).getId());
           }
         }
+        previousQuerySize = newPolls.size();
+        randomPolls.addAll(newPolls);
       }
 
       // adjusted num requested in case numRequested > randomPolls.size()
