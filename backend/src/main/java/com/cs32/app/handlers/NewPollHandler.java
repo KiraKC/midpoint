@@ -35,7 +35,7 @@ public class NewPollHandler implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    boolean status; int userId; String question; String emoji; List<AnswerOption> answerOptions; List<String> taggedCategories;
+    boolean status; String userId; String question; String emoji; List<AnswerOption> answerOptions; List<String> taggedCategories;
     Map<String, Object> variables = new HashMap<>();
     // Parse request
     try {
@@ -64,7 +64,7 @@ public class NewPollHandler implements Route {
       System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
       //TODO: add pollId to user's created polls field in database (so user can see all polls they created)
-      userId = jsonReqObject.getInt("creatorId");
+      userId = jsonReqObject.getString("creatorId");
       BasicDBObject findQuery = new BasicDBObject("_id", userId);
       BasicDBObject newPollIdToAdd = new BasicDBObject("createdPolls", newPoll.getId());
       Document updateQuery = new Document().append("$push", newPollIdToAdd);

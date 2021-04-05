@@ -11,12 +11,15 @@ import {
 	FirebaseAuthConsumer
 } from "@react-firebase/auth";
 import GameStart from './component/Game/GameStart';
+import IPoll from './interfaces/IPoll';
 import GameBox from './component/Game/GameBox';
 
 function App() {
 
 	const [isLoggedIn, setIsLoggedIn]: [boolean, any] = useState(false);
 	const [fetchNewPoll, setFetchNewPoll]: [boolean, any] = useState(false);
+	const [polls, setPolls]: [IPoll[], any] = useState([]);
+	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
 
 	useEffect(() => {
 		if (firebase.auth().currentUser !== null) {
@@ -30,19 +33,28 @@ function App() {
 			}
 		});
 	}, [])
-	
+
+	const pollProps = {
+		polls: polls,
+		setPolls: setPolls,
+		seenPollIds: seenPollIds,
+		setSeenPollIds: setSeenPollIds
+	}
 
 	return (
 		<>
-		{console.log(isLoggedIn)}
+			{console.log(isLoggedIn)}
 			<BrowserRouter>
 				<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
 					<div id="website-wrapper">
 						<Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
-							fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />
+							fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
+							{...pollProps} />
 						<Routes>
 							<Route element={<Navigate to="home" />} />
-							<Route path="/home" element={<MasonryWrapper isLoggedIn={isLoggedIn} fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
+							<Route path="/home" element={<MasonryWrapper
+								{...pollProps} isLoggedIn={isLoggedIn}
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
 							<Route path="/game" element={<GameBox/>} />
 							<Route path="/my-profile" />
 						</Routes>

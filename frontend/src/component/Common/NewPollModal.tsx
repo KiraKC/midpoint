@@ -10,10 +10,16 @@ import OptionPanel from './OptionPanel';
 import OptionButton from './OptionButton';
 import categoryArray from '../../constants/Category';
 import endpointUrl from '../../constants/Endpoint';
+import IPoll from '../../interfaces/IPoll';
+import firebase from 'firebase';
 
 interface INewPollModal {
 	isModalOpen: boolean,
-	setIsModalOpen: any
+	setIsModalOpen: any,
+	polls: IPoll[],
+	setPolls: any,
+	seenPollIds: string[],
+	setSeenPollIds: any
 }
 
 interface IPollOption {
@@ -100,9 +106,10 @@ function NewPollModal(props: INewPollModal) {
 		setQuestionHint("QUESTION")
 	}
 
-	const handleSubmit = () => {
+	const handleSubmit = async () => {
+		const userId = await firebase.auth().currentUser.getIdToken(true)
 		const toSend = {
-			creatorId: 123,
+			creatorId: userId,
 			emoji: questionEmoji,
 			question: questionText,
 			answerOptions: getOptionsArray(),
@@ -117,14 +124,26 @@ function NewPollModal(props: INewPollModal) {
 		}
 		console.log(isSubmissionValid())
 		if (isSubmissionValid()) {
-			props.setIsModalOpen(false);
 			axios.post(
 				endpointUrl + '/poll/new',
 				toSend,
 				config,
 			)
 				.then(response => {
-					cleanUpData()
+					cleanUpData();
+					const newPoll: IPoll = {
+						id: response.data.newPoll.id,
+						question: toSend.question,
+						emoji: toSend.emoji,
+						answerOptions: response.data.newPoll.answerOptions
+					}
+					let tempSeenIds = props.seenPollIds;
+					tempSeenIds.push(newPoll.id)
+					props.setSeenPollIds([...tempSeenIds])
+					let tempPoll = props.polls;
+					tempPoll.unshift(newPoll)
+					props.setPolls([...tempPoll])
+					props.setIsModalOpen(false);
 					return response.data;
 				})
 				.catch(e => {

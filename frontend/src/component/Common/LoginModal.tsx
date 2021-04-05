@@ -7,13 +7,14 @@ import "firebase/auth";
 import firebaseConfig from "../../firebase/FirebaseIndex"
 import '../../styles/Common/LoginModal.css'
 import Spinner from './Spinner';
+import IPoll from '../../interfaces/IPoll';
 
 interface INewPollModal {
 	isModalOpen: boolean,
 	setIsModalOpen: any,
 	setIsSignupModalOpen: any,
 	fetchNewPoll: boolean,
-	setFetchNewPoll: any
+	setFetchNewPoll: any,
 }
 
 const customStyles = {
