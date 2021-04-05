@@ -4,6 +4,8 @@ import com.cs32.app.CategoryPoints;
 import com.cs32.app.poll.AnswerOption;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
+import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,6 +20,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cs32.app.database.Connection.pollCollection;
+import static com.cs32.app.database.Connection.userCollection;
 
 public class NewPollHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -37,8 +40,7 @@ public class NewPollHandler implements Route {
     // Parse request
     try {
       JSONObject jsonReqObject = new JSONObject(request.body());
-      //TODO: add pollId to user's created polls field in database (so user can see all polls they created)
-      userId = jsonReqObject.getInt("creatorId");
+
       question = jsonReqObject.getString("question");
       emoji = jsonReqObject.getString("emoji");
 
@@ -61,6 +63,13 @@ public class NewPollHandler implements Route {
 
       System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
+      //TODO: add pollId to user's created polls field in database (so user can see all polls they created)
+      userId = jsonReqObject.getInt("creatorId");
+      BasicDBObject findQuery = new BasicDBObject("_id", userId);
+      BasicDBObject newPollIdToAdd = new BasicDBObject("createdPolls", newPoll.getId());
+      Document updateQuery = new Document().append("$push", newPollIdToAdd);
+      userCollection.updateOne(findQuery, updateQuery);
+
       variables.put("newPoll", newPoll);
     } catch (JSONException e) {
       e.printStackTrace();

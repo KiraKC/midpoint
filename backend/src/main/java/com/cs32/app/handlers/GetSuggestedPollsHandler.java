@@ -47,6 +47,7 @@ public class GetSuggestedPollsHandler implements Route {
       JSONObject jsonReqObject = new JSONObject(request.body());
       numPollsRequested = jsonReqObject.getInt("numPollsRequested");
 
+      // Seen polls
       Set<String> seenPollIds = new HashSet<>();
       JSONArray jsonSeenPollsArray = jsonReqObject.getJSONArray("seenPollIds");
       for (int i = 0; i < jsonSeenPollsArray.length(); i++) {
@@ -69,8 +70,19 @@ public class GetSuggestedPollsHandler implements Route {
       }
 
       // Query for random polls
-      List<Poll> randomPolls = Connection.getRandomPolls(
-          numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
+      List<Poll> randomPolls = new ArrayList<>();
+      int previousQuerySize = 1;
+      while (randomPolls.size() < numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED && previousQuerySize != 0) {
+        List<Poll> newPolls = Connection.getRandomPolls(numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
+        previousQuerySize = newPolls.size();
+        randomPolls.addAll(newPolls);
+        for(int i = 0; i<randomPolls.size(); i++) {
+          if (seenPollIds.contains(randomPolls.get(i).getId())) {
+            randomPolls.remove(i);
+            i--;
+          }
+        }
+      }
 
       // adjusted num requested in case numRequested > randomPolls.size()
       int adjustedNumRequested = Math.min(numPollsRequested, randomPolls.size());
