@@ -55,7 +55,7 @@ function App() {
 						<Routes>
 							<Route element={<Navigate to="home" />} />
 							<Route path="/home" element={<MasonryWrapper
-								{...pollProps} isLoggedIn={isLoggedIn}
+								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
 							<Route path="/game" element={<GameBox/>} />
 							<Route path="/my-profile" />
