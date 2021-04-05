@@ -122,7 +122,7 @@
 	margin-top: 0.5rem;
 }
 
-.display-flex {
+.gamebox-display-flex {
 	display: flex;
 	width: 100%;
 	flex-wrap: wrap;

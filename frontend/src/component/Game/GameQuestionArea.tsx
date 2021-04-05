@@ -26,7 +26,7 @@ function GameQuestionArea(props: IGameBoxProps) {
 					HERE is where the question will go! 
 					</div>
 				</div>
-				<div className="display-flex">
+				<div className="gamebox-display-flex">
 					{/* props.categories */}
 						{categoryArray.map((e, i) => (
 							<CategoryButton
