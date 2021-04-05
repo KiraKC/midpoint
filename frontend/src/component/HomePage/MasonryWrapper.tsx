@@ -45,14 +45,14 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 			const idToken = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				userIdToken: idToken,
-				numPollsRequested: 30,
+				numPollsRequested: 5,
 				seenPollIds: seenPollIds,
 				loggedIn: true
 			}
 		} else {
 			toSend = {
 				userIdToken: 'none',
-				numPollsRequested: 30,
+				numPollsRequested: 5,
 				seenPollIds: seenPollIds,
 				loggedIn: false
 			}
