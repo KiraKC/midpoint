@@ -26,17 +26,13 @@ function GameBox(props: IGameBoxProps) {
 
 				</div>
 				<div className="game-box-area">
+					<GameQuestionArea />
 					<div className="game-option-grid">
 					<OptionButton />
 					<OptionButton />
-
 					<OptionButton />
-
 					<OptionButton />
 					</div>
-
-
-					details go here
 				</div>
 	
 
