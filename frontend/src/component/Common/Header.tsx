@@ -22,16 +22,22 @@ function Header(props) {
 		}
 	}
 
+	const fetchNewPollProps = {
+		fetchNewPoll: props.fetchNewPoll,
+		setFetchNewPoll: props.setFetchNewPoll
+	}
 	return (
 		<>
-			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} />
-			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen} setIsSignupModalOpen={setIsSignupModalOpen} />
-			<SignUpModal setIsLoggedIn={props.setIsLoggedIn} isModalOpen={isSignupModalOpen} setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} />
+			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} {...fetchNewPollProps} />
+			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen}
+				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps} />
+			<SignUpModal setIsLoggedIn={props.setIsLoggedIn} isModalOpen={isSignupModalOpen}
+				setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} {...fetchNewPollProps} />
 			<div className="header">
 				<div className="header-background"></div>
 				<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
 					<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
-					<div className="nav-text-link" style={{ marginLeft: '45px' }} onClick={() => navigate('answer')}>Answer</div>
+					<div className="nav-text-link" style={{ marginLeft: '45px' }} onClick={() => navigate('my-profile')}>My Profile</div>
 					<div className="nav-text-link" onClick={() => navigate('game')}>Game</div>
 				</div>
 				<div style={{ position: 'relative' }}>

@@ -8,23 +8,35 @@ import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
 
 interface MasonryWrapperProps {
-	isLoggedIn: boolean
+	isLoggedIn: boolean,
+	fetchNewPoll: boolean,
+	setFetchNewPoll: any
 }
 
 function MasonryWrapper(props: MasonryWrapperProps) {
 
-	const [polls, setPolls]: [IPoll[], any] = useState([])
+	const [polls, setPolls]: [IPoll[], any] = useState([]);
+	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
 
 	useEffect(() => {
 		async function pollHandler() {
 			await requestPolls();
 		}
 		pollHandler();
-	}, [props.isLoggedIn])
+	}, [props.fetchNewPoll])
 
 	const updatePollArray = (newPolls: IPoll[]) => {
 		let tempPolls = polls;
 		setPolls([...tempPolls, ...newPolls]);
+	}
+
+	const updateSeenPollIds = (newPolls: IPoll[]) => {
+		let newPollIds = [];
+		for (let i = 0; i < newPolls.length; i++) {
+			newPollIds.push(newPolls[i].id)
+		}
+		let tempPollIds = seenPollIds;
+		setSeenPollIds([...tempPollIds, ...newPollIds]);
 	}
 
 	const requestPolls = async () => {
@@ -34,14 +46,14 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 			toSend = {
 				userIdToken: idToken,
 				numPollsRequested: 30,
-				seenPollIds: [],
+				seenPollIds: seenPollIds,
 				loggedIn: true
 			}
 		} else {
 			toSend = {
 				userIdToken: 'none',
 				numPollsRequested: 30,
-				seenPollIds: [],
+				seenPollIds: seenPollIds,
 				loggedIn: false
 			}
 		}
@@ -55,7 +67,10 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 		axios.post(
 			endpointUrl + '/user/get-suggested', toSend, config)
 			.then(response => {
-				updatePollArray(response.data.suggestedPolls)
+				updateSeenPollIds(response.data.suggestedPolls)
+				updatePollArray(response.data.suggestedPolls);
+				console.log("RETURNED RESULT:");
+				console.log(response.data.suggestedPolls)
 			})
 			.catch(e => {
 				console.log(e)

@@ -11,7 +11,9 @@ import Spinner from './Spinner';
 interface INewPollModal {
 	isModalOpen: boolean,
 	setIsModalOpen: any,
-	setIsSignupModalOpen: any
+	setIsSignupModalOpen: any,
+	fetchNewPoll: boolean,
+	setFetchNewPoll: any
 }
 
 const customStyles = {
@@ -90,6 +92,7 @@ function LoginModal(props: INewPollModal) {
 				setPasswordDescription("PASSWORD");
 				setLoading(false);
 				props.setIsModalOpen(false);
+				props.setFetchNewPoll(!props.fetchNewPoll)
 				cleanUp();
 			})
 			.catch((error) => {
