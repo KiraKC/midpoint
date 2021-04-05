@@ -100,10 +100,10 @@ public class Connection {
       System.out.println("USER: " + user.toBSON());
       System.out.println("userCollection: " + userCollection);
       userCollection.insertOne(user.toBSON());
-      System.out.println("adding com.cs32.app.user to db was SUCCESSFUL");
+      System.out.println("adding com.cs32.app.user to db was SUCCESSFUL, userId: " + user.getId());
     } catch (Exception e) {
       e.printStackTrace();
-      System.out.println("adding com.cs32.app.user to db failed");
+      System.out.println("adding com.cs32.app.user to db failed, userId: \" + user.getId()");
       return false;
     }
     return true;

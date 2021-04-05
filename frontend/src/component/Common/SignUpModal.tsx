@@ -15,7 +15,9 @@ interface INewPollModal {
 	isModalOpen: boolean,
 	setIsModalOpen: any,
 	setIsLoginModalOpen: any,
-	setIsLoggedIn: any
+	setIsLoggedIn: any,
+	fetchNewPoll: boolean,
+	setFetchNewPoll: any
 }
 
 const customStyles = {
@@ -35,7 +37,6 @@ const customStyles = {
 		backgroundColor: 'rgba(255,255,255, 0.6)',
 		backdropFilter: 'blur(20px)',
 		boxShadow: 'rgb(0 0 0 / 46%) 0px 3px 6px, rgb(255 255 255 / 24%) 0px 3px 12px inset',
-
 	}
 };
 
@@ -112,6 +113,7 @@ function SignUpModal(props: INewPollModal) {
 					let status: boolean = await addUserToMongo();
 					console.log(status)
 					if (status) {
+						props.setFetchNewPoll(!props.fetchNewPoll);
 						cleanUpData();
 						setLoading(false)
 						// TODO: figure out redirect animation
@@ -191,6 +193,10 @@ function SignUpModal(props: INewPollModal) {
 				if (result.length !== 0) {
 					return true;
 				}
+				return false;
+			})
+			.catch((e) => {
+				console.log(e)
 				return false;
 			});
 	}

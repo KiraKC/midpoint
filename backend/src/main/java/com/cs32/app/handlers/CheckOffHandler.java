@@ -39,9 +39,7 @@ public class CheckOffHandler implements Route {
 
       // TODO: update user's list of answered polls
 
-
       // TODO: update user's category points
-
 
       // TODO: update poll's list of responders
 

@@ -66,4 +66,7 @@ public class User {
     return categoryPoints;
   }
 
+  public String getId() {
+    return id;
+  }
 }
