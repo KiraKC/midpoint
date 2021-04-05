@@ -16,6 +16,7 @@ public class User {
   private CategoryPoints categoryPoints;
   private AnsweredPolls answeredPolls;
   private CreatedPolls createdPolls;
+  private int highScore;
 
   /**
    * Constructor for creating entirely new user from registration
@@ -43,6 +44,9 @@ public class User {
 
     // createdPolls
     createdPolls = new CreatedPolls();
+
+    // highScore
+    highScore = 0;
   }
 
   public User(Document mongoUser) {
@@ -51,6 +55,7 @@ public class User {
     categoryPoints.initializeFromMongo((List<Document>) mongoUser.get("categoryPoints"));
     answeredPolls = new AnsweredPolls((List<String>) mongoUser.get("answeredPolls"));
     createdPolls = new CreatedPolls((List<String>) mongoUser.get("answeredPolls"));
+    highScore = mongoUser.getInteger("highScore");
   }
 
   public Document toBSON() {
@@ -58,7 +63,8 @@ public class User {
     mongoUser.append("categoryPoints", categoryPoints.toBSON())
           .append("userMetaData", userMetaData.toBSON())
           .append("answeredPolls", answeredPolls.toBSON())
-          .append("createdPolls", createdPolls.toBSON());
+          .append("createdPolls", createdPolls.toBSON())
+          .append("highScore", highScore);
     return mongoUser;
   }
 
@@ -68,5 +74,9 @@ public class User {
 
   public String getId() {
     return id;
+  }
+
+  public int getHighScore() {
+    return highScore;
   }
 }
