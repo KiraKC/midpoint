@@ -41,7 +41,6 @@
 	padding-right: 0.5rem;
 	font-family: "Inter", sans-serif;
 	font-weight: 800;
-	margin-top: 20px;
 	font-size: 1.5rem;
 }
 
@@ -61,8 +60,9 @@
 	align-items: center;
 	grid-gap: 1rem;
 	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	height: 100%;
+	width: 90%;
 	margin: 2rem;
-	max-height: 20rem;
 }
 
 .game-option-button {
@@ -122,8 +122,8 @@
 	color: black;
 	font-weight: 500;
 	font-size: 0.9rem;
+	margin-top: 0.5rem;
 }
-
 
 .display-flex {
 	display: flex;
@@ -131,4 +131,54 @@
 	flex-wrap: wrap;
 	height: 5vh;
 	overflow-y: scroll;
+}
+
+.dashboard{
+	margin-right: 2rem;
+	margin-left: 2rem;
+	margin-top: 5rem;
+	margin-bottom: 2rem;
+}
+
+.userName{
+	font-family: "Inter", sans-serif;
+	color: black;
+	font-weight: 600;
+	font-size: 1rem;
+	margin-top: 0.5rem;
+	text-transform: uppercase;
+}
+
+.current-score{
+	font-family: "Inter", sans-serif;
+	color: black;
+	font-weight: 600;
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+	font-style:italic;
+	margin-right: 0.8rem;
+}
+
+.lives-left{
+	font-family: "Inter", sans-serif;
+	color: black;
+	font-weight: 600;
+	font-size: 0.8rem;
+	margin-top: 0.5rem;
+	font-style:italic;
+}
+
+.flex-horizontal{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+}
+
+.flex-vertical{
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: center;
+	height: 100%;
 }

@@ -19,19 +19,23 @@ function GameBox(props: IGameBoxProps) {
 	return (
 			<div className="game-wrapper-flex">
 				<div className="game-box-rect">
-				<div className="game-rect-heading">Hit the <br/> Midpoint Challenge</div>
-				<div className="game-rect-details">
-				Try to choose the most popular option.
+				<div className="flex-vertical">
+					<div>
+						<div className="game-rect-heading">Hit the <br/> Midpoint Challenge</div>
+						<div className="game-rect-details">
+						Try to choose the most popular option.
+						</div>
+					</div>
+					<PlayerDashboard />
 				</div>
-
-				</div>
-				<div className="game-box-area">
-					<GameQuestionArea />
-					<div className="game-option-grid">
-					<OptionButton />
-					<OptionButton />
-					<OptionButton />
-					<OptionButton />
+			</div>
+				<div className="game-box-area flex-vertical">
+						<GameQuestionArea />
+						<div className="game-option-grid">
+							<OptionButton />
+							<OptionButton />
+							<OptionButton />
+							<OptionButton />
 					</div>
 				</div>
 	
