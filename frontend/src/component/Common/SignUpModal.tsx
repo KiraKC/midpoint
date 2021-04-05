@@ -1,24 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useEffect, useState } from 'react';
 import Modal from 'react-modal';
-import { FirebaseAuthConsumer, FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseAuthedAnd } from '@react-firebase/auth';
 import firebase from 'firebase';
 import "firebase/auth";
-import firebaseConfig from "../../firebase/FirebaseIndex"
 import '../../styles/Common/LoginModal.css'
 import CategoryButton from './CategoryButton';
-import OptionPanel from './OptionPanel';
 import categoryArray from '../../constants/Category';
 import OptionSelector from './OptionSelector';
-import { registerNewUser } from '../../firebase/AuthMethods';
 import axios from 'axios';
 import Spinner from './Spinner';
 import endpointUrl from '../../constants/Endpoint';
+import { signOut } from '../../firebase/AuthMethods';
 
 interface INewPollModal {
 	isModalOpen: boolean,
 	setIsModalOpen: any,
-	setIsLoginModalOpen: any
+	setIsLoginModalOpen: any,
+	setIsLoggedIn: any
 }
 
 const customStyles = {
@@ -82,8 +79,13 @@ function SignUpModal(props: INewPollModal) {
 			setCategoryDescription("SELECT AT LEAST 3 BEFORE REGISTRATION");
 			isValid = false;
 		}
-		if (birthday === '' || calculateAge() === NaN || gender === 'Undisclosed' || gender === '') {
-			setInfoDescription("COMPLETE REQUIRED FIELD");
+		if (birthday === '' || calculateAge() === NaN ||
+			gender === 'Undisclosed' || gender === '' || calculateAge() <= 3) {
+			if (calculateAge() <= 3) {
+				setInfoDescription("HMM, ARE YOU REALLY THAT YOUNG?")
+			} else {
+				setInfoDescription("COMPLETE REQUIRED FIELD");
+			}
 			isValid = false;
 		}
 		if (email === '' || password === '') {
@@ -93,23 +95,34 @@ function SignUpModal(props: INewPollModal) {
 		return isValid;
 	}
 
-	const handleRegister = () => {
-		setCredentialDescription('ALL FIELDS REQUIRED');
-		setInfoDescription('* INDICATES REQUIRED FIELD');
-		setEmailDescription('EMAIL');
-		setPasswordDescription('PASSWORD');
+	const handleRegister = async () => {
+		cleanUpText()
 		setLoading(true)
 		if (isSubmissionValid()) {
-			checkExists();
+			const isRegistered: boolean = await checkExists();
+			if (isRegistered) {
+				setEmailDescription("EMAIL ALREADY IN USE");
+				setLoading(false)
+				return;
+			}
+			// attempt to register credential with firebase
 			firebase.auth().createUserWithEmailAndPassword(email, password)
-				.then(async (res) => {
-					setLoading(false)
+				.then(async () => {
+					// attempt to add user to MongoDB database
 					let status: boolean = await addUserToMongo();
 					console.log(status)
 					if (status) {
-						cleanUpData()
-						props.setIsModalOpen(false);
+						cleanUpData();
+						setLoading(false)
+						// TODO: figure out redirect animation
+						setTimeout(() => {
+							props.setIsModalOpen(false)
+						}, 3000)
+					} else {
+						deleteAndLogOut();
+						setLoading(false);
 					}
+
 				})
 				.catch(err => {
 					setLoading(false)
@@ -164,17 +177,37 @@ function SignUpModal(props: INewPollModal) {
 		setPasswordDescription('PASSWORD');
 	}
 
-	function checkExists() {
-		firebase.auth()
-		.fetchSignInMethodsForEmail(email)
-		.then((result) => {
-			console.log('result', result);
+	function cleanUpText() {
+		setCredentialDescription('ALL FIELDS REQUIRED');
+		setInfoDescription('* INDICATES REQUIRED FIELD');
+		setEmailDescription('EMAIL');
+		setPasswordDescription('PASSWORD');
+	}
+
+	async function checkExists() {
+		return firebase.auth()
+			.fetchSignInMethodsForEmail(email)
+			.then((result) => {
+				if (result.length !== 0) {
+					return true;
+				}
+				return false;
+			});
+	}
+
+	async function deleteAndLogOut() {
+		let user = firebase.auth().currentUser;
+		user.delete().then(function () {
+			signOut();
+			props.setIsLoggedIn(false);
+			return true;
+		}).catch(function (error) {
+			console.log(error);
+			return false;
 		});
 	}
 
-
 	const addUserToMongo = async () => {
-		setLoading(true)
 		return firebase.auth().currentUser.getIdToken(true)
 			.then(function (idToken) {
 				const toSend = {
@@ -201,13 +234,16 @@ function SignUpModal(props: INewPollModal) {
 					toSend,
 					config,
 				)
-					.then(response => {
-						setLoading(false);
-						return true;
+					.then((response) => {
+						if (response.data.success) {
+							return true;
+						} else {
+							return false;
+						}
 					})
 					.catch(e => {
+						console.log(e)
 						setCredentialDescription('INTERNAL SERVER ERROR');
-						setLoading(false);
 						return false;
 					});
 			}).catch(function (error) {

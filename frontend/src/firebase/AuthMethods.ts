@@ -16,7 +16,6 @@ const signIn = (email, password) => {
 }
 const signOut = () => {
 	firebase.auth().signOut().then(() => {
-		console.log("signed out")
 	  }).catch((error) => {
 		console.log(error)
 	  });
