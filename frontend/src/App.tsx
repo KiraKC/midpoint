@@ -43,7 +43,7 @@ function App() {
 						<Routes>
 							<Route element={<Navigate to="home" />} />
 							<Route path="/home" element={<MasonryWrapper isLoggedIn={isLoggedIn} fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
-							<Route path="/game" element={<GameStart isLoggedIn={isLoggedIn} />} />
+							<Route path="/game" element={<GameBox/>} />
 							<Route path="/my-profile" />
 						</Routes>
 					</div>
