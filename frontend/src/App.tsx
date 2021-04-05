@@ -11,6 +11,7 @@ import {
 	FirebaseAuthConsumer
 } from "@react-firebase/auth";
 import GameStart from './component/Game/GameStart';
+import GameBox from './component/Game/GameBox';
 
 function App() {
 
@@ -36,7 +37,9 @@ function App() {
 						<Routes>
 							<Route element={<Navigate to="home" />} />
 							<Route path="/home" element={<MasonryWrapper isLoggedIn={isLoggedIn} />} />
-							<Route path="/game" element={<GameStart isLoggedIn={isLoggedIn} />} />
+							<Route path="/game" element={<GameBox />} />
+
+							{/* <Route path="/game" element={<GameStart isLoggedIn={isLoggedIn} />} /> */}
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>
