@@ -75,5 +75,6 @@ public class Main {
     Spark.post("/poll/new", new NewPollHandler());
     Spark.get("/poll/stats", new GetStatsHandler());
     Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
+    Spark.post("/game/new-poll", new GetGamePollHandler());
   }
 }
