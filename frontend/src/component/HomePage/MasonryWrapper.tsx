@@ -10,13 +10,19 @@ import endpointUrl from '../../constants/Endpoint';
 interface MasonryWrapperProps {
 	isLoggedIn: boolean,
 	fetchNewPoll: boolean,
-	setFetchNewPoll: any
+	setFetchNewPoll: any,
+	polls: IPoll[],
+	setPolls: any,
+	seenPollIds: string[],
+	setSeenPollIds: any
 }
 
 function MasonryWrapper(props: MasonryWrapperProps) {
 
-	const [polls, setPolls]: [IPoll[], any] = useState([]);
-	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
+	let polls = props.polls;
+	let setPolls = props.setPolls;
+	let seenPollIds = props.seenPollIds;
+	let setSeenPollIds = props.setSeenPollIds;
 
 	useEffect(() => {
 		async function pollHandler() {

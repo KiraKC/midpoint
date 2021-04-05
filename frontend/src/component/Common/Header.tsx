@@ -26,9 +26,18 @@ function Header(props) {
 		fetchNewPoll: props.fetchNewPoll,
 		setFetchNewPoll: props.setFetchNewPoll
 	}
+
+	const newPollProps = {
+		polls: props.polls,
+		setPolls: props.setPolls,
+		seenPollIds: props.seenPollIds,
+		setSeenPollIds: props.seenPollIds
+	}
+
 	return (
 		<>
-			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} {...fetchNewPollProps} />
+			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} 
+			{...newPollProps} />
 			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen}
 				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps} />
 			<SignUpModal setIsLoggedIn={props.setIsLoggedIn} isModalOpen={isSignupModalOpen}

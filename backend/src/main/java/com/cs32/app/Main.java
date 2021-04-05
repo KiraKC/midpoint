@@ -48,17 +48,13 @@ public class Main {
     Spark.before((request, response) -> {
       response.header("Access-Control-Allow-Origin", "*");
       response.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-      response.header("Access-Control-Allow-Headers", "Content-Type, api_key, Authorization");
+      response.header("Access-Control-Allow-Headers", "Content-Type,Authorization,X-Requested-With,Content-Length,Accept,Origin");
     });
     // Connections class for MongoDB related queries
     Connection conn = new Connection();
 
     // Authentication using Firebase
     try {
-//      FileInputStream serviceAccount =
-//            new FileInputStream(System.getenv("PATH_TO_PRIVATE_KEY"));
-
-
       URLConnection connection = new URL("https://www.midpoint.fun/firebase_config.json").openConnection();
       InputStream response = connection.getInputStream();
 
