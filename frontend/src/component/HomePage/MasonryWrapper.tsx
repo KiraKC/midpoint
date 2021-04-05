@@ -48,17 +48,18 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 	const requestPolls = async () => {
 		let toSend;
 		if (props.isLoggedIn) {
+			// TODO: JINOO, example of getting user id token
 			const idToken = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				userIdToken: idToken,
-				numPollsRequested: 5,
+				numPollsRequested: 10,
 				seenPollIds: seenPollIds,
 				loggedIn: true
 			}
 		} else {
 			toSend = {
 				userIdToken: 'none',
-				numPollsRequested: 5,
+				numPollsRequested: 10,
 				seenPollIds: seenPollIds,
 				loggedIn: false
 			}
@@ -70,6 +71,8 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 				'Access-Control-Allow-Origin': '*',
 			}
 		}
+		
+		// TODO: JINOO, example POST request
 		axios.post(
 			endpointUrl + '/user/get-suggested', toSend, config)
 			.then(response => {

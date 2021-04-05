@@ -10,7 +10,6 @@ function Header(props) {
 
 	const navigate = useNavigate()
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
-	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
 	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
 
 	function handleSignInStatus() {
@@ -18,7 +17,7 @@ function Header(props) {
 			signOut();
 			props.setIsLoggedIn(false)
 		} else {
-			setIsLoginModalOpen(true)
+			props.setIsLoginModalOpen(true)
 		}
 	}
 
@@ -38,10 +37,10 @@ function Header(props) {
 		<>
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} 
 			{...newPollProps} />
-			<LoginModal isModalOpen={isLoginModalOpen} setIsModalOpen={setIsLoginModalOpen}
+			<LoginModal isModalOpen={props.isLoginModalOpen} setIsModalOpen={props.setIsLoginModalOpen}
 				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps} />
 			<SignUpModal setIsLoggedIn={props.setIsLoggedIn} isModalOpen={isSignupModalOpen}
-				setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={setIsLoginModalOpen} {...fetchNewPollProps} />
+				setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={props.setIsLoginModalOpen} {...fetchNewPollProps} />
 			<div className="header">
 				<div className="header-background"></div>
 				<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
@@ -50,7 +49,7 @@ function Header(props) {
 					<div className="nav-text-link" onClick={() => navigate('game')}>Game</div>
 				</div>
 				<div style={{ position: 'relative' }}>
-					<button className="nav-link" onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : setIsLoginModalOpen(true) }}>New Poll</button>
+					<button className="nav-link" onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : props.setIsLoginModalOpen(true) }}>New Poll</button>
 					<button className="nav-link"
 						onClick={() => handleSignInStatus()}>{props.isLoggedIn ? 'Log out' : 'Sign in'}</button>
 				</div>

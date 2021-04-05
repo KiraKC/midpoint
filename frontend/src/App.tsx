@@ -16,15 +16,16 @@ import GameBox from './component/Game/GameBox';
 
 function App() {
 
+	// TODO: JINOO, global logged in state
 	const [isLoggedIn, setIsLoggedIn]: [boolean, any] = useState(false);
+	// TODO: JINOO, fetchpoll trigger [setFetchNewPoll(!fetchNewPoll)]
 	const [fetchNewPoll, setFetchNewPoll]: [boolean, any] = useState(false);
 	const [polls, setPolls]: [IPoll[], any] = useState([]);
 	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
+	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
+
 
 	useEffect(() => {
-		if (firebase.auth().currentUser !== null) {
-			setIsLoggedIn(true)
-		}
 		firebase.auth().onAuthStateChanged(function (user) {
 			if (user) {
 				setIsLoggedIn(true)
@@ -32,7 +33,7 @@ function App() {
 				setIsLoggedIn(false)
 			}
 		});
-	}, [])
+	}, [isLoggedIn])
 
 	const pollProps = {
 		polls: polls,
@@ -49,7 +50,8 @@ function App() {
 					<div id="website-wrapper">
 						<Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
 							fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-							{...pollProps} />
+							{...pollProps} isLoginModalOpen={isLoginModalOpen} 
+							setIsLoginModalOpen={setIsLoginModalOpen} />
 						<Routes>
 							<Route element={<Navigate to="home" />} />
 							<Route path="/home" element={<MasonryWrapper
