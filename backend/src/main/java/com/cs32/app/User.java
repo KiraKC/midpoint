@@ -79,4 +79,8 @@ public class User {
   public int getHighScore() {
     return highScore;
   }
+
+  public UserMetaData getUserMetaData() {
+    return userMetaData;
+  }
 }

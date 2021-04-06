@@ -36,26 +36,25 @@ public class AnonymousAnswerHandler implements Route {
         {
          pollId: "asdjflasd",
          answerOptionId: "asdfajsdf",
-         userMetaData: {
-                        {key: "age", value: "18"},
-                        {key: "gender", value: "F"},
-                        ...
-                        }
-        }
+         userIdToken: "asdlfasdf"
      */
 
     try{
       // Update database with new response
+      System.out.println("HIHIHI 0");
       JSONObject jsonReqObject = new JSONObject(request.body());
+      System.out.println("HIHIHI 1");
       PollResponse pollResponse = new PollResponse(jsonReqObject);
+      System.out.println("HIHIHI 1");
       Connection.addPollResponseToDB(pollResponse);
+      System.out.println("HIHIHI 1");
 
       // Get all answer options and all responses
       String pollId = jsonReqObject.getString("pollId");
       variables.put("pollId", pollId);
       List<AnswerOption> answerOptions = Connection.getPollById(pollId).getAnswerOptions();
       List<PollResponse> allResponses = Connection.getResponses(pollId);
-
+      System.out.println("HIHIHI 2");
       // Initialize a map for counting the occurrence of every answer option
       Map<String, Double> counts = new HashMap<>();
       for (AnswerOption answerOption : answerOptions) {
@@ -66,21 +65,32 @@ public class AnonymousAnswerHandler implements Route {
       for (PollResponse everyResponse : allResponses) {
         counts.put(everyResponse.getAnswerOptionId(), counts.get(everyResponse.getAnswerOptionId()) + 1);
       }
-
+      System.out.println("HIHIHI 3");
       // Send mini-stats to front end
       Map<String, Double> miniStats = new HashMap<>();
       for (AnswerOption answerOption : answerOptions) {
-        double percentage = counts.get(answerOption.getId()) / allResponses.size();
-        miniStats.put(answerOption.getValue(), percentage);
+        // TODO: fix this because we need to send the poll req first. that way, we don't have 0 as allResponses.size().
+        if (allResponses.size() == 0) {
+          miniStats.put(answerOption.getValue(), (double) 1/answerOptions.size());
+        } else {
+          double percentage = counts.get(answerOption.getId()) / allResponses.size();
+          System.out.println("ANSWEROPTION NUM: " + answerOption.getId());
+          System.out.println("ALL RESPONSES: " + allResponses.size());
+          System.out.println("PERCENTAGE: " + percentage);
+          miniStats.put(answerOption.getValue(), percentage);
+        }
       }
+      System.out.println("ministats here!!!");
+      System.out.println(miniStats);
       variables.put("miniStats", miniStats);
       status = true;
     } catch (Exception e) {
-      System.err.println(e.getMessage());
+      e.printStackTrace();
       status = false;
     }
 
     variables.put("status", status);
+    System.out.println(GSON.toJson(variables));
     return GSON.toJson(variables);
   }
 

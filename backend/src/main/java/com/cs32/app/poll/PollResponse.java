@@ -1,6 +1,12 @@
 package com.cs32.app.poll;
 
+import com.cs32.app.User;
 import com.cs32.app.UserMetaData;
+import com.cs32.app.database.Connection;
+import com.cs32.app.exceptions.MissingDBObjectException;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.annotations.Expose;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -33,12 +39,15 @@ public class PollResponse {
     userMetaData = new UserMetaData((List<Document>) mongoPollResponse.get("userMetaData"));
   }
 
-  public PollResponse(JSONObject jsonReqObject) throws JSONException {
+  public PollResponse(JSONObject jsonReqObject) throws JSONException, MissingDBObjectException, FirebaseAuthException {
     id = new ObjectId().toString();
     pollId = jsonReqObject.getString("pollId");
     answerOptionId = jsonReqObject.getString("answerOptionId");
-    JSONArray jsonUserMetaDataArray = jsonReqObject.getJSONArray("userMetaData");
-    userMetaData = new UserMetaData(jsonUserMetaDataArray);
+    String userIdToken = jsonReqObject.getString("userIdToken");
+    FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
+    String userId = decodedToken.getUid();
+    User user = Connection.getUserById(userId);
+    userMetaData = user.getUserMetaData();
   }
 
   public String getAnswerOptionId() {

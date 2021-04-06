@@ -14,7 +14,8 @@ interface MasonryWrapperProps {
 	polls: IPoll[],
 	setPolls: any,
 	seenPollIds: string[],
-	setSeenPollIds: any
+	setSeenPollIds: any,
+  setIsLoginModalOpen: any
 }
 
 function MasonryWrapper(props: MasonryWrapperProps) {
@@ -87,7 +88,7 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 	}
 
 	const divItems = polls.map(function (poll) {
-		return <MasonryPoll key={poll.id} question={poll.question} emoji={poll.emoji} answerOption={poll.answerOptions} />
+		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question} emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}/>
 	});
 
 	const breakpointColumnsObj = {
