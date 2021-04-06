@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Modal from 'react-modal';
 import firebase from 'firebase';
 import "firebase/auth";
@@ -10,6 +10,7 @@ import axios from 'axios';
 import Spinner from './Spinner';
 import endpointUrl from '../../constants/Endpoint';
 import { signOut } from '../../firebase/AuthMethods';
+import SuccessScreen from './SuccessScreen';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -49,6 +50,7 @@ function SignUpModal(props: INewPollModal) {
 	const [emailDescription, setEmailDescription]: [string, any] = useState('EMAIL');
 	const [passwordDescription, setPasswordDescription]: [string, any] = useState('PASSWORD');
 	const [loading, setLoading]: [boolean, any] = useState(false);
+	const [success, setSuccess]: [boolean, any] = useState(false);
 	const [email, setEmail]: [string, any] = useState('');
 	const [password, setPassword]: [string, any] = useState('');
 	const [birthday, setBirthday]: [string, any] = useState('');
@@ -116,10 +118,12 @@ function SignUpModal(props: INewPollModal) {
 						props.setFetchNewPoll(!props.fetchNewPoll);
 						cleanUpData();
 						setLoading(false)
+						setSuccess(true)
 						// TODO: figure out redirect animation
 						setTimeout(() => {
 							props.setIsModalOpen(false)
-						}, 3000)
+							setSuccess(false)
+						}, 1500)
 					} else {
 						deleteAndLogOut();
 						setLoading(false);
@@ -266,6 +270,8 @@ function SignUpModal(props: INewPollModal) {
 				style={customStyles}>
 				{loading ?
 					(<Spinner color="white" type="spin" />) : ''}
+				{success ?
+					(<SuccessScreen />) : ''}
 				<div className="login-modal-wrapper">
 					<div className="login-modal-flex-wrapper">
 						<div className="login-modal-heading">Join MidPoint</div>
