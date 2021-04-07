@@ -95,10 +95,10 @@ function NewPollModal(props: INewPollModal) {
 			}
 		}
 		// TODO: flag the array with duplicates+
-		if (checkIfDuplicateExists(textFieldValue)) {
-			// flag the two duplicate cell with alertsfg
-			isValid = false;
-		}
+		// if (checkIfDuplicateExists(textFieldValue)) {
+		// 	// flag the two duplicate cell with alertsfg
+		// 	isValid = false;
+		// }
 		return isValid;
 	}
 

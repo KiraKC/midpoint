@@ -11,13 +11,6 @@ import java.util.Set;
 public class AnsweredPolls {
   private Set<String> answeredPolls;
 
-  public AnsweredPolls(JSONArray jsonArrayAnsweredPolls) throws JSONException {
-    answeredPolls = new HashSet<>();
-    for(int i = 0; i < jsonArrayAnsweredPolls.length(); i++){
-      answeredPolls.add(jsonArrayAnsweredPolls.getString(i));
-    }
-  }
-
   public AnsweredPolls() {
     answeredPolls = new HashSet<>();
   }
@@ -27,6 +20,17 @@ public class AnsweredPolls {
     if (pollsAnswered != null) {
       answeredPolls.addAll(pollsAnswered);
     }
+  }
+
+  public AnsweredPolls(JSONArray jsonArrayAnsweredPolls) throws JSONException {
+    answeredPolls = new HashSet<>();
+    for(int i = 0; i < jsonArrayAnsweredPolls.length(); i++){
+      answeredPolls.add(jsonArrayAnsweredPolls.getString(i));
+    }
+  }
+
+  public void add(String pollId) {
+    answeredPolls.add(pollId);
   }
 
   public Object toBSON() {

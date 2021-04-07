@@ -5,14 +5,11 @@ import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 
 import com.mongodb.client.model.Filters;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.*;
 
@@ -31,12 +28,18 @@ public class Connection {
   // TODO: @Jacqueline Change connection from static class to regular non-static class that needs to be instantiated and passed around like a normal class.
   // this change allows us to have a test and production version of our Connection class. (rmbr to change both instance variables and methods to non-static)
 
-  public Connection() {
+  public Connection(Boolean isTesting) {
     mongoClient = MongoClients.create(System.getenv("MONGODB_URI"));
     mongoDatabase = mongoClient.getDatabase("main");
-    userCollection = mongoDatabase.getCollection("user");
-    pollCollection = mongoDatabase.getCollection("poll");
-    responseCollection = mongoDatabase.getCollection("response");
+    if (isTesting) {
+      userCollection = mongoDatabase.getCollection("user_test");
+      pollCollection = mongoDatabase.getCollection("poll_test");
+      responseCollection = mongoDatabase.getCollection("response_test");
+    } else {
+      userCollection = mongoDatabase.getCollection("user");
+      pollCollection = mongoDatabase.getCollection("poll");
+      responseCollection = mongoDatabase.getCollection("response");
+    }
   }
 
 

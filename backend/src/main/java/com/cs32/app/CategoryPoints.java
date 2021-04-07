@@ -80,9 +80,12 @@ public class CategoryPoints {
     return catPtsMap;
   }
 
-  // TODO: use getTotalPts()
-  public Double getNormPts(String category, Double totalPts) {
-    return catPtsMap.get(category)/totalPts;
+  public Double getPts(String category) {
+    return catPtsMap.get(category);
+  }
+
+  public Double getNormPts(String category) {
+    return catPtsMap.get(category)/this.getTotalPts();
   }
 
   public Double getTotalPts() {
