@@ -42,7 +42,7 @@ public class NewPollHandler implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    boolean status; String userId; String question; String emoji; List<AnswerOption> answerOptions; List<String> taggedCategories;
+    boolean status; String question; String emoji; List<AnswerOption> answerOptions; List<String> taggedCategories;
     Map<String, Object> variables = new HashMap<>();
     // Parse request
     try {
