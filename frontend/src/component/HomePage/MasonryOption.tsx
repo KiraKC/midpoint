@@ -7,26 +7,19 @@ interface MasonryOptionProps {
 	emoji: string,
 	value: string,
 	textColor: string,
-  isLoggedIn: boolean,
-  setIsLoginModalOpen: any,
-  setAnswered: any
+	isLoggedIn: boolean,
+	setIsLoginModalOpen: any,
+	setSelectedOptionId: any,
+	clickHandler: any
 }
 
 function MasonryOption(props: MasonryOptionProps) {
-
-  function buttonPressed() {
-    if (props.isLoggedIn) {
-      props.setAnswered(props.id);
-    } else {
-      props.setIsLoginModalOpen(true);
-    }
-  }
 
 	return (
 		<button
 			className="option-wrapper"
 			style={{ color: `${props.textColor}` }}
-      onClick={buttonPressed}>
+			onClick={() => {props.clickHandler(props.id)}}>
 			<div style={{ marginTop: "1px" }}>
 				<Emoji emoji={props.emoji} set='apple' size={26} />
 			</div>

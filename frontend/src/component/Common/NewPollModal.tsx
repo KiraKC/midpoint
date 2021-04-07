@@ -94,9 +94,7 @@ function NewPollModal(props: INewPollModal) {
 				isValid = false;
 			}
 		}
-		// TODO: flag the array with duplicates+
 		if (checkIfDuplicateExists(textFieldValue)) {
-			// flag the two duplicate cell with alertsfg
 			setQuestionHint("THERE ARE DUPLICATE ANSWERS")
 			isValid = false;
 		}
