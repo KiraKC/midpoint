@@ -49,9 +49,6 @@ public class CheckOffHandler implements Route {
       // Update user's list of answered polls
       user.answered(pollId);
 
-<<<<<<< HEAD
-      // TODO: update poll's numClicks
-=======
       // Update poll's numClicks
       poll.clicked();
 
@@ -60,7 +57,6 @@ public class CheckOffHandler implements Route {
       double currUserTotalPts = userCatPts.getTotalPts();
       CategoryPoints pollCatPts = poll.getCatPts();
       double currPollTotalPts = pollCatPts.getTotalPts();
->>>>>>> 76db9637892dfc037048375b566fe85b13b0363d
 
       for (String category : Constants.ALL_CATEGORIES) {
         double currUserPts = userCatPts.getPts(category);
