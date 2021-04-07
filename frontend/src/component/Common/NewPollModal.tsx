@@ -95,10 +95,15 @@ function NewPollModal(props: INewPollModal) {
 			}
 		}
 		// TODO: flag the array with duplicates+
-		// if (checkIfDuplicateExists(textFieldValue)) {
-		// 	// flag the two duplicate cell with alertsfg
-		// 	isValid = false;
-		// }
+		if (checkIfDuplicateExists(textFieldValue)) {
+			// flag the two duplicate cell with alertsfg
+			setQuestionHint("THERE ARE DUPLICATE ANSWERS")
+			isValid = false;
+		}
+		if (categories.length < 1) {
+			setQuestionHint("PLEASE CHOOSE AT LEAST 1 CATEGORY")
+			isValid = false;
+		}
 		return isValid;
 	}
 
