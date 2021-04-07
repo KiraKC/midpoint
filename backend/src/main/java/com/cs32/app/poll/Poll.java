@@ -2,6 +2,7 @@ package com.cs32.app.poll;
 
 import com.cs32.app.CategoryPoints;
 import com.cs32.app.Constants;
+import com.cs32.app.database.Connection;
 import com.google.gson.annotations.Expose;
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -20,6 +21,8 @@ public class Poll {
   private String emoji;
   @Expose
   private List<AnswerOption> answerOptions;
+  @Expose
+  private String color;
   private CategoryPoints categoryPoints;
   private int numRenders;
   private int numClicks;
@@ -55,7 +58,6 @@ public class Poll {
     // Get answer options
     answerOptions = new ArrayList<>();
     List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
-//    System.out.println("MONGOANSWEROPTIONS:" + mongoAnswerOptions);
     for (Document doc : mongoAnswerOptions) {
       answerOptions.add(new AnswerOption(doc.getString("answerOptionId"), doc.getString("value"), doc.getString("emoji")));
     }
@@ -64,11 +66,21 @@ public class Poll {
     categoryPoints = new CategoryPoints();
     categoryPoints.initializeFromMongo((List<Document>) mongoPoll.get("catPts"));
 
+    // color
+    color = mongoPoll.getString("color");
+
     // Get numRenders
     numRenders = mongoPoll.getInteger("numRenders");
 
     // Get numClicks
     numClicks = mongoPoll.getInteger("numClicks");
+
+    // autofixing
+    if (color == null) {
+      color = Constants.ALL_COLORS[(int) Math.floor(Math.random()*Constants.ALL_COLORS.length)];
+      Connection.replacePoll(this);
+    }
+
   }
 
   public String getId() {
