@@ -65,7 +65,6 @@ public class AnonymousAnswerHandler implements Route {
       // Send mini-stats to front end
       Map<String, Double> miniStats = new HashMap<>();
       for (AnswerOption answerOption : answerOptions) {
-        // TODO: fix this because we need to send the poll req first. that way, we don't have 0 as allResponses.size().
         double percentage = counts.get(answerOption.getId()) / allResponses.size();
         miniStats.put(answerOption.getValue(), percentage);
       }
