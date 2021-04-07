@@ -5,14 +5,11 @@ import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
 import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.Aggregates;
 
 import com.mongodb.client.model.Filters;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.bson.Document;
-import org.bson.types.ObjectId;
 
 import java.util.*;
 
@@ -28,9 +25,6 @@ public class Connection {
   public static MongoCollection<Document> pollCollection;
   public static MongoCollection<Document> responseCollection;
 
-  // TODO: @Jacqueline Change connection from static class to regular non-static class that needs to be instantiated and passed around like a normal class.
-  // this change allows us to have a test and production version of our Connection class. (rmbr to change both instance variables and methods to non-static)
-
   public Connection() {
     mongoClient = MongoClients.create(System.getenv("MONGODB_URI"));
     mongoDatabase = mongoClient.getDatabase("main");
@@ -38,7 +32,6 @@ public class Connection {
     pollCollection = mongoDatabase.getCollection("poll");
     responseCollection = mongoDatabase.getCollection("response");
   }
-
 
   /**
    * Method for generating random polls.
