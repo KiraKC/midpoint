@@ -74,7 +74,7 @@ public class NewPollHandler implements Route {
       //TODO: update user in MongoDB
       String userIdToken = jsonReqObject.getString("creatorId");
       FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
-      String userId = decodedToken.getUid();
+      userId = decodedToken.getUid();
       User user = Connection.getUserById(userId);
       user.created(newPoll.getId());
       BasicDBObject searchQuery = new BasicDBObject("_id", userId);
