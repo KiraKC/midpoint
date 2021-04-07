@@ -25,12 +25,25 @@ public class Connection {
   public static MongoCollection<Document> pollCollection;
   public static MongoCollection<Document> responseCollection;
 
+<<<<<<< HEAD
   public Connection() {
+=======
+  // TODO: @Jacqueline Change connection from static class to regular non-static class that needs to be instantiated and passed around like a normal class.
+  // this change allows us to have a test and production version of our Connection class. (rmbr to change both instance variables and methods to non-static)
+
+  public Connection(Boolean isTesting) {
+>>>>>>> 76db9637892dfc037048375b566fe85b13b0363d
     mongoClient = MongoClients.create(System.getenv("MONGODB_URI"));
     mongoDatabase = mongoClient.getDatabase("main");
-    userCollection = mongoDatabase.getCollection("user");
-    pollCollection = mongoDatabase.getCollection("poll");
-    responseCollection = mongoDatabase.getCollection("response");
+    if (isTesting) {
+      userCollection = mongoDatabase.getCollection("user_test");
+      pollCollection = mongoDatabase.getCollection("poll_test");
+      responseCollection = mongoDatabase.getCollection("response_test");
+    } else {
+      userCollection = mongoDatabase.getCollection("user");
+      pollCollection = mongoDatabase.getCollection("poll");
+      responseCollection = mongoDatabase.getCollection("response");
+    }
   }
 
   /**

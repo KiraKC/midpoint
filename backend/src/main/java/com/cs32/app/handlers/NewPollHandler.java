@@ -1,11 +1,15 @@
 package com.cs32.app.handlers;
 
 import com.cs32.app.CategoryPoints;
+import com.cs32.app.User;
+import com.cs32.app.database.Connection;
+import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.AnswerOption;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,15 +67,18 @@ public class NewPollHandler implements Route {
 
       System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
-      //TODO: add pollId to user's created polls field in database (so user can see all polls they created)
+
+      //TODO: update user in MongoDB
       userId = jsonReqObject.getString("creatorId");
-      BasicDBObject findQuery = new BasicDBObject("_id", userId);
-      BasicDBObject newPollIdToAdd = new BasicDBObject("createdPolls", newPoll.getId());
-      Document updateQuery = new Document().append("$push", newPollIdToAdd);
-      userCollection.updateOne(findQuery, updateQuery);
+      User user = Connection.getUserById(userId);
+      user.created(newPoll.getId());
+      BasicDBObject searchQuery = new BasicDBObject("_id", userId);
+      BasicDBObject updateFields = new BasicDBObject("createdPolls", user.getCreatedPolls().toBSON());
+      BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+      Connection.userCollection.updateOne(searchQuery, setQuery);
 
       variables.put("newPoll", newPoll);
-    } catch (JSONException e) {
+    } catch (JSONException | MissingDBObjectException e) {
       e.printStackTrace();
       System.err.println("JSON request not properly formatted");
       status = false;

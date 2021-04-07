@@ -118,12 +118,10 @@ public class Poll {
   public double calculateDisparity(CategoryPoints userCatPts) {
     double categoryDisparity = 0;
     double clickRate = this.getClickRate();
-    Double userTotal = userCatPts.getTotalPts();
 //    System.out.println("USERCATPTS:" + userTotal);
-    Double pollTotal = categoryPoints.getTotalPts();
 //    System.out.println("POLLCATPTS:" + question + pollTotal);
     for(String category : Constants.ALL_CATEGORIES) {
-      categoryDisparity += Math.abs(userCatPts.getNormPts(category, userTotal) - categoryPoints.getNormPts(category, pollTotal));
+      categoryDisparity += Math.abs(userCatPts.getNormPts(category) - categoryPoints.getNormPts(category));
     }
     return (1-clickRate) * categoryDisparity;
   }

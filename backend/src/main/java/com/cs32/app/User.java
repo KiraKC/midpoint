@@ -84,4 +84,20 @@ public class User {
   public UserMetaData getUserMetaData() {
     return userMetaData;
   }
+
+  public void answered(String pollId) {
+    answeredPolls.add(pollId);
+  }
+
+  public AnsweredPolls getAnsweredPolls() {
+    return answeredPolls;
+  }
+
+  public void created(String pollId) {
+    createdPolls.add(pollId);
+  }
+
+  public CreatedPolls getCreatedPolls() {
+    return createdPolls;
+  }
 }

@@ -1,8 +1,14 @@
 package com.cs32.app.handlers;
 
+import com.cs32.app.CategoryPoints;
+import com.cs32.app.Constants;
+import com.cs32.app.User;
 import com.cs32.app.database.Connection;
+import com.cs32.app.poll.Poll;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
+import org.bson.types.ObjectId;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -37,16 +43,47 @@ public class CheckOffHandler implements Route {
       String pollId = data.getString("pollId");
       String userId = data.getString("userId");
 
-      // TODO: update user's list of answered polls
+      Poll poll = Connection.getPollById(pollId);
+      User user = Connection.getUserById(userId);
 
-      // TODO: update user's category points
+      // Update user's list of answered polls
+      user.answered(pollId);
 
+<<<<<<< HEAD
       // TODO: update poll's numClicks
+=======
+      // Update poll's numClicks
+      poll.clicked();
 
-      // TODO: update poll's category points
+      // Update user's and poll's category points
+      CategoryPoints userCatPts = user.getCategoryPoints();
+      double currUserTotalPts = userCatPts.getTotalPts();
+      CategoryPoints pollCatPts = poll.getCatPts();
+      double currPollTotalPts = pollCatPts.getTotalPts();
+>>>>>>> 76db9637892dfc037048375b566fe85b13b0363d
 
-      Connection.getPollById(pollId);
+      for (String category : Constants.ALL_CATEGORIES) {
+        double currUserPts = userCatPts.getPts(category);
+        double currPollPts = pollCatPts.getPts(category);
+        userCatPts.updateCatPts(category, currUserPts + 30 * currPollPts / currPollTotalPts);
+        pollCatPts.updateCatPts(category, currPollPts + 100 * currUserPts / currUserTotalPts);
+      }
 
+      // TODO: update user in MongoDB
+      BasicDBObject searchQuery = new BasicDBObject("_id", userId);
+      BasicDBObject updateFields = new BasicDBObject();
+      updateFields.append("answeredPolls", user.getAnsweredPolls().toBSON());
+      updateFields.append("categoryPoints", userCatPts.toBSON());
+      BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+      Connection.userCollection.updateOne(searchQuery, setQuery);
+
+      // TODO: update poll in MongoDB
+      searchQuery = new BasicDBObject("_id", new ObjectId(pollId));
+      updateFields = new BasicDBObject();
+      updateFields.append("numClicks", poll.getNumClicks());
+      updateFields.append("catPts", poll.getCatPts().toBSON());
+      setQuery = new BasicDBObject("$set", updateFields);
+      Connection.pollCollection.updateOne(searchQuery, setQuery);
 
       status = true;
     } catch (org.json.JSONException e) {

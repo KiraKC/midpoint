@@ -11,6 +11,8 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
+import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import spark.Request;
@@ -132,12 +134,15 @@ public class GetSuggestedPollsHandler implements Route {
       // Return the polls to the frontend as a JSON
       variables.put("suggestedPolls", pollsToSend);
 
-      // Update the polls' num of renders
+      // Update the polls' num of renders and update polls in MongoDB
       for (Poll poll : pollsToSend) {
         poll.rendered();
+        // TODO: update poll in MongoDB
+        BasicDBObject searchQuery = new BasicDBObject("_id", new ObjectId(poll.getId()));
+        BasicDBObject updateFields = new BasicDBObject("numRenders", poll.getNumRenders());
+        BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+        Connection.userCollection.updateOne(searchQuery, setQuery);
       }
-
-      // TODO: update poll in database
 
       status = true;
     } catch (JSONException e) {

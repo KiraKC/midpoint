@@ -30,6 +30,10 @@ public class CreatedPolls {
     }
   }
 
+  public void add(String pollId) {
+    createdPolls.add(pollId);
+  }
+
   public Object toBSON() {
     List<Object> mongoAnsweredPollsList = new BasicDBList();
     mongoAnsweredPollsList.addAll(createdPolls);
