@@ -5,6 +5,9 @@ import com.cs32.app.User;
 import com.cs32.app.database.Connection;
 import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.AnswerOption;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
@@ -69,7 +72,9 @@ public class NewPollHandler implements Route {
       status = this.addPollToDB(newPoll);
 
       //TODO: update user in MongoDB
-      userId = jsonReqObject.getString("creatorId");
+      String userIdToken = jsonReqObject.getString("creatorId");
+      FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
+      String userId = decodedToken.getUid();
       User user = Connection.getUserById(userId);
       user.created(newPoll.getId());
       BasicDBObject searchQuery = new BasicDBObject("_id", userId);
@@ -81,6 +86,9 @@ public class NewPollHandler implements Route {
     } catch (JSONException | MissingDBObjectException e) {
       e.printStackTrace();
       System.err.println("JSON request not properly formatted");
+      status = false;
+    } catch (FirebaseAuthException e) {
+      e.printStackTrace();
       status = false;
     }
     variables.put("status", status);
