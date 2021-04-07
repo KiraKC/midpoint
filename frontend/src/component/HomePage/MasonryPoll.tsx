@@ -45,7 +45,7 @@ function MasonryPoll(props: MasonryPollProps) {
 						console.log(res.data.miniStats);
 						setSelectedOptionId(optionId);
 					} else {
-						console.log("FAILED")
+						console.log("Option Selection Failed")
 					}
 				})
 				.catch(e => {
@@ -65,21 +65,36 @@ function MasonryPoll(props: MasonryPollProps) {
 
 	const selectedColor = randomColor();
 
-	return (
-		<div className="masonary-poll-wrapper" >
-			<div className="masonary-background" style={{
-				backgroundColor: `${selectedColor}`
-			}}></div>
-			<Emoji emoji={props.emoji} set='apple' size={35} />
-			<div className="masonary-poll-heading">{props.question}</div>
-			{props.answerOption.map((option, index) => (
-				<MasonryOption key={index} id={option.id} value={option.value}
-					emoji={option.emoji} textColor={selectedColor}
-					isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
-					setSelectedOptionId={setSelectedOptionId} clickHandler={handleResponseToPoll} />
-			))}
-		</div>
-	);
+
+	if (selectedOptionId === '') {
+		return (
+			<div className="masonary-poll-wrapper" >
+				<div className="masonary-background" style={{
+					backgroundColor: `${selectedColor}`
+				}}></div>
+				<Emoji emoji={props.emoji} set='apple' size={35} />
+				<div className="masonary-poll-heading">{props.question}</div>
+				{props.answerOption.map((option, index) => (
+					<MasonryOption key={index} id={option.id} value={option.value}
+						emoji={option.emoji} textColor={selectedColor}
+						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
+						setSelectedOptionId={setSelectedOptionId} clickHandler={handleResponseToPoll} />
+				))}
+			</div>
+		);
+	} else {
+		return (
+			<div className="masonary-poll-wrapper" >
+				<div className="masonary-background" style={{
+					backgroundColor: `${selectedColor}`
+				}}></div>
+				<Emoji emoji={props.emoji} set='apple' size={35} />
+				<div className="masonary-poll-heading">{props.question}</div>
+				
+			</div>
+		)
+	}
+	
 }
 
 export default MasonryPoll;
