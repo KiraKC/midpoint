@@ -76,6 +76,10 @@ function NewPollModal(props: INewPollModal) {
 		return optionArray
 	}
 
+	function checkIfDuplicateExists(myArray: string[]){
+		return new Set(myArray).size !== myArray.length 
+	}
+
 	const isSubmissionValid = () => {
 		let isValid = true;
 		if (questionText === '') {
@@ -89,6 +93,11 @@ function NewPollModal(props: INewPollModal) {
 				setOptionHint([...tempHint])
 				isValid = false;
 			}
+		}
+		// TODO: flag the array with duplicates+
+		if (checkIfDuplicateExists(textFieldValue)) {
+			// flag the two duplicate cell with alertsfg
+			isValid = false;
 		}
 		return isValid;
 	}
