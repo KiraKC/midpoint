@@ -52,7 +52,7 @@ public class GetGamePollHandler implements Route{
       // Return the poll to the frontend as a JSON
       variables.put("gamePoll", pollToSend);
       status = true;
-    } catch (JSONException e) {
+    } catch (Exception e) {
       e.printStackTrace();
       System.err.println("ERROR: GetSuggestedPollsHandler JSON request not properly formatted");
       // TODO: send a failure response to frontend

@@ -47,6 +47,7 @@ public class PollResponse {
     FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
     String userId = decodedToken.getUid();
     User user = Connection.getUserById(userId);
+    System.out.println("USER: " + user.toBSON());
     userMetaData = user.getUserMetaData();
   }
 
