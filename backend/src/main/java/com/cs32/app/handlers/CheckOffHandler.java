@@ -5,6 +5,8 @@ import com.cs32.app.Constants;
 import com.cs32.app.User;
 import com.cs32.app.database.Connection;
 import com.cs32.app.poll.Poll;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
@@ -39,9 +41,12 @@ public class CheckOffHandler implements Route {
     Map<String, Object> variables = new HashMap<>();
     boolean status;
     try {
-      JSONObject data = new JSONObject(req.body());
-      String pollId = data.getString("pollId");
-      String userId = data.getString("userId");
+      // parse JSON
+      JSONObject jsonReqObject = new JSONObject(req.body());
+      String pollId = jsonReqObject.getString("pollId");
+      String userIdToken = jsonReqObject.getString("userIdToken");
+      FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
+      String userId = decodedToken.getUid();
 
       Poll poll = Connection.getPollById(pollId);
       User user = Connection.getUserById(userId);
@@ -83,10 +88,12 @@ public class CheckOffHandler implements Route {
 
       status = true;
     } catch (org.json.JSONException e) {
+      e.printStackTrace();
       System.err.println("ERROR: Incorrect JSON object formatting");
       // TODO: send the error message to the frontend
       status = false;
     } catch (NumberFormatException e) {
+      e.printStackTrace();
       System.err.println("ERROR: Incorrect ID data type");
       // TODO: send the error message to the frontend
       status = false;
