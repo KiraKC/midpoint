@@ -4,7 +4,7 @@
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	background-color: rgba(255, 255, 255, 0.85);
+	background-color: rgba(255, 255, 255, 0.7);
 	border-radius: 10px;
 	padding: 6px 15px;
 	margin-bottom: 15px;
@@ -13,6 +13,7 @@
 	outline: none;
 	z-index: 4;
 	position: relative;
+	cursor: pointer;
 }
 
 .option-wrapper:hover {background-color: white}
@@ -31,4 +32,42 @@
 	margin-left: 10px;
 	font-size: 1.35rem;
 	font-weight: 700;
+	z-index: 4;
+}
+
+.answered-option-wrapper {
+	width: 100%;
+	height: max-content;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.5);
+	border-radius: 10px;
+	padding: 6px 15px;
+	margin-bottom: 15px;
+	box-shadow: 0 3px rgb(197, 197, 197);
+	border: none;
+	outline: none;
+	z-index: 4;
+	position: relative;
+}
+
+.answered-option-white-bar {
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.option-percentage {
+	font-family: "Inter", sans-serif;
+	margin-top: -1px;
+	margin-left: 10px;
+	font-size: 1.35rem;
+	font-weight: 700;
+	z-index: 4;
+	position: absolute;
+	right: 15px;
 }

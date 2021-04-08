@@ -1,11 +1,12 @@
 import '../../styles/HomePage/MasonryPoll.css';
-import MasonryOption from './PollOption';
 import { Emoji } from 'emoji-mart';
 import IOption from '../../interfaces/IOption';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
+import AnsweredOption from './AnsweredOption';
+import MasonryOption from './PollOption';
 
 interface MasonryPollProps {
 	id: string,
@@ -20,7 +21,8 @@ interface MasonryPollProps {
 function MasonryPoll(props: MasonryPollProps) {
 
 	const [selectedOptionId, setSelectedOptionId]: [string, any] = useState("");
-
+	const [stats, setStats] = useState({})
+	
 	const handleResponseToPoll = async (optionId: string) => {
 		if (props.isLoggedIn) {
 			let status:boolean = await handleAnonAnswer(optionId);
@@ -53,7 +55,7 @@ function MasonryPoll(props: MasonryPollProps) {
 			)
 				.then(res => {
 					if (res.data.status) {
-						console.log(res.data.miniStats);
+						setStats(res.data.miniStats);
 						setSelectedOptionId(optionId);
             return true;
 					} else {
@@ -112,7 +114,7 @@ function MasonryPoll(props: MasonryPollProps) {
 					<MasonryOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
 						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
-						setSelectedOptionId={setSelectedOptionId} clickHandler={handleResponseToPoll} />
+						setSelectedOptionId={setSelectedOptionId} clickHandler={handleResponseToPoll}/>
 				))}
 			</div>
 		);
@@ -124,7 +126,12 @@ function MasonryPoll(props: MasonryPollProps) {
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
-				
+				{props.answerOption.map((option, index) => (
+					<AnsweredOption key={index} id={option.id} value={option.value}
+						emoji={option.emoji} textColor={props.color}
+						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
+						setSelectedOptionId={setSelectedOptionId} percentage={stats[option.id]}/>
+				))}
 			</div>
 		)
 	}
