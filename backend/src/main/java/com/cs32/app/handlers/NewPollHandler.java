@@ -27,7 +27,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cs32.app.database.Connection.pollCollection;
-import static com.cs32.app.database.Connection.userCollection;
 
 public class NewPollHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
@@ -42,7 +41,7 @@ public class NewPollHandler implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    boolean status; String userId; String question; String emoji; List<AnswerOption> answerOptions; List<String> taggedCategories;
+    boolean status; String question; String emoji; List<AnswerOption> answerOptions;
     Map<String, Object> variables = new HashMap<>();
     // Parse request
     try {
@@ -74,7 +73,7 @@ public class NewPollHandler implements Route {
       //TODO: update user in MongoDB
       String userIdToken = jsonReqObject.getString("creatorId");
       FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
-      userId = decodedToken.getUid();
+      String userId = decodedToken.getUid();
       User user = Connection.getUserById(userId);
       user.created(newPoll.getId());
       BasicDBObject searchQuery = new BasicDBObject("_id", userId);

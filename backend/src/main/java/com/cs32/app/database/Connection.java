@@ -118,4 +118,8 @@ public class Connection {
     }
     return (new User(cursor.next()));
   }
+
+  public static void replacePoll(Poll poll) {
+
+  }
 }
