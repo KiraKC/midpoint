@@ -57,10 +57,8 @@ public class AnonymousAnswerHandler implements Route {
         counts.put(answerOption.getId(), 0.0);
       }
 
-      System.out.println("ALLRESPONSES.size(): " + allResponses.size());
       // Count
       for (PollResponse everyResponse : allResponses) {
-        System.out.println("EVERYRESPONSE: " + everyResponse.toBSON());
         counts.put(everyResponse.getAnswerOptionId(), counts.get(everyResponse.getAnswerOptionId()) + 1);
       }
 
