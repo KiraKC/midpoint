@@ -56,6 +56,8 @@ function OptionItem(props: IOptionItemProps) {
 
 	return (
 		<div className="poll-modal-input-module display-relative">
+					{console.log(pollEmojiArray[index])}
+
 			<button className="emoji-picker-button"
 				onClick={() => handleEmojiOpen(index)}><Emoji emoji={pollEmojiArray[index]} set='apple' size={23} /></button>
 			{isEmojiOpenArray[index] ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => handlePollEmoji(emoji, index)} /></div> : ''}

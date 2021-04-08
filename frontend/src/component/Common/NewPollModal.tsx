@@ -52,13 +52,13 @@ function NewPollModal(props: INewPollModal) {
 
 	Modal.setAppElement("#root")
 
-	const [pollEmojiArray, setPollEmojiArray]: [string[], any] = useState(['thumbsup', 'thumbsdown']);
+	const [pollEmojiArray, setPollEmojiArray]: [string[], any] = useState(['rocket', 'ghost']);
 	const [isEmojiOpenArray, setIsEmojiOpenArray]: [boolean[], any] = useState([false, false]);
 	const [textFieldValue, setTextFieldValue]: [string[], any] = useState(['', '']);
 	const [optionHint, setOptionHint]: [string[], any] = useState(['ANSWER', 'ANSWER'])
 
 	const [questionText, setQuestionText]: [string, any] = useState('');
-	const [questionEmoji, setQuestionEmoji]: [string, any] = useState('earth_asia')
+	const [questionEmoji, setQuestionEmoji]: [string, any] = useState('star2')
 	const [questionEmojiOpen, setQuestionEmojiOpen]: [boolean, any] = useState(false)
 	const [questionHint, setQuestionHint]: [string, any] = useState('QUESTION')
 
@@ -107,12 +107,12 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	const cleanUpData = () => {
-		setPollEmojiArray(['thumbsup', 'thumbsdown']);
+		setPollEmojiArray(['rocket', 'ghost']);
 		setIsEmojiOpenArray([false, false]);
 		setTextFieldValue(['', '']);
 		setOptionHint(['ANSWER', 'ANSWER'])
 		setQuestionText('')
-		setQuestionEmoji('earth_asia')
+		setQuestionEmoji('star2')
 		setQuestionEmojiOpen(false)
 		setCategories([])
 		setNumOfOptions(2)
@@ -144,7 +144,6 @@ function NewPollModal(props: INewPollModal) {
 				config,
 			)
 				.then(response => {
-					cleanUpData();
 					const newPoll: IPoll = {
 						id: response.data.newPoll.id,
 						question: toSend.question,
@@ -159,6 +158,7 @@ function NewPollModal(props: INewPollModal) {
 					tempPoll.unshift(newPoll)
 					props.setPolls([...tempPoll])
 					props.setIsModalOpen(false);
+					cleanUpData();
 					return response.data;
 				})
 				.catch(e => {
@@ -181,6 +181,7 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	const handleIncrement = () => {
+		const listOfEmojis = ['star-struck', 'face_with_cowboy_hat', 'see_no_evil', 'eyes']
 		if (numOfOptions < 6) {
 			setNumOfOptions(numOfOptions + 1)
 			let tempIsOpenArray = isEmojiOpenArray;
@@ -190,7 +191,7 @@ function NewPollModal(props: INewPollModal) {
 			tempTextFieldValue.push('');
 			setTextFieldValue([...tempTextFieldValue])
 			let tempPollEmojiArray = pollEmojiArray;
-			tempPollEmojiArray.push('star-struck', 'face_with_cowboy_hat', 'see_no_evil', 'eyes', 'crystal_ball', 'doughnut');
+			tempPollEmojiArray.push(listOfEmojis[numOfOptions - 2]);
 			setPollEmojiArray([...tempPollEmojiArray])
 			let tempOptionHint = optionHint;
 			tempOptionHint.push('ANSWER');
