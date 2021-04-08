@@ -97,7 +97,6 @@ public class Connection {
   public static boolean addUserToDB(User user) {
     try {
       System.out.println("USER: " + user.toBSON());
-      System.out.println("userCollection: " + userCollection);
       userCollection.insertOne(user.toBSON());
       System.out.println("adding com.cs32.app.user to db was SUCCESSFUL, userId: " + user.getId());
     } catch (Exception e) {

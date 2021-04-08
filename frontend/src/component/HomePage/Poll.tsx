@@ -23,7 +23,17 @@ function MasonryPoll(props: MasonryPollProps) {
 
 	const handleResponseToPoll = async (optionId: string) => {
 		if (props.isLoggedIn) {
-			const userId = await firebase.auth().currentUser.getIdToken(true)
+			let status:boolean = await handleAnonAnswer(optionId);
+      if (status) {
+        await handleCheckOff();
+      }
+		} else {
+			props.setIsLoginModalOpen(true);
+		}
+	}
+
+  const handleAnonAnswer = async (optionId: string) : Promise<boolean> => {
+    const userId = await firebase.auth().currentUser.getIdToken(true)
 			const toSend = {
 				pollId: props.id,
 				answerOptionId: optionId,
@@ -36,7 +46,7 @@ function MasonryPoll(props: MasonryPollProps) {
 					'Access-Control-Allow-Origin': '*',
 				}
 			}
-			axios.post(
+			return axios.post(
 				endpointUrl + '/poll/anon-answer',
 				toSend,
 				config,
@@ -45,17 +55,50 @@ function MasonryPoll(props: MasonryPollProps) {
 					if (res.data.status) {
 						console.log(res.data.miniStats);
 						setSelectedOptionId(optionId);
+            return true;
 					} else {
 						console.log("Option Selection Failed")
+            return false;
 					}
 				})
 				.catch(e => {
 					console.log(e);
+          return false;
 				});
-		} else {
-			props.setIsLoginModalOpen(true);
-		}
-	}
+  }
+
+  const handleCheckOff = async () : Promise<boolean> => {
+    const userId = await firebase.auth().currentUser.getIdToken(true)
+			const toSend = {
+				pollId: props.id,
+				userIdToken: userId,
+			}
+			console.log(toSend)
+			const config = {
+				headers: {
+					"Content-Type": "application/json",
+					'Access-Control-Allow-Origin': '*',
+				}
+			}
+			return axios.post(
+				endpointUrl + '/poll/check-off',
+				toSend,
+				config,
+			)
+				.then(res => {
+					if (res.data.status) {
+            return true;
+					} else {
+						console.log("Option Selection Failed")
+            return false;
+					}
+				})
+				.catch(e => {
+					console.log(e);
+          return false;
+				});
+  }
+
 
 	if (selectedOptionId === '') {
 		return (
