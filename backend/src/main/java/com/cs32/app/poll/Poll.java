@@ -27,7 +27,7 @@ public class Poll {
   private int numRenders;
   private int numClicks;
 
-  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints) {
+  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color) {
     this.id = new ObjectId().toString();
     this.question = question;
     this.emoji = emoji;
@@ -35,9 +35,10 @@ public class Poll {
     this.categoryPoints = categoryPoints;
     this.numRenders = 0;
     this.numClicks = 0;
+    this.color = color;
   }
 
-  public Poll(String id, String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, int numRenders, int numClicks) {
+  public Poll(String id, String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, int numRenders, int numClicks, String color) {
     this.id = id;
     this.question = question;
     this.emoji = emoji;
@@ -45,9 +46,10 @@ public class Poll {
     this.categoryPoints = categoryPoints;
     this.numRenders = numRenders;
     this.numClicks = numClicks;
+    this.color = color;
   }
 
-  public Poll(Document mongoPoll) {
+  public Poll(Document mongoPoll) throws Exception {
     id = mongoPoll.getString("_id");
     // Get question
     question = mongoPoll.getString("question");
@@ -170,7 +172,8 @@ public class Poll {
           .append("answerOptions", mongoAnswers)
           .append("catPts", mongoCatPts)
           .append("numClicks", numClicks)
-          .append("numRenders", numRenders);
+          .append("numRenders", numRenders)
+          .append("color", color);
     return mongoPoll;
   }
 

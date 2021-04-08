@@ -44,7 +44,7 @@ public class Connection {
    * @param numPolls num of polls to generate
    * @return a List of polls
    */
-  public static List<Poll> getRandomPolls(int numPolls) {
+  public static List<Poll> getRandomPolls(int numPolls) throws Exception {
     List<Poll> randomPolls = new ArrayList<>();
 
     // Randomly sample from the MongoDB collection
@@ -62,7 +62,7 @@ public class Connection {
   }
 
 
-  public static Poll getPollById(String pollId) throws MissingDBObjectException {
+  public static Poll getPollById(String pollId) throws Exception {
     Document document = pollCollection.find(Filters.eq("_id", pollId)).first();
     if (document != null) {
       return (new Poll(document));
@@ -119,7 +119,7 @@ public class Connection {
     return (new User(cursor.next()));
   }
 
-  public static void replacePoll(Poll poll) {
-
+  public static void replacePoll(Poll poll) throws Exception{
+    pollCollection.replaceOne(Filters.eq("_id", poll.getId()), poll.toBSON());
   }
 }
