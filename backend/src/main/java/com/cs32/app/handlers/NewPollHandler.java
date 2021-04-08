@@ -71,7 +71,7 @@ public class NewPollHandler implements Route {
       System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
 
-      //TODO: update user in MongoDB
+      // Update user's created polls in MongoDB
       String userIdToken = jsonReqObject.getString("creatorId");
       FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
       String userId = decodedToken.getUid();
