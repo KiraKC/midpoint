@@ -21,7 +21,8 @@ interface MasonryPollProps {
 function MasonryPoll(props: MasonryPollProps) {
 
 	const [selectedOptionId, setSelectedOptionId]: [string, any] = useState("");
-
+	const [stats, setStats] = useState({})
+	
 	const handleResponseToPoll = async (optionId: string) => {
 		if (props.isLoggedIn) {
 			const userId = await firebase.auth().currentUser.getIdToken(true)
@@ -44,7 +45,7 @@ function MasonryPoll(props: MasonryPollProps) {
 			)
 				.then(res => {
 					if (res.data.status) {
-						console.log(res.data.miniStats);
+						setStats(res.data.miniStats);
 						setSelectedOptionId(optionId);
 					} else {
 						console.log("Option Selection Failed")
@@ -86,7 +87,7 @@ function MasonryPoll(props: MasonryPollProps) {
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
 						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
-						setSelectedOptionId={setSelectedOptionId} />
+						setSelectedOptionId={setSelectedOptionId} percentage={stats[option.id]}/>
 				))}
 			</div>
 		)
