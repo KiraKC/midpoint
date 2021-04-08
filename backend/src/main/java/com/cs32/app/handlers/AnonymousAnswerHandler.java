@@ -12,6 +12,7 @@ import spark.Response;
 import spark.Route;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -66,9 +67,10 @@ public class AnonymousAnswerHandler implements Route {
       Map<String, Double> miniStats = new HashMap<>();
       for (AnswerOption answerOption : answerOptions) {
         double percentage = counts.get(answerOption.getId()) / allResponses.size();
-        miniStats.put(answerOption.getValue(), percentage);
+        miniStats.put(answerOption.getId(), percentage * 100);
       }
       variables.put("miniStats", miniStats);
+      variables.put("answerOptions", answerOptions);
       status = true;
     } catch (Exception e) {
       e.printStackTrace();
