@@ -12,6 +12,7 @@ import categoryArray from '../../constants/Category';
 import endpointUrl from '../../constants/Endpoint';
 import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
+import randomColor from '../../constants/Color';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -125,7 +126,8 @@ function NewPollModal(props: INewPollModal) {
 			emoji: questionEmoji,
 			question: questionText,
 			answerOptions: getOptionsArray(),
-			taggedCategories: categories
+			taggedCategories: categories,
+			color: randomColor()
 		}
 		console.log(toSend)
 		const config = {
@@ -147,7 +149,8 @@ function NewPollModal(props: INewPollModal) {
 						id: response.data.newPoll.id,
 						question: toSend.question,
 						emoji: toSend.emoji,
-						answerOptions: response.data.newPoll.answerOptions
+						answerOptions: response.data.newPoll.answerOptions,
+						color: toSend.color
 					}
 					let tempSeenIds = props.seenPollIds;
 					tempSeenIds.push(newPoll.id)
@@ -192,8 +195,6 @@ function NewPollModal(props: INewPollModal) {
 			let tempOptionHint = optionHint;
 			tempOptionHint.push('ANSWER');
 			setOptionHint([...tempOptionHint])
-		} else {
-			// TODO: error message somewhere
 		}
 	}
 
@@ -212,8 +213,6 @@ function NewPollModal(props: INewPollModal) {
 			let tempOptionHint = optionHint;
 			tempOptionHint.pop();
 			setOptionHint([...tempOptionHint])
-		} else {
-			// TODO: error message somewhere
 		}
 	}
 
@@ -221,7 +220,6 @@ function NewPollModal(props: INewPollModal) {
 		<div>
 			<Modal
 				isOpen={props.isModalOpen}
-				// onRequestClose={() => props.setIsModalOpen(false)}
 				contentLabel="Example Modal"
 				style={customStyles}>
 				<div className="poll-modal-wrapper">

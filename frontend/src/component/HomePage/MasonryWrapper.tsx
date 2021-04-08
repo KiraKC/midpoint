@@ -1,7 +1,7 @@
 import Masonry from 'react-masonry-css';
 import '../../styles/HomePage/MasonryWrapper.css';
 import React, { useEffect, useState } from 'react';
-import MasonryPoll from './MasonryPoll'
+import MasonryPoll from './Poll'
 import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -49,7 +49,6 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 	const requestPolls = async () => {
 		let toSend;
 		if (props.isLoggedIn) {
-			// TODO: JINOO, example of getting user id token
 			const idToken = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				userIdToken: idToken,
@@ -73,13 +72,11 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 			}
 		}
 		
-		// TODO: JINOO, example POST request
 		axios.post(
 			endpointUrl + '/user/get-suggested', toSend, config)
 			.then(response => {
 				updateSeenPollIds(response.data.suggestedPolls)
 				updatePollArray(response.data.suggestedPolls);
-				console.log("RETURNED RESULT:");
 				console.log(response.data.suggestedPolls)
 			})
 			.catch(e => {
@@ -88,7 +85,9 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 	}
 
 	const divItems = polls.map(function (poll) {
-		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question} emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}/>
+		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question} 
+		emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn} 
+		setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color}/>
 	});
 
 	const breakpointColumnsObj = {

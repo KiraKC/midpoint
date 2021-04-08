@@ -4,7 +4,8 @@ interface IPoll {
 	id: string,
 	question: string,
 	emoji: string,
-	answerOptions: IOption[]
+	answerOptions: IOption[],
+	color: string
 }
 
 export default IPoll;
