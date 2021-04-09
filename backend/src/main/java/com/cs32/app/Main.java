@@ -78,5 +78,6 @@ public class Main {
     Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
     Spark.post("/game/new-poll", new GetGamePollHandler());
     Spark.post("/poll/check-off", new CheckOffHandler());
+    Spark.post("/poll/search", new SearchPollHandler());
   }
 }
