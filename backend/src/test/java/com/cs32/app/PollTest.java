@@ -2,7 +2,6 @@ package com.cs32.app;
 
 import com.cs32.app.poll.AnswerOption;
 import com.cs32.app.poll.Poll;
-import org.checkerframework.checker.units.qual.A;
 import org.junit.Test;
 
 import java.util.ArrayList;
