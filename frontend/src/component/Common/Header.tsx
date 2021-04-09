@@ -5,12 +5,21 @@ import { signOut } from '../../firebase/AuthMethods'
 import NewPollModal from "./NewPollModal";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
+import { useMediaQuery } from 'react-responsive'
 
 function Header(props) {
 
 	const navigate = useNavigate()
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
 	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
+
+	const isSmallScreen = useMediaQuery({
+		query: '(max-width: 1100px)'
+	})
+
+	const isBigScreen = useMediaQuery({
+		query: '(min-width: 1100px)'
+	})
 
 	function handleSignInStatus() {
 		if (props.isLoggedIn) {
@@ -35,24 +44,60 @@ function Header(props) {
 
 	return (
 		<>
-			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen} 
-			{...newPollProps} />
+			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen}
+				{...newPollProps} />
 			<LoginModal isModalOpen={props.isLoginModalOpen} setIsModalOpen={props.setIsLoginModalOpen}
 				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps} />
 			<SignUpModal setIsLoggedIn={props.setIsLoggedIn} isModalOpen={isSignupModalOpen}
 				setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={props.setIsLoginModalOpen} {...fetchNewPollProps} />
 			<div className="header">
-				<div className="header-background"></div>
-				<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-					<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
-					<div className="nav-text-link" style={{ marginLeft: '45px' }} onClick={() => navigate('my-profile')}>My Profile</div>
-					<div className="nav-text-link" onClick={() => navigate('game')}>Game</div>
-				</div>
-				<div style={{ position: 'relative' }}>
-					<button className="nav-link" onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : props.setIsLoginModalOpen(true) }}>New Poll</button>
-					<button className="nav-link"
-						onClick={() => handleSignInStatus()}>{props.isLoggedIn ? 'Log out' : 'Sign in'}</button>
-				</div>
+				{
+					isSmallScreen &&
+					<>
+						<div className="header-background"></div>
+						<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+							<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
+							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
+						</div>
+						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
+							<button className="mobile-nav-link"
+								 onClick={() => navigate('history')}>
+								<span className="material-icons-outlined">
+									history</span></button>
+							<button className="mobile-nav-link"
+								onClick={() => navigate('my-poll')}>
+								<span className="material-icons-outlined">
+									outbox</span></button>
+							<button className="mobile-nav-link"
+								onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : props.setIsLoginModalOpen(true) }}>
+								<span className="material-icons-outlined">
+									create</span></button>
+							<button className="mobile-nav-link"
+								onClick={() => handleSignInStatus()}>
+								{props.isLoggedIn ? <span className="material-icons-outlined">exit_to_app</span> :
+									<span className="material-icons-outlined">face</span>}
+							</button>
+						</div>
+					</>
+				}
+				{
+					isBigScreen &&
+					<>
+						<div className="header-background"></div>
+						<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
+							<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
+							<div className="nav-text-link" style={{ marginLeft: '30px' }} onClick={() => navigate('history')}>History</div>
+							<div className="nav-text-link" onClick={() => navigate('my-poll')}>My Polls</div>
+							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
+						</div>
+						<div style={{ position: 'relative' }}>
+							<button className="nav-link" onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : props.setIsLoginModalOpen(true) }}>New Poll</button>
+							<button className="nav-link"
+								onClick={() => handleSignInStatus()}>{props.isLoggedIn ? 'Log out' : 'Sign in'}</button>
+						</div>
+					</>
+				}
+
 			</div>
 		</>
 	);

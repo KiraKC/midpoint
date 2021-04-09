@@ -57,8 +57,12 @@ function App() {
 							<Route path="/home" element={<MasonryWrapper
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
-							<Route path="/game" element={<GameBox/>} />
-							<Route path="/my-profile" />
+							<Route path="/history" element={<MasonryWrapper
+								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
+							<Route path="/my-polls" element={<MasonryWrapper
+								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>

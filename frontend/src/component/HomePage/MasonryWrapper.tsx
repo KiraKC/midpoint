@@ -87,7 +87,7 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 	const divItems = polls.map(function (poll) {
 		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question} 
 		emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn} 
-		setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color}/>
+		setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}/>
 	});
 
 	const breakpointColumnsObj = {
