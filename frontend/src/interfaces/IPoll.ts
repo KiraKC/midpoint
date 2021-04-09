@@ -5,7 +5,8 @@ interface IPoll {
 	question: string,
 	emoji: string,
 	answerOptions: IOption[],
-	color: string
+	color: string,
+	imageUrl: string
 }
 
 export default IPoll;

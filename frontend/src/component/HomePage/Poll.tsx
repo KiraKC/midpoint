@@ -110,6 +110,7 @@ function MasonryPoll(props: MasonryPollProps) {
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
+				<img className="masonry-poll-img" src="https://media.tenor.com/images/c9c262a8a4f5453e7433da2bb8ccf531/tenor.gif"></img>
 				{props.answerOption.map((option, index) => (
 					<MasonryOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
