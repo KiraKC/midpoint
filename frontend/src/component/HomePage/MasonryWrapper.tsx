@@ -15,7 +15,7 @@ interface MasonryWrapperProps {
 	setPolls: any,
 	seenPollIds: string[],
 	setSeenPollIds: any,
-  setIsLoginModalOpen: any
+	setIsLoginModalOpen: any
 }
 
 function MasonryWrapper(props: MasonryWrapperProps) {
@@ -71,7 +71,7 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 				'Access-Control-Allow-Origin': '*',
 			}
 		}
-		
+
 		axios.post(
 			endpointUrl + '/user/get-suggested', toSend, config)
 			.then(response => {
@@ -85,9 +85,9 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 	}
 
 	const divItems = polls.map(function (poll) {
-		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question} 
-		emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn} 
-		setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}/>
+		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
+			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} />
 	});
 
 	const breakpointColumnsObj = {
