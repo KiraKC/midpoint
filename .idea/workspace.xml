@@ -6,18 +6,7 @@
   <component name="ChangeListManager">
     <list default="true" id="d582ac83-f454-46b4-9a64-852df8947de5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/AnsweredPolls.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/AnsweredPolls.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CategoryPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CategoryPoints.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CreatedPolls.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CreatedPolls.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/database/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/database/Connection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/CheckOffHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/CheckOffHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetSuggestedPollsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetSuggestedPollsHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/NewPollHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/NewPollHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/Poll.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/Poll.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/AppTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/AppTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/component/Common/NewPollModal.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/component/Common/NewPollModal.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -170,7 +159,7 @@
       <workItem from="1617506480011" duration="2766000" />
       <workItem from="1617511336590" duration="137000" />
       <workItem from="1617634974507" duration="407000" />
-      <workItem from="1617687066483" duration="11558000" />
+      <workItem from="1617687066483" duration="19752000" />
     </task>
     <servers />
   </component>

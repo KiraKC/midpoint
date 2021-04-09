@@ -2,14 +2,12 @@ package com.cs32.app;
 
 import static org.junit.Assert.assertTrue;
 
-import com.cs32.app.database.Connection;
 import org.junit.Test;
 
 /**
- * Unit test for simple App.
+ * Unit tests for App.
  */
-public class AppTest 
-{
+public class AppTest {
     /**
      * Rigorous Test :-)
      */

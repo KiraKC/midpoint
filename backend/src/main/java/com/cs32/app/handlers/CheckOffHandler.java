@@ -70,21 +70,23 @@ public class CheckOffHandler implements Route {
         pollCatPts.updateCatPts(category, currPollPts + 100 * currUserPts / currUserTotalPts);
       }
 
-      // TODO: update user in MongoDB
+      // Update user's answered polls and category points in MongoDB
       BasicDBObject searchQuery = new BasicDBObject("_id", userId);
       BasicDBObject updateFields = new BasicDBObject();
       updateFields.append("answeredPolls", user.getAnsweredPolls().toBSON());
       updateFields.append("categoryPoints", userCatPts.toBSON());
       BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
       Connection.userCollection.updateOne(searchQuery, setQuery);
+      System.out.println("Updating user data SUCCESSFUL.");
 
-      // TODO: update poll in MongoDB
+      // TODO: update poll's number of clicks and category points in MongoDB
       searchQuery = new BasicDBObject("_id", new ObjectId(pollId));
       updateFields = new BasicDBObject();
       updateFields.append("numClicks", poll.getNumClicks());
       updateFields.append("catPts", poll.getCatPts().toBSON());
       setQuery = new BasicDBObject("$set", updateFields);
       Connection.pollCollection.updateOne(searchQuery, setQuery);
+      System.out.println("Updating poll data SUCCESSFUL.");
 
       status = true;
     } catch (org.json.JSONException e) {

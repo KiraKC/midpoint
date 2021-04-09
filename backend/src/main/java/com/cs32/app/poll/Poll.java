@@ -7,11 +7,12 @@ import com.google.gson.annotations.Expose;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import java.net.StandardSocketOptions;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * Poll class that literally stands for a poll.
+ */
 public class Poll {
   @Expose
   private String id;
@@ -27,6 +28,14 @@ public class Poll {
   private int numRenders;
   private int numClicks;
 
+  /**
+   * Poll constructor.
+   * @param question poll question
+   * @param emoji poll emoji
+   * @param answerOptions answer options
+   * @param categoryPoints category points
+   * @param color poll color
+   */
   public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color) {
     this.id = new ObjectId().toString();
     this.question = question;
@@ -38,17 +47,11 @@ public class Poll {
     this.color = color;
   }
 
-  public Poll(String id, String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, int numRenders, int numClicks, String color) {
-    this.id = id;
-    this.question = question;
-    this.emoji = emoji;
-    this.answerOptions = answerOptions;
-    this.categoryPoints = categoryPoints;
-    this.numRenders = numRenders;
-    this.numClicks = numClicks;
-    this.color = color;
-  }
-
+  /**
+   * Poll constructor that transforms a MongoDB document for a poll to a Poll object.
+   * @param mongoPoll MongoDB document for a poll
+   * @throws Exception
+   */
   public Poll(Document mongoPoll) throws Exception {
     id = mongoPoll.getString("_id");
     // Get question
@@ -85,59 +88,71 @@ public class Poll {
 
   }
 
+  /**
+   * Getter method for poll id.
+   * @return poll id
+   */
   public String getId() {
     return id;
   }
 
-  public String getQuestion() {
-    return question;
-  }
-
-  public String getEmoji() { return emoji; }
-
+  /**
+   * Getter method for answer options.
+   * @return a list of answer options
+   */
   public List<AnswerOption> getAnswerOptions() {
     return answerOptions;
   }
 
+  /**
+   * Getter method for category points.
+   * @return a map of category points
+   */
   public CategoryPoints getCatPts() {
     return categoryPoints;
   }
 
+  /**
+   * Getter method for number of renders.
+   * @return number of renders
+   */
   public int getNumRenders() {
     return numRenders;
   }
 
+  /**
+   * Getter method for number of clicks.
+   * @return number of clicks
+   */
   public int getNumClicks() {
     return numClicks;
   }
 
   /**
    * Getter method for click rate.
-   * @return
+   * @return click rate
    */
   public double getClickRate() {
     if (numRenders == 0) {
       return Constants.STARTING_CLICKRATE;
     } else {
-      return numClicks / numRenders;
+      return (double) numClicks / (double) numRenders;
     }
   }
 
   /**
    * Method for calculating disparity between the poll and a given user's category points.
-   * The lower the disparity, the more relevant the poll is to the user.
+   * The lower the disparity, the higher the relevancy.
    * @param userCatPts a given user's category points
    * @return disparity
    */
   public double calculateDisparity(CategoryPoints userCatPts) {
-    double categoryDisparity = 0;
-    double clickRate = this.getClickRate();
-//    System.out.println("USERCATPTS:" + userTotal);
-//    System.out.println("POLLCATPTS:" + question + pollTotal);
+    double disparity = 0;
     for(String category : Constants.ALL_CATEGORIES) {
-      categoryDisparity += Math.abs(userCatPts.getNormPts(category) - categoryPoints.getNormPts(category));
+      disparity += Math.abs(userCatPts.getNormPts(category) - categoryPoints.getNormPts(category));
     }
-    return (1-clickRate) * categoryDisparity;
+//    return (1-this.getClickRate()) * disparity;
+    return disparity;
   }
 
   /**
@@ -154,6 +169,10 @@ public class Poll {
     numClicks += 1;
   }
 
+  /**
+   * Method for transforming a Poll object into a Bson object.
+   * @return a Bson object of the poll
+   */
   public Document toBSON() {
     List<Document> mongoAnswers = new ArrayList<>();
     for (AnswerOption answerOption : answerOptions) {
@@ -176,5 +195,4 @@ public class Poll {
           .append("color", color);
     return mongoPoll;
   }
-
 }

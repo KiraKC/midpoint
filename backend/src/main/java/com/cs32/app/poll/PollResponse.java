@@ -10,15 +10,14 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.annotations.Expose;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+/**
+ * PollResponse class that stands for a poll response.
+ */
 public class PollResponse {
 
   @Expose
@@ -30,6 +29,10 @@ public class PollResponse {
   @Expose
   private UserMetaData userMetaData;
 
+  /**
+   * Constructor for transforming a MongoDB document to a PollResponse object.
+   * @param mongoPollResponse MongoDB document of a poll response
+   */
   public PollResponse(Document mongoPollResponse) {
     id = mongoPollResponse.getString("_id");
     pollId = mongoPollResponse.getString("pollId");
@@ -39,6 +42,13 @@ public class PollResponse {
     userMetaData = new UserMetaData((List<Document>) mongoPollResponse.get("userMetaData"));
   }
 
+  /**
+   * Constructor for transforming a Json object to a PollResponse object.
+   * @param jsonReqObject Json object of a poll response
+   * @throws JSONException
+   * @throws MissingDBObjectException
+   * @throws FirebaseAuthException
+   */
   public PollResponse(JSONObject jsonReqObject) throws JSONException, MissingDBObjectException, FirebaseAuthException {
     id = new ObjectId().toString();
     pollId = jsonReqObject.getString("pollId");
@@ -51,10 +61,18 @@ public class PollResponse {
     userMetaData = user.getUserMetaData();
   }
 
+  /**
+   * Getter method for answer option id of the poll response.
+   * @return answer option id
+   */
   public String getAnswerOptionId() {
     return answerOptionId;
   }
 
+  /**
+   * Method for transforming a poll response to a Bson object.
+   * @return a Bson object of a poll response.
+   */
   public Document toBSON() {
     List<Document> mongoUserMetaData = userMetaData.toBSON();
 

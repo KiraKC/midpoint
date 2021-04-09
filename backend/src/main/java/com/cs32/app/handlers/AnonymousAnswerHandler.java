@@ -2,7 +2,6 @@ package com.cs32.app.handlers;
 
 import com.cs32.app.database.Connection;
 import com.cs32.app.poll.AnswerOption;
-import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -12,19 +11,25 @@ import spark.Response;
 import spark.Route;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
 
 /**
- * This handler is responsible for:
- * - inserting the response into the response collection
- * - sending back the mini-stats for the frontend to render
+ * The handler which is responsible for:
+ * - inserting the response into MongoDB response collection
+ * - sending back the mini-stats to the frontend
  */
 public class AnonymousAnswerHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
+  /**
+   * The handle() method that does the job above.
+   * @param request
+   * @param response
+   * @return a Json object containing the mini-stats
+   * @throws Exception
+   */
   @Override
   public Object handle(Request request, Response response) throws Exception {
 
@@ -37,16 +42,17 @@ public class AnonymousAnswerHandler implements Route {
         {
          pollId: "asdjflasd",
          answerOptionId: "asdfajsdf",
-         userIdToken: "asdlfasdf"
+         userMetaData: "asdlfasdf"
+         }
      */
 
     try{
-      // Update database with new response
+      // Insert new response to MongoDB database
       JSONObject jsonReqObject = new JSONObject(request.body());
       PollResponse pollResponse = new PollResponse(jsonReqObject);
       Connection.addPollResponseToDB(pollResponse);
 
-      // Get all answer options and all responses
+      // Get all answer options and all responses of the poll being answered
       String pollId = jsonReqObject.getString("pollId");
       variables.put("pollId", pollId);
       List<AnswerOption> answerOptions = Connection.getPollById(pollId).getAnswerOptions();
