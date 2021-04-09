@@ -11,8 +11,6 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
-import org.bson.Document;
-import org.bson.types.ObjectId;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -41,7 +39,7 @@ public class NewPollHandler implements Route {
    */
   @Override
   public Object handle(Request request, Response response) {
-    boolean status; String question; String emoji; String color; List<AnswerOption> answerOptions;
+    boolean status; String question; String emoji; String color; String imageUrl; List<AnswerOption> answerOptions;
     Map<String, Object> variables = new HashMap<>();
     // Parse request
     try {
@@ -50,6 +48,8 @@ public class NewPollHandler implements Route {
       question = jsonReqObject.getString("question");
       emoji = jsonReqObject.getString("emoji");
       color = jsonReqObject.getString("color");
+      imageUrl = jsonReqObject.getString("imageUrl");
+
 
       // create ArrayList of AnswerOption objects
       JSONArray jsonAnswerOptions = jsonReqObject.getJSONArray("answerOptions");
@@ -66,7 +66,7 @@ public class NewPollHandler implements Route {
       JSONArray jsonTaggedCategories = jsonReqObject.getJSONArray("taggedCategories");
       CategoryPoints newCategoryPoints = new CategoryPoints(jsonTaggedCategories);
 
-      Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints, color);
+      Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints, color, imageUrl);
 
       System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
