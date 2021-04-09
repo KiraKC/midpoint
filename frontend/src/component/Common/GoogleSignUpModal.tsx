@@ -12,7 +12,7 @@ import endpointUrl from '../../constants/Endpoint';
 import { signOut } from '../../firebase/AuthMethods';
 import SuccessScreen from './SuccessScreen';
 
-interface ISignUpModalProps {
+interface INewPollModal {
 	isModalOpen: boolean,
 	setIsModalOpen: any,
 	setIsLoginModalOpen: any,
@@ -41,7 +41,7 @@ const customStyles = {
 	}
 };
 
-function SignUpModal(props: ISignUpModalProps) {
+function SignUpModal(props: INewPollModal) {
 
 	const [categories, setCategories]: [string[], any] = useState([])
 	const [categoryDescription, setCategoryDescription]: [string, any] = useState('PLEASE CHOOSE AT LEAST 3')
