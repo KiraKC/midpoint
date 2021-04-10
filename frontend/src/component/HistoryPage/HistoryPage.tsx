@@ -52,7 +52,7 @@ function HistoryPage(props: IHistoryPageProps) {
 	const divItems = answeredPolls.map(function (poll) {
 		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} />
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} answered={false}/>
 	});
 
 	const breakpointColumnsObj = {
