@@ -1,17 +1,22 @@
 package com.cs32.app.handlers;
 
+import com.cs32.app.User;
 import com.cs32.app.database.Connection;
 import com.cs32.app.poll.Poll;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.json.JSONObject;
+import org.json.JSONException;
 import spark.Request;
 import spark.Response;
 import spark.Route;
+import org.json.JSONObject;
 
 import java.util.*;
 
-public class SearchPollHandler implements Route {
+
+public class AnsweredPollsHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
   /**
@@ -24,24 +29,31 @@ public class SearchPollHandler implements Route {
    * @throws Exception
    */
   @Override
-  public Object handle(Request request, Response response) {
+  public Object handle(Request request, Response response) throws Exception {
     Map<String, Object> variables = new HashMap<>();
 
     boolean status;
-
     try {
       // Parse request
       JSONObject jsonReqObject = new JSONObject(request.body());
 
-      String searchString = jsonReqObject.getString("searchString");
-      System.out.println("SEARCH STRING: " + searchString);
-      List<Poll> searchResults = Connection.searchPolls(searchString);
-      System.out.println(searchResults);
-      variables.put("searchResults", searchResults);
+      // query for user and get their + answered polls
+      String userIdToken = jsonReqObject.getString("userIdToken");
+      FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
+      String userId = decodedToken.getUid();
+      User user = Connection.getUserById(userId);
+      Set<String> answeredPolls = user.getAnsweredPolls().getSet();
+
+      // Query for answeredPolls
+      List<Poll> pollsToSend = Connection.getPollsById(answeredPolls);
+
+      // Return the polls to the frontend as a JSON
+      variables.put("answeredPolls", pollsToSend);
+
       status = true;
-    } catch (Exception e) {
+    } catch (JSONException e) {
       e.printStackTrace();
-      System.err.println("ERROR: SearchPollHandler JSON request not properly formatted");
+      System.err.println("ERROR: GetSuggestedPollsHandler JSON request not properly formatted");
       // TODO: send a failure response to frontend
       status = false;
     }
