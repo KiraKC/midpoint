@@ -26,17 +26,17 @@ function SearchResult(props: ISearchResultProps) {
 	const requestPolls = async () => {
 		let toSend;
 		if (props.isLoggedIn) {
-			const userIdToken = await firebase.auth().currentUser.getIdToken(true);
+			const token = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				searchString: props.searchString,
-				userToken: userIdToken,
-				isLoggedIn: true
+				userIdToken: token,
+				loggedIn: true
 			}
 		} else {
 			toSend = {
 				searchString: props.searchString,
-				userToken: 'none',
-				isLoggedIn: false
+				userIdToken: 'none',
+				loggedIn: false
 			}
 		}
 		console.log(toSend)
@@ -50,6 +50,8 @@ function SearchResult(props: ISearchResultProps) {
 			endpointUrl + '/poll/search', toSend, config)
 			.then(response => {
 				console.log(response.data.searchResults)
+        console.log(response.data.answeredPollIds)
+        console.log(response.data.createdPollIds)
 				const returnedPolls: IPoll[] = response.data.searchResults;
 				setValidPolls(returnedPolls)
 			})
