@@ -12,6 +12,7 @@ function Header(props) {
 	const navigate = useNavigate()
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
 	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
+	const [isSearchFocused, setIsSearchFocused]: [boolean, any] = useState(false);
 
 	const isSmallScreen = useMediaQuery({
 		query: '(max-width: 1100px)'
@@ -44,6 +45,12 @@ function Header(props) {
 		setSeenPollIds: props.setSeenPollIds
 	}
 
+	const handleEnter = (e) => {
+		if (e.key === 'Enter') {
+			console.log('do validate');
+		  }
+	}
+	
 	return (
 		<>
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen}
@@ -65,7 +72,7 @@ function Header(props) {
 						</div>
 						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
 							<button className="mobile-nav-link"
-								 onClick={() => navigate('history')}>
+								onClick={() => navigate('history')}>
 								<span className="material-icons-outlined">
 									history</span></button>
 							<button className="mobile-nav-link"
@@ -94,14 +101,31 @@ function Header(props) {
 							<div className="nav-text-link" onClick={() => navigate('my-poll')}>My Polls</div>
 							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
 						</div>
-						<div style={{ position: 'relative' }}>
+						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
 							<button className="nav-link" onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : props.setIsLoginModalOpen(true) }}>New Poll</button>
 							<button className="nav-link"
 								onClick={() => handleSignInStatus()}>{props.isLoggedIn ? 'Log out' : 'Sign in'}</button>
+							<button className="nav-search"
+								onFocus={() => setIsSearchFocused(true)}
+							>
+								{
+									isSearchFocused ?
+										<div className="search-module">
+											<span style={{marginLeft: '6px'}} className="material-icons-outlined">search</span>
+											<input autoFocus 
+											className="search-input" 
+											type="text" onBlur={() => setIsSearchFocused(false)}
+											placeholder="Press ENTER to Search"
+											onKeyDown={(e) => handleEnter(e)}></input>
+										</div> :
+										<span className="material-icons-outlined">search</span>
+
+								}
+
+							</button>
 						</div>
 					</>
 				}
-
 			</div>
 		</>
 	);
