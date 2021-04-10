@@ -38,4 +38,8 @@ public class AnsweredPolls {
     mongoAnsweredPollsList.addAll(answeredPolls);
     return mongoAnsweredPollsList;
   }
+
+  public Set<String> getSet() {
+    return answeredPolls;
+  }
 }
