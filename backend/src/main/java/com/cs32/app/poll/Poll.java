@@ -74,7 +74,7 @@ public class Poll {
 
     // Get category points
     categoryPoints = new CategoryPoints();
-    categoryPoints.initializeFromMongo((List<Document>) mongoPoll.get("catPts"));
+    boolean needsAutofixing = categoryPoints.initializeFromMongo((List<Document>) mongoPoll.get("catPts"));
 
     // color
     color = mongoPoll.getString("color");
@@ -89,7 +89,6 @@ public class Poll {
     numClicks = mongoPoll.getInteger("numClicks");
 
     // autofixing
-    boolean needsAutofixing = false;
     if (color == null) {
       color = Constants.ALL_COLORS[(int) Math.floor(Math.random()*Constants.ALL_COLORS.length)];
       needsAutofixing = true;

@@ -71,10 +71,20 @@ public class CategoryPoints {
    * Method for initializing the category points from MongoDB.
    * @param mongoCatPts a list of MongoDB document of category points
    */
-  public void initializeFromMongo(List<Document> mongoCatPts) {
+  public boolean initializeFromMongo(List<Document> mongoCatPts) {
+    Set<String> categories = new HashSet<>(Arrays.asList(Constants.ALL_CATEGORIES));
     for (Document doc : mongoCatPts) {
       updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
+      categories.remove(doc.getString("categoryName"));
     }
+    // autofix
+    if (categories.size() > 0) {
+      for (String remainingCategories : categories) {
+        updateCatPts(remainingCategories, 0.0);
+      }
+      return true;
+    }
+    return false;
   }
 
   /**

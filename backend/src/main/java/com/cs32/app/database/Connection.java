@@ -37,7 +37,7 @@ public class Connection {
         pollCollection = mongoDatabase.getCollection("poll");
         responseCollection = mongoDatabase.getCollection("response");
       } else {
-        userCollection = mongoDatabase.getCollection("user_staging");
+        userCollection = mongoDatabase.getCollection("user");
         pollCollection = mongoDatabase.getCollection("poll_staging");
         responseCollection = mongoDatabase.getCollection("response_staging");
       }

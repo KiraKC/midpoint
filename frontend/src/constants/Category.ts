@@ -28,6 +28,7 @@ const categoryArray = [
   { emoji: "church", text: "religion", highlightColor: '#4ECDC4'},
 	{ emoji: "musical_note", text: "music", highlightColor: '#B4154E' },
 	{ emoji: "speech_balloon", text: "languages", highlightColor: '#F43030' },
+  { emoji: "see_no_evil", text: "personal", highlightColor: '#6761A8' },
 ]
 
 export default categoryArray;
