@@ -23,8 +23,17 @@
 	font-family: "Inter", sans-serif;
 	font-size: 1.6rem;
 	font-weight: 700;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 	margin-top: 7px;
 	z-index: 5;
 	position: relative;
+}
+
+.masonry-poll-img {
+	width: 100%;
+	z-index: 5;
+	position: relative;
+	border-radius: 15px;
+	margin-top: 2px;
+	margin-bottom: 2px;
 }

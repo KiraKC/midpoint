@@ -69,4 +69,8 @@ public class CreatedPolls {
     mongoAnsweredPollsList.addAll(createdPolls);
     return mongoAnsweredPollsList;
   }
+
+  public Set<String> getSet() {
+    return createdPolls;
+  }
 }

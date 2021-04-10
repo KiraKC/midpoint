@@ -12,15 +12,13 @@ import endpointUrl from '../../constants/Endpoint';
 import { signOut } from '../../firebase/AuthMethods';
 import SuccessScreen from './SuccessScreen';
 
-interface ISignUpModalProps {
+interface INewPollModal {
 	isModalOpen: boolean,
 	setIsModalOpen: any,
 	setIsLoginModalOpen: any,
 	setIsLoggedIn: any,
 	fetchNewPoll: boolean,
-	setFetchNewPoll: any,
-	clearFeed: boolean,
-	setClearFeed: any
+	setFetchNewPoll: any
 }
 
 const customStyles = {
@@ -43,7 +41,7 @@ const customStyles = {
 	}
 };
 
-function SignUpModal(props: ISignUpModalProps) {
+function SignUpModal(props: INewPollModal) {
 
 	const [categories, setCategories]: [string[], any] = useState([])
 	const [categoryDescription, setCategoryDescription]: [string, any] = useState('PLEASE CHOOSE AT LEAST 3')
@@ -117,20 +115,15 @@ function SignUpModal(props: ISignUpModalProps) {
 					let status: boolean = await addUserToMongo();
 					console.log(status)
 					if (status) {
-						await firebase.auth().currentUser.getIdToken(true)
-						.then((userToken) => localStorage.setItem('userToken', userToken))
-						.catch(console.log)
-						// clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
-						props.setClearFeed(!props.clearFeed);
-						setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
+						props.setFetchNewPoll(!props.fetchNewPoll);
 						cleanUpData();
 						setLoading(false)
 						setSuccess(true)
-
+						// TODO: figure out redirect animation
 						setTimeout(() => {
 							props.setIsModalOpen(false)
 							setSuccess(false)
-						}, 500)
+						}, 1500)
 					} else {
 						deleteAndLogOut();
 						setLoading(false);

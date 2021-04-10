@@ -12,8 +12,8 @@ public class Constants {
 
   // Constants for generating poll feeds
   public static final int NUM_QUERIED_POLLS_PER_REQUESTED = 3;
-  public static final Double QUERY_RAND_POLLS_RELEVANCY_PORTION = 0.8;
-  public static final Double QUERY_RAND_POLLS_CLICK_RATE_PORTION = 0.15;
+  public static final Double QUERY_RAND_POLLS_RELEVANCY_PORTION = 0.75;
+  public static final Double QUERY_RAND_POLLS_CLICK_RATE_PORTION = 0.2;
   public static final Double QUERY_RAND_POLLS_RANDOM_PORTION = 0.05;
   public static final String[] ALL_COLORS = {"#2274A5", "#D83282", "#0B5EA9", "#13BE8B", "#494848", "#464D77", "#E26D5A", "#F24343", "#274690", "#7F5A83",
         "#B33951", "#264779", "#B36A5E", "#344966", "#A4303F", "#CF5C36", "#70A288", "#2ABC88", "#86BBEC", "#246A73"};

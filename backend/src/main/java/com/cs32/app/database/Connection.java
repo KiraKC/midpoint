@@ -6,9 +6,8 @@ import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
-import com.mongodb.client.model.Aggregates;
+import com.mongodb.client.model.*;
 
-import com.mongodb.client.model.Filters;
 import org.bson.Document;
 
 import java.util.*;
@@ -37,6 +36,7 @@ public class Connection {
       pollCollection = mongoDatabase.getCollection("poll");
       responseCollection = mongoDatabase.getCollection("response");
     }
+    pollCollection.createIndex(Indexes.text("question"));
   }
 
   /**
@@ -120,5 +120,30 @@ public class Connection {
 
   public static void replacePoll(Poll poll) throws Exception{
     pollCollection.replaceOne(Filters.eq("_id", poll.getId()), poll.toBSON());
+  }
+
+  public static List<Poll> searchPolls(String searchString) throws Exception {
+    List<Poll> searchResults = new ArrayList<>();
+    MongoCursor<Document> cursor = pollCollection.find(Filters.text(searchString))
+          .projection(Projections.metaTextScore("score"))
+          .sort(Sorts.metaTextScore("score")).iterator();
+    while (cursor.hasNext()) {
+      // Create and add poll
+      searchResults.add(new Poll(cursor.next()));
+    }
+    return searchResults;
+  }
+
+  public static List<Poll> getPollsById(Set<String> pollIds) throws Exception {
+    BasicDBObject query = new BasicDBObject();
+    query.put("_id", new BasicDBObject("$in", pollIds));
+
+    List<Poll> pollsFound = new ArrayList<>();
+    MongoCursor<Document> cursor = pollCollection.find(query).iterator();
+    while (cursor.hasNext()) {
+      // Create and add poll
+      pollsFound.add(new Poll(cursor.next()));
+    }
+    return pollsFound;
   }
 }

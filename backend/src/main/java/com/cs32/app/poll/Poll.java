@@ -24,8 +24,11 @@ public class Poll {
   private List<AnswerOption> answerOptions;
   @Expose
   private String color;
+  @Expose
+  private String imageUrl;
   private CategoryPoints categoryPoints;
   private int numRenders;
+  @Expose
   private int numClicks;
 
   /**
@@ -36,7 +39,7 @@ public class Poll {
    * @param categoryPoints category points
    * @param color poll color
    */
-  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color) {
+  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color, String imageUrl) {
     this.id = new ObjectId().toString();
     this.question = question;
     this.emoji = emoji;
@@ -45,6 +48,7 @@ public class Poll {
     this.numRenders = 0;
     this.numClicks = 0;
     this.color = color;
+    this.imageUrl = imageUrl;
   }
 
   /**
@@ -74,6 +78,9 @@ public class Poll {
     // color
     color = mongoPoll.getString("color");
 
+    // imageURL
+    imageUrl = mongoPoll.getString("imageURL");
+
     // Get numRenders
     numRenders = mongoPoll.getInteger("numRenders");
 
@@ -81,11 +88,18 @@ public class Poll {
     numClicks = mongoPoll.getInteger("numClicks");
 
     // autofixing
+    boolean needsAutofixing = false;
     if (color == null) {
       color = Constants.ALL_COLORS[(int) Math.floor(Math.random()*Constants.ALL_COLORS.length)];
+      needsAutofixing = true;
+    }
+    if (imageUrl == null) {
+      imageUrl = "";
+      needsAutofixing = true;
+    }
+    if (needsAutofixing) {
       Connection.replacePoll(this);
     }
-
   }
 
   /**
@@ -192,7 +206,8 @@ public class Poll {
           .append("catPts", mongoCatPts)
           .append("numClicks", numClicks)
           .append("numRenders", numRenders)
-          .append("color", color);
+          .append("color", color)
+          .append("imageURL", imageUrl);
     return mongoPoll;
   }
 }

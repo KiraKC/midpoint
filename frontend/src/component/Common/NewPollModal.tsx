@@ -64,6 +64,8 @@ function NewPollModal(props: INewPollModal) {
 
 	const [categories, setCategories]: [string[], any] = useState([])
 	const [numOfOptions, setNumOfOptions]: [number, any] = useState(2);
+	const [imageUrl, setImageUrl]: [string, any] = useState('');
+	const [imageHint, setImageHint]: [string, any] = useState('IMAGE URL');
 
 	const getOptionsArray = () => {
 		const optionArray: IPollOption[] = [];
@@ -107,6 +109,7 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	const cleanUpData = () => {
+		// TODO: clean image url
 		setPollEmojiArray(['rocket', 'ghost']);
 		setIsEmojiOpenArray([false, false]);
 		setTextFieldValue(['', '']);
@@ -127,7 +130,8 @@ function NewPollModal(props: INewPollModal) {
 			question: questionText,
 			answerOptions: getOptionsArray(),
 			taggedCategories: categories,
-			color: randomColor()
+			color: randomColor(),
+			imageUrl: imageUrl
 		}
 		console.log(toSend)
 		const config = {
@@ -149,7 +153,8 @@ function NewPollModal(props: INewPollModal) {
 						question: toSend.question,
 						emoji: toSend.emoji,
 						answerOptions: response.data.newPoll.answerOptions,
-						color: toSend.color
+						color: toSend.color,
+						imageUrl: response.data.newPoll.imageUrl
 					}
 					let tempSeenIds = props.seenPollIds;
 					tempSeenIds.push(newPoll.id)
@@ -217,6 +222,21 @@ function NewPollModal(props: INewPollModal) {
 		}
 	}
 
+	var isUriImage = function(uri) {
+		//make sure we remove any nasty GET params 
+		uri = uri.split('?')[0];
+		//moving on, split the uri into parts that had dots before them
+		var parts = uri.split('.');
+		//get the last part ( should be the extension )
+		var extension = parts[parts.length-1];
+		//define some image types to test against
+		var imageTypes = ['jpg','jpeg','tiff','png','gif','bmp'];
+		//check if the extension matches anything in the list.
+		if(imageTypes.indexOf(extension) !== -1) {
+			return true;   
+		}
+	}
+
 	return (
 		<div>
 			<Modal
@@ -253,9 +273,19 @@ function NewPollModal(props: INewPollModal) {
 							<OptionButton text={'add'} handler={handleIncrement} />
 							<OptionButton text={'remove'} handler={handleDecrement} />
 						</div>
-
 					</div>
 					<OptionPanel {...optionPanelProp} />
+
+					<div className="poll-section-heading">3. Optionally, add an image to your poll</div>
+					<div className="poll-modal-input-module display-relative">
+						<input className="poll-image-url-input" type="text"
+							placeholder="Image URL, starts with https://"
+							onChange={(e) => { setImageUrl(e.target.value); setImageHint("IMAGE URL") }}></input>
+						<div className="poll-modal-image-url-hint"
+							style={{ color: (imageHint == 'IMAGE URL' ? 'black' : '#F24443') }}
+						>{imageHint}</div>
+					</div>
+
 					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">3. Finally, choose (several) categories</div>
 					<div className="poll-modal-input-module display-flex">
 						{categoryArray.map((e, i) => (

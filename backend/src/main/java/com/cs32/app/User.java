@@ -60,7 +60,7 @@ public class User {
     categoryPoints = new CategoryPoints();
     categoryPoints.initializeFromMongo((List<Document>) mongoUser.get("categoryPoints"));
     answeredPolls = new AnsweredPolls((List<String>) mongoUser.get("answeredPolls"));
-    createdPolls = new CreatedPolls((List<String>) mongoUser.get("answeredPolls"));
+    createdPolls = new CreatedPolls((List<String>) mongoUser.get("createdPolls"));
     userMetaData = new UserMetaData((List<Document>) mongoUser.get("userMetaData"));
     highScore = mongoUser.getInteger("highScore");
   }
