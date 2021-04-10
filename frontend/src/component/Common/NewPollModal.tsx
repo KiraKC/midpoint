@@ -157,7 +157,8 @@ function NewPollModal(props: INewPollModal) {
 						emoji: toSend.emoji,
 						answerOptions: response.data.newPoll.answerOptions,
 						color: toSend.color,
-						imageUrl: response.data.newPoll.imageUrl
+						imageUrl: response.data.newPoll.imageUrl,
+						numClicks: response.data.newPoll.numClicks
 					}
 					let tempSeenIds = props.seenPollIds;
 					tempSeenIds.push(newPoll.id)

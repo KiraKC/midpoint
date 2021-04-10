@@ -18,7 +18,8 @@ interface PollProps {
 	setIsLoginModalOpen: any
 	imageUrl: string,
 	answered: boolean,
-	answeredStats?: {}
+	answeredStats?: {},
+	numClicks: number
 }
 
 function Poll(props: PollProps) {
@@ -113,19 +114,18 @@ function Poll(props: PollProps) {
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
-				<div className="selection-hint">YOU'VE ANSWERED THIS QUESTION</div>
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
 						percentage={props.answeredStats[option.id]} />
 				))}
-				{console.log(props.answeredStats)}
+				<div className="selection-hint" style={{marginTop: '17px'}}>YOU'VE ANSWERED THIS QUESTION</div>
 			</div>
 		)
 	}
 	if (selectedOptionValue !== '') {
-		console.log("this is wrong 1")
 		return (
 			<div className="masonary-poll-wrapper" >
 				<div className="masonary-background" style={{
@@ -133,18 +133,18 @@ function Poll(props: PollProps) {
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
-				{selectedOptionValue !== '' ? <div className="selection-hint">YOU CHOSE {selectedOptionValue.toUpperCase().substring(0, 15)}</div> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
 						percentage={stats[option.id]} />
 				))}
+				{selectedOptionValue !== '' ? 
+				<div className="selection-hint" style={{marginTop: '17px'}}>YOU CHOSE {selectedOptionValue.toUpperCase().substring(0, 18)}</div> : ''}
 			</div>
 		)
 	}
-	console.log("this is wrong 2")
-
 	return (
 
 		<div className="masonary-poll-wrapper" >
@@ -153,6 +153,7 @@ function Poll(props: PollProps) {
 			}}></div>
 			<Emoji emoji={props.emoji} set='apple' size={35} />
 			<div className="masonary-poll-heading">{props.question}</div>
+			<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
 			{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
 			{props.answerOption.map((option, index) => (
 				<MasonryOption key={index} id={option.id} value={option.value}

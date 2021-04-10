@@ -6,7 +6,7 @@ import Masonry from "react-masonry-css";
 import endpointUrl from "../../constants/Endpoint";
 import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
-import MasonryPoll from "../HomePage/Poll";
+import Poll from "../HomePage/Poll";
 
 interface IMyPollsPageProps {
 	setIsLoginModalOpen: any,
@@ -50,9 +50,10 @@ function MyPollsPage(props: IMyPollsPageProps) {
 	}
 
 	const divItems = createdPolls.map(function (poll) {
-		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
+		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} answered={false}/>
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} answered={false} 
+			numClicks={poll.numClicks} />
 	});
 
 	const breakpointColumnsObj = {

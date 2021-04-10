@@ -67,7 +67,7 @@ function SearchResult(props: ISearchResultProps) {
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
 			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color}
 			imageUrl={poll.imageUrl} answered={answeredPollIds.includes(poll.id) ? true : false}
-			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}}
+			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}} numClicks={poll.numClicks}
 		/>
 	});
 

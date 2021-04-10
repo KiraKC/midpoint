@@ -105,7 +105,8 @@ function HomePage(props: HomePageProps) {
 	const divItems = polls.map(function (poll) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} answered={false} />
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} 
+			answered={false} numClicks={poll.numClicks} />
 	});
 
 	const breakpointColumnsObj = {
