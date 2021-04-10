@@ -118,7 +118,7 @@ public class Connection {
     return (new User(cursor.next()));
   }
 
-  public static void replacePoll(Poll poll) throws Exception{
+  public static void replacePoll(Poll poll) {
     pollCollection.replaceOne(Filters.eq("_id", poll.getId()), poll.toBSON());
   }
 

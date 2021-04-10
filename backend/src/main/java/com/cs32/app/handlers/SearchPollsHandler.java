@@ -59,13 +59,12 @@ public class SearchPollsHandler implements Route {
 
         // set list of answeredPollIds and createdPollIds
         for (Poll poll : searchResults) {
+          poll.rendered();
           if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
-            System.out.println("HIHIHIHI");
             // add pollId to list of answeredPollIdsToSend
             answeredPollIdsToSend.add(poll.getId());
 
             // calculate mini-stats to send
-//            miniStats.put(poll.getId(), new HashMap<>());
             Map<String, Double> miniStat = new HashMap<>();
             for (AnswerOption answerOption : poll.getAnswerOptions()) {
               miniStat.put(answerOption.getId(), 0.0);
@@ -82,14 +81,12 @@ public class SearchPollsHandler implements Route {
               miniStat.put(answerOption.getId(), percentage * 100);
             }
             // add miniStat to miniStats
-            System.out.println("added to ministats");
             miniStats.put(poll.getId(), miniStat);
           }
         }
       }
 
       variables.put("answeredPollIds", answeredPollIdsToSend);
-      System.out.println("MINISTATS: " + miniStats.size());
       variables.put("miniStats", miniStats);
 
       status = true;

@@ -4,6 +4,7 @@ import com.cs32.app.CategoryPoints;
 import com.cs32.app.Constants;
 import com.cs32.app.database.Connection;
 import com.google.gson.annotations.Expose;
+import com.mongodb.BasicDBObject;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -45,7 +46,7 @@ public class Poll {
     this.emoji = emoji;
     this.answerOptions = answerOptions;
     this.categoryPoints = categoryPoints;
-    this.numRenders = 0;
+    this.numRenders = 1;
     this.numClicks = 0;
     this.color = color;
     this.imageUrl = imageUrl;
@@ -174,6 +175,10 @@ public class Poll {
    */
   public void rendered() {
     numRenders += 1;
+    BasicDBObject searchQuery = new BasicDBObject("_id", id);
+    BasicDBObject updateFields = new BasicDBObject("numRenders", numRenders);
+    BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+    Connection.pollCollection.updateOne(searchQuery, setQuery);
   }
 
   /**
