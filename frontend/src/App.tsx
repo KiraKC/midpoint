@@ -14,6 +14,7 @@ import GameStart from './component/Game/GameStart';
 import IPoll from './interfaces/IPoll';
 import GameBox from './component/Game/GameBox';
 import SearchResult from './component/SearchPage/SearchResult';
+import HistoryPage from './component/HistoryPage/HistoryPage';
 
 function App() {
 
@@ -61,10 +62,9 @@ function App() {
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
 								clearFeed={clearFeed} setClearFeed={setClearFeed}
 							/>} />
-							<Route path="/history" element={<HomePage
-								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-								clearFeed={clearFeed} setClearFeed={setClearFeed} />} />
+							<Route path="/history" element={<HistoryPage
+								isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
+					    />} />
 							<Route path="/my-polls" element={<HomePage
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}

@@ -75,6 +75,6 @@ public class Main {
     Spark.post("/poll/check-off", new CheckOffHandler());
     Spark.post("/poll/search", new SearchPollsHandler());
     Spark.post("/user/get-answered", new AnsweredPollsHandler());
-    Spark.post("user/get-created", new CreatedPollsHandler());
+    Spark.post("/user/get-created", new CreatedPollsHandler());
   }
 }
