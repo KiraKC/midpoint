@@ -15,7 +15,8 @@ interface MasonryWrapperProps {
 	setPolls: any,
 	seenPollIds: string[],
 	setSeenPollIds: any,
-	setIsLoginModalOpen: any
+  setIsLoginModalOpen: any,
+  clearFeed: boolean
 }
 
 function MasonryWrapper(props: MasonryWrapperProps) {
@@ -32,8 +33,17 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 		pollHandler();
 	}, [props.fetchNewPoll])
 
+  useEffect(() => {
+    setPolls([]);
+    setSeenPollIds([]);
+  }, [props.clearFeed])
+
 	const updatePollArray = (newPolls: IPoll[]) => {
 		let tempPolls = polls;
+    console.log("TEMPPOLLS: ")
+    console.log(tempPolls)
+    console.log("POLLS: ")
+    console.log(newPolls)
 		setPolls([...tempPolls, ...newPolls]);
 	}
 
@@ -52,14 +62,14 @@ function MasonryWrapper(props: MasonryWrapperProps) {
 			const idToken = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				userIdToken: idToken,
-				numPollsRequested: 10,
+				numPollsRequested: 3,
 				seenPollIds: seenPollIds,
 				loggedIn: true
 			}
 		} else {
 			toSend = {
 				userIdToken: 'none',
-				numPollsRequested: 10,
+				numPollsRequested: 3,
 				seenPollIds: seenPollIds,
 				loggedIn: false
 			}

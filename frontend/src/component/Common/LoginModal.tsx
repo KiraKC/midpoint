@@ -15,6 +15,8 @@ interface INewPollModal {
 	setIsSignupModalOpen: any,
 	fetchNewPoll: boolean,
 	setFetchNewPoll: any,
+  clearFeed: boolean,
+  setClearFeed: any
 }
 
 const customStyles = {
@@ -71,6 +73,9 @@ function LoginModal(props: INewPollModal) {
 				props.setIsModalOpen(false);
 				setLoading(false);
 				cleanUp();
+        // clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
+        props.setClearFeed(!props.clearFeed);
+        setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
 			})
 			.catch((error) => {
 				var errorCode = error.code;
@@ -93,8 +98,10 @@ function LoginModal(props: INewPollModal) {
 				setPasswordDescription("PASSWORD");
 				setLoading(false);
 				props.setIsModalOpen(false);
-				props.setFetchNewPoll(!props.fetchNewPoll)
 				cleanUp();
+        // clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
+        props.setClearFeed(!props.clearFeed);
+        setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
 			})
 			.catch((error) => {
 				let errorCode = error.code;

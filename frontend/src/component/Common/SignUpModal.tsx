@@ -18,7 +18,9 @@ interface ISignUpModalProps {
 	setIsLoginModalOpen: any,
 	setIsLoggedIn: any,
 	fetchNewPoll: boolean,
-	setFetchNewPoll: any
+	setFetchNewPoll: any,
+  clearFeed: boolean,
+  setClearFeed: any
 }
 
 const customStyles = {
@@ -115,7 +117,9 @@ function SignUpModal(props: ISignUpModalProps) {
 					let status: boolean = await addUserToMongo();
 					console.log(status)
 					if (status) {
-						props.setFetchNewPoll(!props.fetchNewPoll);
+						// clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
+            props.setClearFeed(!props.clearFeed);
+            setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
 						cleanUpData();
 						setLoading(false)
 						setSuccess(true)
@@ -123,7 +127,7 @@ function SignUpModal(props: ISignUpModalProps) {
 						setTimeout(() => {
 							props.setIsModalOpen(false)
 							setSuccess(false)
-						}, 1500)
+						}, 500)
 					} else {
 						deleteAndLogOut();
 						setLoading(false);
