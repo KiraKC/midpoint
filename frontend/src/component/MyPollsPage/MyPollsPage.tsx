@@ -40,7 +40,7 @@ function MyPollsPage(props: IMyPollsPageProps) {
         endpointUrl + '/user/created-polls', toSend, config)
         .then(response => {
           console.log("CREATEDPOLLS: ")
-          console.log(response.data.createdPolls)
+          console.log(response.data)
           setCreatedPolls(response.data.createdPolls);
         })
         .catch(e => {
