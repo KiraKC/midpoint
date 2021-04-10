@@ -1,4 +1,4 @@
-import '../../styles/HomePage/MasonryPoll.css';
+import '../../styles/HomePage/Poll.css';
 import { Emoji } from 'emoji-mart';
 import IOption from '../../interfaces/IOption';
 import React, { useEffect, useState } from 'react';
@@ -8,7 +8,7 @@ import endpointUrl from '../../constants/Endpoint';
 import AnsweredOption from './AnsweredOption';
 import MasonryOption from './PollOption';
 
-interface MasonryPollProps {
+interface PollProps {
 	id: string,
 	question: string,
 	emoji: string,
@@ -16,17 +16,19 @@ interface MasonryPollProps {
 	answerOption: IOption[],
 	isLoggedIn: boolean
 	setIsLoginModalOpen: any
-	imageUrl: string
+	imageUrl: string,
+	answered: boolean,
+	answeredStats?: {}
 }
 
-function MasonryPoll(props: MasonryPollProps) {
+function Poll(props: PollProps) {
 
-	const [selectedOptionId, setSelectedOptionId]: [string, any] = useState("");
+	const [selectedOptionValue, setSelectedOptionValue]: [string, any] = useState('');
 	const [stats, setStats] = useState({})
 
-	const handleResponseToPoll = async (optionId: string) => {
+	const handleResponseToPoll = async (optionId: string, optionValue: string) => {
 		if (props.isLoggedIn) {
-			let status: boolean = await handleAnonAnswer(optionId);
+			let status: boolean = await handleAnonAnswer(optionId, optionValue);
 			if (status) {
 				await handleCheckOff();
 			}
@@ -35,7 +37,7 @@ function MasonryPoll(props: MasonryPollProps) {
 		}
 	}
 
-	const handleAnonAnswer = async (optionId: string): Promise<boolean> => {
+	const handleAnonAnswer = async (optionId: string, optionValue: string): Promise<boolean> => {
 		const userId = await firebase.auth().currentUser.getIdToken(true)
 		const toSend = {
 			pollId: props.id,
@@ -57,7 +59,7 @@ function MasonryPoll(props: MasonryPollProps) {
 			.then(res => {
 				if (res.data.status) {
 					setStats(res.data.miniStats);
-					setSelectedOptionId(optionId);
+					setSelectedOptionValue(optionValue);
 					return true;
 				} else {
 					console.log("Option Selection Failed")
@@ -102,8 +104,8 @@ function MasonryPoll(props: MasonryPollProps) {
 			});
 	}
 
-
-	if (selectedOptionId === '') {
+	if (props.answered && selectedOptionValue === '') {
+		console.log("this is correct")
 		return (
 			<div className="masonary-poll-wrapper" >
 				<div className="masonary-background" style={{
@@ -111,33 +113,54 @@ function MasonryPoll(props: MasonryPollProps) {
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
-				{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
-				{props.answerOption.map((option, index) => (
-					<MasonryOption key={index} id={option.id} value={option.value}
-						emoji={option.emoji} textColor={props.color}
-						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
-						setSelectedOptionId={setSelectedOptionId} clickHandler={handleResponseToPoll} />
-				))}
-			</div>
-		);
-	} else {
-		return (
-			<div className="masonary-poll-wrapper" >
-				<div className="masonary-background" style={{
-					backgroundColor: `${props.color}`
-				}}></div>
-				<Emoji emoji={props.emoji} set='apple' size={35} />
-				<div className="masonary-poll-heading">{props.question}</div>
-				{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
+				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
-						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
-						setSelectedOptionId={setSelectedOptionId} percentage={stats[option.id]} />
+						percentage={stats[option.id]} />
 				))}
 			</div>
 		)
 	}
+	if (selectedOptionValue !== '') {
+		console.log("this is wrong 1")
+		return (
+			<div className="masonary-poll-wrapper" >
+				<div className="masonary-background" style={{
+					backgroundColor: `${props.color}`
+				}}></div>
+				<Emoji emoji={props.emoji} set='apple' size={35} />
+				<div className="masonary-poll-heading">{props.question}</div>
+				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
+				{selectedOptionValue !== '' ? <div className="selection-hint">YOU CHOSE {selectedOptionValue.toUpperCase()}</div> : ''}
+				{props.answerOption.map((option, index) => (
+					<AnsweredOption key={index} id={option.id} value={option.value}
+						emoji={option.emoji} textColor={props.color}
+						percentage={stats[option.id]} />
+				))}
+			</div>
+		)
+	}
+	console.log("this is wrong 2")
+
+	return (
+
+		<div className="masonary-poll-wrapper" >
+			<div className="masonary-background" style={{
+				backgroundColor: `${props.color}`
+			}}></div>
+			<Emoji emoji={props.emoji} set='apple' size={35} />
+			<div className="masonary-poll-heading">{props.question}</div>
+			{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
+			{props.answerOption.map((option, index) => (
+				<MasonryOption key={index} id={option.id} value={option.value}
+					emoji={option.emoji} textColor={props.color}
+					isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
+					clickHandler={handleResponseToPoll} />
+			))}
+		</div>
+	);
 }
 
-export default MasonryPoll;
+
+export default Poll;

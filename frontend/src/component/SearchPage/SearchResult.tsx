@@ -6,7 +6,7 @@ import Masonry from "react-masonry-css";
 import endpointUrl from "../../constants/Endpoint";
 import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
-import MasonryPoll from "../HomePage/Poll";
+import Poll from "../HomePage/Poll";
 
 interface ISearchResultProps {
 	searchString: string,
@@ -16,8 +16,9 @@ interface ISearchResultProps {
 }
 
 function SearchResult(props: ISearchResultProps) {
-	
+
 	const [validPolls, setValidPolls]: [IPoll[], any] = useState([]);
+	const [answeredPollIds, setAnsweredPollIds]: [string[], any] = useState([]);
 
 	useEffect(() => {
 		requestPolls();
@@ -49,10 +50,9 @@ function SearchResult(props: ISearchResultProps) {
 		axios.post(
 			endpointUrl + '/poll/search', toSend, config)
 			.then(response => {
-				console.log(response.data.searchResults)
-        console.log(response.data.answeredPollIds)
-        console.log(response.data.createdPollIds)
+				console.log(response.data)
 				const returnedPolls: IPoll[] = response.data.searchResults;
+				setAnsweredPollIds(response.data.answeredPollIds);
 				setValidPolls(returnedPolls)
 			})
 			.catch(e => {
@@ -61,9 +61,11 @@ function SearchResult(props: ISearchResultProps) {
 	}
 
 	const divItems = validPolls.map(function (poll) {
-		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
+		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} />
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} 
+			imageUrl={poll.imageUrl} answered={poll.id in answeredPollIds ? false : false} 
+			/>
 	});
 
 	const breakpointColumnsObj = {

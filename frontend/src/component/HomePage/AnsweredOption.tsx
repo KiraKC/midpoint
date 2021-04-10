@@ -7,9 +7,6 @@ interface IAnsweredOptionProps {
 	emoji: string,
 	value: string,
 	textColor: string,
-	isLoggedIn: boolean,
-	setIsLoginModalOpen: any,
-	setSelectedOptionId: any,
 	percentage: number
 }
 
