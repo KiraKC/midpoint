@@ -133,7 +133,7 @@ function Poll(props: PollProps) {
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
-				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
+				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks + 1}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
