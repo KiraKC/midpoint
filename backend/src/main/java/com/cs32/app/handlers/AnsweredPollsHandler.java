@@ -57,7 +57,7 @@ public class AnsweredPollsHandler implements Route {
       // instantiate list of answeredPollIds and createdPollIds
       Map<String, Map<String, Double>> miniStats = new HashMap<>();
 
-      // set list of answeredPollIds and createdPollIds
+      // set list of createdPollIds
       for (Poll poll : pollsToSend) {
         poll.rendered();
         if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
