@@ -14,7 +14,7 @@ import spark.Route;
 
 import java.util.*;
 
-public class SearchPollHandler implements Route {
+public class SearchPollsHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
   /**
@@ -43,23 +43,29 @@ public class SearchPollHandler implements Route {
       System.out.println(searchResults);
       variables.put("searchResults", searchResults);
 
-      // get user from userIdToken
-      String userIdToken = jsonReqObject.getString("userIdToken");
-      FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
-      String userId = decodedToken.getUid();
-      User user = Connection.getUserById(userId);
-
-      // set list of answeredPollIds and createdPollIds
+      // instantiate list of answeredPollIds and createdPollIds
       List<String> answeredPollIdsToSend = new ArrayList<>();
       List<String> createdPollIdsToSend = new ArrayList<>();
-      for (Poll poll : searchResults) {
-        if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
-          answeredPollIdsToSend.add(poll.getId());
-        }
-        if (user.getCreatedPolls().getSet().contains(poll.getId())) {
-          createdPollIdsToSend.add(poll.getId());
+
+      boolean loggedIn = jsonReqObject.getString("loggedIn").equals("true");
+      if (loggedIn) {
+        // get user from userIdToken
+        String userIdToken = jsonReqObject.getString("userIdToken");
+        FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
+        String userId = decodedToken.getUid();
+        User user = Connection.getUserById(userId);
+
+        // set list of answeredPollIds and createdPollIds
+        for (Poll poll : searchResults) {
+          if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
+            answeredPollIdsToSend.add(poll.getId());
+          }
+          if (user.getCreatedPolls().getSet().contains(poll.getId())) {
+            createdPollIdsToSend.add(poll.getId());
+          }
         }
       }
+
       variables.put("answeredPollIds", answeredPollIdsToSend);
       variables.put("createdPollIds", createdPollIdsToSend);
 
