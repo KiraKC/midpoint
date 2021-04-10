@@ -10,11 +10,9 @@ import java.util.List;
 import static org.junit.Assert.*;
 
 /**
- * JUnit tests for Poll.
+ * JUnit tests for Poll and AnswerOption.
  */
 public class PollTest {
-  private static final double DELTA = 1e-15;
-
   /**
    * JUnit test for Poll.
    */
@@ -37,36 +35,36 @@ public class PollTest {
 
     assertEquals(poll.getNumRenders(), 0);
     assertEquals(poll.getNumClicks(), 0);
-    assertEquals(poll.getClickRate(), Constants.STARTING_CLICKRATE, DELTA);
+    assertEquals(poll.getClickRate(), Constants.STARTING_CLICKRATE, Constants.DELTA);
 
     poll.rendered();
     assertEquals(poll.getNumRenders(), 1);
     assertEquals(poll.getNumClicks(), 0);
-    assertEquals(poll.getClickRate(), 0, DELTA);
+    assertEquals(poll.getClickRate(), 0, Constants.DELTA);
 
     poll.clicked();
     assertEquals(poll.getNumRenders(), 1);
     assertEquals(poll.getNumClicks(), 1);
-    assertEquals(poll.getClickRate(), 1, DELTA);
+    assertEquals(poll.getClickRate(), 1, Constants.DELTA);
 
     poll.rendered();
     assertEquals(poll.getNumRenders(), 2);
     assertEquals(poll.getNumClicks(), 1);
-    assertEquals(poll.getClickRate(), 0.5, DELTA);
+    assertEquals(poll.getClickRate(), 0.5, Constants.DELTA);
 
     poll.rendered();
     assertEquals(poll.getNumRenders(), 3);
     assertEquals(poll.getNumClicks(), 1);
-    assertEquals(poll.getClickRate(), 1.0 / 3.0, DELTA);
+    assertEquals(poll.getClickRate(), 1.0 / 3.0, Constants.DELTA);
 
-    assertEquals(poll.calculateDisparity(pollCatPts), 0, DELTA);
+    assertEquals(poll.calculateDisparity(pollCatPts), 0, Constants.DELTA);
 
     List<String> userTags = new ArrayList<>();
     userTags.add("sports");
     userTags.add("politics");
     userTags.add("culture");
     CategoryPoints userCatPts = new CategoryPoints(userTags);
-    assertEquals(poll.calculateDisparity(userCatPts), 2.0/3.0, DELTA);
+    assertEquals(poll.calculateDisparity(userCatPts), 2.0/3.0, Constants.DELTA);
   }
 
   /**

@@ -80,7 +80,7 @@ public class CheckOffHandler implements Route {
       System.out.println("Updating user data SUCCESSFUL.");
 
       // TODO: update poll's number of clicks and category points in MongoDB
-      searchQuery = new BasicDBObject("_id", new ObjectId(pollId));
+      searchQuery = new BasicDBObject("_id", pollId);
       updateFields = new BasicDBObject();
       updateFields.append("numClicks", poll.getNumClicks());
       updateFields.append("catPts", poll.getCatPts().toBSON());

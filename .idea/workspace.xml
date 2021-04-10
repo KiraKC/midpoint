@@ -5,8 +5,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d582ac83-f454-46b4-9a64-852df8947de5" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/AnsweredPollsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/CategoryPointsTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/CreatedPollsTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/AnsweredPolls.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/AnsweredPolls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CategoryPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CategoryPoints.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/Constants.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CreatedPolls.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CreatedPolls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/UserMetaData.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/UserMetaData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/PollTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/PollTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +63,7 @@
       <recent name="$PROJECT_DIR$" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.App">
+  <component name="RunManager" selected="JUnit.All in peek">
     <configuration name="App" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="ALTERNATIVE_JRE_PATH" value="11" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
@@ -86,6 +96,14 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="All in peek" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="peek" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="TEST_OBJECT" value="package" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="AppTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="peek" />
       <extension name="coverage">
@@ -108,10 +126,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="my-app-1.0-SNAPSHOT.jar" type="JarApplication" temporary="true">
-      <option name="JAR_PATH" value="$PROJECT_DIR$/target/my-app-1.0-SNAPSHOT.jar" />
-      <method v="2" />
-    </configuration>
     <configuration name="peek-1.0-SNAPSHOT.jar (1)" type="JarApplication" temporary="true">
       <option name="JAR_PATH" value="$PROJECT_DIR$/peek/target/peek-1.0-SNAPSHOT.jar" />
       <method v="2" />
@@ -122,18 +136,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.App" />
-      <item itemvalue="JAR Application.my-app-1.0-SNAPSHOT.jar" />
       <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar" />
       <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar (1)" />
       <item itemvalue="JUnit.AppTest" />
+      <item itemvalue="JUnit.All in peek" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.App" />
+        <item itemvalue="JUnit.All in peek" />
         <item itemvalue="JUnit.AppTest" />
+        <item itemvalue="Application.App" />
         <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar (1)" />
         <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar" />
-        <item itemvalue="JAR Application.my-app-1.0-SNAPSHOT.jar" />
       </list>
     </recent_temporary>
   </component>
@@ -159,7 +173,7 @@
       <workItem from="1617506480011" duration="2766000" />
       <workItem from="1617511336590" duration="137000" />
       <workItem from="1617634974507" duration="407000" />
-      <workItem from="1617687066483" duration="19752000" />
+      <workItem from="1617687066483" duration="27751000" />
     </task>
     <servers />
   </component>
@@ -191,5 +205,11 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/peek$All_in_peek.ic" NAME="All in peek Coverage Results" MODIFIED="1618035437484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/peek$AppTest.ic" NAME="AppTest Coverage Results" MODIFIED="1618024013261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.cs32.app.*</FILTER>
+    </SUITE>
   </component>
 </project>

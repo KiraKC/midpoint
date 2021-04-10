@@ -1,7 +1,7 @@
 import './App.css';
 import Header from './component/Common/Header';
 import HomePage from './component/HomePage/HomePage'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import "firebase/auth";
 import firebase from "firebase/app";
@@ -14,6 +14,8 @@ import GameStart from './component/Game/GameStart';
 import IPoll from './interfaces/IPoll';
 import GameBox from './component/Game/GameBox';
 import SearchResult from './component/SearchPage/SearchResult';
+import HistoryPage from './component/HistoryPage/HistoryPage';
+import MyPollsPage from './component/MyPollsPage/MyPollsPage';
 
 function App() {
 
@@ -60,15 +62,13 @@ function App() {
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
 								clearFeed={clearFeed} setClearFeed={setClearFeed}
-							/>} />
-							<Route path="/history" element={<HomePage
-								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-								clearFeed={clearFeed} setClearFeed={setClearFeed} />} />
-							<Route path="/my-polls" element={<HomePage
-								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-								clearFeed={clearFeed} setClearFeed={setClearFeed} />} />
+							  />} />
+							<Route path="/history" element={<HistoryPage
+								isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
+					      />} />
+							<Route path="/my-polls" element={<MyPollsPage
+								isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
+								/>} />
 							<Route path="/search-result" element={<SearchResult searchString={searchString} 
 							setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn} />} />
 						</Routes>

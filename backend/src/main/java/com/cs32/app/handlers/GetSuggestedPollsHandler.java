@@ -130,13 +130,15 @@ public class GetSuggestedPollsHandler implements Route {
       variables.put("suggestedPolls", pollsToSend);
 
       // Update the polls' num of renders and update polls in MongoDB
-      for (Poll poll : pollsToSend) {
-        poll.rendered();
-        // TODO: update poll's number of renders in MongoDB
-        BasicDBObject searchQuery = new BasicDBObject("_id", new ObjectId(poll.getId()));
-        BasicDBObject updateFields = new BasicDBObject("numRenders", poll.getNumRenders());
-        BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-        Connection.userCollection.updateOne(searchQuery, setQuery);
+      if (loggedIn) {
+        for (Poll poll : pollsToSend) {
+          poll.rendered();
+          // TODO: update poll's number of renders in MongoDB
+          BasicDBObject searchQuery = new BasicDBObject("_id", poll.getId());
+          BasicDBObject updateFields = new BasicDBObject("numRenders", poll.getNumRenders());
+          BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+          Connection.pollCollection.updateOne(searchQuery, setQuery);
+        }
       }
 
       status = true;
