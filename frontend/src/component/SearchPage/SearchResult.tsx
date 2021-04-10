@@ -1,4 +1,5 @@
 import axios from "axios";
+import firebase from "firebase";
 import React, { useEffect, useState } from "react";
 import ReactLoading, { LoadingType } from 'react-loading';
 import Masonry from "react-masonry-css";
@@ -23,8 +24,20 @@ function SearchResult(props: ISearchResultProps) {
 	}, [props.searchString])
 
 	const requestPolls = async () => {
-		let toSend = {
-			searchString: props.searchString
+		let toSend;
+		if (props.isLoggedIn) {
+			const userIdToken = await firebase.auth().currentUser.getIdToken(true);
+			toSend = {
+				searchString: props.searchString,
+				userToken: userIdToken,
+				isLoggedIn: true
+			}
+		} else {
+			toSend = {
+				searchString: props.searchString,
+				userToken: 'none',
+				isLoggedIn: false
+			}
 		}
 		console.log(toSend)
 		const config = {
@@ -36,7 +49,6 @@ function SearchResult(props: ISearchResultProps) {
 		axios.post(
 			endpointUrl + '/poll/search', toSend, config)
 			.then(response => {
-
 				console.log(response.data.searchResults)
 				const returnedPolls: IPoll[] = response.data.searchResults;
 				setValidPolls(returnedPolls)

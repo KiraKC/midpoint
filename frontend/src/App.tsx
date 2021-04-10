@@ -59,16 +59,16 @@ function App() {
 							<Route path="/home" element={<HomePage
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-								clearFeed={clearFeed}
+								clearFeed={clearFeed} setClearFeed={setClearFeed}
 							/>} />
 							<Route path="/history" element={<HomePage
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-								clearFeed={clearFeed} />} />
+								clearFeed={clearFeed} setClearFeed={setClearFeed} />} />
 							<Route path="/my-polls" element={<HomePage
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-								clearFeed={clearFeed} />} />
+								clearFeed={clearFeed} setClearFeed={setClearFeed} />} />
 							<Route path="/search-result" element={<SearchResult searchString={searchString} 
 							setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn} />} />
 						</Routes>

@@ -16,7 +16,8 @@ interface HomePageProps {
 	seenPollIds: string[],
 	setSeenPollIds: any,
 	setIsLoginModalOpen: any,
-	clearFeed: boolean
+	clearFeed: boolean,
+	setClearFeed: any
 }
 
 function HomePage(props: HomePageProps) {
@@ -25,6 +26,7 @@ function HomePage(props: HomePageProps) {
 	let setPolls = props.setPolls;
 	let seenPollIds = props.seenPollIds;
 	let setSeenPollIds = props.setSeenPollIds;
+	// const [isInitialRender, setIni]
 
 	useEffect(() => {
 		async function pollHandler() {
