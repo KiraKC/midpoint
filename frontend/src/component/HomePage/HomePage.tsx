@@ -1,7 +1,7 @@
 import Masonry from 'react-masonry-css';
 import '../../styles/HomePage/HomePage.css';
 import React, { useEffect, useState } from 'react';
-import MasonryPoll from './Poll'
+import Poll from './Poll'
 import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
 import axios from 'axios';
@@ -103,9 +103,9 @@ function HomePage(props: HomePageProps) {
 	}
 
 	const divItems = polls.map(function (poll) {
-		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
+		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} />
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} answered={false} />
 	});
 
 	const breakpointColumnsObj = {

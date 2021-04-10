@@ -13,6 +13,7 @@ import endpointUrl from '../../constants/Endpoint';
 import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
 import randomColor from '../../constants/Color';
+import listOfEmojis, { randomEmoji } from '../../constants/Emoji';
 
 interface INewPollModal {
 	isModalOpen: boolean,
@@ -52,13 +53,13 @@ function NewPollModal(props: INewPollModal) {
 
 	Modal.setAppElement("#root")
 
-	const [pollEmojiArray, setPollEmojiArray]: [string[], any] = useState(['rocket', 'ghost']);
+	const [pollEmojiArray, setPollEmojiArray]: [string[], any] = useState([randomEmoji(), randomEmoji()]);
 	const [isEmojiOpenArray, setIsEmojiOpenArray]: [boolean[], any] = useState([false, false]);
 	const [textFieldValue, setTextFieldValue]: [string[], any] = useState(['', '']);
 	const [optionHint, setOptionHint]: [string[], any] = useState(['ANSWER', 'ANSWER'])
 
 	const [questionText, setQuestionText]: [string, any] = useState('');
-	const [questionEmoji, setQuestionEmoji]: [string, any] = useState('star2')
+	const [questionEmoji, setQuestionEmoji]: [string, any] = useState(randomEmoji())
 	const [questionEmojiOpen, setQuestionEmojiOpen]: [boolean, any] = useState(false)
 	const [questionHint, setQuestionHint]: [string, any] = useState('QUESTION')
 
@@ -82,6 +83,8 @@ function NewPollModal(props: INewPollModal) {
 	function checkIfDuplicateExists(myArray: string[]){
 		return new Set(myArray).size !== myArray.length 
 	}
+
+
 
 	const isSubmissionValid = () => {
 		let isValid = true;
@@ -110,12 +113,12 @@ function NewPollModal(props: INewPollModal) {
 
 	const cleanUpData = () => {
 		// TODO: clean image url
-		setPollEmojiArray(['rocket', 'ghost']);
+		setPollEmojiArray([randomEmoji(), randomEmoji()]);
 		setIsEmojiOpenArray([false, false]);
 		setTextFieldValue(['', '']);
 		setOptionHint(['ANSWER', 'ANSWER'])
 		setQuestionText('')
-		setQuestionEmoji('star2')
+		setQuestionEmoji(randomEmoji())
 		setQuestionEmojiOpen(false)
 		setCategories([])
 		setNumOfOptions(2)
@@ -186,8 +189,7 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	const handleIncrement = () => {
-		const listOfEmojis = ['star-struck', 'face_with_cowboy_hat', 'see_no_evil', 'eyes']
-		if (numOfOptions < 6) {
+		if (numOfOptions < 12) {
 			setNumOfOptions(numOfOptions + 1)
 			let tempIsOpenArray = isEmojiOpenArray;
 			tempIsOpenArray.push(false);

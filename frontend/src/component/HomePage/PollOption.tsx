@@ -9,7 +9,6 @@ interface MasonryOptionProps {
 	textColor: string,
 	isLoggedIn: boolean,
 	setIsLoginModalOpen: any,
-	setSelectedOptionId: any,
 	clickHandler: any,
 }
 
@@ -19,7 +18,7 @@ function MasonryOption(props: MasonryOptionProps) {
 		<button
 			className="option-wrapper"
 			style={{ color: `${props.textColor}` }}
-			onClick={() => { props.clickHandler(props.id) }}>
+			onClick={() => { props.clickHandler(props.id, props.value) }}>
 			<div style={{ marginTop: "1px" }}>
 				<Emoji emoji={props.emoji} set='apple' size={26} />
 			</div>
