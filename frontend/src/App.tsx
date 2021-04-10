@@ -1,6 +1,6 @@
 import './App.css';
 import Header from './component/Common/Header';
-import MasonryWrapper from './component/HomePage/MasonryWrapper'
+import HomePage from './component/HomePage/HomePage'
 import { useEffect, useState } from 'react';
 import { Routes, Route, BrowserRouter, Navigate } from 'react-router-dom';
 import "firebase/auth";
@@ -13,17 +13,17 @@ import {
 import GameStart from './component/Game/GameStart';
 import IPoll from './interfaces/IPoll';
 import GameBox from './component/Game/GameBox';
+import SearchResult from './component/SearchPage/SearchResult';
 
 function App() {
 
-	// TODO: JINOO, global logged in state
 	const [isLoggedIn, setIsLoggedIn]: [boolean, any] = useState(false);
-	// TODO: JINOO, fetchpoll trigger [setFetchNewPoll(!fetchNewPoll)]
 	const [fetchNewPoll, setFetchNewPoll]: [boolean, any] = useState(false);
 	const [polls, setPolls]: [IPoll[], any] = useState([]);
+	const [searchString, setSearchString]: [string, any] = useState('');
 	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
 	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
-  const [clearFeed, setClearFeed] : [boolean, any] = useState(false);
+	const [clearFeed, setClearFeed]: [boolean, any] = useState(false);
 
 
 	useEffect(() => {
@@ -51,24 +51,25 @@ function App() {
 					<div id="website-wrapper">
 						<Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
 							fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-							{...pollProps} isLoginModalOpen={isLoginModalOpen} 
-							setIsLoginModalOpen={setIsLoginModalOpen} 
-              clearFeed={clearFeed} setClearFeed={setClearFeed}/>
+							{...pollProps} isLoginModalOpen={isLoginModalOpen}
+							setIsLoginModalOpen={setIsLoginModalOpen}
+							clearFeed={clearFeed} setClearFeed={setClearFeed} setSearchString={setSearchString} />
 						<Routes>
 							<Route element={<Navigate to="home" />} />
-							<Route path="/home" element={<MasonryWrapper
+							<Route path="/home" element={<HomePage
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
-                clearFeed={clearFeed}
-                />} />
-							<Route path="/history" element={<MasonryWrapper
+								clearFeed={clearFeed}
+							/>} />
+							<Route path="/history" element={<HomePage
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} 
-                clearFeed={clearFeed}/>} />
-							<Route path="/my-polls" element={<MasonryWrapper
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
+								clearFeed={clearFeed} />} />
+							<Route path="/my-polls" element={<HomePage
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} 
-                clearFeed={clearFeed}/>} />
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
+								clearFeed={clearFeed} />} />
+							<Route path="/search-result" element={<SearchResult searchString={searchString} />} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>

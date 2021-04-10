@@ -26,11 +26,11 @@ function Header(props) {
 		if (props.isLoggedIn) {
 			signOut();
 			props.setIsLoggedIn(false);
-      props.setClearFeed(!props.clearFeed);
-      setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
+			props.setClearFeed(!props.clearFeed);
+			setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
 		} else {
 			props.setIsLoginModalOpen(true);
-    }
+		}
 	}
 
 	const fetchNewPollProps = {
@@ -48,19 +48,20 @@ function Header(props) {
 	const handleEnter = (e) => {
 		if (e.key === 'Enter') {
 			console.log('do validate');
-		  }
+			navigate('search-result')
+		}
 	}
-	
+
 	return (
 		<>
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen}
 				{...newPollProps} />
 			<LoginModal isModalOpen={props.isLoginModalOpen} setIsModalOpen={props.setIsLoginModalOpen}
-				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps} 
-        clearFeed={props.clearFeed} setClearFeed={props.setClearFeed}/>
+				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps}
+				clearFeed={props.clearFeed} setClearFeed={props.setClearFeed} />
 			<SignUpModal setIsLoggedIn={props.setIsLoggedIn} isModalOpen={isSignupModalOpen}
 				setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={props.setIsLoginModalOpen} {...fetchNewPollProps}
-        clearFeed={props.clearFeed} setClearFeed={props.setClearFeed}  />
+				clearFeed={props.clearFeed} setClearFeed={props.setClearFeed} />
 			<div className="header">
 				{
 					isSmallScreen &&
@@ -111,12 +112,13 @@ function Header(props) {
 								{
 									isSearchFocused ?
 										<div className="search-module">
-											<span style={{marginLeft: '6px'}} className="material-icons-outlined">search</span>
-											<input autoFocus 
-											className="search-input" 
-											type="text" onBlur={() => setIsSearchFocused(false)}
-											placeholder="Press ENTER to Search"
-											onKeyDown={(e) => handleEnter(e)}></input>
+											<span style={{ marginLeft: '6px' }} className="material-icons-outlined">search</span>
+											<input autoFocus
+												className="search-input"
+												type="text" onBlur={() => setIsSearchFocused(false)}
+												placeholder="Press ENTER to Search"
+												onKeyDown={(e) => handleEnter(e)}
+												onChange={(e) => props.setSearchString(e.target.value)}></input>
 										</div> :
 										<span className="material-icons-outlined">search</span>
 
