@@ -8,14 +8,14 @@ import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
 import MasonryPoll from "../HomePage/Poll";
 
-interface IHistoryPageProps {
+interface IMyPollsPageProps {
 	setIsLoginModalOpen: any,
 	isLoggedIn: boolean,
 }
 
-function HistoryPage(props: IHistoryPageProps) {
+function MyPollsPage(props: IMyPollsPageProps) {
 	
-	const [answeredPolls, setAnsweredPolls]: [IPoll[], any] = useState([]);
+	const [createdPolls, setCreatedPolls]: [IPoll[], any] = useState([]);
 
   useEffect(() => {
     requestPolls();
@@ -37,11 +37,11 @@ function HistoryPage(props: IHistoryPageProps) {
         }
       }
       axios.post(
-        endpointUrl + '/user/answered-polls', toSend, config)
+        endpointUrl + '/user/created-polls', toSend, config)
         .then(response => {
-          console.log("ANSWEREDPOLLS: ")
-          console.log(response.data.answeredPolls)
-          setAnsweredPolls(response.data.answeredPolls);
+          console.log("CREATEDPOLLS: ")
+          console.log(response.data.createdPolls)
+          setCreatedPolls(response.data.createdPolls);
         })
         .catch(e => {
           console.log(e)
@@ -49,7 +49,7 @@ function HistoryPage(props: IHistoryPageProps) {
     }
 	}
 
-	const divItems = answeredPolls.map(function (poll) {
+	const divItems = createdPolls.map(function (poll) {
 		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
 			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} />
@@ -77,4 +77,4 @@ function HistoryPage(props: IHistoryPageProps) {
 	);
 }
 
-export default HistoryPage;
+export default MyPollsPage;

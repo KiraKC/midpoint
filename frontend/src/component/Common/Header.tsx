@@ -100,7 +100,7 @@ function Header(props) {
 						<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
 							<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
 							<div className="nav-text-link" style={{ marginLeft: '30px' }} onClick={() => { props.isLoggedIn ? navigate('history') : props.setIsLoginModalOpen(true)}}>History</div>
-							<div className="nav-text-link" onClick={() => navigate('my-poll')}>My Polls</div>
+							<div className="nav-text-link" onClick={() => { props.isLoggedIn ? navigate('my-polls') : props.setIsLoginModalOpen(true)}}>My Polls</div>
 							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
 						</div>
 						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
