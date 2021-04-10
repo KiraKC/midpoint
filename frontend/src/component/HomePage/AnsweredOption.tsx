@@ -21,7 +21,7 @@ function AnsweredOption(props: IAnsweredOptionProps) {
 			<div style={{ marginTop: "1px" }}>
 				<Emoji emoji={props.emoji} set='apple' size={26} />
 			</div>
-			<div className="option-text">{props.value.toUpperCase()}</div>
+			<div className="option-text-answered">{props.value.toUpperCase()}</div>
 			<div className="option-percentage">{props.percentage.toFixed(1)}%</div>
 		</button>
 	);

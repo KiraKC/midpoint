@@ -62,11 +62,12 @@ function SearchResult(props: ISearchResultProps) {
 	}
 
 	const divItems = validPolls.map(function (poll) {
+		console.log(stats[poll.id])
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
 			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color}
-			imageUrl={poll.imageUrl} answered={poll.id in answeredPollIds ? false : true}
-			answeredStats={poll.id in answeredPollIds ? {} : stats[poll.id]}
+			imageUrl={poll.imageUrl} answered={answeredPollIds.includes(poll.id) ? true : false}
+			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}}
 		/>
 	});
 

@@ -104,7 +104,7 @@ function Poll(props: PollProps) {
 			});
 	}
 
-	if (props.answered && selectedOptionValue === '') {
+	if (props.answered === true && selectedOptionValue === '') {
 		console.log("this is correct")
 		return (
 			<div className="masonary-poll-wrapper" >
@@ -114,11 +114,13 @@ function Poll(props: PollProps) {
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
+				<div className="selection-hint">YOU'VE ANSWERED THIS QUESTION</div>
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
-						percentage={stats[option.id]} />
+						percentage={props.answeredStats[option.id]} />
 				))}
+				{console.log(props.answeredStats)}
 			</div>
 		)
 	}
@@ -132,7 +134,7 @@ function Poll(props: PollProps) {
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
-				{selectedOptionValue !== '' ? <div className="selection-hint">YOU CHOSE {selectedOptionValue.toUpperCase()}</div> : ''}
+				{selectedOptionValue !== '' ? <div className="selection-hint">YOU CHOSE {selectedOptionValue.toUpperCase().substring(0, 15)}</div> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}

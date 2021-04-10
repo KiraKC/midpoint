@@ -13,7 +13,7 @@ function Header(props) {
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
 	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
 	const [isSearchFocused, setIsSearchFocused]: [boolean, any] = useState(false);
-
+	 
 	const isSmallScreen = useMediaQuery({
 		query: '(max-width: 1100px)'
 	})
@@ -122,9 +122,7 @@ function Header(props) {
 												onChange={(e) => props.setSearchString(e.target.value)}></input>
 										</div> :
 										<span className="material-icons-outlined">search</span>
-
 								}
-
 							</button>
 						</div>
 					</>

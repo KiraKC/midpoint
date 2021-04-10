@@ -26,6 +26,19 @@
 .option-text {
 	display: inline-block;
 	width: fit-content;
+	word-break: break-word;
+	text-align: left;
+	font-family: "Inter", sans-serif;
+	margin-top: -1px;
+	margin-left: 10px;
+	font-size: 1.35rem;
+	font-weight: 700;
+	z-index: 4;
+}
+
+.option-text-answered {
+	display: inline-block;
+	width: fit-content;
 	max-width: 135px;
 	word-break: break-word;
 	text-align: left;
