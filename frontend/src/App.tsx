@@ -69,7 +69,8 @@ function App() {
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
 								clearFeed={clearFeed} />} />
-							<Route path="/search-result" element={<SearchResult searchString={searchString} />} />
+							<Route path="/search-result" element={<SearchResult searchString={searchString} 
+							setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn} />} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>

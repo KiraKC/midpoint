@@ -1,16 +1,27 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactLoading, { LoadingType } from 'react-loading';
 import Masonry from "react-masonry-css";
 import endpointUrl from "../../constants/Endpoint";
+import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
+import MasonryPoll from "../HomePage/Poll";
 
 interface ISearchResultProps {
 	searchString: string,
+	setIsLoginModalOpen: any,
+	isLoggedIn: boolean,
 
 }
 
 function SearchResult(props: ISearchResultProps) {
+	
+	const [validPolls, setValidPolls]: [IPoll[], any] = useState([]);
+
+	useEffect(() => {
+		requestPolls();
+	}, [props.searchString])
+
 	const requestPolls = async () => {
 		let toSend = {
 			searchString: props.searchString
@@ -22,23 +33,24 @@ function SearchResult(props: ISearchResultProps) {
 				'Access-Control-Allow-Origin': '*',
 			}
 		}
-
 		axios.post(
 			endpointUrl + '/poll/search', toSend, config)
 			.then(response => {
 
-				console.log(response.data.suggestedPolls)
+				console.log(response.data.searchResults)
+				const returnedPolls: IPoll[] = response.data.searchResults;
+				setValidPolls(returnedPolls)
 			})
 			.catch(e => {
 				console.log(e)
 			});
 	}
 
-	// const divItems = polls.map(function (poll) {
-	// 	return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
-	// 		emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-	// 		setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} />
-	// });
+	const divItems = validPolls.map(function (poll) {
+		return <MasonryPoll key={poll.id} id={poll.id} question={poll.question}
+			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} />
+	});
 
 	const breakpointColumnsObj = {
 		default: 4,
@@ -52,13 +64,12 @@ function SearchResult(props: ISearchResultProps) {
 	return (
 		<div className="masonry-wrapper-wrapper">
 			{console.log(props.searchString)}
-
 			<Masonry
 				breakpointCols={breakpointColumnsObj}
 				className="my-masonry-grid"
 				columnClassName="my-masonry-grid_column"
 			>
-				{/* {divItems} */}
+				{divItems}
 			</Masonry>
 		</div>
 	);
