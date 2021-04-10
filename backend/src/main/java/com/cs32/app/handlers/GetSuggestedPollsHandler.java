@@ -80,7 +80,6 @@ public class GetSuggestedPollsHandler implements Route {
         List<Poll> newPolls = Connection.getRandomPolls(numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
         for(int i = 0; i<newPolls.size(); i++) {
           System.out.println("considering poll: " + newPolls.get(i).getId());
-          System.out.println(pollsToExclude);
           if (pollsToExclude.contains(newPolls.get(i).getId())) {
             System.out.println("removed poll");
             pollsToExclude.add(newPolls.get(i).getId());
@@ -132,12 +131,8 @@ public class GetSuggestedPollsHandler implements Route {
       // Update the polls' num of renders and update polls in MongoDB
       if (loggedIn) {
         for (Poll poll : pollsToSend) {
-          poll.rendered();
           // TODO: update poll's number of renders in MongoDB
-          BasicDBObject searchQuery = new BasicDBObject("_id", poll.getId());
-          BasicDBObject updateFields = new BasicDBObject("numRenders", poll.getNumRenders());
-          BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-          Connection.pollCollection.updateOne(searchQuery, setQuery);
+          poll.rendered();
         }
       }
 

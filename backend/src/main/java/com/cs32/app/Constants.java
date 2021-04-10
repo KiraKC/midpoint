@@ -4,7 +4,7 @@ public class Constants {
   public static final String[] ALL_CATEGORIES = {"sports", "politics", "funny", "culture", "entertainment",
   "food", "education", "serious", "relationship", "cute", "lifestyle", "news", "nature", "health", "beauty",
   "entrepreneurship", "gaming", "movies", "celebrities", "science", "business", "books", "design", "technology",
-  "fashion", "history", "music", "languages"};
+  "fashion", "history", "music", "languages", "religion"};
   public static final Double INITIAL_NEW_POLL_CAT_PTS = 1000.0;
   public static final Integer ALGORITHM_RANDOM_POLL_BATCH_SZ = 70;
   public static final Double STARTING_CLICKRATE = 0.5;

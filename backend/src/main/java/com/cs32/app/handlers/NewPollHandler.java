@@ -50,7 +50,6 @@ public class NewPollHandler implements Route {
       color = jsonReqObject.getString("color");
       imageUrl = jsonReqObject.getString("imageUrl");
 
-
       // create ArrayList of AnswerOption objects
       JSONArray jsonAnswerOptions = jsonReqObject.getJSONArray("answerOptions");
       answerOptions = new ArrayList<>();

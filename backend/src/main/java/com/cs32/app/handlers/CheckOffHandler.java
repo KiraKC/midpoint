@@ -39,7 +39,7 @@ public class CheckOffHandler implements Route {
   @Override
   public Object handle(Request req, Response res) throws Exception {
     Map<String, Object> variables = new HashMap<>();
-    boolean status;
+    boolean alreadyAnswered; boolean status;
     try {
       // parse JSON
       JSONObject jsonReqObject = new JSONObject(req.body());
@@ -48,58 +48,68 @@ public class CheckOffHandler implements Route {
       FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
       String userId = decodedToken.getUid();
 
-      Poll poll = Connection.getPollById(pollId);
+      // check if user has already answered this poll
       User user = Connection.getUserById(userId);
+      if (user.getAnsweredPolls().getSet().contains(pollId)) {
+        alreadyAnswered = true;
+        status = true;
+      } else {
+        // get poll
+        Poll poll = Connection.getPollById(pollId);
 
-      // Update user's list of answered polls
-      user.answered(pollId);
+        // Update user's list of answered polls
+        user.answered(pollId);
 
-      // Update poll's numClicks
-      poll.clicked();
+        // Update user's and poll's category points
+        CategoryPoints userCatPts = user.getCategoryPoints();
+        double currUserTotalPts = userCatPts.getTotalPts();
+        CategoryPoints pollCatPts = poll.getCatPts();
+        double currPollTotalPts = pollCatPts.getTotalPts();
 
-      // Update user's and poll's category points
-      CategoryPoints userCatPts = user.getCategoryPoints();
-      double currUserTotalPts = userCatPts.getTotalPts();
-      CategoryPoints pollCatPts = poll.getCatPts();
-      double currPollTotalPts = pollCatPts.getTotalPts();
+        for (String category : Constants.ALL_CATEGORIES) {
+          double currUserPts = userCatPts.getPts(category);
+          double currPollPts = pollCatPts.getPts(category);
+          userCatPts.updateCatPts(category, currUserPts + 30 * currPollPts / currPollTotalPts);
+          pollCatPts.updateCatPts(category, currPollPts + 100 * currUserPts / currUserTotalPts);
+        }
 
-      for (String category : Constants.ALL_CATEGORIES) {
-        double currUserPts = userCatPts.getPts(category);
-        double currPollPts = pollCatPts.getPts(category);
-        userCatPts.updateCatPts(category, currUserPts + 30 * currPollPts / currPollTotalPts);
-        pollCatPts.updateCatPts(category, currPollPts + 100 * currUserPts / currUserTotalPts);
+        // Update user's answered polls and category points in MongoDB
+        BasicDBObject searchQuery = new BasicDBObject("_id", userId);
+        BasicDBObject updateFields = new BasicDBObject();
+        updateFields.append("answeredPolls", user.getAnsweredPolls().toBSON());
+        updateFields.append("categoryPoints", userCatPts.toBSON());
+        BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+        Connection.userCollection.updateOne(searchQuery, setQuery);
+        System.out.println("Updating user data SUCCESSFUL.");
+
+        // TODO: update poll's number of clicks and category points in MongoDB
+        poll.clicked();
+        searchQuery = new BasicDBObject("_id", pollId);
+        updateFields = new BasicDBObject();
+        updateFields.append("numClicks", poll.getNumClicks());
+        updateFields.append("catPts", poll.getCatPts().toBSON());
+        setQuery = new BasicDBObject("$set", updateFields);
+        Connection.pollCollection.updateOne(searchQuery, setQuery);
+        System.out.println("Updating poll data SUCCESSFUL.");
+
+        alreadyAnswered = false;
+        status = true;
       }
 
-      // Update user's answered polls and category points in MongoDB
-      BasicDBObject searchQuery = new BasicDBObject("_id", userId);
-      BasicDBObject updateFields = new BasicDBObject();
-      updateFields.append("answeredPolls", user.getAnsweredPolls().toBSON());
-      updateFields.append("categoryPoints", userCatPts.toBSON());
-      BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-      Connection.userCollection.updateOne(searchQuery, setQuery);
-      System.out.println("Updating user data SUCCESSFUL.");
-
-      // TODO: update poll's number of clicks and category points in MongoDB
-      searchQuery = new BasicDBObject("_id", pollId);
-      updateFields = new BasicDBObject();
-      updateFields.append("numClicks", poll.getNumClicks());
-      updateFields.append("catPts", poll.getCatPts().toBSON());
-      setQuery = new BasicDBObject("$set", updateFields);
-      Connection.pollCollection.updateOne(searchQuery, setQuery);
-      System.out.println("Updating poll data SUCCESSFUL.");
-
-      status = true;
     } catch (org.json.JSONException e) {
       e.printStackTrace();
       System.err.println("ERROR: Incorrect JSON object formatting");
       // TODO: send the error message to the frontend
+      alreadyAnswered = false;
       status = false;
     } catch (NumberFormatException e) {
       e.printStackTrace();
       System.err.println("ERROR: Incorrect ID data type");
       // TODO: send the error message to the frontend
+      alreadyAnswered = false;
       status = false;
     }
+    variables.put("alreadyAnswered", alreadyAnswered);
     variables.put("status", status);
     return GSON.toJson(variables);
   }

@@ -25,6 +25,7 @@ const categoryArray = [
 	{ emoji: "mechanical_arm", text: "technology", highlightColor: '#FFA8EC' },
 	{ emoji: "womans_hat", text: "fashion", highlightColor: '#FFA61B' },
 	{ emoji: "scroll", text: "history", highlightColor: '#C18FD2' },
+  { emoji: "church", text: "religion", highlightColor: '#4ECDC4'},
 	{ emoji: "musical_note", text: "music", highlightColor: '#B4154E' },
 	{ emoji: "speech_balloon", text: "languages", highlightColor: '#F43030' },
 ]
