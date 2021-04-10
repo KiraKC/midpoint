@@ -9,8 +9,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import java.util.List;
 
+/**
+ * User class that stands for a user.
+ */
 public class User {
-
   private String id;
   private UserMetaData userMetaData;
   private CategoryPoints categoryPoints;
@@ -20,7 +22,7 @@ public class User {
 
   /**
    * Constructor for creating entirely new user from registration
-   * @param jsonReqObject
+   * @param jsonReqObject Json object of a user
    * @throws JSONException
    * @throws FirebaseAuthException
    */
@@ -49,6 +51,10 @@ public class User {
     highScore = 0;
   }
 
+  /**
+   * Constructor for creating user from MongoDB.
+   * @param mongoUser MongoDB document of a user
+   */
   public User(Document mongoUser) {
     id = mongoUser.getString("_id");
     categoryPoints = new CategoryPoints();
@@ -59,6 +65,10 @@ public class User {
     highScore = mongoUser.getInteger("highScore");
   }
 
+  /**
+   * Method for transforming the User object to a Bson object.
+   * @return a Bson object of a user
+   */
   public Document toBSON() {
     Document mongoUser = new Document("_id", id);
     mongoUser.append("categoryPoints", categoryPoints.toBSON())
@@ -69,35 +79,67 @@ public class User {
     return mongoUser;
   }
 
-  public CategoryPoints getCategoryPoints() {
-    return categoryPoints;
-  }
-
+  /**
+   * Getter method for user ID.
+   * @return user ID
+   */
   public String getId() {
     return id;
   }
 
-  public int getHighScore() {
-    return highScore;
-  }
-
+  /**
+   * Getter method for user meta data.
+   * @return user meta data
+   */
   public UserMetaData getUserMetaData() {
     return userMetaData;
   }
 
-  public void answered(String pollId) {
-    answeredPolls.add(pollId);
+  /**
+   * Getter method for user category points.
+   * @return user category points
+   */
+  public CategoryPoints getCategoryPoints() {
+    return categoryPoints;
   }
 
+  /**
+   * Getter method for user answered polls
+   * @return user answered polls
+   */
   public AnsweredPolls getAnsweredPolls() {
     return answeredPolls;
   }
 
-  public void created(String pollId) {
-    createdPolls.add(pollId);
-  }
-
+  /**
+   * Getter method for user created polls.
+   * @return user created polls
+   */
   public CreatedPolls getCreatedPolls() {
     return createdPolls;
+  }
+
+  /**
+   * Getter method for user high score.
+   * @return high score
+   */
+  public int getHighScore() {
+    return highScore;
+  }
+
+  /**
+   * Method for adding newly answered polls.
+   * @param pollId ID of the newly answered poll
+   */
+  public void answered(String pollId) {
+    answeredPolls.add(pollId);
+  }
+
+  /**
+   * Method for adding newly created polls.
+   * @param pollId ID of the newly created poll
+   */
+  public void created(String pollId) {
+    createdPolls.add(pollId);
   }
 }
