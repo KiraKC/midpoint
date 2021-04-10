@@ -121,6 +121,7 @@ function NewPollModal(props: INewPollModal) {
 		setQuestionEmoji(randomEmoji())
 		setQuestionEmojiOpen(false)
 		setCategories([])
+    setImageUrl('')
 		setNumOfOptions(2)
 		setQuestionHint("QUESTION")
 	}
