@@ -5,17 +5,12 @@ import com.cs32.app.handlers.*;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import io.github.cdimascio.dotenv.Dotenv;
-import org.checkerframework.checker.units.qual.C;
 import spark.Spark;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-
-import static spark.route.HttpMethod.before;
 
 public class Main {
 
@@ -78,7 +73,7 @@ public class Main {
     Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
     Spark.post("/game/new-poll", new GetGamePollHandler());
     Spark.post("/poll/check-off", new CheckOffHandler());
-    Spark.post("/poll/search", new SearchPollHandler());
+    Spark.post("/poll/search", new SearchPollsHandler());
     Spark.post("/user/get-answered", new AnsweredPollsHandler());
     Spark.post("user/get-created", new CreatedPollsHandler());
   }
