@@ -133,4 +133,17 @@ public class Connection {
     }
     return searchResults;
   }
+
+  public static List<Poll> getPollsById(Set<String> pollIds) throws Exception {
+    BasicDBObject query = new BasicDBObject();
+    query.put("employeeId", new BasicDBObject("$in", pollIds));
+
+    List<Poll> pollsFound = new ArrayList<>();
+    MongoCursor<Document> cursor = pollCollection.find(query).iterator();
+    while (cursor.hasNext()) {
+      // Create and add poll
+      pollsFound.add(new Poll(cursor.next()));
+    }
+    return pollsFound;
+  }
 }
