@@ -15,8 +15,8 @@ interface INewPollModal {
 	setIsSignupModalOpen: any,
 	fetchNewPoll: boolean,
 	setFetchNewPoll: any,
-  clearFeed: boolean,
-  setClearFeed: any
+	clearFeed: boolean,
+	setClearFeed: any
 }
 
 const customStyles = {
@@ -73,9 +73,9 @@ function LoginModal(props: INewPollModal) {
 				props.setIsModalOpen(false);
 				setLoading(false);
 				cleanUp();
-        // clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
-        props.setClearFeed(!props.clearFeed);
-        setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
+				// clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
+				props.setClearFeed(!props.clearFeed);
+				setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
 			})
 			.catch((error) => {
 				var errorCode = error.code;
@@ -92,16 +92,19 @@ function LoginModal(props: INewPollModal) {
 			.then((userCredential) => {
 				// Signed in
 				let user = userCredential.user;
-				console.log(user.uid)
-				console.log(userCredential)
+				user.getIdToken(true)
+					.then((userToken) => localStorage.setItem('userToken', userToken))
+					.catch(console.log)
+				// console.log(user.uid)
+				// console.log(userCredential)
 				setEmailDescription("EMAIL");
 				setPasswordDescription("PASSWORD");
 				setLoading(false);
 				props.setIsModalOpen(false);
 				cleanUp();
-        // clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
-        props.setClearFeed(!props.clearFeed);
-        setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
+				// clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
+				props.setClearFeed(!props.clearFeed);
+				setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
 			})
 			.catch((error) => {
 				let errorCode = error.code;
@@ -127,7 +130,6 @@ function LoginModal(props: INewPollModal) {
 
 	function handleResetPassword() {
 		var auth = firebase.auth();
-
 		auth.sendPasswordResetEmail(email).then(function () {
 			setForgetPasswordDescription('RESET PASSWORD EMAIL SENT!')
 			setTimeout(function () {

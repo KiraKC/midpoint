@@ -25,6 +25,7 @@ function Header(props) {
 	function handleSignInStatus() {
 		if (props.isLoggedIn) {
 			signOut();
+			localStorage.removeItem('userToken');
 			props.setIsLoggedIn(false);
 			props.setClearFeed(!props.clearFeed);
 			setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
