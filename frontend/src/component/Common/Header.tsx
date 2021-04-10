@@ -24,10 +24,12 @@ function Header(props) {
 	function handleSignInStatus() {
 		if (props.isLoggedIn) {
 			signOut();
-			props.setIsLoggedIn(false)
+			props.setIsLoggedIn(false);
+      props.setClearFeed(!props.clearFeed);
+      setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
 		} else {
-			props.setIsLoginModalOpen(true)
-		}
+			props.setIsLoginModalOpen(true);
+    }
 	}
 
 	const fetchNewPollProps = {
@@ -47,9 +49,11 @@ function Header(props) {
 			<NewPollModal isModalOpen={isPollModalOpen} setIsModalOpen={setIsPollModalOpen}
 				{...newPollProps} />
 			<LoginModal isModalOpen={props.isLoginModalOpen} setIsModalOpen={props.setIsLoginModalOpen}
-				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps} />
+				setIsSignupModalOpen={setIsSignupModalOpen} {...fetchNewPollProps} 
+        clearFeed={props.clearFeed} setClearFeed={props.setClearFeed}/>
 			<SignUpModal setIsLoggedIn={props.setIsLoggedIn} isModalOpen={isSignupModalOpen}
-				setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={props.setIsLoginModalOpen} {...fetchNewPollProps} />
+				setIsModalOpen={setIsSignupModalOpen} setIsLoginModalOpen={props.setIsLoginModalOpen} {...fetchNewPollProps}
+        clearFeed={props.clearFeed} setClearFeed={props.setClearFeed}  />
 			<div className="header">
 				{
 					isSmallScreen &&

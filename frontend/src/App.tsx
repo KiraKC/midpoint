@@ -23,6 +23,7 @@ function App() {
 	const [polls, setPolls]: [IPoll[], any] = useState([]);
 	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
 	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
+  const [clearFeed, setClearFeed] : [boolean, any] = useState(false);
 
 
 	useEffect(() => {
@@ -51,18 +52,23 @@ function App() {
 						<Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
 							fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
 							{...pollProps} isLoginModalOpen={isLoginModalOpen} 
-							setIsLoginModalOpen={setIsLoginModalOpen} />
+							setIsLoginModalOpen={setIsLoginModalOpen} 
+              clearFeed={clearFeed} setClearFeed={setClearFeed}/>
 						<Routes>
 							<Route element={<Navigate to="home" />} />
 							<Route path="/home" element={<MasonryWrapper
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
+                clearFeed={clearFeed}
+                />} />
 							<Route path="/history" element={<MasonryWrapper
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} 
+                clearFeed={clearFeed}/>} />
 							<Route path="/my-polls" element={<MasonryWrapper
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} />} />
+								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll} 
+                clearFeed={clearFeed}/>} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>
