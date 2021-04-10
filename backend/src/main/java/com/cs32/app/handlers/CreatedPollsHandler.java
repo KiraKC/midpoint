@@ -76,9 +76,11 @@ public class CreatedPollsHandler implements Route {
             miniStat.put(answerOptionId, miniStat.get(answerOptionId) + 1);
           }
           // convert to percentages
-          for (AnswerOption answerOption : poll.getAnswerOptions()) {
-            double percentage = miniStat.get(answerOption.getId()) / allResponses.size();
-            miniStat.put(answerOption.getId(), percentage * 100);
+          if (allResponses.size() > 0) {
+            for (AnswerOption answerOption : poll.getAnswerOptions()) {
+              double percentage = miniStat.get(answerOption.getId()) / allResponses.size();
+              miniStat.put(answerOption.getId(), percentage * 100);
+            }
           }
           // add miniStat to miniStats
           miniStats.put(poll.getId(), miniStat);
@@ -87,7 +89,8 @@ public class CreatedPollsHandler implements Route {
 
       variables.put("answeredPollIds", answeredPollIdsToSend);
       variables.put("miniStats", miniStats);
-
+      System.out.println("MINISTATS");
+      System.out.println(miniStats);
       status = true;
     } catch (JSONException e) {
       e.printStackTrace();
