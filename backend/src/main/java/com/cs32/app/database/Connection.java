@@ -32,9 +32,15 @@ public class Connection {
       pollCollection = mongoDatabase.getCollection("poll_test");
       responseCollection = mongoDatabase.getCollection("response_test");
     } else {
-      userCollection = mongoDatabase.getCollection("user");
-      pollCollection = mongoDatabase.getCollection("poll");
-      responseCollection = mongoDatabase.getCollection("response");
+      if (System.getenv("MODE").equals("PRODUCTION")) {
+        userCollection = mongoDatabase.getCollection("user");
+        pollCollection = mongoDatabase.getCollection("poll");
+        responseCollection = mongoDatabase.getCollection("response");
+      } else {
+        userCollection = mongoDatabase.getCollection("user_staging");
+        pollCollection = mongoDatabase.getCollection("poll_staging");
+        responseCollection = mongoDatabase.getCollection("response_staging");
+      }
     }
     pollCollection.createIndex(Indexes.text("question"));
   }
