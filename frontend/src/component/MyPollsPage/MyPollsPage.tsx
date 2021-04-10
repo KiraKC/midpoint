@@ -14,46 +14,47 @@ interface IMyPollsPageProps {
 }
 
 function MyPollsPage(props: IMyPollsPageProps) {
-	
-	const [createdPolls, setCreatedPolls]: [IPoll[], any] = useState([]);
 
-  useEffect(() => {
-    requestPolls();
-  }, [])
+	const [createdPolls, setCreatedPolls]: [IPoll[], any] = useState([]);
+	const [answeredPollIds, setAnsweredPollIds]: [string[], any] = useState([]);
+	const [stats, setStats] = useState({});
+
+	useEffect(() => {
+		requestPolls();
+	}, [])
 
 	const requestPolls = async () => {
-		let toSend;
-		if (props.isLoggedIn) {
-			const token = await firebase.auth().currentUser.getIdToken(true);
-			toSend = {
-				userIdToken: token
+		if (localStorage.getItem('userToken') !== null) {
+			let toSend = {
+				userIdToken: localStorage.getItem('userToken')
 			}
-		
-      console.log(toSend)
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
-        }
-      }
-      axios.post(
-        endpointUrl + '/user/created-polls', toSend, config)
-        .then(response => {
-          console.log("CREATEDPOLLS: ")
-          console.log(response.data)
-          setCreatedPolls(response.data.createdPolls);
-        })
-        .catch(e => {
-          console.log(e)
-        });
-    }
+			const config = {
+				headers: {
+					"Content-Type": "application/json",
+					'Access-Control-Allow-Origin': '*',
+				}
+			}
+			axios.post(
+				endpointUrl + '/user/created-polls', toSend, config)
+				.then(response => {
+					console.log("CREATEDPOLLS: ")
+					console.log(response.data)
+					setAnsweredPollIds(response.data.answeredPollIds);
+					setStats(response.data.miniStats)
+					setCreatedPolls(response.data.createdPolls);
+				})
+				.catch(e => {
+					console.log(e)
+				});
+		}
 	}
 
 	const divItems = createdPolls.map(function (poll) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} answered={false} 
-			numClicks={poll.numClicks} />
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} 
+			answered={answeredPollIds.includes(poll.id) ? true : false}
+			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}} numClicks={poll.numClicks} />
 	});
 
 	const breakpointColumnsObj = {

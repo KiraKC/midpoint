@@ -14,46 +14,45 @@ interface IHistoryPageProps {
 }
 
 function HistoryPage(props: IHistoryPageProps) {
-	
-	const [answeredPolls, setAnsweredPolls]: [IPoll[], any] = useState([]);
 
-  useEffect(() => {
-    requestPolls();
-  }, [])
+	const [answeredPolls, setAnsweredPolls]: [IPoll[], any] = useState([]);
+	const [stats, setStats] = useState({});
+
+	useEffect(() => {
+		requestPolls();
+	}, [])
 
 	const requestPolls = async () => {
-		let toSend;
-		if (props.isLoggedIn) {
-			const token = await firebase.auth().currentUser.getIdToken(true);
-			toSend = {
-				userIdToken: token
+		if (localStorage.getItem('userToken') !== null) {
+			let toSend = {
+				userIdToken: localStorage.getItem('userToken')
 			}
-		
-      console.log(toSend)
-      const config = {
-        headers: {
-          "Content-Type": "application/json",
-          'Access-Control-Allow-Origin': '*',
-        }
-      }
-      axios.post(
-        endpointUrl + '/user/answered-polls', toSend, config)
-        .then(response => {
-          console.log("ANSWEREDPOLLS: ")
-          console.log(response.data)
-          setAnsweredPolls(response.data.answeredPolls);
-        })
-        .catch(e => {
-          console.log(e)
-        });
-    }
+			console.log(toSend)
+			const config = {
+				headers: {
+					"Content-Type": "application/json",
+					'Access-Control-Allow-Origin': '*',
+				}
+			}
+			axios.post(
+				endpointUrl + '/user/answered-polls', toSend, config)
+				.then(response => {
+					console.log("ANSWEREDPOLLS: ")
+					console.log(response.data)
+					setStats(response.data.miniStats);
+					setAnsweredPolls(response.data.answeredPolls);
+				})
+				.catch(e => {
+					console.log(e)
+				});
+		}
 	}
 
 	const divItems = answeredPolls.map(function (poll) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} 
-			answered={false} numClicks={poll.numClicks} />
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}
+			answeredStats={stats[poll.id]} answered={true} numClicks={poll.numClicks} />
 	});
 
 	const breakpointColumnsObj = {

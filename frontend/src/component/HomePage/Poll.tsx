@@ -146,7 +146,6 @@ function Poll(props: PollProps) {
 		)
 	}
 	return (
-
 		<div className="masonary-poll-wrapper" >
 			<div className="masonary-background" style={{
 				backgroundColor: `${props.color}`
