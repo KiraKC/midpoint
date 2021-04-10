@@ -138,7 +138,6 @@ function MasonryPoll(props: MasonryPollProps) {
 			</div>
 		)
 	}
-
 }
 
 export default MasonryPoll;
