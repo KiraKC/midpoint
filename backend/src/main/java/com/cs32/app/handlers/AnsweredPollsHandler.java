@@ -2,7 +2,9 @@ package com.cs32.app.handlers;
 
 import com.cs32.app.User;
 import com.cs32.app.database.Connection;
+import com.cs32.app.poll.AnswerOption;
 import com.cs32.app.poll.Poll;
+import com.cs32.app.poll.PollResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
@@ -51,6 +53,36 @@ public class AnsweredPollsHandler implements Route {
 
       // Return the polls to the frontend as a JSON
       variables.put("answeredPolls", pollsToSend);
+
+      // instantiate list of answeredPollIds and createdPollIds
+      Map<String, Map<String, Double>> miniStats = new HashMap<>();
+
+      // set list of answeredPollIds and createdPollIds
+      for (Poll poll : pollsToSend) {
+        poll.rendered();
+        if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
+          // calculate mini-stats to send
+          Map<String, Double> miniStat = new HashMap<>();
+          for (AnswerOption answerOption : poll.getAnswerOptions()) {
+            miniStat.put(answerOption.getId(), 0.0);
+          }
+          // count the number of responses for each answer option
+          List<PollResponse> allResponses = Connection.getResponses(poll.getId());
+          for (PollResponse everyResponse : allResponses) {
+            String answerOptionId = everyResponse.getAnswerOptionId();
+            miniStat.put(answerOptionId, miniStat.get(answerOptionId) + 1);
+          }
+          // convert to percentages
+          for (AnswerOption answerOption : poll.getAnswerOptions()) {
+            double percentage = miniStat.get(answerOption.getId()) / allResponses.size();
+            miniStat.put(answerOption.getId(), percentage * 100);
+          }
+          // add miniStat to miniStats
+          miniStats.put(poll.getId(), miniStat);
+        }
+      }
+
+      variables.put("miniStats", miniStats);
 
       status = true;
     } catch (JSONException e) {
