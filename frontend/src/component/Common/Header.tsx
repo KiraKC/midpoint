@@ -13,7 +13,7 @@ function Header(props) {
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
 	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
 	const [isSearchFocused, setIsSearchFocused]: [boolean, any] = useState(false);
-	 
+
 	const isSmallScreen = useMediaQuery({
 		query: '(max-width: 1100px)'
 	})
@@ -48,9 +48,15 @@ function Header(props) {
 
 	const handleEnter = (e) => {
 		if (e.key === 'Enter') {
-			console.log('do validate');
-			navigate('search-result')
+			navigateAndClean('search-result')
 		}
+	}
+
+	const navigateAndClean = (url: string) => {
+		props.setClearFeed(!props.clearFeed);
+		setTimeout(() => {
+			navigate(url)
+		}, 100)
 	}
 
 	return (
@@ -69,16 +75,19 @@ function Header(props) {
 					<>
 						<div className="header-background"></div>
 						<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-							<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
+							<a className="header-link" onClick={() => {
+								navigate('home');
+								setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
+							}} style={{ cursor: 'pointer' }}>midpoint.</a>
 							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
 						</div>
 						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
 							<button className="mobile-nav-link"
-								onClick={() => navigate('history')}>
+								onClick={() => navigateAndClean('history')}>
 								<span className="material-icons-outlined">
 									history</span></button>
 							<button className="mobile-nav-link"
-								onClick={() => navigate('my-poll')}>
+								onClick={() => navigateAndClean('my-poll')}>
 								<span className="material-icons-outlined">
 									outbox</span></button>
 							<button className="mobile-nav-link"
@@ -96,11 +105,15 @@ function Header(props) {
 				{
 					isBigScreen &&
 					<>
+						{console.log(props.polls)}
 						<div className="header-background"></div>
 						<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
-							<a className="header-link" onClick={() => navigate('home')} style={{ cursor: 'pointer' }}>midpoint.</a>
-							<div className="nav-text-link" style={{ marginLeft: '30px' }} onClick={() => { props.isLoggedIn ? navigate('history') : props.setIsLoginModalOpen(true)}}>History</div>
-							<div className="nav-text-link" onClick={() => { props.isLoggedIn ? navigate('my-polls') : props.setIsLoginModalOpen(true)}}>My Polls</div>
+							<a className="header-link" onClick={() => {
+								navigate('home');
+								setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
+							}} style={{ cursor: 'pointer' }}>midpoint.</a>
+							<div className="nav-text-link" style={{ marginLeft: '30px' }} onClick={() => { props.isLoggedIn ? navigateAndClean('history') : props.setIsLoginModalOpen(true) }}>History</div>
+							<div className="nav-text-link" onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>My Polls</div>
 							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
 						</div>
 						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>

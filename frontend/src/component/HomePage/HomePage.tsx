@@ -61,7 +61,7 @@ function HomePage(props: HomePageProps) {
 			const idToken = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				userIdToken: idToken,
-				numPollsRequested: 3,
+				numPollsRequested: 10,
 				seenPollIds: seenPollIds,
 				loggedIn: true
 			}
@@ -69,14 +69,14 @@ function HomePage(props: HomePageProps) {
 			if (localStorage.getItem('userToken') === null) {
 				toSend = {
 					userIdToken: 'none',
-					numPollsRequested: 3,
+					numPollsRequested: 10,
 					seenPollIds: seenPollIds,
 					loggedIn: false
 				}
 			} else {
 				toSend = {
 					userIdToken: localStorage.getItem('userToken'),
-					numPollsRequested: 3,
+					numPollsRequested: 10,
 					seenPollIds: seenPollIds,
 					loggedIn: true
 				}
