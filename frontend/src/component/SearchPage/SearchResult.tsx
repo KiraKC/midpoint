@@ -51,7 +51,7 @@ function SearchResult(props: ISearchResultProps) {
 			.then(response => {
 				console.log(response.data.searchResults)
         console.log(response.data.answeredPollIds)
-        console.log(response.data.createdPollIds)
+        console.log(response.data)
 				const returnedPolls: IPoll[] = response.data.searchResults;
 				setValidPolls(returnedPolls)
 			})

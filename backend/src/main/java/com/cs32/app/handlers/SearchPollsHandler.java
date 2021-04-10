@@ -60,24 +60,36 @@ public class SearchPollsHandler implements Route {
         // set list of answeredPollIds and createdPollIds
         for (Poll poll : searchResults) {
           if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
+            System.out.println("HIHIHIHI");
             // add pollId to list of answeredPollIdsToSend
             answeredPollIdsToSend.add(poll.getId());
 
             // calculate mini-stats to send
-            miniStats.put(poll.getId(), new HashMap<>());
-            List<PollResponse> allResponses = Connection.getResponses(poll.getId());
+//            miniStats.put(poll.getId(), new HashMap<>());
+            Map<String, Double> miniStat = new HashMap<>();
             for (AnswerOption answerOption : poll.getAnswerOptions()) {
-              miniStats.get(poll.getId()).put(answerOption.getId(), 0.0);
+              miniStat.put(answerOption.getId(), 0.0);
             }
             // count the number of responses for each answer option
+            List<PollResponse> allResponses = Connection.getResponses(poll.getId());
             for (PollResponse everyResponse : allResponses) {
-              miniStats.get(poll.getId()).put(everyResponse.getAnswerOptionId(), miniStats.get(poll.getId()).get(everyResponse.getAnswerOptionId()) + 1);
+              String answerOptionId = everyResponse.getAnswerOptionId();
+              miniStat.put(answerOptionId, miniStat.get(answerOptionId) + 1);
             }
+            // convert to percentages
+            for (AnswerOption answerOption : poll.getAnswerOptions()) {
+              double percentage = miniStat.get(answerOption.getId()) / allResponses.size();
+              miniStat.put(answerOption.getId(), percentage * 100);
+            }
+            // add miniStat to miniStats
+            System.out.println("added to ministats");
+            miniStats.put(poll.getId(), miniStat);
           }
         }
       }
 
       variables.put("answeredPollIds", answeredPollIdsToSend);
+      System.out.println("MINISTATS: " + miniStats.size());
       variables.put("miniStats", miniStats);
 
       status = true;
