@@ -64,7 +64,7 @@ public class AnonymousAnswerHandler implements Route {
         counts.put(answerOption.getId(), 0.0);
       }
 
-      // Count
+      // count the number of responses for each answer option
       for (PollResponse everyResponse : allResponses) {
         counts.put(everyResponse.getAnswerOptionId(), counts.get(everyResponse.getAnswerOptionId()) + 1);
       }

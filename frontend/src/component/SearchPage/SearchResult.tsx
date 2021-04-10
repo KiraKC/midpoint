@@ -12,13 +12,13 @@ interface ISearchResultProps {
 	searchString: string,
 	setIsLoginModalOpen: any,
 	isLoggedIn: boolean,
-
 }
 
 function SearchResult(props: ISearchResultProps) {
 
 	const [validPolls, setValidPolls]: [IPoll[], any] = useState([]);
 	const [answeredPollIds, setAnsweredPollIds]: [string[], any] = useState([]);
+	const [stats, setStats] = useState({});
 
 	useEffect(() => {
 		requestPolls();
@@ -53,6 +53,7 @@ function SearchResult(props: ISearchResultProps) {
 				console.log(response.data)
 				const returnedPolls: IPoll[] = response.data.searchResults;
 				setAnsweredPollIds(response.data.answeredPollIds);
+				setStats(response.data.miniStats)
 				setValidPolls(returnedPolls)
 			})
 			.catch(e => {
@@ -63,9 +64,10 @@ function SearchResult(props: ISearchResultProps) {
 	const divItems = validPolls.map(function (poll) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} 
-			imageUrl={poll.imageUrl} answered={poll.id in answeredPollIds ? false : false} 
-			/>
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color}
+			imageUrl={poll.imageUrl} answered={poll.id in answeredPollIds ? false : true}
+			answeredStats={poll.id in answeredPollIds ? {} : stats[poll.id]}
+		/>
 	});
 
 	const breakpointColumnsObj = {
