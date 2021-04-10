@@ -2,7 +2,9 @@ package com.cs32.app.handlers;
 
 import com.cs32.app.User;
 import com.cs32.app.database.Connection;
+import com.cs32.app.poll.AnswerOption;
 import com.cs32.app.poll.Poll;
+import com.cs32.app.poll.PollResponse;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
@@ -45,7 +47,7 @@ public class SearchPollsHandler implements Route {
 
       // instantiate list of answeredPollIds and createdPollIds
       List<String> answeredPollIdsToSend = new ArrayList<>();
-      List<String> createdPollIdsToSend = new ArrayList<>();
+      Map<String, Map<String, Double>> miniStats = new HashMap<>();
 
       boolean loggedIn = jsonReqObject.getString("loggedIn").equals("true");
       if (loggedIn) {
@@ -58,16 +60,25 @@ public class SearchPollsHandler implements Route {
         // set list of answeredPollIds and createdPollIds
         for (Poll poll : searchResults) {
           if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
+            // add pollId to list of answeredPollIdsToSend
             answeredPollIdsToSend.add(poll.getId());
-          }
-          if (user.getCreatedPolls().getSet().contains(poll.getId())) {
-            createdPollIdsToSend.add(poll.getId());
+
+            // calculate mini-stats to send
+            miniStats.put(poll.getId(), new HashMap<>());
+            List<PollResponse> allResponses = Connection.getResponses(poll.getId());
+            for (AnswerOption answerOption : poll.getAnswerOptions()) {
+              miniStats.get(poll.getId()).put(answerOption.getId(), 0.0);
+            }
+            // count the number of responses for each answer option
+            for (PollResponse everyResponse : allResponses) {
+              miniStats.get(poll.getId()).put(everyResponse.getAnswerOptionId(), miniStats.get(poll.getId()).get(everyResponse.getAnswerOptionId()) + 1);
+            }
           }
         }
       }
 
       variables.put("answeredPollIds", answeredPollIdsToSend);
-      variables.put("createdPollIds", createdPollIdsToSend);
+      variables.put("miniStats", miniStats);
 
       status = true;
     } catch (Exception e) {
