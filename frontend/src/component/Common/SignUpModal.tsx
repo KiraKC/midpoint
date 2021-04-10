@@ -19,8 +19,8 @@ interface ISignUpModalProps {
 	setIsLoggedIn: any,
 	fetchNewPoll: boolean,
 	setFetchNewPoll: any,
-  clearFeed: boolean,
-  setClearFeed: any
+	clearFeed: boolean,
+	setClearFeed: any
 }
 
 const customStyles = {
@@ -117,13 +117,16 @@ function SignUpModal(props: ISignUpModalProps) {
 					let status: boolean = await addUserToMongo();
 					console.log(status)
 					if (status) {
+						await firebase.auth().currentUser.getIdToken(true)
+						.then((userToken) => localStorage.setItem('userToken', userToken))
+						.catch(console.log)
 						// clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
-            props.setClearFeed(!props.clearFeed);
-            setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
+						props.setClearFeed(!props.clearFeed);
+						setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
 						cleanUpData();
 						setLoading(false)
 						setSuccess(true)
-						// TODO: figure out redirect animation
+
 						setTimeout(() => {
 							props.setIsModalOpen(false)
 							setSuccess(false)

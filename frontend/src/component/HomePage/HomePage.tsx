@@ -6,6 +6,8 @@ import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
+import { isLoggedIn } from '../../firebase/AuthMethods';
+import { wait } from '@testing-library/dom';
 
 interface HomePageProps {
 	isLoggedIn: boolean,
@@ -26,7 +28,6 @@ function HomePage(props: HomePageProps) {
 	let setPolls = props.setPolls;
 	let seenPollIds = props.seenPollIds;
 	let setSeenPollIds = props.setSeenPollIds;
-	// const [isInitialRender, setIni]
 
 	useEffect(() => {
 		async function pollHandler() {
@@ -65,11 +66,20 @@ function HomePage(props: HomePageProps) {
 				loggedIn: true
 			}
 		} else {
-			toSend = {
-				userIdToken: 'none',
-				numPollsRequested: 3,
-				seenPollIds: seenPollIds,
-				loggedIn: false
+			if (localStorage.getItem('userToken') === null) {
+				toSend = {
+					userIdToken: 'none',
+					numPollsRequested: 3,
+					seenPollIds: seenPollIds,
+					loggedIn: false
+				}
+			} else {
+				toSend = {
+					userIdToken: localStorage.getItem('userToken'),
+					numPollsRequested: 3,
+					seenPollIds: seenPollIds,
+					loggedIn: true
+				}
 			}
 		}
 		console.log(toSend)
