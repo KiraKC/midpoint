@@ -7,11 +7,16 @@ import org.json.JSONException;
 
 import java.util.*;
 
+/**
+ * CategoryPoints class that stores category points for users and polls.
+ */
 public class CategoryPoints {
   @Expose
   Map<String, Double> catPtsMap;
+
   /**
-   * Constructor when creating CatPtsWrapper with only tagged categories from user.
+   * Constructor when creating CatPtsWrapper with only tagged categories
+   * for users and polls.
    */
   public CategoryPoints(List<String> taggedCategories) {
     catPtsMap = new HashMap<>();
@@ -29,6 +34,11 @@ public class CategoryPoints {
     }
   }
 
+  /**
+   * Constructor when creating CatPtsWrapper with Json object.
+   * @param jsonTaggedCategories
+   * @throws JSONException
+   */
   public CategoryPoints(JSONArray jsonTaggedCategories) throws JSONException {
     List<String> taggedCategories = new ArrayList<>();
     for (int i = 0; i < jsonTaggedCategories.length(); i++) {
@@ -50,17 +60,21 @@ public class CategoryPoints {
     }
   }
 
-  public void initializeFromMongo(List<Document> mongoCatPts) {
-    for (Document doc : mongoCatPts) {
-      updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
-    }
-  }
-
   /**
    * Constructor when creating CatPtsWrapper from MongoDB Database.
    */
   public CategoryPoints() {
     catPtsMap = new HashMap<>();
+  }
+
+  /**
+   * Method for initializing the category points from MongoDB.
+   * @param mongoCatPts a list of MongoDB document of category points
+   */
+  public void initializeFromMongo(List<Document> mongoCatPts) {
+    for (Document doc : mongoCatPts) {
+      updateCatPts(doc.getString("categoryName"), doc.getDouble("points"));
+    }
   }
 
   /**
@@ -74,20 +88,34 @@ public class CategoryPoints {
 
   /**
    * Getter method for the map.
-   * @return
+   * @return the map of category points
    */
   public Map<String, Double> getMap() {
     return catPtsMap;
   }
 
+  /**
+   * Getter method for the points of a certain category.
+   * @param category category
+   * @return the points of a certain category
+   */
   public Double getPts(String category) {
     return catPtsMap.get(category);
   }
 
+  /**
+   * Getter method for the normalized points of a certain category.
+   * @param category category
+   * @return the normalized points of a certain category
+   */
   public Double getNormPts(String category) {
     return catPtsMap.get(category)/this.getTotalPts();
   }
 
+  /**
+   * Getter method for total points.
+   * @return total points
+   */
   public Double getTotalPts() {
     Double totalPts = 0.0;
     for(Double pts : catPtsMap.values()) {
@@ -96,6 +124,10 @@ public class CategoryPoints {
     return totalPts;
   }
 
+  /**
+   * Method for transforming the CategoryPoints object to Bson object.
+   * @return a Bson object of category points
+   */
   public List<Document> toBSON() {
     List<Document> mongoCatPts = new ArrayList<>();
     for (Map.Entry<String,Double> entry : catPtsMap.entrySet()) {
@@ -104,5 +136,4 @@ public class CategoryPoints {
     }
     return mongoCatPts;
   }
-
 }
