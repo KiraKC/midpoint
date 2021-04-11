@@ -67,7 +67,7 @@ public class GetStatsHandler implements Route {
         // calculate number of responders for each userMetaData grouping
         List<PollResponse> allPollResponses = Connection.getResponses(pollId);
         for (PollResponse pollResponse : allPollResponses) {
-          String metaDataIdentity = pollResponse.getUserMetaData().getMap().get(userMetaDataGrouping);
+          String metaDataIdentity = pollResponse.getUserMetaData().get(userMetaDataGrouping);
           if (metaDataIdentity.equals("")) {
             metaDataIdentity = Constants.UNIDENTIFIED;
           }

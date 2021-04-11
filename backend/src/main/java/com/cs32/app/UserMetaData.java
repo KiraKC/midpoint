@@ -66,4 +66,15 @@ public class UserMetaData {
     return mongoUserMetaData;
   }
 
+  public String get(String userMetaDataGrouping) {
+    switch (userMetaDataGrouping) {
+      case "age":
+        Integer age = Integer.parseInt(userMetaDataMap.get(userMetaDataGrouping));
+        Integer index = Math.min(age / 10, 8);
+        return Constants.USER_GROUPINGS.get(userMetaDataGrouping)[index];
+      default:
+        return userMetaDataMap.get(userMetaDataGrouping);
+    }
+  }
+
 }
