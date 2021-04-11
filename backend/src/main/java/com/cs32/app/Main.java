@@ -76,5 +76,6 @@ public class Main {
     Spark.post("/poll/search", new SearchPollsHandler());
     Spark.post("/user/answered-polls", new AnsweredPollsHandler());
     Spark.post("/user/created-polls", new CreatedPollsHandler());
+    Spark.post("/poll/delete", new DeletePollHandler());
   }
 }

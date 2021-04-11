@@ -26,7 +26,7 @@ public class PollTest {
     pollTags.add("politics");
     pollTags.add("funny");
     CategoryPoints pollCatPts = new CategoryPoints(pollTags);
-    Poll poll = new Poll("some question", "some emoji", answerOptions, pollCatPts, "some color", "some image url");
+    Poll poll = new Poll("some question", "some emoji", answerOptions, pollCatPts, "some color", "some image url", "some creator id");
 
     assertFalse(poll.getId() == null);
     assertEquals(poll.getAnswerOptions().size(), 2);

@@ -45,7 +45,7 @@ function MyPollsPage(props: IMyPollsPageProps) {
 					if (response.data.createdPolls.length === 0) {
 						setDescription("Didn't find polls that was created by you, create a poll first!");
 					} else {
-						setDescription('Posted a poll before? Check the result here!');
+						setDescription('Posted a poll before? Check the results here!');
 					}
 				})
 				.catch(e => {

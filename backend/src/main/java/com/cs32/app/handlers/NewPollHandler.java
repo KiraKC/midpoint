@@ -45,6 +45,10 @@ public class NewPollHandler implements Route {
     try {
       JSONObject jsonReqObject = new JSONObject(request.body());
 
+      String userIdToken = jsonReqObject.getString("creatorId");
+      FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
+      String userId = decodedToken.getUid();
+      User user = Connection.getUserById(userId);
       question = jsonReqObject.getString("question");
       emoji = jsonReqObject.getString("emoji");
       color = jsonReqObject.getString("color");
@@ -65,16 +69,12 @@ public class NewPollHandler implements Route {
       JSONArray jsonTaggedCategories = jsonReqObject.getJSONArray("taggedCategories");
       CategoryPoints newCategoryPoints = new CategoryPoints(jsonTaggedCategories);
 
-      Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints, color, imageUrl);
+      Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints, color, imageUrl, user.getId());
 
       System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
 
       // Update user's created polls in MongoDB
-      String userIdToken = jsonReqObject.getString("creatorId");
-      FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
-      String userId = decodedToken.getUid();
-      User user = Connection.getUserById(userId);
       user.created(newPoll.getId());
       BasicDBObject searchQuery = new BasicDBObject("_id", userId);
       BasicDBObject updateFields = new BasicDBObject("createdPolls", user.getCreatedPolls().toBSON());

@@ -1,6 +1,7 @@
 package com.cs32.app.database;
 
 import com.cs32.app.User;
+import com.cs32.app.exceptions.FailedDBWriteException;
 import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
@@ -9,6 +10,8 @@ import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.*;
 
+import com.mongodb.client.result.DeleteResult;
+import com.mongodb.client.result.UpdateResult;
 import org.bson.Document;
 
 import java.util.*;
@@ -161,5 +164,43 @@ public class Connection {
     BasicDBObject updateFields = new BasicDBObject("numRenders", poll.getNumRenders());
     BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
     pollCollection.updateOne(searchQuery, setQuery);
+  }
+
+  public static boolean deleteResponses(String pollId) throws FailedDBWriteException {
+    BasicDBObject query = new BasicDBObject();
+    query.put("pollId", pollId);
+    DeleteResult deleteResult = Connection.responseCollection.deleteMany(query);
+    if (deleteResult.wasAcknowledged()) {
+      return true;
+    } else {
+      throw new FailedDBWriteException("response", "delete", "responseCollection");
+    }
+  }
+
+  public static boolean deletePoll(String pollId) throws FailedDBWriteException {
+    BasicDBObject pollSearchQuery = new BasicDBObject();
+    pollSearchQuery.put("_id", pollId);
+    DeleteResult deleteResult = Connection.pollCollection.deleteOne(pollSearchQuery);
+    if (!deleteResult.wasAcknowledged()) {
+      throw new FailedDBWriteException("response", "delete", "responseCollection");
+    }
+    BasicDBObject userSearchQuery = new BasicDBObject();
+    BasicDBObject updateFields = new BasicDBObject();
+    updateFields.append("createdPolls", pollId);
+    updateFields.append("answeredPolls", pollId);
+    new BasicDBObject("$pull", updateFields);
+    Connection.updateUsers(userSearchQuery, updateFields);
+    return true;
+  }
+
+  public static boolean updateUsers(BasicDBObject searchQuery, BasicDBObject updateFields) throws FailedDBWriteException{
+    BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+    UpdateResult updateResult = userCollection.updateMany(searchQuery, setQuery);
+    if (updateResult.wasAcknowledged()) {
+      System.out.println("Updating user data SUCCESSFUL.");
+      return true;
+    } else {
+      throw new FailedDBWriteException("user", "update", "userCollection");
+    }
   }
 }

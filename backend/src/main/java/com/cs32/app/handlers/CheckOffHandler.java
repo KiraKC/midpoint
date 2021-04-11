@@ -78,9 +78,7 @@ public class CheckOffHandler implements Route {
         BasicDBObject updateFields = new BasicDBObject();
         updateFields.append("answeredPolls", user.getAnsweredPolls().toBSON());
         updateFields.append("categoryPoints", userCatPts.toBSON());
-        BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-        Connection.userCollection.updateOne(searchQuery, setQuery);
-        System.out.println("Updating user data SUCCESSFUL.");
+        Connection.updateUsers(searchQuery, updateFields);
 
         // TODO: update poll's number of clicks and category points in MongoDB
         poll.clicked();
@@ -88,7 +86,7 @@ public class CheckOffHandler implements Route {
         updateFields = new BasicDBObject();
         updateFields.append("numClicks", poll.getNumClicks());
         updateFields.append("catPts", poll.getCatPts().toBSON());
-        setQuery = new BasicDBObject("$set", updateFields);
+        BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
         Connection.pollCollection.updateOne(searchQuery, setQuery);
         System.out.println("Updating poll data SUCCESSFUL.");
 

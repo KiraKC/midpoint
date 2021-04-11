@@ -5,6 +5,7 @@ import com.cs32.app.Constants;
 import com.cs32.app.database.Connection;
 import com.google.gson.annotations.Expose;
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCursor;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -31,6 +32,7 @@ public class Poll {
   private int numRenders;
   @Expose
   private int numClicks;
+  private String creatorId;
 
   /**
    * Poll constructor.
@@ -40,7 +42,7 @@ public class Poll {
    * @param categoryPoints category points
    * @param color poll color
    */
-  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color, String imageUrl) {
+  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color, String imageUrl, String creatorId) {
     this.id = new ObjectId().toString();
     this.question = question;
     this.emoji = emoji;
@@ -50,6 +52,7 @@ public class Poll {
     this.numClicks = 0;
     this.color = color;
     this.imageUrl = imageUrl;
+    this.creatorId = creatorId;
   }
 
   /**
@@ -88,6 +91,9 @@ public class Poll {
     // Get numClicks
     numClicks = mongoPoll.getInteger("numClicks");
 
+    // get creatorId
+    creatorId = mongoPoll.getString("creatorId");
+
     // autofixing
     if (color == null) {
       color = Constants.ALL_COLORS[(int) Math.floor(Math.random()*Constants.ALL_COLORS.length)];
@@ -95,6 +101,18 @@ public class Poll {
     }
     if (imageUrl == null) {
       imageUrl = "";
+      needsAutofixing = true;
+    }
+    if (creatorId == null) {
+      BasicDBObject query = new BasicDBObject();
+      query.put("createdPolls", id);
+      MongoCursor<Document> cursor = Connection.userCollection.find(query).limit(1).iterator();
+      if (cursor.hasNext()) {
+        creatorId = cursor.next().getString("_id");
+      } else {
+        // empty string for creatorId means user has been deleted
+        creatorId = "";
+      }
       needsAutofixing = true;
     }
     if (needsAutofixing) {
@@ -207,7 +225,12 @@ public class Poll {
           .append("numClicks", numClicks)
           .append("numRenders", numRenders)
           .append("color", color)
-          .append("imageURL", imageUrl);
+          .append("imageURL", imageUrl)
+          .append("creatorId", creatorId);
     return mongoPoll;
+  }
+
+  public String getCreatorId() {
+    return creatorId;
   }
 }
