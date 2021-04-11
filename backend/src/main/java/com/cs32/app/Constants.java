@@ -1,5 +1,9 @@
 package com.cs32.app;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * Constants class.
  */
@@ -33,6 +37,16 @@ public final class Constants {
       "#494848", "#464D77", "#E26D5A", "#F24343", "#274690", "#7F5A83", "#B33951",
       "#264779", "#B36A5E", "#344966", "#A4303F", "#CF5C36", "#70A288", "#2ABC88", "#86BBEC",
       "#246A73"};
+
+  // Constants for get stats
+  public static final String UNIDENTIFIED = "Unidentified";
+  public static final Map<String, String[]> USER_GROUPINGS = new HashMap<String, String[]>() {{
+      put("education", new String[]{"Elementary School", "Middle School", "High School", "Bachelors", "Masters", "PhD"});
+      put("gender", new String[]{"Male", "Female", "Others"});
+      put("age", new String[]{"0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"});
+      put("politicalLeaning", new String[]{"Left Leaning", "Neutral", "Right Leaning"});
+      put("maritalStatus", new String[]{"Married", "Unmarried"});
+  }};
 
   // Percentage
   public static final double PERCENTAGE = 100.0;

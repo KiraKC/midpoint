@@ -85,4 +85,7 @@ public class PollResponse {
     return mongoPollResponse;
   }
 
+  public UserMetaData getUserMetaData() {
+    return userMetaData;
+  }
 }

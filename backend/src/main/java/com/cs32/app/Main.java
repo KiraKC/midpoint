@@ -81,7 +81,7 @@ public class Main {
     Spark.post("/user/get-suggested", new GetSuggestedPollsHandler());
     Spark.post("/user/new", new NewUserHandler());
     Spark.post("/poll/new", new NewPollHandler());
-    Spark.get("/poll/stats", new GetStatsHandler());
+    Spark.post("/poll/stats", new GetStatsHandler());
     Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
     Spark.post("/game/new-poll", new GetGamePollHandler());
     Spark.post("/poll/check-off", new CheckOffHandler());
