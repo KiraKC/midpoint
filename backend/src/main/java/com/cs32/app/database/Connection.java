@@ -65,10 +65,8 @@ public class Connection {
     }
     List<IndexModel> indexModels  = new ArrayList<>();
     indexModels.add(new IndexModel(new Document().append("question", "text")
-        .append("answerOptions.value", "text").append("catPts.categoryName", "text")));
+        .append("answerOptions.value", "text")));
     pollCollection.createIndexes(indexModels);
-
-
   }
 
   /**
