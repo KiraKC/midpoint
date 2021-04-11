@@ -59,9 +59,8 @@ public class Poll {
   /**
    * Poll constructor that transforms a MongoDB document for a poll to a Poll object.
    * @param mongoPoll MongoDB document for a poll
-   * @throws Exception exception
    */
-  public Poll(Document mongoPoll) throws Exception {
+  public Poll(Document mongoPoll) {
     // Get ID
     id = mongoPoll.getString("_id");
 

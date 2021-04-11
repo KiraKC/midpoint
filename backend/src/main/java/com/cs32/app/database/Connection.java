@@ -67,6 +67,9 @@ public class Connection {
     indexModels.add(new IndexModel(new Document().append("question", "text")
         .append("answerOptions.value", "text")));
     pollCollection.createIndexes(indexModels);
+
+    // ONLY COMMENT OUT FOR RESETTING DATABASE
+//    Connection.resetDatabase("V77u9JfMcjZDfPAlqpU5ldbMkyV2");
   }
 
   /**
@@ -98,7 +101,7 @@ public class Connection {
    * @return a Poll object instantiated from a MongoDB document
    * @throws Exception exception
    */
-  public static Poll getPollById(String pollId) throws Exception {
+  public static Poll getPollById(String pollId) throws MissingDBObjectException {
     Document document = pollCollection.find(Filters.eq("_id", pollId)).first();
     if (document != null) {
       return (new Poll(document));
@@ -271,7 +274,7 @@ public class Connection {
       BasicDBObject searchQuery = new BasicDBObject();
       BasicDBObject updateFields = new BasicDBObject("answeredPolls", new AnsweredPolls().toBSON());
       updateFields.append("createdPolls", new CreatedPolls().toBSON());
-      BasicDBObject updateQuery = new BasicDBObject("$set", updateFields);
+      BasicDBObject updateQuery = new BasicDBObject("$pull", updateFields);
       Connection.updateUsers(searchQuery, updateQuery);
 
       // give all polls to megaUser
