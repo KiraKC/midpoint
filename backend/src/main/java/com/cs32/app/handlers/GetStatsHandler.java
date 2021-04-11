@@ -16,20 +16,12 @@ import java.util.Map;
 import static com.cs32.app.database.Connection.getResponses;
 
 /**
- * The GetStatsHandler class takes in the com.cs32.app.poll id and the user response when a com.cs32.app.poll
- * is answered by a user. It then updates the database and returns the statistics for
- * this com.cs32.app.poll.
+ * The handler which is responsible for:
+ * - sending the statistics for a poll to the frontend.
  */
 public class GetStatsHandler implements Route {
-  /**
-   * The handle() method.
-   * @param req a JSON object containing the com.cs32.app.poll id and the user response
-   * @param res
-   * @return the statistics for this com.cs32.app.poll
-   * @throws Exception
-   */
-
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+      .create();
 
   @Override
   public Object handle(Request req, Response res) {

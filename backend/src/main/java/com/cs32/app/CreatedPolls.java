@@ -12,7 +12,7 @@ import java.util.Set;
  * CreatedPolls class that stores all the polls created by a user.
  */
 public class CreatedPolls {
-  private Set<String> createdPolls;
+  private final Set<String> createdPolls;
 
   /**
    * Constructor that instantiates an empty CreatedPolls.
@@ -35,11 +35,11 @@ public class CreatedPolls {
   /**
    * Constructor that takes in a Json object of created polls.
    * @param jsonArrayPollsCreated a Json object of created polls
-   * @throws JSONException
+   * @throws JSONException Json exception
    */
   public CreatedPolls(JSONArray jsonArrayPollsCreated) throws JSONException {
     createdPolls = new HashSet<>();
-    for(int i = 0; i < jsonArrayPollsCreated.length(); i++){
+    for (int i = 0; i < jsonArrayPollsCreated.length(); i++) {
       createdPolls.add(jsonArrayPollsCreated.getString(i));
     }
   }
@@ -54,7 +54,7 @@ public class CreatedPolls {
 
   /**
    * Method for adding newly created polls.
-   * @param pollId
+   * @param pollId poll ID
    */
   public void add(String pollId) {
     createdPolls.add(pollId);
@@ -62,7 +62,7 @@ public class CreatedPolls {
 
   /**
    * Method for transforming a CreatedPolls object to Bson object.
-   * @return
+   * @return a Bson object of the CreatedPolls object
    */
   public Object toBSON() {
     List<Object> mongoAnsweredPollsList = new BasicDBList();

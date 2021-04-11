@@ -17,18 +17,18 @@ import java.util.List;
  */
 public class Poll {
   @Expose
-  private String id;
+  private final String id;
   @Expose
-  private String question;
+  private final String question;
   @Expose
-  private String emoji;
+  private final String emoji;
   @Expose
-  private List<AnswerOption> answerOptions;
+  private final List<AnswerOption> answerOptions;
   @Expose
   private String color;
   @Expose
   private String imageUrl;
-  private CategoryPoints categoryPoints;
+  private final CategoryPoints categoryPoints;
   private int numRenders;
   @Expose
   private int numClicks;
@@ -41,6 +41,7 @@ public class Poll {
    * @param answerOptions answer options
    * @param categoryPoints category points
    * @param color poll color
+   * @param imageUrl image URL
    */
   public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color, String imageUrl, String creatorId) {
     this.id = new ObjectId().toString();
@@ -58,10 +59,12 @@ public class Poll {
   /**
    * Poll constructor that transforms a MongoDB document for a poll to a Poll object.
    * @param mongoPoll MongoDB document for a poll
-   * @throws Exception
+   * @throws Exception exception
    */
   public Poll(Document mongoPoll) throws Exception {
+    // Get ID
     id = mongoPoll.getString("_id");
+
     // Get question
     question = mongoPoll.getString("question");
 
@@ -72,17 +75,19 @@ public class Poll {
     answerOptions = new ArrayList<>();
     List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
     for (Document doc : mongoAnswerOptions) {
-      answerOptions.add(new AnswerOption(doc.getString("answerOptionId"), doc.getString("value"), doc.getString("emoji")));
+      answerOptions.add(new AnswerOption(doc.getString("answerOptionId"),
+          doc.getString("value"), doc.getString("emoji")));
     }
 
     // Get category points
     categoryPoints = new CategoryPoints();
-    boolean needsAutofixing = categoryPoints.initializeFromMongo((List<Document>) mongoPoll.get("catPts"));
+    boolean needsAutofixing = categoryPoints.initializeFromMongo(
+        (List<Document>) mongoPoll.get("catPts"));
 
-    // color
+    // Get color
     color = mongoPoll.getString("color");
 
-    // imageURL
+    // Get imageURL
     imageUrl = mongoPoll.getString("imageURL");
 
     // Get numRenders
@@ -96,7 +101,7 @@ public class Poll {
 
     // autofixing
     if (color == null) {
-      color = Constants.ALL_COLORS[(int) Math.floor(Math.random()*Constants.ALL_COLORS.length)];
+      color = Constants.ALL_COLORS[(int) Math.floor(Math.random() * Constants.ALL_COLORS.length)];
       needsAutofixing = true;
     }
     if (imageUrl == null) {
@@ -165,11 +170,7 @@ public class Poll {
    * @return click rate
    */
   public double getClickRate() {
-    if (numRenders == 0) {
-      return Constants.STARTING_CLICKRATE;
-    } else {
-      return (double) numClicks / (double) numRenders;
-    }
+    return (double) numClicks / (double) numRenders;
   }
 
   /**
@@ -180,7 +181,7 @@ public class Poll {
    */
   public double calculateDisparity(CategoryPoints userCatPts) {
     double disparity = 0;
-    for(String category : Constants.ALL_CATEGORIES) {
+    for (String category : Constants.ALL_CATEGORIES) {
       disparity += Math.abs(userCatPts.getNormPts(category) - categoryPoints.getNormPts(category));
     }
 //    return (1-this.getClickRate()) * disparity;

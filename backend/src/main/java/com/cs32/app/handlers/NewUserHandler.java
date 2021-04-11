@@ -14,16 +14,19 @@ import spark.Route;
 
 import java.util.Map;
 
+/**
+ * The handler which is responsible for:
+ * - creating and inserting new users to MongoDB.
+ */
 public class NewUserHandler implements Route {
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+      .create();
 
   /**
-   * Provides the frontend with the most relevant polls to display.
-   * @param request A JSON object that contains the userId, list of pollIds that the user
-   *                has seen in their current browsing session, number of polls that the
-   *                frontend wants.
-   * @param response Doesn't do much here.
-   * @return JSON objects representing the polls that the frontend should display.
+   * The handle() method that does the job above.
+   * @param request a Json object containing the information of a new user
+   * @param response doesn't matter
+   * @return a success message
    */
   @Override
   public Object handle(Request request, Response response) {

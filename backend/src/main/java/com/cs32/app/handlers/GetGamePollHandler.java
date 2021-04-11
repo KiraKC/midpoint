@@ -5,26 +5,30 @@ import com.cs32.app.poll.Poll;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.*;
+import java.util.Set;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.HashSet;
 
-public class GetGamePollHandler implements Route{
-
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+/**
+ * The handler which is responsible for the followings.
+ * - generating random polls for the frontend game page
+ */
+public class GetGamePollHandler implements Route {
+  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+      .create();
 
   /**
-   * Provides the frontend with the most relevant polls to display.
-   * @param request A JSON object that contains the userId, list of pollIds that the user
-   *                has seen in their current browsing session, number of polls that the
-   *                frontend wants.
-   * @param response Doesn't do much here.
-   * @return JSON objects representing the polls that the frontend should display.
-   * @throws Exception
+   * The handle() method that does the job above.
+   * @param request a Json object containing the seen polls of a user
+   * @param response doesn't matter
+   * @return a Json object containing the polls to display on the frontend game page
+   * @throws Exception exception
    */
   @Override
   public Object handle(Request request, Response response) throws Exception {

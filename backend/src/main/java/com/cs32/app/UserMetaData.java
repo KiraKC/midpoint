@@ -16,12 +16,12 @@ import java.util.Map;
  */
 public class UserMetaData {
   @Expose
-  private Map<String, String> userMetaDataMap;
+  private final Map<String, String> userMetaDataMap;
 
   /**
    * Constructor that instantiate UserMetaData from a Json object.
    * @param jsonUserMetaDataArray a Json object of user meta data
-   * @throws JSONException
+   * @throws JSONException Json exception
    */
   public UserMetaData(JSONArray jsonUserMetaDataArray) throws JSONException {
     userMetaDataMap = new HashMap<>();

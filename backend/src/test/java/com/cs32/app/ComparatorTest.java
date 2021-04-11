@@ -23,21 +23,20 @@ public class ComparatorTest {
     Poll p1 = new Poll("poll 1", "some emoji", new ArrayList<>(), new CategoryPoints(), "some color", "some image url", "some creator id");
     Poll p2 = new Poll("poll 2", "some emoji", new ArrayList<>(), new CategoryPoints(), "some color", "some image url", "some creator id");
 
-    // p1 and p2 both have starting click rate of 0.5
+    // p1 and p2 both have starting click rate of 0
     assertEquals(comparator.compare(p1, p1), 0);
     assertEquals(comparator.compare(p1, p2), 0);
 
-    p1.rendered();
     p1.clicked();
     // p1 now has a click rate of 1
     assertEquals(comparator.compare(p1, p2), -1);
 
-    p1.rendered();
-    // p1 again has a click rate of 0.5
+    p2.clicked();
+    // p2 now has a click rate of 1
     assertEquals(comparator.compare(p1, p2), 0);
 
     p1.rendered();
-    // p1 now has a click rate of 0.3333
+    // p1 now has a click rate of 0.5
     assertEquals(comparator.compare(p1, p2), 1);
   }
 

@@ -12,7 +12,7 @@ import java.util.Set;
  * AnsweredPolls class that stores the polls a user has answered.
  */
 public class AnsweredPolls {
-  private Set<String> answeredPolls;
+  private final Set<String> answeredPolls;
 
   /**
    * Constructor that instantiates an empty AnsweredPolls.
@@ -35,18 +35,18 @@ public class AnsweredPolls {
   /**
    * Constructor that takes in a Json object of answered polls.
    * @param jsonArrayAnsweredPolls a Json object of answered polls
-   * @throws JSONException
+   * @throws JSONException Json exception
    */
   public AnsweredPolls(JSONArray jsonArrayAnsweredPolls) throws JSONException {
     answeredPolls = new HashSet<>();
-    for(int i = 0; i < jsonArrayAnsweredPolls.length(); i++){
+    for (int i = 0; i < jsonArrayAnsweredPolls.length(); i++) {
       answeredPolls.add(jsonArrayAnsweredPolls.getString(i));
     }
   }
 
   /**
    * Method for adding a newly answered poll.
-   * @param pollId
+   * @param pollId poll ID
    */
   public void add(String pollId) {
     answeredPolls.add(pollId);
@@ -61,6 +61,14 @@ public class AnsweredPolls {
   }
 
   /**
+   * Getter method for answered polls.
+   * @return answered polls
+   */
+  public Set<String> getSet() {
+    return answeredPolls;
+  }
+
+  /**
    * Method for transforming the AnsweredPolls object to Bson object.
    * @return a Bson object of answered polls
    */
@@ -68,9 +76,5 @@ public class AnsweredPolls {
     List<Object> mongoAnsweredPollsList = new BasicDBList();
     mongoAnsweredPollsList.addAll(answeredPolls);
     return mongoAnsweredPollsList;
-  }
-
-  public Set<String> getSet() {
-    return answeredPolls;
   }
 }

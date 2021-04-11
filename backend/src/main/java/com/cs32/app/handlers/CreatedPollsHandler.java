@@ -1,5 +1,6 @@
 package com.cs32.app.handlers;
 
+import com.cs32.app.Constants;
 import com.cs32.app.User;
 import com.cs32.app.database.Connection;
 import com.cs32.app.poll.AnswerOption;
@@ -9,27 +10,32 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mongodb.BasicDBObject;
 import org.json.JSONException;
 import spark.Request;
 import spark.Response;
 import spark.Route;
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.Set;
+import java.util.List;
+import java.util.ArrayList;
 
-
+/**
+ * The handler which is responsible for the followings.
+ * - sending all the polls a user has created to the frontend history page
+ */
 public class CreatedPollsHandler implements Route {
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+      .create();
 
   /**
-   * Provides the frontend with the most relevant polls to display.
-   * @param request A JSON object that contains the userId, list of pollIds that the user
-   *                has seen in their current browsing session, number of polls that the
-   *                frontend wants.
-   * @param response Doesn't do much here.
-   * @return JSON objects representing the polls that the frontend should display.
-   * @throws Exception
+   * The handle() method that does the job above.
+   * @param request a JSON object containing the user ID
+   * @param response doesn't matter
+   * @return a JSON object containing the created polls
+   * @throws Exception exception
    */
   @Override
   public Object handle(Request request, Response response) throws Exception {
@@ -81,7 +87,7 @@ public class CreatedPollsHandler implements Route {
           if (allResponses.size() > 0) {
             for (AnswerOption answerOption : poll.getAnswerOptions()) {
               double percentage = miniStat.get(answerOption.getId()) / allResponses.size();
-              miniStat.put(answerOption.getId(), percentage * 100);
+              miniStat.put(answerOption.getId(), percentage * Constants.PERCENTAGE);
             }
           }
           // add miniStat to miniStats
