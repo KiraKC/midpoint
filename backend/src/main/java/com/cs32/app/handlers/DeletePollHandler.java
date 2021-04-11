@@ -1,8 +1,6 @@
 package com.cs32.app.handlers;
 
-import com.cs32.app.CategoryPoints;
-import com.cs32.app.Constants;
-import com.cs32.app.User;
+
 import com.cs32.app.database.Connection;
 import com.cs32.app.exceptions.FailedDBWriteException;
 import com.cs32.app.poll.Poll;
@@ -10,8 +8,6 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.mongodb.BasicDBObject;
-import org.bson.types.ObjectId;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -27,7 +23,7 @@ public class DeletePollHandler implements Route {
   @Override
   public Object handle(Request req, Response res) throws Exception {
     Map<String, Object> variables = new HashMap<>();
-    boolean alreadyAnswered; boolean status;
+    boolean status;
     try {
       // parse JSON
       JSONObject jsonReqObject = new JSONObject(req.body());
