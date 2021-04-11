@@ -1,12 +1,13 @@
 import '../../styles/HomePage/Poll.css';
 import { Emoji } from 'emoji-mart';
 import IOption from '../../interfaces/IOption';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
 import AnsweredOption from './AnsweredOption';
 import MasonryOption from './PollOption';
+import { FacebookShareButton } from 'react-share';
 
 interface PollProps {
 	id: string,
@@ -29,6 +30,7 @@ function Poll(props: PollProps) {
 
 	const [selectedOptionValue, setSelectedOptionValue]: [string, any] = useState('');
 	const [stats, setStats] = useState({})
+	const [isShareModalOpen, setIsShareModalOpen]: [boolean, any] = useState(false);
 
 	const handleResponseToPoll = async (optionId: string, optionValue: string) => {
 		if (props.isLoggedIn) {
@@ -153,9 +155,12 @@ function Poll(props: PollProps) {
 			<button className="poll-corner-icon" >
 				<span className="material-icons-outlined">query_stats</span>
 			</button>
-			<button className="poll-corner-icon" >
-				<span className="material-icons-outlined">share</span>
-			</button>
+			<FacebookShareButton
+				children={<div className="poll-corner-icon"><span className="material-icons-outlined">share</span></div>}
+				url={endpointUrl + '/poll' + props.id} 
+				quote={"Found this poll on MidPoint.Fun, let me know what you think!"} 
+				hashtag={"#TakeThePoll"} 
+				style={{outline: 'none', border: 'none'}}/>
 		</div>
 	)
 
@@ -205,24 +210,26 @@ function Poll(props: PollProps) {
 		)
 	}
 	return (
-		<div className="masonary-poll-wrapper" >
-			<div className="masonary-background" style={{
-				backgroundColor: `${props.color}`
-			}}></div>
-			<div className="poll-top-flex">
-				<Emoji emoji={props.emoji} set='apple' size={35} />
-				{props.isCreated ? deleteButton : shareAndStats}
+		<>
+			<div className="masonary-poll-wrapper" >
+				<div className="masonary-background" style={{
+					backgroundColor: `${props.color}`
+				}}></div>
+				<div className="poll-top-flex">
+					<Emoji emoji={props.emoji} set='apple' size={35} />
+					{props.isCreated ? deleteButton : shareAndStats}
+				</div>
+				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
+				{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
+				{props.answerOption.map((option, index) => (
+					<MasonryOption key={index} id={option.id} value={option.value}
+						emoji={option.emoji} textColor={props.color}
+						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
+						clickHandler={handleResponseToPoll} />
+				))}
 			</div>
-			<div className="masonary-poll-heading">{props.question}</div>
-			<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
-			{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
-			{props.answerOption.map((option, index) => (
-				<MasonryOption key={index} id={option.id} value={option.value}
-					emoji={option.emoji} textColor={props.color}
-					isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
-					clickHandler={handleResponseToPoll} />
-			))}
-		</div>
+		</>
 	);
 }
 

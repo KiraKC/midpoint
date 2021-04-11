@@ -1,5 +1,4 @@
 import { Emoji, Picker } from "emoji-mart";
-import React from "react";
 import '../../styles/Common/NewPollModal.css'
 
 interface IOptionItemProps {
