@@ -26,20 +26,25 @@ import java.util.Map;
 
 import static com.cs32.app.database.Connection.pollCollection;
 
+/**
+ * The handler which is responsible for the followings.
+ * - creating and inserting new polls to MongoDB
+ * - updating user's created polls
+ */
 public class NewPollHandler implements Route {
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+      .create();
 
   /**
-   * Provides the frontend with the most relevant polls to display.
-   * @param request A JSON object that contains the userId, list of pollIds that the user
-   *                has seen in their current browsing session, number of polls that the
-   *                frontend wants.
-   * @param response Doesn't do much here.
-   * @return JSON objects representing the polls that the frontend should display.
+   * The handle() method that does the job above.
+   * @param request a Json object containing information of a new poll
+   * @param response doesn't matter
+   * @return a Json object of the new poll
    */
   @Override
   public Object handle(Request request, Response response) {
-    boolean status; String question; String emoji; String color; String imageUrl; List<AnswerOption> answerOptions;
+    boolean status; String question; String emoji; String color; String imageUrl;
+    List<AnswerOption> answerOptions;
     Map<String, Object> variables = new HashMap<>();
     // Parse request
     try {
@@ -53,7 +58,7 @@ public class NewPollHandler implements Route {
       // create ArrayList of AnswerOption objects
       JSONArray jsonAnswerOptions = jsonReqObject.getJSONArray("answerOptions");
       answerOptions = new ArrayList<>();
-      for (int i = 0; i < jsonAnswerOptions.length(); i++){
+      for (int i = 0; i < jsonAnswerOptions.length(); i++) {
         JSONObject jsonAnswerObject = jsonAnswerOptions.getJSONObject(i);
         String answerOptionString = jsonAnswerObject.getString("value");
         String answerOptionEmoji = jsonAnswerObject.getString("emoji");
@@ -77,7 +82,8 @@ public class NewPollHandler implements Route {
       User user = Connection.getUserById(userId);
       user.created(newPoll.getId());
       BasicDBObject searchQuery = new BasicDBObject("_id", userId);
-      BasicDBObject updateFields = new BasicDBObject("createdPolls", user.getCreatedPolls().toBSON());
+      BasicDBObject updateFields = new BasicDBObject("createdPolls",
+          user.getCreatedPolls().toBSON());
       BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
       Connection.userCollection.updateOne(searchQuery, setQuery);
 

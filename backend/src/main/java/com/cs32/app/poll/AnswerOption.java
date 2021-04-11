@@ -8,11 +8,11 @@ import org.bson.types.ObjectId;
  */
 public class AnswerOption {
   @Expose
-  private String id;
+  private final String id;
   @Expose
-  private String value;
+  private final String value;
   @Expose
-  private String emoji;
+  private final String emoji;
 
   /**
    * Constructor that takes in a value and an emoji.
@@ -39,7 +39,7 @@ public class AnswerOption {
 
   /**
    * Getter method for the id.
-   * @return
+   * @return user id
    */
   public String getId() {
     return id;
