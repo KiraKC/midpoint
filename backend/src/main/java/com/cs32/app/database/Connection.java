@@ -4,6 +4,7 @@ import com.cs32.app.User;
 import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
+import com.google.firestore.admin.v1.Index;
 import com.mongodb.BasicDBObject;
 import com.mongodb.client.*;
 import com.mongodb.client.model.*;
@@ -42,7 +43,9 @@ public class Connection {
         responseCollection = mongoDatabase.getCollection("response_staging");
       }
     }
-    pollCollection.createIndex(Indexes.text("question"));
+    List<IndexModel> indexModels  = new ArrayList<>();
+    indexModels.add(new IndexModel(new Document().append("question", "text").append("answerOptions.value", "text").append("catPts.categoryName","text")));
+    pollCollection.createIndexes(indexModels);
   }
 
   /**
