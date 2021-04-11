@@ -165,8 +165,10 @@ function Poll(props: PollProps) {
 				<div className="masonary-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
-				<Emoji emoji={props.emoji} set='apple' size={35} />
-				<div style={{ position: 'relative' }} onClick={() => handleDelete()}>DELETE</div>
+				<div className="poll-top-flex">
+					<Emoji emoji={props.emoji} set='apple' size={35} />
+					{props.isCreated ? deleteButton : shareAndStats}
+				</div>
 				<div className="masonary-poll-heading">{props.question}</div>
 				<div className="selection-hint" style={{ marginBottom: '10px' }}>TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
@@ -185,7 +187,10 @@ function Poll(props: PollProps) {
 				<div className="masonary-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
-				<Emoji emoji={props.emoji} set='apple' size={35} />
+				<div className="poll-top-flex">
+					<Emoji emoji={props.emoji} set='apple' size={35} />
+					{props.isCreated ? deleteButton : shareAndStats}
+				</div>
 				<div className="masonary-poll-heading">{props.question}</div>
 				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks + 1}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
