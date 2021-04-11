@@ -39,7 +39,7 @@
 .option-text-answered {
 	display: inline-block;
 	width: fit-content;
-	max-width: 135px;
+	flex: 1;
 	word-break: break-word;
 	text-align: left;
 	font-family: "Inter", sans-serif;
@@ -83,6 +83,6 @@
 	font-size: 1.35rem;
 	font-weight: 700;
 	z-index: 4;
-	position: absolute;
 	right: 15px;
+	width: max-content;
 }
