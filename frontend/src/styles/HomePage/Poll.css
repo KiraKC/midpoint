@@ -79,3 +79,33 @@
 	background-color:rgba(255, 255, 255, 0.8);
 	color: black;
 }
+
+.poll-corner-wrapper-flex {
+	position: relative;
+	font-size: 0.95rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.poll-corner-icon {
+	background-color: transparent;
+	border: none;
+	color: white;
+	border-radius: 4px;
+	width: 35px;
+	height: 35px;
+	outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.poll-corner-icon:hover {
+	background-color:rgba(255, 255, 255, 0.2);
+}
+
+.poll-corner-icon:active {
+	background-color:rgba(255, 255, 255, 0.8);
+	color: black;
+}

@@ -147,7 +147,18 @@ function Poll(props: PollProps) {
 			<div style={{ marginTop: '1px', marginLeft: '2px' }}>DELETE</div>
 		</button>
 	)
-	
+
+	const shareAndStats = (
+		<div className="poll-corner-wrapper-flex">
+			<button className="poll-corner-icon" >
+				<span className="material-icons-outlined">query_stats</span>
+			</button>
+			<button className="poll-corner-icon" >
+				<span className="material-icons-outlined">share</span>
+			</button>
+		</div>
+	)
+
 	if (props.answered === true && selectedOptionValue === '') {
 		return (
 			<div className="masonary-poll-wrapper" >
@@ -195,7 +206,7 @@ function Poll(props: PollProps) {
 			}}></div>
 			<div className="poll-top-flex">
 				<Emoji emoji={props.emoji} set='apple' size={35} />
-				{deleteButton}
+				{props.isCreated ? deleteButton : shareAndStats}
 			</div>
 			<div className="masonary-poll-heading">{props.question}</div>
 			<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
