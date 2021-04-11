@@ -3,7 +3,12 @@ package com.cs32.app;
 /**
  * Constants class.
  */
-public class Constants {
+public final class Constants {
+  /**
+   * Private constructor never called.
+   */
+  private Constants() { }
+
   // All category tags
   public static final String[] ALL_CATEGORIES = {"sports", "politics", "funny", "culture",
       "entertainment", "food", "education", "serious", "relationship", "cute", "lifestyle",

@@ -3,7 +3,11 @@ package com.cs32.app;
 /**
  * Hello world!
  */
-public class App {
+public final class App {
+  /**
+   * Private constructor never called.
+   */
+  private App() { }
 
   /**
    * Hello world!
