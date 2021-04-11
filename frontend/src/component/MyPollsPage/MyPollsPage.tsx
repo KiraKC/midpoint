@@ -23,7 +23,7 @@ function MyPollsPage(props: IMyPollsPageProps) {
 
 	useEffect(() => {
 		requestPolls();
-	}, [])
+	}, [refresh])
 
 	const requestPolls = async () => {
 		setDescription('fetching created polls from the server...')

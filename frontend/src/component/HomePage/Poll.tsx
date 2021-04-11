@@ -18,11 +18,11 @@ interface PollProps {
 	setIsLoginModalOpen: any
 	imageUrl: string,
 	answered: boolean,
-	answeredStats ?: {},
+	answeredStats?: {},
 	numClicks: number,
 	isCreated: boolean,
-	refreshCreatedPage ?: boolean,
-	setRefreshCreatedPage ?: any
+	refreshCreatedPage?: boolean,
+	setRefreshCreatedPage?: any
 }
 
 function Poll(props: PollProps) {
@@ -128,6 +128,7 @@ function Poll(props: PollProps) {
 		)
 			.then(res => {
 				if (res.data.status) {
+					props.setRefreshCreatedPage(!props.refreshCreatedPage)
 					return true;
 				} else {
 					console.log("DELETION Failed")
@@ -140,6 +141,13 @@ function Poll(props: PollProps) {
 			});
 	}
 
+	const deleteButton = (
+		<button className="poll-corner-delete" onClick={() => handleDelete()}>
+			<span className="material-icons-outlined">delete</span>
+			<div style={{ marginTop: '1px', marginLeft: '2px' }}>DELETE</div>
+		</button>
+	)
+	
 	if (props.answered === true && selectedOptionValue === '') {
 		return (
 			<div className="masonary-poll-wrapper" >
@@ -147,16 +155,16 @@ function Poll(props: PollProps) {
 					backgroundColor: `${props.color}`
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
-				<div style={{position: 'relative'}}onClick={() => handleDelete()}>DELETE</div>
+				<div style={{ position: 'relative' }} onClick={() => handleDelete()}>DELETE</div>
 				<div className="masonary-poll-heading">{props.question}</div>
-				<div className="selection-hint" style={{marginBottom: '10px'}}>TOTAL RESPONSES: {props.numClicks}</div>
+				<div className="selection-hint" style={{ marginBottom: '10px' }}>TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
 						percentage={props.answeredStats[option.id]} />
 				))}
-				<div className="selection-hint" style={{marginTop: '12px'}}>YOU'VE ANSWERED THIS POLL</div>
+				<div className="selection-hint" style={{ marginTop: '12px' }}>YOU'VE ANSWERED THIS POLL</div>
 			</div>
 		)
 	}
@@ -175,8 +183,8 @@ function Poll(props: PollProps) {
 						emoji={option.emoji} textColor={props.color}
 						percentage={stats[option.id]} />
 				))}
-				{selectedOptionValue !== '' ? 
-				<div className="selection-hint" style={{marginTop: '12px'}}>YOU CHOSE {selectedOptionValue.toUpperCase().substring(0, 18)}</div> : ''}
+				{selectedOptionValue !== '' ?
+					<div className="selection-hint" style={{ marginTop: '12px' }}>YOU CHOSE {selectedOptionValue.toUpperCase().substring(0, 18)}</div> : ''}
 			</div>
 		)
 	}
@@ -185,7 +193,10 @@ function Poll(props: PollProps) {
 			<div className="masonary-background" style={{
 				backgroundColor: `${props.color}`
 			}}></div>
-			<Emoji emoji={props.emoji} set='apple' size={35} />
+			<div className="poll-top-flex">
+				<Emoji emoji={props.emoji} set='apple' size={35} />
+				{deleteButton}
+			</div>
 			<div className="masonary-poll-heading">{props.question}</div>
 			<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
 			{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}

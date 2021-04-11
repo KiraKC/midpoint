@@ -106,7 +106,7 @@ function NewPollModal(props: INewPollModal) {
 			setQuestionHint("PLEASE CHOOSE AT LEAST 1 CATEGORY")
 			isValid = false;
 		}
-		if (isUriImage(imageUrl) === false) {
+		if (isUriImage(imageUrl) === false && imageUrl !== '') {
 			setImageHint("PLEASE INCLUDE A VALID IMAGE FILE")
 			isValid = false;
 		}
