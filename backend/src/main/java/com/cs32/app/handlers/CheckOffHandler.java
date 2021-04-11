@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mongodb.BasicDBObject;
-import org.bson.types.ObjectId;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -21,20 +20,19 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The CheckOffHandler class takes in the com.cs32.app.poll id and the user id from the frontend
- * when a com.cs32.app.poll is answered by the user. It then
- * 1) checks off the com.cs32.app.poll for this user in the database so that this com.cs32.app.poll won't show
- * up again on the feed page,
- * 2) updates the category points for both the com.cs32.app.poll and the user.
+ * The handler which is responsible for the followings.
+ * - checking off the poll newly answered by a user
+ * - updating category points for both the user and the poll
  */
 public class CheckOffHandler implements Route {
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+      .create();
   /**
-   * The handle() method.
-   * @param req a JSON object containing the com.cs32.app.poll id and the user id
-   * @param res
+   * The handle() method that does the job above.
+   * @param req a JSON object containing the user ID and the poll ID
+   * @param res doesn't matter
    * @return a success message
-   * @throws Exception
+   * @throws Exception exception
    */
   @Override
   public Object handle(Request req, Response res) throws Exception {
@@ -69,8 +67,10 @@ public class CheckOffHandler implements Route {
         for (String category : Constants.ALL_CATEGORIES) {
           double currUserPts = userCatPts.getPts(category);
           double currPollPts = pollCatPts.getPts(category);
-          userCatPts.updateCatPts(category, currUserPts + 30 * currPollPts / currPollTotalPts);
-          pollCatPts.updateCatPts(category, currPollPts + 100 * currUserPts / currUserTotalPts);
+          userCatPts.updateCatPts(category, currUserPts
+              + Constants.UPDATE_CAT_PTS_FACTOR_USER * currPollPts / currPollTotalPts);
+          pollCatPts.updateCatPts(category, currPollPts
+              + Constants.UPDATE_CAT_PTS_FACTOR_POLL * currUserPts / currUserTotalPts);
         }
 
         // Update user's answered polls and category points in MongoDB
@@ -78,9 +78,7 @@ public class CheckOffHandler implements Route {
         BasicDBObject updateFields = new BasicDBObject();
         updateFields.append("answeredPolls", user.getAnsweredPolls().toBSON());
         updateFields.append("categoryPoints", userCatPts.toBSON());
-        BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-        Connection.userCollection.updateOne(searchQuery, setQuery);
-        System.out.println("Updating user data SUCCESSFUL.");
+        Connection.updateUsers(searchQuery, updateFields);
 
         // TODO: update poll's number of clicks and category points in MongoDB
         poll.clicked();
@@ -88,7 +86,7 @@ public class CheckOffHandler implements Route {
         updateFields = new BasicDBObject();
         updateFields.append("numClicks", poll.getNumClicks());
         updateFields.append("catPts", poll.getCatPts().toBSON());
-        setQuery = new BasicDBObject("$set", updateFields);
+        BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
         Connection.pollCollection.updateOne(searchQuery, setQuery);
         System.out.println("Updating poll data SUCCESSFUL.");
 

@@ -21,13 +21,13 @@ import java.util.List;
 public class PollResponse {
 
   @Expose
-  private String id;
+  private final String id;
   @Expose
-  private String pollId;
+  private final String pollId;
   @Expose
-  private String answerOptionId;
+  private final String answerOptionId;
   @Expose
-  private UserMetaData userMetaData;
+  private final UserMetaData userMetaData;
 
   /**
    * Constructor for transforming a MongoDB document to a PollResponse object.
@@ -45,11 +45,12 @@ public class PollResponse {
   /**
    * Constructor for transforming a Json object to a PollResponse object.
    * @param jsonReqObject Json object of a poll response
-   * @throws JSONException
-   * @throws MissingDBObjectException
-   * @throws FirebaseAuthException
+   * @throws JSONException Json exception
+   * @throws MissingDBObjectException missing MongoDB object exception
+   * @throws FirebaseAuthException firebase exception
    */
-  public PollResponse(JSONObject jsonReqObject) throws JSONException, MissingDBObjectException, FirebaseAuthException {
+  public PollResponse(JSONObject jsonReqObject) throws JSONException,
+      MissingDBObjectException, FirebaseAuthException {
     id = new ObjectId().toString();
     pollId = jsonReqObject.getString("pollId");
     answerOptionId = jsonReqObject.getString("answerOptionId");

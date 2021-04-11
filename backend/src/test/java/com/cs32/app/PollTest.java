@@ -26,18 +26,13 @@ public class PollTest {
     pollTags.add("politics");
     pollTags.add("funny");
     CategoryPoints pollCatPts = new CategoryPoints(pollTags);
-    Poll poll = new Poll("some question", "some emoji", answerOptions, pollCatPts, "some color", "some image url");
+    Poll poll = new Poll("some question", "some emoji", answerOptions, pollCatPts, "some color", "some image url", "some creator id");
 
     assertFalse(poll.getId() == null);
     assertEquals(poll.getAnswerOptions().size(), 2);
     assertTrue(poll.getCatPts().getMap().get("sports") > 0);
     assertFalse(poll.getCatPts().getMap().get("culture") > 0);
 
-    assertEquals(poll.getNumRenders(), 0);
-    assertEquals(poll.getNumClicks(), 0);
-    assertEquals(poll.getClickRate(), Constants.STARTING_CLICKRATE, Constants.DELTA);
-
-    poll.rendered();
     assertEquals(poll.getNumRenders(), 1);
     assertEquals(poll.getNumClicks(), 0);
     assertEquals(poll.getClickRate(), 0, Constants.DELTA);

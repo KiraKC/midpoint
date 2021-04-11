@@ -1,5 +1,6 @@
 package com.cs32.app.handlers;
 
+import com.cs32.app.Constants;
 import com.cs32.app.database.Connection;
 import com.cs32.app.poll.AnswerOption;
 import com.cs32.app.poll.PollResponse;
@@ -16,19 +17,20 @@ import java.util.Map;
 
 
 /**
- * The handler which is responsible for:
+ * The handler which is responsible for the followings.
  * - inserting the response into MongoDB response collection
  * - sending back the mini-stats to the frontend
  */
 public class AnonymousAnswerHandler implements Route {
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private static final Gson GSON = new
+      GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 
   /**
    * The handle() method that does the job above.
-   * @param request
-   * @param response
+   * @param request a Json object containing user ID and poll ID
+   * @param response doesn't matter
    * @return a Json object containing the mini-stats
-   * @throws Exception
+   * @throws Exception exception
    */
   @Override
   public Object handle(Request request, Response response) throws Exception {
@@ -46,7 +48,7 @@ public class AnonymousAnswerHandler implements Route {
          }
      */
 
-    try{
+    try {
       // Insert new response to MongoDB database
       JSONObject jsonReqObject = new JSONObject(request.body());
       PollResponse pollResponse = new PollResponse(jsonReqObject);
@@ -66,14 +68,15 @@ public class AnonymousAnswerHandler implements Route {
 
       // count the number of responses for each answer option
       for (PollResponse everyResponse : allResponses) {
-        counts.put(everyResponse.getAnswerOptionId(), counts.get(everyResponse.getAnswerOptionId()) + 1);
+        counts.put(everyResponse.getAnswerOptionId(),
+            counts.get(everyResponse.getAnswerOptionId()) + 1);
       }
 
       // Send mini-stats to front end
       Map<String, Double> miniStats = new HashMap<>();
       for (AnswerOption answerOption : answerOptions) {
         double percentage = counts.get(answerOption.getId()) / allResponses.size();
-        miniStats.put(answerOption.getId(), percentage * 100);
+        miniStats.put(answerOption.getId(), percentage * Constants.PERCENTAGE);
       }
       variables.put("miniStats", miniStats);
       variables.put("answerOptions", answerOptions);

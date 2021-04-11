@@ -13,18 +13,18 @@ import java.util.List;
  * User class that stands for a user.
  */
 public class User {
-  private String id;
-  private UserMetaData userMetaData;
-  private CategoryPoints categoryPoints;
-  private AnsweredPolls answeredPolls;
-  private CreatedPolls createdPolls;
+  private final String id;
+  private final UserMetaData userMetaData;
+  private final CategoryPoints categoryPoints;
+  private final AnsweredPolls answeredPolls;
+  private final CreatedPolls createdPolls;
   private int highScore;
 
   /**
-   * Constructor for creating entirely new user from registration
+   * Constructor for creating entirely new user from registration.
    * @param jsonReqObject Json object of a user
-   * @throws JSONException
-   * @throws FirebaseAuthException
+   * @throws JSONException Json exception
+   * @throws FirebaseAuthException firebase exception
    */
   public User(JSONObject jsonReqObject) throws JSONException, FirebaseAuthException {
     // decrypt userId
@@ -104,7 +104,7 @@ public class User {
   }
 
   /**
-   * Getter method for user answered polls
+   * Getter method for user answered polls.
    * @return user answered polls
    */
   public AnsweredPolls getAnsweredPolls() {

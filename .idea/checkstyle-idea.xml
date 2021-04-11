@@ -3,10 +3,11 @@
   <component name="CheckStyle-IDEA">
     <option name="configuration">
       <map>
-        <entry key="checkstyle-version" value="8.41" />
+        <entry key="checkstyle-version" value="8.41.1" />
         <entry key="copy-libs" value="false" />
         <entry key="location-0" value="BUNDLED:(bundled):Sun Checks" />
         <entry key="location-1" value="BUNDLED:(bundled):Google Checks" />
+        <entry key="active-configuration" value="LOCAL_FILE:/Users/jake/Documents/GitHub/term-project-ehong9-jzhan204-kteramot-xchai1/backend/config/cs32_intellij_checks.xml:cs32-checkstyle" />
         <entry key="scan-before-checkin" value="false" />
         <entry key="scanscope" value="JavaOnly" />
         <entry key="suppress-errors" value="false" />

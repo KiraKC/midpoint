@@ -10,11 +10,11 @@ import java.util.Comparator;
  * by disparity).
  */
 public class RelevancyComparator implements Comparator<Poll> {
-  private CategoryPoints userCatPts;
+  private final CategoryPoints userCatPts;
 
   /**
    * Constructor that takes in a given user's category points.
-   * @param userCatPts
+   * @param userCatPts user category points
    */
   public RelevancyComparator(CategoryPoints userCatPts) {
     this.userCatPts = userCatPts;

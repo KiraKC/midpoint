@@ -5,17 +5,32 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="d582ac83-f454-46b4-9a64-852df8947de5" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/AnsweredPollsTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/CategoryPointsTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/CreatedPollsTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/checkstyle-idea.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/AnsweredPolls.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/AnsweredPolls.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/App.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CategoryPoints.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CategoryPoints.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CreatedPolls.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/CreatedPolls.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/UserMetaData.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/UserMetaData.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/algorithm/RelevancyComparator.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/algorithm/RelevancyComparator.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/database/Connection.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/database/Connection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/exceptions/MissingDBObjectException.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/exceptions/MissingDBObjectException.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/AnonymousAnswerHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/AnonymousAnswerHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/AnsweredPollsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/AnsweredPollsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/CheckOffHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/CheckOffHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/CreatedPollsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/CreatedPollsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetGamePollHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetGamePollHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetStatsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetStatsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetSuggestedPollsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/GetSuggestedPollsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/NewPollHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/NewPollHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/NewUserHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/NewUserHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/SearchPollsHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/handlers/SearchPollsHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/AnswerOption.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/AnswerOption.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/Poll.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/Poll.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/PollResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/main/java/com/cs32/app/poll/PollResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/ComparatorTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/ComparatorTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/PollTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/test/java/com/cs32/app/PollTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -85,17 +100,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="ArquillianJUnit" factoryName="" nameIsGenerated="true">
-      <option name="arquillianRunConfiguration">
-        <value>
-          <option name="containerStateName" value="" />
-        </value>
-      </option>
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="All in peek" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="peek" />
       <option name="PACKAGE_NAME" value="" />
@@ -136,18 +140,18 @@
     </configuration>
     <list>
       <item itemvalue="Application.App" />
-      <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar" />
       <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar (1)" />
-      <item itemvalue="JUnit.AppTest" />
+      <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar" />
       <item itemvalue="JUnit.All in peek" />
+      <item itemvalue="JUnit.AppTest" />
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="JUnit.All in peek" />
-        <item itemvalue="JUnit.AppTest" />
-        <item itemvalue="Application.App" />
-        <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar (1)" />
         <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar" />
+        <item itemvalue="JAR Application.peek-1.0-SNAPSHOT.jar (1)" />
+        <item itemvalue="JUnit.AppTest" />
+        <item itemvalue="JUnit.All in peek" />
+        <item itemvalue="Application.App" />
       </list>
     </recent_temporary>
   </component>
@@ -174,6 +178,9 @@
       <workItem from="1617511336590" duration="137000" />
       <workItem from="1617634974507" duration="407000" />
       <workItem from="1617687066483" duration="27751000" />
+      <workItem from="1618118490995" duration="1731000" />
+      <workItem from="1618120231321" duration="388000" />
+      <workItem from="1618120899443" duration="178000" />
     </task>
     <servers />
   </component>
@@ -207,7 +214,7 @@
     </breakpoint-manager>
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/peek$All_in_peek.ic" NAME="All in peek Coverage Results" MODIFIED="1618035437484" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/peek$All_in_peek.ic" NAME="All in peek Coverage Results" MODIFIED="1618112483417" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
     <SUITE FILE_PATH="coverage/peek$AppTest.ic" NAME="AppTest Coverage Results" MODIFIED="1618024013261" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>com.cs32.app.*</FILTER>
     </SUITE>

@@ -5,6 +5,7 @@ import com.cs32.app.Constants;
 import com.cs32.app.database.Connection;
 import com.google.gson.annotations.Expose;
 import com.mongodb.BasicDBObject;
+import com.mongodb.client.MongoCursor;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
@@ -16,21 +17,22 @@ import java.util.List;
  */
 public class Poll {
   @Expose
-  private String id;
+  private final String id;
   @Expose
-  private String question;
+  private final String question;
   @Expose
-  private String emoji;
+  private final String emoji;
   @Expose
-  private List<AnswerOption> answerOptions;
+  private final List<AnswerOption> answerOptions;
   @Expose
   private String color;
   @Expose
   private String imageUrl;
-  private CategoryPoints categoryPoints;
+  private final CategoryPoints categoryPoints;
   private int numRenders;
   @Expose
   private int numClicks;
+  private String creatorId;
 
   /**
    * Poll constructor.
@@ -39,8 +41,9 @@ public class Poll {
    * @param answerOptions answer options
    * @param categoryPoints category points
    * @param color poll color
+   * @param imageUrl image URL
    */
-  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color, String imageUrl) {
+  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color, String imageUrl, String creatorId) {
     this.id = new ObjectId().toString();
     this.question = question;
     this.emoji = emoji;
@@ -50,15 +53,18 @@ public class Poll {
     this.numClicks = 0;
     this.color = color;
     this.imageUrl = imageUrl;
+    this.creatorId = creatorId;
   }
 
   /**
    * Poll constructor that transforms a MongoDB document for a poll to a Poll object.
    * @param mongoPoll MongoDB document for a poll
-   * @throws Exception
+   * @throws Exception exception
    */
   public Poll(Document mongoPoll) throws Exception {
+    // Get ID
     id = mongoPoll.getString("_id");
+
     // Get question
     question = mongoPoll.getString("question");
 
@@ -69,17 +75,19 @@ public class Poll {
     answerOptions = new ArrayList<>();
     List<Document> mongoAnswerOptions = (List<Document>) mongoPoll.get("answerOptions");
     for (Document doc : mongoAnswerOptions) {
-      answerOptions.add(new AnswerOption(doc.getString("answerOptionId"), doc.getString("value"), doc.getString("emoji")));
+      answerOptions.add(new AnswerOption(doc.getString("answerOptionId"),
+          doc.getString("value"), doc.getString("emoji")));
     }
 
     // Get category points
     categoryPoints = new CategoryPoints();
-    boolean needsAutofixing = categoryPoints.initializeFromMongo((List<Document>) mongoPoll.get("catPts"));
+    boolean needsAutofixing = categoryPoints.initializeFromMongo(
+        (List<Document>) mongoPoll.get("catPts"));
 
-    // color
+    // Get color
     color = mongoPoll.getString("color");
 
-    // imageURL
+    // Get imageURL
     imageUrl = mongoPoll.getString("imageURL");
 
     // Get numRenders
@@ -88,13 +96,28 @@ public class Poll {
     // Get numClicks
     numClicks = mongoPoll.getInteger("numClicks");
 
+    // get creatorId
+    creatorId = mongoPoll.getString("creatorId");
+
     // autofixing
     if (color == null) {
-      color = Constants.ALL_COLORS[(int) Math.floor(Math.random()*Constants.ALL_COLORS.length)];
+      color = Constants.ALL_COLORS[(int) Math.floor(Math.random() * Constants.ALL_COLORS.length)];
       needsAutofixing = true;
     }
     if (imageUrl == null) {
       imageUrl = "";
+      needsAutofixing = true;
+    }
+    if (creatorId == null) {
+      BasicDBObject query = new BasicDBObject();
+      query.put("createdPolls", id);
+      MongoCursor<Document> cursor = Connection.userCollection.find(query).limit(1).iterator();
+      if (cursor.hasNext()) {
+        creatorId = cursor.next().getString("_id");
+      } else {
+        // empty string for creatorId means user has been deleted
+        creatorId = "";
+      }
       needsAutofixing = true;
     }
     if (needsAutofixing) {
@@ -147,11 +170,7 @@ public class Poll {
    * @return click rate
    */
   public double getClickRate() {
-    if (numRenders == 0) {
-      return Constants.STARTING_CLICKRATE;
-    } else {
-      return (double) numClicks / (double) numRenders;
-    }
+    return (double) numClicks / (double) numRenders;
   }
 
   /**
@@ -162,7 +181,7 @@ public class Poll {
    */
   public double calculateDisparity(CategoryPoints userCatPts) {
     double disparity = 0;
-    for(String category : Constants.ALL_CATEGORIES) {
+    for (String category : Constants.ALL_CATEGORIES) {
       disparity += Math.abs(userCatPts.getNormPts(category) - categoryPoints.getNormPts(category));
     }
 //    return (1-this.getClickRate()) * disparity;
@@ -207,7 +226,12 @@ public class Poll {
           .append("numClicks", numClicks)
           .append("numRenders", numRenders)
           .append("color", color)
-          .append("imageURL", imageUrl);
+          .append("imageURL", imageUrl)
+          .append("creatorId", creatorId);
     return mongoPoll;
+  }
+
+  public String getCreatorId() {
+    return creatorId;
   }
 }

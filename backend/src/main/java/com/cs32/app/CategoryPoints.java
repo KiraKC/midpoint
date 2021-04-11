@@ -5,29 +5,36 @@ import org.bson.Document;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.HashSet;
+import java.util.Arrays;
 
 /**
  * CategoryPoints class that stores category points for users and polls.
  */
 public class CategoryPoints {
   @Expose
-  Map<String, Double> catPtsMap;
+  private final Map<String, Double> catPtsMap;
 
   /**
    * Constructor when creating CatPtsWrapper with only tagged categories
    * for users and polls.
+   * @param taggedCategories a list of tagged categories
    */
   public CategoryPoints(List<String> taggedCategories) {
     catPtsMap = new HashMap<>();
-    for(String taggedCategory : taggedCategories) {
-      catPtsMap.put(taggedCategory, Constants.INITIAL_NEW_POLL_CAT_PTS/taggedCategories.size());
+    for (String taggedCategory : taggedCategories) {
+      catPtsMap.put(taggedCategory, Constants.INITIAL_NEW_POLL_CAT_PTS / taggedCategories.size());
     }
     Double startingPts = 0.0;
     if (taggedCategories.size() == 0) {
       startingPts = Constants.UNTAGGED_CAT_STARTING_PTS;
     }
-    for(String category : Constants.ALL_CATEGORIES) {
+    for (String category : Constants.ALL_CATEGORIES) {
       if (!catPtsMap.containsKey(category)) {
         catPtsMap.put(category, startingPts);
       }
@@ -36,8 +43,8 @@ public class CategoryPoints {
 
   /**
    * Constructor when creating CatPtsWrapper with Json object.
-   * @param jsonTaggedCategories
-   * @throws JSONException
+   * @param jsonTaggedCategories a Json object of tagged categories
+   * @throws JSONException Json exception
    */
   public CategoryPoints(JSONArray jsonTaggedCategories) throws JSONException {
     List<String> taggedCategories = new ArrayList<>();
@@ -46,14 +53,14 @@ public class CategoryPoints {
     }
     System.out.println(taggedCategories);
     catPtsMap = new HashMap<>();
-    for(String taggedCategory : taggedCategories) {
-      catPtsMap.put(taggedCategory, Constants.INITIAL_NEW_POLL_CAT_PTS/taggedCategories.size());
+    for (String taggedCategory : taggedCategories) {
+      catPtsMap.put(taggedCategory, Constants.INITIAL_NEW_POLL_CAT_PTS / taggedCategories.size());
     }
     Double startingPts = 0.0;
     if (taggedCategories.size() == 0) {
       startingPts = Constants.UNTAGGED_CAT_STARTING_PTS;
     }
-    for(String category : Constants.ALL_CATEGORIES) {
+    for (String category : Constants.ALL_CATEGORIES) {
       if (!catPtsMap.containsKey(category)) {
         catPtsMap.put(category, startingPts);
       }
@@ -70,6 +77,7 @@ public class CategoryPoints {
   /**
    * Method for initializing the category points from MongoDB.
    * @param mongoCatPts a list of MongoDB document of category points
+   * @return a boolean indicating whether the process is successful
    */
   public boolean initializeFromMongo(List<Document> mongoCatPts) {
     Set<String> categories = new HashSet<>(Arrays.asList(Constants.ALL_CATEGORIES));
@@ -92,7 +100,7 @@ public class CategoryPoints {
    * @param category category name
    * @param points category points
    */
-  public void updateCatPts (String category, double points) {
+  public void updateCatPts(String category, double points) {
     catPtsMap.put(category, points);
   }
 
@@ -119,7 +127,7 @@ public class CategoryPoints {
    * @return the normalized points of a certain category
    */
   public Double getNormPts(String category) {
-    return catPtsMap.get(category)/this.getTotalPts();
+    return catPtsMap.get(category) / this.getTotalPts();
   }
 
   /**
@@ -128,7 +136,7 @@ public class CategoryPoints {
    */
   public Double getTotalPts() {
     Double totalPts = 0.0;
-    for(Double pts : catPtsMap.values()) {
+    for (Double pts : catPtsMap.values()) {
       totalPts += pts;
     }
     return totalPts;
@@ -140,7 +148,7 @@ public class CategoryPoints {
    */
   public List<Document> toBSON() {
     List<Document> mongoCatPts = new ArrayList<>();
-    for (Map.Entry<String,Double> entry : catPtsMap.entrySet()) {
+    for (Map.Entry<String, Double> entry : catPtsMap.entrySet()) {
       mongoCatPts.add(new Document("categoryName", entry.getKey())
             .append("points", entry.getValue()));
     }
