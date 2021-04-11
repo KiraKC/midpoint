@@ -13,7 +13,7 @@ import {
 import GameStart from './component/Game/GameStart';
 import IPoll from './interfaces/IPoll';
 import GameBox from './component/Game/GameBox';
-import SearchResult from './component/SearchPage/SearchResult';
+import SearchPage from './component/SearchPage/SearchPage';
 import HistoryPage from './component/HistoryPage/HistoryPage';
 import MyPollsPage from './component/MyPollsPage/MyPollsPage';
 
@@ -69,7 +69,7 @@ function App() {
 							<Route path="/my-polls" element={<MyPollsPage
 								isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								/>} />
-							<Route path="/search-result" element={<SearchResult searchString={searchString} 
+							<Route path="/search-result" element={<SearchPage searchString={searchString} 
 							setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn} />} />
 						</Routes>
 					</div>

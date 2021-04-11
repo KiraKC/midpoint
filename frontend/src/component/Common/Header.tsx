@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router";
+import { useLocation, useNavigate } from "react-router";
 import '../../styles/Common/Header.css'
 import { signOut } from '../../firebase/AuthMethods'
 import NewPollModal from "./NewPollModal";
 import LoginModal from "./LoginModal";
 import SignUpModal from "./SignUpModal";
 import { useMediaQuery } from 'react-responsive'
+import { Emoji } from "emoji-mart";
 
 function Header(props) {
 
@@ -13,6 +14,7 @@ function Header(props) {
 	const [isPollModalOpen, setIsPollModalOpen]: [boolean, any] = useState(false);
 	const [isSignupModalOpen, setIsSignupModalOpen]: [boolean, any] = useState(false);
 	const [isSearchFocused, setIsSearchFocused]: [boolean, any] = useState(false);
+	const location = useLocation();
 
 	const isSmallScreen = useMediaQuery({
 		query: '(max-width: 1100px)'
@@ -105,15 +107,21 @@ function Header(props) {
 				{
 					isBigScreen &&
 					<>
-						{console.log(props.polls)}
+						{console.log(location.pathname)}
 						<div className="header-background"></div>
 						<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
 							<a className="header-link" onClick={() => {
 								navigate('home');
 								setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
 							}} style={{ cursor: 'pointer' }}>midpoint.</a>
-							<div className="nav-text-link" style={{ marginLeft: '30px' }} onClick={() => { props.isLoggedIn ? navigateAndClean('history') : props.setIsLoginModalOpen(true) }}>History</div>
-							<div className="nav-text-link" onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>My Polls</div>
+							<div className={location.pathname === '/history' ? 'nav-text-link selected-nav' : 'nav-text-link'} style={{ marginLeft: '30px' }}
+								onClick={() => { props.isLoggedIn ? navigateAndClean('history') : props.setIsLoginModalOpen(true) }}>
+								<Emoji emoji='classical_building' set='apple' size={20} />&nbsp;history
+							</div>
+							<div className={location.pathname === '/my-polls' ? 'nav-text-link selected-nav' : 'nav-text-link'}
+								onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>
+								<Emoji emoji='writing_hand' set='apple' size={20} />&nbsp;created
+							</div>
 							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
 						</div>
 						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>

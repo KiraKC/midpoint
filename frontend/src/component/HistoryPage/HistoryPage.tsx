@@ -17,12 +17,14 @@ function HistoryPage(props: IHistoryPageProps) {
 
 	const [answeredPolls, setAnsweredPolls]: [IPoll[], any] = useState([]);
 	const [stats, setStats] = useState({});
+	const [description, setDescription]: [string, any] = useState('');
 
 	useEffect(() => {
 		requestPolls();
 	}, [])
 
 	const requestPolls = async () => {
+		setDescription('fetching histories from the server...')
 		if (localStorage.getItem('userToken') !== null) {
 			let toSend = {
 				userIdToken: localStorage.getItem('userToken')
@@ -37,13 +39,13 @@ function HistoryPage(props: IHistoryPageProps) {
 			axios.post(
 				endpointUrl + '/user/answered-polls', toSend, config)
 				.then(response => {
-					console.log("ANSWEREDPOLLS: ")
-					console.log(response.data)
 					setStats(response.data.miniStats);
 					setAnsweredPolls(response.data.answeredPolls);
+					setDescription('Find all the polls you have answered so far, and see how fellow users think!');
 				})
 				.catch(e => {
 					console.log(e)
+					setDescription('oops, server is sleeping. try again later!');
 				});
 		}
 	}
@@ -66,6 +68,10 @@ function HistoryPage(props: IHistoryPageProps) {
 
 	return (
 		<div className="masonry-wrapper-wrapper">
+			<div className="page-title-wrapper-flex">
+				<div className="page-title">&nbsp;History</div>
+				<div className="page-title-description">{description}</div>
+			</div>
 			<Masonry
 				breakpointCols={breakpointColumnsObj}
 				className="my-masonry-grid"

@@ -94,6 +94,8 @@
 	margin-left: 23px;
 	cursor: pointer;
 	position: relative;
+	display: flex;
+	align-items: center;
 }
 
 .nav-text-link:hover {
@@ -162,4 +164,8 @@
 
 .search-input::-ms-input-placeholder {
 	color: white;
+}
+
+.selected-nav {
+	font-weight: 700;
 }

@@ -8,23 +8,25 @@ import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
 import Poll from "../HomePage/Poll";
 
-interface ISearchResultProps {
+interface ISearchPageProps {
 	searchString: string,
 	setIsLoginModalOpen: any,
 	isLoggedIn: boolean,
 }
 
-function SearchResult(props: ISearchResultProps) {
+function SearchPage(props: ISearchPageProps) {
 
 	const [validPolls, setValidPolls]: [IPoll[], any] = useState([]);
 	const [answeredPollIds, setAnsweredPollIds]: [string[], any] = useState([]);
 	const [stats, setStats] = useState({});
+	const [description, setDescription]: [string, any] = useState('');
 
 	useEffect(() => {
 		requestPolls();
 	}, [props.searchString])
 
 	const requestPolls = async () => {
+		setDescription('querying ' + props.searchString + ' from the server...')
 		let toSend;
 		if (props.isLoggedIn) {
 			const token = await firebase.auth().currentUser.getIdToken(true);
@@ -55,9 +57,19 @@ function SearchResult(props: ISearchResultProps) {
 				setAnsweredPollIds(response.data.answeredPollIds);
 				setStats(response.data.miniStats)
 				setValidPolls(returnedPolls)
+				let respLength = response.data.searchResults.length;
+				if (respLength === 0) {
+					setDescription("didn't find anything with keyword " + props.searchString)
+				} else {
+					setDescription('displaying ' + response.data.searchResults.length 
+					+ ' results with keyword ' + props.searchString)
+				}
+				
 			})
 			.catch(e => {
 				console.log(e)
+				setDescription('oops, an error occurred when querying, try again later!')
+
 			});
 	}
 
@@ -82,7 +94,10 @@ function SearchResult(props: ISearchResultProps) {
 
 	return (
 		<div className="masonry-wrapper-wrapper">
-			{console.log(props.searchString)}
+			<div className="page-title-wrapper-flex">
+				<div className="page-title">&nbsp;Search</div>
+				<div className="page-title-description">{description}</div>
+			</div>
 			<Masonry
 				breakpointCols={breakpointColumnsObj}
 				className="my-masonry-grid"
@@ -94,4 +109,4 @@ function SearchResult(props: ISearchResultProps) {
 	);
 }
 
-export default SearchResult;
+export default SearchPage;

@@ -18,12 +18,14 @@ function MyPollsPage(props: IMyPollsPageProps) {
 	const [createdPolls, setCreatedPolls]: [IPoll[], any] = useState([]);
 	const [answeredPollIds, setAnsweredPollIds]: [string[], any] = useState([]);
 	const [stats, setStats] = useState({});
+	const [description, setDescription]: [string, any] = useState('');
 
 	useEffect(() => {
 		requestPolls();
 	}, [])
 
 	const requestPolls = async () => {
+		setDescription('fetching created polls from the server...')
 		if (localStorage.getItem('userToken') !== null) {
 			let toSend = {
 				userIdToken: localStorage.getItem('userToken')
@@ -37,14 +39,18 @@ function MyPollsPage(props: IMyPollsPageProps) {
 			axios.post(
 				endpointUrl + '/user/created-polls', toSend, config)
 				.then(response => {
-					console.log("CREATEDPOLLS: ")
-					console.log(response.data)
 					setAnsweredPollIds(response.data.answeredPollIds);
 					setStats(response.data.miniStats)
 					setCreatedPolls(response.data.createdPolls);
+					if (response.data.createdPolls.length === 0) {
+						setDescription("Didn't find polls that was created by you, create a poll first!");
+					} else {
+						setDescription('Posted a poll before? Check the result here!');
+					}
 				})
 				.catch(e => {
 					console.log(e)
+					setDescription('oops, server is sleeping. try again later!');
 				});
 		}
 	}
@@ -52,7 +58,7 @@ function MyPollsPage(props: IMyPollsPageProps) {
 	const divItems = createdPolls.map(function (poll) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} 
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}
 			answered={answeredPollIds.includes(poll.id) ? true : false}
 			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}} numClicks={poll.numClicks} />
 	});
@@ -68,6 +74,10 @@ function MyPollsPage(props: IMyPollsPageProps) {
 
 	return (
 		<div className="masonry-wrapper-wrapper">
+			<div className="page-title-wrapper-flex">
+				<div className="page-title">&nbsp;Created</div>
+				<div className="page-title-description">{description}</div>
+			</div>
 			<Masonry
 				breakpointCols={breakpointColumnsObj}
 				className="my-masonry-grid"
