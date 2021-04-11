@@ -1,5 +1,7 @@
 package com.cs32.app.database;
 
+import com.cs32.app.AnsweredPolls;
+import com.cs32.app.CreatedPolls;
 import com.cs32.app.User;
 import com.cs32.app.exceptions.FailedDBWriteException;
 import com.cs32.app.exceptions.MissingDBObjectException;
@@ -65,6 +67,8 @@ public class Connection {
     indexModels.add(new IndexModel(new Document().append("question", "text")
         .append("answerOptions.value", "text").append("catPts.categoryName", "text")));
     pollCollection.createIndexes(indexModels);
+
+
   }
 
   /**
@@ -248,19 +252,57 @@ public class Connection {
     BasicDBObject updateFields = new BasicDBObject();
     updateFields.append("createdPolls", pollId);
     updateFields.append("answeredPolls", pollId);
-    new BasicDBObject("$pull", updateFields);
-    Connection.updateUsers(userSearchQuery, updateFields);
+    BasicDBObject updateQuery = new BasicDBObject("$pull", updateFields);
+    Connection.updateUsers(userSearchQuery, updateQuery);
     return true;
   }
 
-  public static boolean updateUsers(BasicDBObject searchQuery, BasicDBObject updateFields) throws FailedDBWriteException {
-    BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-    UpdateResult updateResult = userCollection.updateMany(searchQuery, setQuery);
+  public static boolean updateUsers(BasicDBObject searchQuery, BasicDBObject updateQuery) throws FailedDBWriteException {
+    UpdateResult updateResult = userCollection.updateMany(searchQuery, updateQuery);
     if (updateResult.wasAcknowledged()) {
       System.out.println("Updating user data SUCCESSFUL.");
       return true;
     } else {
       throw new FailedDBWriteException("user", "update", "userCollection");
+    }
+  }
+
+  public static void resetDatabase(String megaCreatorId) {
+    try {
+      // reset all user answeredPolls
+      BasicDBObject searchQuery = new BasicDBObject();
+      BasicDBObject updateFields = new BasicDBObject("answeredPolls", new AnsweredPolls().toBSON());
+      updateFields.append("createdPolls", new CreatedPolls().toBSON());
+      BasicDBObject updateQuery = new BasicDBObject("$set", updateFields);
+      Connection.updateUsers(searchQuery, updateQuery);
+
+      // give all polls to megaUser
+      CreatedPolls megaUsersCreatedPolls = new CreatedPolls();
+      MongoCursor<Document> pollCursor = pollCollection.find().iterator();
+      List<Poll> allPolls = new ArrayList<>();
+      List<String> allPollIds = new ArrayList<>();
+      while (pollCursor.hasNext()) {
+        Poll newPoll = new Poll(pollCursor.next());
+        allPolls.add(newPoll);
+        megaUsersCreatedPolls.add(newPoll.getId());
+        allPollIds.add(newPoll.getId());
+      }
+      searchQuery = new BasicDBObject("_id", megaCreatorId);
+      updateFields = new BasicDBObject("createdPolls", megaUsersCreatedPolls.toBSON());
+      updateQuery = new BasicDBObject("$set", updateFields);
+      Connection.updateUsers(searchQuery, updateQuery);
+
+      // delete all responses by dropping collection
+      responseCollection.drop();
+
+      // reset all numClicks and numRenders
+      searchQuery = new BasicDBObject();
+      updateFields = new BasicDBObject("numClicks", 0).append("numRenders", 0);
+      updateQuery = new BasicDBObject("$set", updateFields);
+      pollCollection.updateMany(searchQuery, updateQuery);
+
+    } catch (Exception e) {
+      e.printStackTrace();
     }
   }
 }
