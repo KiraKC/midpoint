@@ -1,7 +1,7 @@
 body,
 html {
-	background-color: white;
-	background-image: url("https://i.ibb.co/8xWS490/448138-PEVTIZ-120.jpg");
+	background-color: black;
+	/* background-image: url("https://i.ibb.co/8xWS490/448138-PEVTIZ-120.jpg"); */
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
@@ -43,7 +43,6 @@ html {
 	justify-content: center;
 	display: flex;
 	flex-wrap: wrap;
-
 }
 
 .page-title {

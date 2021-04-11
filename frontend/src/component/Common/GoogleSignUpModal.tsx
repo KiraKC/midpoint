@@ -338,7 +338,7 @@ function SignUpModal(props: INewPollModal) {
 							<div className="login-option-flex-wrapper">
 								<div className="login-option-title">Education</div>
 								<OptionSelector
-									optionArray={['Undisclosed', 'Elementary School', 'Middle School', 'High School', 'Bachelor', 'Masters', 'PhD']}
+									optionArray={['Undisclosed', 'Elementary School', 'Middle School', 'High School', 'Bachelors', 'Masters', 'PhD']}
 									setOptionValue={setEducation} />
 							</div>
 							<div className="login-option-flex-wrapper">
