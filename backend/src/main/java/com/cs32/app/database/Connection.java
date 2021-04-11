@@ -1,6 +1,7 @@
 package com.cs32.app.database;
 
 import com.cs32.app.User;
+import com.cs32.app.exceptions.FailedDBWriteException;
 import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
@@ -252,7 +253,7 @@ public class Connection {
     return true;
   }
 
-  public static boolean updateUsers(BasicDBObject searchQuery, BasicDBObject updateFields) throws FailedDBWriteException{
+  public static boolean updateUsers(BasicDBObject searchQuery, BasicDBObject updateFields) throws FailedDBWriteException {
     BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
     UpdateResult updateResult = userCollection.updateMany(searchQuery, setQuery);
     if (updateResult.wasAcknowledged()) {

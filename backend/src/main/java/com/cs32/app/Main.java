@@ -1,17 +1,18 @@
 package com.cs32.app;
 
 import com.cs32.app.database.Connection;
+
 import com.cs32.app.handlers.AnonymousAnswerHandler;
 import com.cs32.app.handlers.AnsweredPollsHandler;
 import com.cs32.app.handlers.CheckOffHandler;
 import com.cs32.app.handlers.CreatedPollsHandler;
+import com.cs32.app.handlers.DeletePollHandler;
 import com.cs32.app.handlers.GetGamePollHandler;
 import com.cs32.app.handlers.GetStatsHandler;
 import com.cs32.app.handlers.GetSuggestedPollsHandler;
 import com.cs32.app.handlers.NewPollHandler;
 import com.cs32.app.handlers.NewUserHandler;
 import com.cs32.app.handlers.SearchPollsHandler;
-
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
