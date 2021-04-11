@@ -41,7 +41,7 @@ function HistoryPage(props: IHistoryPageProps) {
 				.then(response => {
 					setStats(response.data.miniStats);
 					setAnsweredPolls(response.data.answeredPolls);
-					setDescription('Find all the polls you have answered so far, and see how fellow users think!');
+					setDescription("Return to all the polls you've answered so far and see what other users think!");
 				})
 				.catch(e => {
 					console.log(e)

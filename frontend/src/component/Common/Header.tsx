@@ -31,6 +31,7 @@ function Header(props) {
 			props.setIsLoggedIn(false);
 			props.setClearFeed(!props.clearFeed);
 			setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
+			navigate('home')
 		} else {
 			props.setIsLoginModalOpen(true);
 		}
@@ -85,11 +86,11 @@ function Header(props) {
 						</div>
 						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
 							<button className="mobile-nav-link"
-								onClick={() => navigateAndClean('history')}>
+								onClick={() => { props.isLoggedIn ? navigateAndClean('history') : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
 									history</span></button>
 							<button className="mobile-nav-link"
-								onClick={() => navigateAndClean('my-poll')}>
+								onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
 									outbox</span></button>
 							<button className="mobile-nav-link"

@@ -62,7 +62,7 @@ function SearchPage(props: ISearchPageProps) {
 					setDescription("didn't find anything with keyword " + props.searchString)
 				} else {
 					setDescription('displaying ' + response.data.searchResults.length 
-					+ ' results with keyword ' + props.searchString)
+					+ ' results related to "' + props.searchString + '"')
 				}
 				
 			})
@@ -93,7 +93,7 @@ function SearchPage(props: ISearchPageProps) {
 	};
 
 	return (
-		<div className="masonry-wrapper-wrapper">
+		<div className="masonry-overall-wrapper">
 			<div className="page-title-wrapper-flex">
 				<div className="page-title">&nbsp;Search</div>
 				<div className="page-title-description">{description}</div>

@@ -106,7 +106,6 @@ function Poll(props: PollProps) {
 	}
 
 	if (props.answered === true && selectedOptionValue === '') {
-		console.log("this is correct")
 		return (
 			<div className="masonary-poll-wrapper" >
 				<div className="masonary-background" style={{

@@ -205,7 +205,7 @@ function LoginModal(props: INewPollModal) {
 									</div>
 									<button className="login-modal-submit" onClick={() => { handleEmailLogin() }}>
 										<span className="material-icons-outlined" style={{ marginRight: '7px' }}>email</span>
-										<div className="login-modal-close-text">Email Sign In</div>
+										<div className="login-modal-close-text">Sign In</div>
 									</button>
 								</div>
 								<div className="login-modal-fineprint" style={{ marginTop: '7px' }}>Don't have an account?&nbsp;
