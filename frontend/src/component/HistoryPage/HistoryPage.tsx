@@ -54,7 +54,7 @@ function HistoryPage(props: IHistoryPageProps) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
 			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}
-			answeredStats={stats[poll.id]} answered={true} numClicks={poll.numClicks} />
+			answeredStats={stats[poll.id]} answered={true} numClicks={poll.numClicks} isCreated={false} />
 	});
 
 	const breakpointColumnsObj = {

@@ -19,6 +19,7 @@ function MyPollsPage(props: IMyPollsPageProps) {
 	const [answeredPollIds, setAnsweredPollIds]: [string[], any] = useState([]);
 	const [stats, setStats] = useState({});
 	const [description, setDescription]: [string, any] = useState('');
+	const [refresh, setRefresh]: [boolean, any] = useState(false);
 
 	useEffect(() => {
 		requestPolls();
@@ -60,7 +61,8 @@ function MyPollsPage(props: IMyPollsPageProps) {
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
 			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}
 			answered={answeredPollIds.includes(poll.id) ? true : false}
-			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}} numClicks={poll.numClicks} />
+			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}} numClicks={poll.numClicks}
+			isCreated={true} refreshCreatedPage={refresh} setRefreshCreatedPage={setRefresh} />
 	});
 
 	const breakpointColumnsObj = {

@@ -18,8 +18,11 @@ interface PollProps {
 	setIsLoginModalOpen: any
 	imageUrl: string,
 	answered: boolean,
-	answeredStats?: {},
-	numClicks: number
+	answeredStats ?: {},
+	numClicks: number,
+	isCreated: boolean,
+	refreshCreatedPage ?: boolean,
+	setRefreshCreatedPage ?: any
 }
 
 function Poll(props: PollProps) {
@@ -105,6 +108,38 @@ function Poll(props: PollProps) {
 			});
 	}
 
+	const handleDelete = async () => {
+		const userId = await firebase.auth().currentUser.getIdToken(true);
+		const toSend = {
+			pollId: props.id,
+			userIdToken: userId,
+		}
+		console.log(toSend)
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+				'Access-Control-Allow-Origin': '*',
+			}
+		}
+		return axios.post(
+			endpointUrl + '/poll/delete',
+			toSend,
+			config,
+		)
+			.then(res => {
+				if (res.data.status) {
+					return true;
+				} else {
+					console.log("DELETION Failed")
+					return false;
+				}
+			})
+			.catch(e => {
+				console.log(e);
+				return false;
+			});
+	}
+
 	if (props.answered === true && selectedOptionValue === '') {
 		return (
 			<div className="masonary-poll-wrapper" >
@@ -112,6 +147,7 @@ function Poll(props: PollProps) {
 					backgroundColor: `${props.color}`
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
+				<div style={{position: 'relative'}}onClick={() => handleDelete()}>DELETE</div>
 				<div className="masonary-poll-heading">{props.question}</div>
 				<div className="selection-hint" style={{marginBottom: '10px'}}>TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}

@@ -108,7 +108,6 @@ function Header(props) {
 				{
 					isBigScreen &&
 					<>
-						{console.log(location.pathname)}
 						<div className="header-background"></div>
 						<div style={{ display: 'flex', alignItems: 'center', position: 'relative' }}>
 							<a className="header-link" onClick={() => {
