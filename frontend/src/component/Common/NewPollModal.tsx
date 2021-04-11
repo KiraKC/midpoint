@@ -114,7 +114,6 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	const cleanUpData = () => {
-		// TODO: clean image url
 		setPollEmojiArray([randomEmoji(), randomEmoji()]);
 		setIsEmojiOpenArray([false, false]);
 		setTextFieldValue(['', '']);
@@ -122,6 +121,7 @@ function NewPollModal(props: INewPollModal) {
 		setQuestionText('')
 		setQuestionEmoji(randomEmoji())
 		setQuestionEmojiOpen(false)
+		setImageHint('IMAGE URL')
 		setCategories([])
 		setImageUrl('')
 		setNumOfOptions(2)
@@ -146,7 +146,6 @@ function NewPollModal(props: INewPollModal) {
 				'Access-Control-Allow-Origin': '*',
 			}
 		}
-		console.log(isSubmissionValid())
 		if (isSubmissionValid()) {
 			axios.post(
 				endpointUrl + '/poll/new',
@@ -229,15 +228,10 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	var isUriImage = function (uri) {
-		//make sure we remove any nasty GET params 
 		uri = uri.split('?')[0];
-		//moving on, split the uri into parts that had dots before them
 		var parts = uri.split('.');
-		//get the last part ( should be the extension )
 		var extension = parts[parts.length - 1];
-		//define some image types to test against
 		var imageTypes = ['jpg', 'jpeg', 'tiff', 'png', 'gif', 'bmp', 'webp'];
-		//check if the extension matches anything in the list.
 		if (imageTypes.indexOf(extension) !== -1) {
 			return true;
 		}
@@ -263,7 +257,11 @@ function NewPollModal(props: INewPollModal) {
 
 					<div className="poll-section-heading">1. Enter a question</div>
 					<div className="poll-modal-input-module display-relative">
-						<button className="emoji-picker-button" onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}><Emoji emoji={questionEmoji} set='apple' size={23} /></button>
+						<button className="emoji-picker-button"
+							onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}
+							onBlur={() => setQuestionEmojiOpen(false)}>
+							<Emoji emoji={questionEmoji} set='apple' size={23} />
+						</button>
 						{questionEmojiOpen ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
 						<div className="poll-modal-question-desc-emoji">EMOJI</div>
 						<input className="poll-modal-question-input" type="text"
