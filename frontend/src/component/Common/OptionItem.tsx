@@ -42,12 +42,6 @@ function OptionItem(props: IOptionItemProps) {
 		setIsEmojiOpenArray([...tempEmojiOpenArray])
 	}
 
-	const handleOnBlur = (index: number) => {
-		let tempEmojiOpenArray = isEmojiOpenArray;
-		tempEmojiOpenArray[index] = false;
-		setIsEmojiOpenArray([...tempEmojiOpenArray])
-	}
-
 	const handleTextChange = (e: any, index: number) => {
 		let tempTextFieldValue = textFieldValue;
 		tempTextFieldValue[index] = e.target.value;
@@ -62,7 +56,7 @@ function OptionItem(props: IOptionItemProps) {
 	return (
 		<div className="poll-modal-input-module display-relative">
 			<button className="emoji-picker-button"
-				onClick={() => handleEmojiOpen(index)} onBlur={() => setTimeout(() => handleOnBlur(index), 100)}><Emoji emoji={pollEmojiArray[index]} set='apple' size={23} /></button>
+				onClick={() => handleEmojiOpen(index)}><Emoji emoji={pollEmojiArray[index]} set='apple' size={23} /></button>
 			{isEmojiOpenArray[index] ? <div className="emoji-picker"><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => handlePollEmoji(emoji, index)} /></div> : ''}
 			<div className="poll-modal-question-desc-emoji">EMOJI</div>
 			<input className="poll-modal-question-input" type="text"

@@ -271,7 +271,6 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-modal-input-module display-relative">
 						<button className="emoji-picker-button"
 							onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}
-							onBlur={() => setTimeout(() => setQuestionEmojiOpen(false), 100)}
 						>
 							<Emoji emoji={questionEmoji} set='apple' size={23} />
 						</button>
