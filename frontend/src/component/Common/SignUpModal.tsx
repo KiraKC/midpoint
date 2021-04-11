@@ -235,7 +235,7 @@ function SignUpModal(props: ISignUpModalProps) {
 						{ key: 'gender', value: gender },
 						{ key: 'maritalStatus', value: maritalStatus },
 						{ key: 'education', value: education },
-						{ key: 'political', value: political }
+						{ key: 'politicalLeaning', value: political }
 					],
 					selectedCategories: categories
 				}

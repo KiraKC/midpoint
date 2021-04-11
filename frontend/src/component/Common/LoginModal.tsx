@@ -57,33 +57,6 @@ function LoginModal(props: ILoginModalProps) {
 		setLoading(false);
 	}
 
-	function handleGoogleLogin() {
-		setLoading(true);
-		let provider = new firebase.auth.GoogleAuthProvider();
-		firebase.auth()
-			.signInWithPopup(provider)
-			.then((result) => {
-				/** @type {firebase.auth.OAuthCredential} */
-				var credential: any = result.credential;
-				// This gives you a Google Access Token. You can use it to access the Google API.
-				var token = credential.accessToken;
-				// The signed-in user info.
-				var user = result.user;
-				console.log(user.uid)
-				props.setIsModalOpen(false);
-				setLoading(false);
-				cleanUp();
-				// clear feed and then wait 0.1s before refetching. this is to ensure no clashing of poll array (sometimes it doesn't refresh properly)
-				props.setClearFeed(!props.clearFeed);
-				setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100);
-			})
-			.catch((error) => {
-				var errorCode = error.code;
-				setLoading(false);
-				console.log(errorCode)
-			});
-	}
-
 	function handleEmailLogin() {
 		setLoading(true);
 		setEmailDescription("EMAIL");
@@ -199,10 +172,6 @@ function LoginModal(props: ILoginModalProps) {
 							<div className="login-details">
 
 								<div className="login-buttons-wrapper-flex">
-									<div className="login-modal-submit" onClick={() => { handleGoogleLogin() }}>
-										<img className="google-icon" src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg" />
-										<div className="login-modal-close-text">Sign In with Google</div>
-									</div>
 									<button className="login-modal-submit" onClick={() => { handleEmailLogin() }}>
 										<span className="material-icons-outlined" style={{ marginRight: '7px' }}>email</span>
 										<div className="login-modal-close-text">Sign In</div>
