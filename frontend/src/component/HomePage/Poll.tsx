@@ -114,14 +114,14 @@ function Poll(props: PollProps) {
 				}}></div>
 				<Emoji emoji={props.emoji} set='apple' size={35} />
 				<div className="masonary-poll-heading">{props.question}</div>
-				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
+				<div className="selection-hint" style={{marginBottom: '10px'}}>TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
 						percentage={props.answeredStats[option.id]} />
 				))}
-				<div className="selection-hint" style={{marginTop: '17px'}}>YOU'VE ANSWERED THIS QUESTION</div>
+				<div className="selection-hint" style={{marginTop: '12px'}}>YOU'VE ANSWERED THIS POLL</div>
 			</div>
 		)
 	}
@@ -141,7 +141,7 @@ function Poll(props: PollProps) {
 						percentage={stats[option.id]} />
 				))}
 				{selectedOptionValue !== '' ? 
-				<div className="selection-hint" style={{marginTop: '17px'}}>YOU CHOSE {selectedOptionValue.toUpperCase().substring(0, 18)}</div> : ''}
+				<div className="selection-hint" style={{marginTop: '12px'}}>YOU CHOSE {selectedOptionValue.toUpperCase().substring(0, 18)}</div> : ''}
 			</div>
 		)
 	}
