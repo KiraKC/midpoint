@@ -237,6 +237,19 @@ function NewPollModal(props: INewPollModal) {
 		return false;
 	}
 
+	const handleImageUrl = (url: string) => {
+		setImageUrl(url);
+		if (url !== '') {
+			if (isUriImage(url)) {
+				// pop up preview
+			} else {
+				setImageHint("DID NOT DETECT VALID IMAGE, TRY ANOTHER ONE")
+			}
+		} else {
+			setImageHint("IMAGE URL")
+		}
+	}
+
 	return (
 		<div>
 			<Modal
@@ -259,7 +272,7 @@ function NewPollModal(props: INewPollModal) {
 						<button className="emoji-picker-button"
 							onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}
 							onBlur={() => setTimeout(() => setQuestionEmojiOpen(false), 100)}
-							>
+						>
 							<Emoji emoji={questionEmoji} set='apple' size={23} />
 						</button>
 						{questionEmojiOpen ? <div className="emoji-picker" ><Picker title='Pick your emoji…' emoji='point_up' onClick={(emoji) => { setQuestionEmoji(emoji.id); setQuestionEmojiOpen(false) }} /></div> : ''}
@@ -285,7 +298,7 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-modal-input-module display-relative">
 						<input className="poll-image-url-input" type="text"
 							placeholder="Image URL, starts with https://"
-							onChange={(e) => { setImageUrl(e.target.value); setImageHint("IMAGE URL") }}></input>
+							onChange={(e) => { handleImageUrl(e.target.value) }}></input>
 						<div className="poll-modal-image-url-hint"
 							style={{ color: (imageHint === 'IMAGE URL' ? 'black' : '#F24443') }}
 						>{imageHint}</div>

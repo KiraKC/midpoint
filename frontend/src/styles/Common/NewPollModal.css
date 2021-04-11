@@ -153,7 +153,7 @@
 }
 
 .poll-image-url-input {
-	width: 100%;
+	width: calc(100% - 20px);
 	height: 30px;
 	border: none;
 	border-bottom: 3px solid black;
