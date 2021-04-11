@@ -62,7 +62,7 @@ function SearchPage(props: ISearchPageProps) {
 					setDescription("didn't find anything with keyword " + props.searchString)
 				} else {
 					setDescription('displaying ' + response.data.searchResults.length 
-					+ ' results with keyword ' + props.searchString)
+					+ ' results related to "' + props.searchString + '"')
 				}
 				
 			})
