@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
 import org.json.JSONObject;
 import spark.Request;
 import spark.Response;
@@ -60,6 +61,7 @@ public class SearchPollsHandler implements Route {
         // set list of answeredPollIds and createdPollIds
         for (Poll poll : searchResults) {
           poll.rendered();
+          Connection.updatePollNumRenders(poll);
           if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
             // add pollId to list of answeredPollIdsToSend
             answeredPollIdsToSend.add(poll.getId());

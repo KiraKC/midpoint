@@ -9,6 +9,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.mongodb.BasicDBObject;
 import org.json.JSONException;
 import spark.Request;
 import spark.Response;
@@ -60,6 +61,7 @@ public class AnsweredPollsHandler implements Route {
       // set list of createdPollIds
       for (Poll poll : pollsToSend) {
         poll.rendered();
+        Connection.updatePollNumRenders(poll);
         if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
           // calculate mini-stats to send
           Map<String, Double> miniStat = new HashMap<>();
