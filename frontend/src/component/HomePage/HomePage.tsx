@@ -10,6 +10,7 @@ import { isLoggedIn } from '../../firebase/AuthMethods';
 import { wait } from '@testing-library/dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import ReactLoading, { LoadingType } from 'react-loading';
+import { Emoji } from 'emoji-mart';
 
 interface HomePageProps {
 	isLoggedIn: boolean,
@@ -129,8 +130,8 @@ function HomePage(props: HomePageProps) {
 				dataLength={polls.length}
 				next={() => props.setFetchNewPoll(!props.fetchNewPoll)}
 				hasMore={hasMore}
-				loader={''} 
-				style={{overflow: 'show'}}>
+				loader={''}
+				style={{ overflow: 'show' }}>
 				<Masonry
 					breakpointCols={breakpointColumnsObj}
 					className="my-masonry-grid"
@@ -139,6 +140,7 @@ function HomePage(props: HomePageProps) {
 					{divItems}
 				</Masonry>
 			</InfiniteScroll>
+			{hasMore ? '' : <div className="ending-words">this is the end, thank you for everything <Emoji emoji='heart' set='apple' size={20} /></div>}
 		</div >
 	);
 }
