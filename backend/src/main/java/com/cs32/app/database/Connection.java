@@ -155,4 +155,11 @@ public class Connection {
     }
     return pollsFound;
   }
+
+  public static void updatePollNumRenders(Poll poll) {
+    BasicDBObject searchQuery = new BasicDBObject("_id", poll.getId());
+    BasicDBObject updateFields = new BasicDBObject("numRenders", poll.getNumRenders());
+    BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
+    pollCollection.updateOne(searchQuery, setQuery);
+  }
 }

@@ -174,10 +174,6 @@ public class Poll {
    */
   public void rendered() {
     numRenders += 1;
-    BasicDBObject searchQuery = new BasicDBObject("_id", id);
-    BasicDBObject updateFields = new BasicDBObject("numRenders", numRenders);
-    BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-    Connection.pollCollection.updateOne(searchQuery, setQuery);
   }
 
   /**

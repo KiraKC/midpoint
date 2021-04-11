@@ -133,6 +133,7 @@ public class GetSuggestedPollsHandler implements Route {
         for (Poll poll : pollsToSend) {
           // TODO: update poll's number of renders in MongoDB
           poll.rendered();
+          Connection.updatePollNumRenders(poll);
         }
       }
 
