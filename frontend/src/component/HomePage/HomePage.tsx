@@ -8,6 +8,8 @@ import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
 import { isLoggedIn } from '../../firebase/AuthMethods';
 import { wait } from '@testing-library/dom';
+import InfiniteScroll from 'react-infinite-scroll-component';
+import ReactLoading, { LoadingType } from 'react-loading';
 
 interface HomePageProps {
 	isLoggedIn: boolean,
@@ -28,6 +30,7 @@ function HomePage(props: HomePageProps) {
 	let setPolls = props.setPolls;
 	let seenPollIds = props.seenPollIds;
 	let setSeenPollIds = props.setSeenPollIds;
+	const [hasMore, setHasMore]: [boolean, any] = useState(true);
 
 	useEffect(() => {
 		async function pollHandler() {
@@ -61,7 +64,7 @@ function HomePage(props: HomePageProps) {
 			const idToken = await firebase.auth().currentUser.getIdToken(true);
 			toSend = {
 				userIdToken: idToken,
-				numPollsRequested: 10,
+				numPollsRequested: 15,
 				seenPollIds: seenPollIds,
 				loggedIn: true
 			}
@@ -69,14 +72,14 @@ function HomePage(props: HomePageProps) {
 			if (localStorage.getItem('userToken') === null) {
 				toSend = {
 					userIdToken: 'none',
-					numPollsRequested: 10,
+					numPollsRequested: 15,
 					seenPollIds: seenPollIds,
 					loggedIn: false
 				}
 			} else {
 				toSend = {
 					userIdToken: localStorage.getItem('userToken'),
-					numPollsRequested: 10,
+					numPollsRequested: 15,
 					seenPollIds: seenPollIds,
 					loggedIn: true
 				}
@@ -95,7 +98,9 @@ function HomePage(props: HomePageProps) {
 			.then(response => {
 				updateSeenPollIds(response.data.suggestedPolls)
 				updatePollArray(response.data.suggestedPolls);
-				console.log(response.data.suggestedPolls)
+				if (response.data.suggestedPolls.length === 0) {
+					setHasMore(false)
+				}
 			})
 			.catch(e => {
 				console.log(e)
@@ -105,7 +110,7 @@ function HomePage(props: HomePageProps) {
 	const divItems = polls.map(function (poll) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
-			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl} 
+			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}
 			answered={false} numClicks={poll.numClicks} />
 	});
 
@@ -120,14 +125,21 @@ function HomePage(props: HomePageProps) {
 
 	return (
 		<div className="masonry-overall-wrapper">
-			<Masonry
-				breakpointCols={breakpointColumnsObj}
-				className="my-masonry-grid"
-				columnClassName="my-masonry-grid_column"
-			>
-				{divItems}
-			</Masonry>
-		</div>
+			<InfiniteScroll
+				dataLength={polls.length}
+				next={() => props.setFetchNewPoll(!props.fetchNewPoll)}
+				hasMore={hasMore}
+				loader={''} 
+				style={{overflow: 'show'}}>
+				<Masonry
+					breakpointCols={breakpointColumnsObj}
+					className="my-masonry-grid"
+					columnClassName="my-masonry-grid_column"
+				>
+					{divItems}
+				</Masonry>
+			</InfiniteScroll>
+		</div >
 	);
 }
 
