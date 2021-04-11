@@ -112,7 +112,7 @@ function HomePage(props: HomePageProps) {
 		return <Poll key={poll.id} id={poll.id} question={poll.question}
 			emoji={poll.emoji} answerOption={poll.answerOptions} isLoggedIn={props.isLoggedIn}
 			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}
-			answered={false} numClicks={poll.numClicks} />
+			answered={false} numClicks={poll.numClicks} isCreated={false} />
 	});
 
 	const breakpointColumnsObj = {
