@@ -40,7 +40,7 @@ function HistoryPage(props: IHistoryPageProps) {
 				endpointUrl + '/user/answered-polls', toSend, config)
 				.then(response => {
 					setStats(response.data.miniStats);
-					setAnsweredPolls(response.data.answeredPolls);
+					setAnsweredPolls(response.data.answeredPolls.reverse());
 					setDescription("You've answered " + response.data.answeredPolls.length + " polls so far! Check in and see how others have responded.");
 				})
 				.catch(e => {

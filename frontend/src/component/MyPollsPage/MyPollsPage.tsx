@@ -42,7 +42,7 @@ function MyPollsPage(props: IMyPollsPageProps) {
 				.then(response => {
 					setAnsweredPollIds(response.data.answeredPollIds);
 					setStats(response.data.miniStats)
-					setCreatedPolls(response.data.createdPolls);
+					setCreatedPolls(response.data.createdPolls.reverse());
 					if (response.data.createdPolls.length === 0) {
 						setDescription("Didn't find polls that was created by you, create a poll first!");
 					} else {
