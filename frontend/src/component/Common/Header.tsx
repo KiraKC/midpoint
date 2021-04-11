@@ -31,7 +31,7 @@ function Header(props) {
 			props.setIsLoggedIn(false);
 			props.setClearFeed(!props.clearFeed);
 			setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
-				navigate('home')
+			navigate('home')
 		} else {
 			props.setIsLoginModalOpen(true);
 		}

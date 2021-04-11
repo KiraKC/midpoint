@@ -119,7 +119,7 @@ function HomePage(props: HomePageProps) {
 	};
 
 	return (
-		<div className="masonry-wrapper-wrapper">
+		<div className="masonry-overall-wrapper">
 			<Masonry
 				breakpointCols={breakpointColumnsObj}
 				className="my-masonry-grid"
