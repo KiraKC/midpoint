@@ -1,5 +1,4 @@
 import '../../styles/HomePage/MasonryOption.css';
-import React from 'react';
 import { Emoji } from 'emoji-mart'
 
 interface MasonryOptionProps {

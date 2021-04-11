@@ -1,7 +1,7 @@
 import '../../styles/HomePage/Poll.css';
 import { Emoji } from 'emoji-mart';
 import IOption from '../../interfaces/IOption';
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';

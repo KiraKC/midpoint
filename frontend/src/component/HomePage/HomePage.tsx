@@ -1,15 +1,12 @@
 import Masonry from 'react-masonry-css';
 import '../../styles/HomePage/HomePage.css';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Poll from './Poll'
 import IPoll from '../../interfaces/IPoll';
 import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
-import { isLoggedIn } from '../../firebase/AuthMethods';
-import { wait } from '@testing-library/dom';
 import InfiniteScroll from 'react-infinite-scroll-component';
-import ReactLoading, { LoadingType } from 'react-loading';
 import { Emoji } from 'emoji-mart';
 
 interface HomePageProps {

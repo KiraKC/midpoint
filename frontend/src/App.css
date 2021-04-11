@@ -8,15 +8,6 @@ html {
 }
 /* https://cdnb.artstation.com/p/assets/images/images/014/594/431/large/robh-ruppel-billboard-revised-2.jpg?1544627353 */
 /* https://i.pinimg.com/originals/04/c7/91/04c79100ee1ec8fd4af045f466ff520a.jpg */
-.bg-image {
-	width: 100vw;
-	height: 100vh;
-	z-index: -1;
-
-	position: fixed;
-	top: 0;
-	left: 0;
-}
 
 #website-wrapper {
 	width: min(90vw, 1400px);

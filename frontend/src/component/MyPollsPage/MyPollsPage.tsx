@@ -1,7 +1,5 @@
 import axios from "axios";
-import firebase from "firebase";
-import React, { useEffect, useState } from "react";
-import ReactLoading, { LoadingType } from 'react-loading';
+import { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import endpointUrl from "../../constants/Endpoint";
 import IPoll from "../../interfaces/IPoll";

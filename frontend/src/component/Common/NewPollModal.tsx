@@ -1,5 +1,4 @@
 import Modal from 'react-modal';
-import React from "react";
 import '../../styles/Common/NewPollModal.css'
 import CategoryButton from './CategoryButton';
 import 'emoji-mart/css/emoji-mart.css'
@@ -268,7 +267,7 @@ function NewPollModal(props: INewPollModal) {
 							placeholder="What's on your curious mind?"
 							onChange={(e) => { setQuestionText(e.target.value); setQuestionHint("QUESTION") }}></input>
 						<div className="poll-modal-question-desc-question"
-							style={{ color: (questionHint == 'QUESTION' ? 'black' : '#F24443') }}
+							style={{ color: (questionHint === 'QUESTION' ? 'black' : '#F24443') }}
 						>{questionHint}</div>
 					</div>
 
@@ -286,7 +285,7 @@ function NewPollModal(props: INewPollModal) {
 							placeholder="Image URL, starts with https://"
 							onChange={(e) => { setImageUrl(e.target.value); setImageHint("IMAGE URL") }}></input>
 						<div className="poll-modal-image-url-hint"
-							style={{ color: (imageHint == 'IMAGE URL' ? 'black' : '#F24443') }}
+							style={{ color: (imageHint === 'IMAGE URL' ? 'black' : '#F24443') }}
 						>{imageHint}</div>
 					</div>
 

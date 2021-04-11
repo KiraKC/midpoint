@@ -9,7 +9,7 @@ import '../../styles/Common/LoginModal.css'
 import Spinner from './Spinner';
 import IPoll from '../../interfaces/IPoll';
 
-interface INewPollModal {
+interface ILoginModalProps {
 	isModalOpen: boolean,
 	setIsModalOpen: any,
 	setIsSignupModalOpen: any,
@@ -39,7 +39,7 @@ const customStyles = {
 	}
 };
 
-function LoginModal(props: INewPollModal) {
+function LoginModal(props: ILoginModalProps) {
 
 	const [email, setEmail]: [string, any] = useState('');
 	const [password, setPassword]: [string, any] = useState('');

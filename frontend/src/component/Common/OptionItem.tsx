@@ -69,7 +69,7 @@ function OptionItem(props: IOptionItemProps) {
 			<input className="poll-modal-question-input" type="text"
 				placeholder={`Enter Option ${props.optionIndex + 1}`} onChange={(e) => { handleTextChange(e, index) }}></input>
 			<div className="poll-modal-question-desc-question"
-				style={{ color: (props.optionHint[index] == 'ANSWER' ? 'black' : '#F24443') }}>
+				style={{ color: (props.optionHint[index] === 'ANSWER' ? 'black' : '#F24443') }}>
 				{props.optionHint[index]}
 			</div>
 		</div>

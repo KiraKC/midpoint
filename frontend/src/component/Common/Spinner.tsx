@@ -1,4 +1,3 @@
-import React from "react";
 import ReactLoading, { LoadingType } from 'react-loading';
 import '../../styles/Common/LoginModal.css'
 
