@@ -1,16 +1,16 @@
 body,
 html {
 	background-color: white;
-	background-image: url("https://s3.medialoot.com/blog-images/How-to-Perfectly-Replicate-a-Sky-Gradient-in-Photoshop/01.jpg?mtime=20190411171039");
+	background-image: url("https://i.ibb.co/8xWS490/448138-PEVTIZ-120.jpg");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
 }
-/* https://cdnb.artstation.com/p/assets/images/images/014/594/431/large/robh-ruppel-billboard-revised-2.jpg?1544627353 */
 /* https://i.pinimg.com/originals/04/c7/91/04c79100ee1ec8fd4af045f466ff520a.jpg */
 
 #website-wrapper {
-	width: min(90vw, 1400px);
+	/* width: min(90vw, 1400px); */
+	width: 95vw;
 	margin-left: auto;
 	margin-right: auto;
 	
@@ -53,6 +53,7 @@ html {
 	flex-basis: 100%;
 	text-align: center;
 	margin-top: 25px;
+	color: white;
 }
 
 .page-title-description {
@@ -63,5 +64,5 @@ html {
 	margin-bottom: 10px;
 	flex-basis: 100%;
 	text-align: center;
-
+	color: white;
 }

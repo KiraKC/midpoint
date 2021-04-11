@@ -83,11 +83,12 @@ function SearchPage(props: ISearchPageProps) {
 	});
 
 	const breakpointColumnsObj = {
-		default: 4,
-		1700: 4,
-		1300: 3,
-		1000: 2,
-		700: 2,
+		default: 7,
+		2450: 6,
+		2200: 5,
+		1950: 4,
+		1500: 3,
+		1050: 2,
 		600: 1
 	};
 
