@@ -54,6 +54,7 @@ public class GetStatsHandler implements Route {
         for (String eachGroup : Constants.USER_GROUPINGS.get(userMetaDataGrouping)) {
           mapForEachAnswerOption.put(eachGroup, 0);
         }
+        System.out.println("mapForEachAnswerOption: " + mapForEachAnswerOption);
       }
 
       // calculate number of responders for each userMetaData grouping
@@ -65,6 +66,8 @@ public class GetStatsHandler implements Route {
         }
         Map<String, Object> answerOptionMiniMap = statsMap.get(pollResponse.getAnswerOptionId());
         Integer curVal = (Integer) answerOptionMiniMap.get(metaDataIdentity);
+        System.out.println("curVal: " + curVal);
+        System.out.println("metaDataIdentity: " + metaDataIdentity);
         answerOptionMiniMap.put(metaDataIdentity, curVal + 1);
       }
 
