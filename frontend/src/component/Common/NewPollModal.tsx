@@ -66,6 +66,7 @@ function NewPollModal(props: INewPollModal) {
 	const [numOfOptions, setNumOfOptions]: [number, any] = useState(2);
 	const [imageUrl, setImageUrl]: [string, any] = useState('');
 	const [imageHint, setImageHint]: [string, any] = useState('IMAGE URL');
+	const [isPreviewAvailable, setIsPreviewAvailable]: [boolean, any] = useState(false);
 
 	const getOptionsArray = () => {
 		const optionArray: IPollOption[] = [];
@@ -238,14 +239,19 @@ function NewPollModal(props: INewPollModal) {
 	}
 
 	const handleImageUrl = (url: string) => {
+		console.log(url)
 		setImageUrl(url);
+		console.log(imageUrl)
 		if (url !== '') {
-			if (isUriImage(url)) {
-				// pop up preview
+			if (isUriImage(url) === true) {
+				setImageHint("IMAGE URL")
+				setIsPreviewAvailable(true);
 			} else {
+				setIsPreviewAvailable(false);
 				setImageHint("DID NOT DETECT VALID IMAGE, TRY ANOTHER ONE")
 			}
 		} else {
+			setIsPreviewAvailable(false);
 			setImageHint("IMAGE URL")
 		}
 	}
@@ -297,10 +303,12 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-modal-input-module display-relative">
 						<input className="poll-image-url-input" type="text"
 							placeholder="Image URL, starts with https://"
-							onChange={(e) => { handleImageUrl(e.target.value) }}></input>
+							onChange={(e) => handleImageUrl(e.target.value) }></input>
 						<div className="poll-modal-image-url-hint"
 							style={{ color: (imageHint === 'IMAGE URL' ? 'black' : '#F24443') }}
 						>{imageHint}</div>
+						{isPreviewAvailable ? <div className="poll-modal-image-preview" onClick={() => window.open(imageUrl, "_blank")}>PREVIEW IN NEW TAB</div> : ''}
+
 					</div>
 
 					<div style={{ marginTop: '20px', marginBottom: '15px' }} className="poll-section-heading">3. Finally, choose (several) categories</div>

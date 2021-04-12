@@ -29,10 +29,10 @@
 }
 
 .login-details {
-	margin-top: 45px;
+	margin-top: 40px;
 	display: flex;
 	flex-direction: column;
-	align-items: flex-end;
+	align-items: flex-start;
 	row-gap: 0.5rem;
 }
 
@@ -98,13 +98,12 @@
 	display: flex;
 	justify-content: flex-end;
 	align-items: center;
-	padding: 5px 8px;
+	padding: 4px 8px;
 	padding-right: 9px;
 	background-color: transparent;
 	border: 2px solid black;
 	outline: none;
 	border-radius: 10px;
-	margin-left: 0.6rem;
 	cursor: pointer;
 }
 
