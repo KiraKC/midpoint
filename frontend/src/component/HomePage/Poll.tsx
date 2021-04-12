@@ -174,7 +174,7 @@ function Poll(props: PollProps) {
 			</button>
 			<FacebookShareButton
 				children={<div className="poll-corner-icon"><span className="material-icons-outlined">share</span></div>}
-				url={endpointUrl + '/poll' + props.id}
+				url={'https://www.midpoint.fun/poll' + props.id}
 				quote={"Found this poll on MidPoint.Fun, let me know what you think!"}
 				hashtag={"#TakeThePoll"}
 				style={{ outline: 'none', border: 'none' }} />
@@ -192,7 +192,7 @@ function Poll(props: PollProps) {
 					{props.isCreated ? deleteButton : shareAndStats}
 				</div>
 				<div className="masonary-poll-heading">{props.question}</div>
-				<div className="selection-hint" style={{ marginBottom: '10px' }}>TOTAL RESPONSES: {props.numClicks}</div>
+				<div className="selection-hint" >TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
