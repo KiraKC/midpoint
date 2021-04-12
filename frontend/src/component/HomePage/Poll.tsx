@@ -8,6 +8,7 @@ import endpointUrl from '../../constants/Endpoint';
 import AnsweredOption from './AnsweredOption';
 import MasonryOption from './PollOption';
 import { FacebookShareButton } from 'react-share';
+import { Navigate, useNavigate } from 'react-router';
 
 interface PollProps {
 	id: string,
@@ -36,6 +37,7 @@ function Poll(props: PollProps) {
 	const [selectedOptionValue, setSelectedOptionValue]: [string, any] = useState('');
 	const [stats, setStats] = useState({})
 	const [isShareModalOpen, setIsShareModalOpen]: [boolean, any] = useState(false);
+	const navigate = useNavigate()
 
 	useEffect(() => {
 		if (props.confirmDelete && props.selectedPollId === props.id) {
@@ -169,7 +171,7 @@ function Poll(props: PollProps) {
 
 	const shareAndStats = (
 		<div className="poll-corner-wrapper-flex">
-			<button className="poll-corner-icon" >
+			<button className="poll-corner-icon" onClick={() => navigate('/stats/' + props.id)}>
 				<span className="material-icons-outlined">query_stats</span>
 			</button>
 			<FacebookShareButton
