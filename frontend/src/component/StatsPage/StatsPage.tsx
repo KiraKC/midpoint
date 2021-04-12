@@ -6,6 +6,7 @@ import '../../styles/Common/LoginModal.css'
 import { randomUserMetaDataGrouping } from "../../constants/UserMetaData";
 import { useParams } from "react-router-dom";
 import BarChart from "./BarChart";
+import StatsBanner from "./StatsBanner";
 
 interface IStatsPageProps {
 	setIsLoginModalOpen: any,
@@ -14,21 +15,20 @@ interface IStatsPageProps {
 
 function StatsPage(props: IStatsPageProps) {
 
-  const [description, setDescription]: [string, any] = useState('');
-  const [chartData, setChartData]: [string, any] = useState('');
-  const [userMetaDataGrouping, setUserMetaDataGrouping]: [string, any] = useState(randomUserMetaDataGrouping());
-  let { pollId } = useParams();
+	const [description, setDescription]: [string, any] = useState('');
+	const [chartData, setChartData]: [string, any] = useState('');
+	const [userMetaDataGrouping, setUserMetaDataGrouping]: [string, any] = useState(randomUserMetaDataGrouping());
+	let { pollId } = useParams();
 
-  useEffect(() => {
-    requestStats();
-  }, [userMetaDataGrouping])
+	useEffect(() => {
+		requestStats();
+	}, [userMetaDataGrouping])
 
 	const requestStats = async () => {
 		setDescription('fetching created stats from the server...')
-		if (localStorage.getItem('userToken') !== null) {
 			let toSend = {
-        pollId: pollId,
-        userMetaDataGrouping: userMetaDataGrouping
+				pollId: pollId,
+				userMetaDataGrouping: userMetaDataGrouping
 			}
 			const config = {
 				headers: {
@@ -39,23 +39,22 @@ function StatsPage(props: IStatsPageProps) {
 			axios.post(
 				endpointUrl + '/poll/stats', toSend, config)
 				.then(response => {
-          console.log(response.data.chartData);
+					console.log(response.data.chartData);
 					setChartData(response.data.chartData);
-          setDescription('');
+					setDescription('');
 				})
 				.catch(e => {
 					console.log(e)
 					setDescription('oops, server is sleeping. try again later!');
 				});
-		}
 	}
 
 
 	return (
 		<>
 			<div className="page-title-description">{description}</div>
-      
-      {chartData ? <BarChart chartData={ chartData }/> : ''}
+			<StatsBanner />
+			{chartData ? <BarChart chartData={chartData} /> : ''}
 		</>
 	);
 }

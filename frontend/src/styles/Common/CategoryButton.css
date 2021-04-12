@@ -14,3 +14,18 @@
 	margin-right: 8px;
 	margin-bottom: 8px;
 }
+
+.category-button-muted {
+	padding: 1.5px 8px;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	color: black;
+	outline: none;
+	border-radius: 90px;
+	border: 2px solid black;
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	font-size: 0.9rem;
+}

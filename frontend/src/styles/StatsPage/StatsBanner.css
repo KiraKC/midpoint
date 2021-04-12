@@ -1,0 +1,57 @@
+.banner-wrapper {
+	width: calc(100% - 60px);
+	border-radius: 20px;
+	background-color: red;
+	position: relative;
+	z-index: 1;
+	padding: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: max-content;
+	color: white;
+}
+
+.banner-supplement-heading {
+	font-family: "Inter", sans-serif;
+	font-size: 1.4rem;
+	font-weight: 600;
+}
+
+.banner-main-heading {
+	font-family: "Inter", sans-serif;
+	font-size: 2.5rem;
+	max-width: 500px;
+	font-weight: 700;
+}
+
+.category-flex-wrapper {
+	display: flex;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.banner-icon {
+	position: absolute;
+	right: 30px;
+	top: 30px;
+}
+
+.banner-statics {
+	position: absolute;
+	right: 30px;
+	bottom: 30px;
+	text-align: right;
+}
+
+.banner-number {
+	font-family: "Inter", sans-serif;
+	font-size: 2rem;
+	font-weight: 700;
+}
+
+.banner-stats-text {
+	font-family: "Inter", sans-serif;
+	font-size: 1.4rem;
+	font-weight: 600;
+}

@@ -50,6 +50,7 @@ html {
 	justify-content: center;
 	display: flex;
 	flex-wrap: wrap;
+	z-index: 0;
 }
 
 .page-title {
@@ -60,6 +61,7 @@ html {
 	text-align: center;
 	margin-top: 25px;
 	color: white;
+	z-index: 0;
 }
 
 .page-title-description {
@@ -71,4 +73,5 @@ html {
 	flex-basis: 100%;
 	text-align: center;
 	color: white;
+	z-index: 0;
 }
