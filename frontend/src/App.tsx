@@ -16,6 +16,7 @@ import GameBox from './component/Game/GameBox';
 import SearchPage from './component/SearchPage/SearchPage';
 import HistoryPage from './component/HistoryPage/HistoryPage';
 import MyPollsPage from './component/MyPollsPage/MyPollsPage';
+import StatsPage from './component/StatsPage/StatsPage';
 
 function App() {
 
@@ -70,7 +71,11 @@ function App() {
 								isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 							/>} />
 							<Route path="/search-result" element={<SearchPage searchString={searchString}
-								setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn} />} />
+								setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn}
+							/>} />
+							<Route path="/stats/:pollId" element={<StatsPage
+								setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn}
+							/>} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>

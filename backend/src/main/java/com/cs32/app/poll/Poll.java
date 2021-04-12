@@ -99,8 +99,8 @@ public class Poll {
     creatorId = mongoPoll.getString("creatorId");
 
     // autofixing
-    if (color == null) {
-      color = Constants.ALL_COLORS[(int) Math.floor(Math.random() * Constants.ALL_COLORS.length)];
+    if (color == null || !Constants.ALL_COLORS.contains(color)) {
+      color = Constants.ALL_COLORS.get((int) Math.floor(Math.random() * Constants.ALL_COLORS.size()));
       needsAutofixing = true;
     }
     if (imageUrl == null) {
