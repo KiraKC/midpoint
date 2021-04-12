@@ -26,6 +26,9 @@ interface PollProps {
 	setRefreshCreatedPage?: any,
 	setIsDeleteModalOpen?: any,
 	confirmDelete?: boolean,
+	selectedPollId?: string,
+	setSelectedPollId?: any,
+	setSelectedPollQuestion?: any
 }
 
 function Poll(props: PollProps) {
@@ -35,7 +38,7 @@ function Poll(props: PollProps) {
 	const [isShareModalOpen, setIsShareModalOpen]: [boolean, any] = useState(false);
 
 	useEffect(() => {
-		if (props.confirmDelete) {
+		if (props.confirmDelete && props.selectedPollId === props.id) {
 			handleDelete();
 		}
 	}, [props.confirmDelete])
@@ -153,7 +156,12 @@ function Poll(props: PollProps) {
 	}
 
 	const deleteButton = (
-		<button className="poll-corner-delete" onClick={() => props.setIsDeleteModalOpen(true)}>
+		<button className="poll-corner-delete"
+			onClick={() => {
+				props.setIsDeleteModalOpen(true);
+				props.setSelectedPollId(props.id);
+				props.setSelectedPollQuestion(props.question)
+			}}>
 			<span className="material-icons-outlined">delete</span>
 			<div style={{ marginTop: '1px', marginLeft: '2px' }}>DELETE</div>
 		</button>
