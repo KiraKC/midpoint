@@ -150,7 +150,7 @@ function LoginModal(props: ILoginModalProps) {
 							</button>
 						</div>
 						<div className="login-modal-info-wrapper">
-							<div className="login-modal-input-module" style={{ marginBottom: '20px', marginTop: '15px' }}>
+							<div className="login-modal-input-module" style={{ marginBottom: '20px', marginTop: '10px' }}>
 								<input className="login-modal-user-input" type="text"
 									placeholder="hello@midpoint.fun"
 									onChange={(e) => { setEmail(e.target.value); setEmailDescription("EMAIL"); }}></input>
@@ -174,10 +174,10 @@ function LoginModal(props: ILoginModalProps) {
 								<div className="login-buttons-wrapper-flex">
 									<button className="login-modal-submit" onClick={() => { handleEmailLogin() }}>
 										<span className="material-icons-outlined" style={{ marginRight: '7px' }}>email</span>
-										<div className="login-modal-close-text">Sign In</div>
+										<div className="login-modal-close-text">Email Sign In</div>
 									</button>
 								</div>
-								<div className="login-modal-fineprint" style={{ marginTop: '7px' }}>Don't have an account?&nbsp;
+								<div className="login-modal-fineprint" style={{ marginTop: '4px' }}>Don't have an account?&nbsp;
 								<span style={{ cursor: 'pointer', textDecoration: 'underline' }}
 										onClick={() => {
 											props.setIsModalOpen(false);

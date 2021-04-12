@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Masonry from "react-masonry-css";
 import endpointUrl from "../../constants/Endpoint";
 import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
 import Poll from "../HomePage/Poll";
+import Modal from 'react-modal';
 
 interface IMyPollsPageProps {
 	setIsLoginModalOpen: any,
@@ -18,10 +19,32 @@ function MyPollsPage(props: IMyPollsPageProps) {
 	const [stats, setStats] = useState({});
 	const [description, setDescription]: [string, any] = useState('');
 	const [refresh, setRefresh]: [boolean, any] = useState(false);
+	const [isDeleteModalOpen, setIsDeleteModalOpen]: [boolean, any] = useState(false);
+	const [confirmDelete, setConfirmDelete]: [boolean, any] = useState(false);
 
 	useEffect(() => {
 		requestPolls();
 	}, [refresh])
+
+	const customStyles = {
+		content: {
+			top: '50%',
+			left: '50%',
+			right: 'auto',
+			bottom: 'auto',
+			marginRight: '-50%',
+			width: 'min(650px, 85vw)',
+			height: 'max-content',
+			transform: 'translate(-50%, -50%)',
+			borderRadius: '30px',
+			paddingTop: '30px',
+			paddingBottom: '30px',
+			paddingLeft: '30px',
+			backgroundColor: 'rgba(255,255,255, 0.6)',
+			backdropFilter: 'blur(20px)',
+			boxShadow: 'rgb(0 0 0 / 46%) 0px 3px 6px, rgb(255 255 255 / 24%) 0px 3px 12px inset'
+		}
+	};
 
 	const requestPolls = async () => {
 		setDescription('fetching created polls from the server...')
@@ -60,7 +83,8 @@ function MyPollsPage(props: IMyPollsPageProps) {
 			setIsLoginModalOpen={props.setIsLoginModalOpen} color={poll.color} imageUrl={poll.imageUrl}
 			answered={answeredPollIds.includes(poll.id) ? true : false}
 			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}} numClicks={poll.numClicks}
-			isCreated={true} refreshCreatedPage={refresh} setRefreshCreatedPage={setRefresh} />
+			isCreated={true} refreshCreatedPage={refresh} setRefreshCreatedPage={setRefresh} 
+			setIsDeleteModalOpen={setIsDeleteModalOpen} confirmDelete={confirmDelete} />
 	});
 
 	const breakpointColumnsObj = {
@@ -74,19 +98,27 @@ function MyPollsPage(props: IMyPollsPageProps) {
 	};
 
 	return (
-		<div className="masonry-overall-wrapper">
-			<div className="page-title-wrapper-flex">
-				<div className="page-title">&nbsp;Created</div>
-				<div className="page-title-description">{description}</div>
+		<>
+			<Modal
+				isOpen={isDeleteModalOpen}
+				contentLabel="Login Modal"
+				style={customStyles}>
+					<div onClick={() => setConfirmDelete(true)}>confirm</div>
+			</Modal>
+			<div className="masonry-overall-wrapper">
+				<div className="page-title-wrapper-flex">
+					<div className="page-title">&nbsp;Created</div>
+					<div className="page-title-description">{description}</div>
+				</div>
+				<Masonry
+					breakpointCols={breakpointColumnsObj}
+					className="my-masonry-grid"
+					columnClassName="my-masonry-grid_column"
+				>
+					{divItems}
+				</Masonry>
 			</div>
-			<Masonry
-				breakpointCols={breakpointColumnsObj}
-				className="my-masonry-grid"
-				columnClassName="my-masonry-grid_column"
-			>
-				{divItems}
-			</Masonry>
-		</div>
+		</>
 	);
 }
 

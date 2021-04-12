@@ -1,7 +1,7 @@
 import '../../styles/HomePage/Poll.css';
 import { Emoji } from 'emoji-mart';
 import IOption from '../../interfaces/IOption';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
@@ -23,7 +23,9 @@ interface PollProps {
 	numClicks: number,
 	isCreated: boolean,
 	refreshCreatedPage?: boolean,
-	setRefreshCreatedPage?: any
+	setRefreshCreatedPage?: any,
+	setIsDeleteModalOpen?: any,
+	confirmDelete?: boolean,
 }
 
 function Poll(props: PollProps) {
@@ -31,6 +33,12 @@ function Poll(props: PollProps) {
 	const [selectedOptionValue, setSelectedOptionValue]: [string, any] = useState('');
 	const [stats, setStats] = useState({})
 	const [isShareModalOpen, setIsShareModalOpen]: [boolean, any] = useState(false);
+
+	useEffect(() => {
+		if (props.confirmDelete) {
+			handleDelete();
+		}
+	}, [props.confirmDelete])
 
 	const handleResponseToPoll = async (optionId: string, optionValue: string) => {
 		if (props.isLoggedIn) {
@@ -131,6 +139,7 @@ function Poll(props: PollProps) {
 			.then(res => {
 				if (res.data.status) {
 					props.setRefreshCreatedPage(!props.refreshCreatedPage)
+					props.setIsDeleteModalOpen(false);
 					return true;
 				} else {
 					console.log("DELETION Failed")
@@ -144,7 +153,7 @@ function Poll(props: PollProps) {
 	}
 
 	const deleteButton = (
-		<button className="poll-corner-delete" onClick={() => handleDelete()}>
+		<button className="poll-corner-delete" onClick={() => props.setIsDeleteModalOpen(true)}>
 			<span className="material-icons-outlined">delete</span>
 			<div style={{ marginTop: '1px', marginLeft: '2px' }}>DELETE</div>
 		</button>
@@ -157,10 +166,10 @@ function Poll(props: PollProps) {
 			</button>
 			<FacebookShareButton
 				children={<div className="poll-corner-icon"><span className="material-icons-outlined">share</span></div>}
-				url={endpointUrl + '/poll' + props.id} 
-				quote={"Found this poll on MidPoint.Fun, let me know what you think!"} 
-				hashtag={"#TakeThePoll"} 
-				style={{outline: 'none', border: 'none'}}/>
+				url={endpointUrl + '/poll' + props.id}
+				quote={"Found this poll on MidPoint.Fun, let me know what you think!"}
+				hashtag={"#TakeThePoll"}
+				style={{ outline: 'none', border: 'none' }} />
 		</div>
 	)
 
