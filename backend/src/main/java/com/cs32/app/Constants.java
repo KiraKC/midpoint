@@ -36,14 +36,14 @@ public final class Constants {
         "#264779", "#B36A5E", "#344966", "#A4303F", "#CF5C36", "#70A288", "#2ABC88", "#86BBEC",
         "#246A73"));
 
-  // Constants for get stats
+  // Constants for get stats (order matters when showing in legend)
   public static final String UNIDENTIFIED = "Unidentified";
   public static final Map<String, String[]> USER_GROUPINGS = new HashMap<String, String[]>() {{
-      put("education", new String[]{"Elementary School", "Middle School", "High School", "Bachelors", "Masters", "PhD"});
-      put("gender", new String[]{"Male", "Female", "Others"});
-      put("age", new String[]{"0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"});
-      put("politicalLeaning", new String[]{"Left Leaning", "Neutral", "Right Leaning"});
-      put("maritalStatus", new String[]{"Married", "Unmarried"});
+      put("education", new String[]{UNIDENTIFIED, "Elementary School", "Middle School", "High School", "Bachelors", "Masters", "PhD"});
+      put("gender", new String[]{UNIDENTIFIED, "Male", "Female", "Others"});
+      put("age", new String[]{UNIDENTIFIED, "0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"});
+      put("politicalLeaning", new String[]{UNIDENTIFIED, "Left Leaning", "Neutral", "Right Leaning"});
+      put("maritalStatus", new String[]{UNIDENTIFIED, "Married", "Unmarried"});
   }};
 
   // Percentage
