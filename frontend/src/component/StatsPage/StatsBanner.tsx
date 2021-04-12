@@ -9,16 +9,16 @@ import BarChart from "./BarChart";
 import CategoryButtonMuted from "../Common/CategoryButtonMuted";
 
 interface IStatsBannerProps {
-
+	poll: IPoll
 }
 
-function StatsBanner() {
+function StatsBanner(props: IStatsBannerProps) {
 
 	return (
-		<div className="banner-wrapper">
+		<div className="banner-wrapper" style={{backgroundColor: props.poll.color}}>
 			<div className="banner-left">
 				<div className="banner-supplement-heading">DETAILED STATISTICS FOR</div>
-				<div className="banner-main-heading">Should the Ratty Discontinue CHICKEN-FINGER Friday?</div>
+				<div className="banner-main-heading">{props.poll.question}</div>
 				<div className="category-flex-wrapper">
 					<div className="category-text">Strongly correlated with: </div>
 					<CategoryButtonMuted text='hello' emoji='cop' />

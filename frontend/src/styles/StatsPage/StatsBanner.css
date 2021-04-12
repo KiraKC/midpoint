@@ -1,7 +1,6 @@
 .banner-wrapper {
 	width: calc(100% - 60px);
 	border-radius: 20px;
-	background-color: red;
 	position: relative;
 	z-index: 1;
 	padding: 30px;
@@ -14,17 +13,23 @@
 
 .banner-supplement-heading {
 	font-family: "Inter", sans-serif;
-	font-size: 1.4rem;
+	font-size: 1.1rem;
 	font-weight: 600;
 }
 
 .banner-main-heading {
 	font-family: "Inter", sans-serif;
-	font-size: 2.5rem;
+	font-size: 2.2rem;
 	max-width: 500px;
 	font-weight: 700;
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 
+.category-text {
+	font-family: "Inter", sans-serif;
+	margin-right: 10px;
+}
 .category-flex-wrapper {
 	display: flex;
 	align-items: center;

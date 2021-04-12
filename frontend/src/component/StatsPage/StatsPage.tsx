@@ -18,6 +18,9 @@ function StatsPage(props: IStatsPageProps) {
 	const [description, setDescription]: [string, any] = useState('');
 	const [chartData, setChartData]: [string, any] = useState('');
 	const [userMetaDataGrouping, setUserMetaDataGrouping]: [string, any] = useState(randomUserMetaDataGrouping());
+	const [poll, setPoll]: [IPoll, any] = useState(null)
+	
+	
 	let { pollId } = useParams();
 
 	useEffect(() => {
@@ -26,35 +29,38 @@ function StatsPage(props: IStatsPageProps) {
 
 	const requestStats = async () => {
 		setDescription('fetching created stats from the server...')
-			let toSend = {
-				pollId: pollId,
-				userMetaDataGrouping: userMetaDataGrouping
+		let toSend = {
+			pollId: pollId,
+			userMetaDataGrouping: userMetaDataGrouping
+		}
+		console.log(toSend);
+		const config = {
+			headers: {
+				"Content-Type": "application/json",
+				'Access-Control-Allow-Origin': '*',
 			}
-      console.log(toSend);
-			const config = {
-				headers: {
-					"Content-Type": "application/json",
-					'Access-Control-Allow-Origin': '*',
-				}
-			}
-			axios.post(
-				endpointUrl + '/poll/stats', toSend, config)
-				.then(response => {
-					console.log(response.data.chartData);
-					setChartData(response.data.chartData);
-					setDescription('');
-				})
-				.catch(e => {
-					console.log(e)
-					setDescription('oops, server is sleeping. try again later!');
-				});
+		}
+		axios.post(
+			endpointUrl + '/poll/stats', toSend, config)
+			.then(response => {
+				console.log(response.data);
+				
+				setChartData(response.data.chartData);
+				setPoll(response.data.poll)
+				setDescription('');
+			})
+			.catch(e => {
+				console.log(e)
+				setDescription('oops, server is sleeping. try again later!');
+			});
 	}
 
 
 	return (
 		<>
+		
 			<div className="page-title-description">{description}</div>
-			<StatsBanner />
+			{poll ? <StatsBanner poll={poll}/> : ''}
 			{chartData ? <BarChart chartData={chartData} /> : ''}
 		</>
 	);
