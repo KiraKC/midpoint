@@ -80,11 +80,17 @@ public class GetStatsHandler implements Route {
       // calculate strongly correlated with
       List<Map.Entry<String, Double>> categoriesRankedByCorrelation = new ArrayList<>(poll.getCatPts().getMap().entrySet());
       categoriesRankedByCorrelation.sort(Map.Entry.comparingByValue());
+      Collections.reverse(categoriesRankedByCorrelation);
+      List<String> rankedCategoriesToSend = new ArrayList<>();
+      for (Map.Entry<String, Double> entry : categoriesRankedByCorrelation) {
+        rankedCategoriesToSend.add(entry.getKey());
+      }
+      System.out.println("categoriesRankedByCorrelation: " + categoriesRankedByCorrelation);
 
       variables.put("chartData", chartData);
       variables.put("poll", poll);
 
-      variables.put("categoriesRankedByCorrelation", categoriesRankedByCorrelation);
+      variables.put("categoriesRankedByCorrelation", rankedCategoriesToSend);
       status = true;
 //      }
 
