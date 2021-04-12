@@ -1,15 +1,11 @@
 package com.cs32.app.handlers;
 
 import com.cs32.app.Constants;
-import com.cs32.app.User;
 import com.cs32.app.database.Connection;
 import com.cs32.app.exceptions.MissingDBObjectException;
 import com.cs32.app.poll.AnswerOption;
 import com.cs32.app.poll.Poll;
 import com.cs32.app.poll.PollResponse;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuthException;
-import com.google.firebase.auth.FirebaseToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONException;
@@ -58,7 +54,6 @@ public class GetStatsHandler implements Route {
         for (String eachGroup : Constants.USER_GROUPINGS.get(userMetaDataGrouping)) {
           mapForEachAnswerOption.put(eachGroup, 0);
         }
-        mapForEachAnswerOption.put(Constants.UNIDENTIFIED, 0);
       }
 
       // calculate number of responders for each userMetaData grouping
@@ -82,7 +77,14 @@ public class GetStatsHandler implements Route {
       chartData.put("stats", stats);
       chartData.put("identities", Constants.USER_GROUPINGS.get(userMetaDataGrouping));
 
+      // calculate strongly correlated with
+      List<Map.Entry<String, Double>> categoriesRankedByCorrelation = new ArrayList<>(poll.getCatPts().getMap().entrySet());
+      categoriesRankedByCorrelation.sort(Map.Entry.comparingByValue());
+
       variables.put("chartData", chartData);
+      variables.put("poll", poll);
+
+      variables.put("categoriesRankedByCorrelation", categoriesRankedByCorrelation);
       status = true;
 //      }
 

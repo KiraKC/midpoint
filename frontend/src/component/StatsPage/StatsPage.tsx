@@ -30,6 +30,7 @@ function StatsPage(props: IStatsPageProps) {
         pollId: pollId,
         userMetaDataGrouping: userMetaDataGrouping
 			}
+      console.log(toSend);
 			const config = {
 				headers: {
 					"Content-Type": "application/json",
