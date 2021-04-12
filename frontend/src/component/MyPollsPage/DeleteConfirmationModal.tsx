@@ -51,7 +51,7 @@ function DeleteConfirmationModal(props: IDeleteConfirmationModalProps) {
 			style={customStyles}>
 			<div className="login-modal-heading" style={{fontSize: '1.5rem'}}>Deleting Poll</div>
 			<div className="login-modal-description" style={{fontSize: '1.05rem'}}>
-				Please enter <code>{props.question}</code> in the textbox below to confirm.
+				Please enter <b>{props.question}</b> in the textbox below to confirm.
 				</div>
 			<input className="delete-poll-input" type="text"
 				placeholder="Enter requested string"

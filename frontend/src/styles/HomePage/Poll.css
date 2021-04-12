@@ -1,4 +1,4 @@
-.masonary-poll-wrapper {
+.masonry-poll-wrapper {
 	border-radius: 30px;
 	padding: 23px;
 	color: white;
@@ -8,7 +8,7 @@
 	backdrop-filter: blur(6px);
 }
 
-.masonary-background {
+.masonry-background {
 	width: 100%;
 	height: 100%;
 	position: absolute;
@@ -19,7 +19,7 @@
 	border-radius: 30px;
 }
 
-.masonary-poll-heading {
+.masonry-poll-heading {
 	font-family: "Inter", sans-serif;
 	font-size: 1.6rem;
 	font-weight: 700;

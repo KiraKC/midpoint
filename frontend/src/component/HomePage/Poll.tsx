@@ -183,15 +183,15 @@ function Poll(props: PollProps) {
 
 	if (props.answered === true && selectedOptionValue === '') {
 		return (
-			<div className="masonary-poll-wrapper" >
-				<div className="masonary-background" style={{
+			<div className="masonry-poll-wrapper" >
+				<div className="masonry-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
 				<div className="poll-top-flex">
 					<Emoji emoji={props.emoji} set='apple' size={35} />
 					{props.isCreated ? deleteButton : shareAndStats}
 				</div>
-				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="masonry-poll-heading">{props.question}</div>
 				<div className="selection-hint" >TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
@@ -205,15 +205,15 @@ function Poll(props: PollProps) {
 	}
 	if (selectedOptionValue !== '') {
 		return (
-			<div className="masonary-poll-wrapper" >
-				<div className="masonary-background" style={{
+			<div className="masonry-poll-wrapper" >
+				<div className="masonry-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
 				<div className="poll-top-flex">
 					<Emoji emoji={props.emoji} set='apple' size={35} />
 					{props.isCreated ? deleteButton : shareAndStats}
 				</div>
-				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="masonry-poll-heading">{props.question}</div>
 				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks + 1}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
@@ -228,15 +228,15 @@ function Poll(props: PollProps) {
 	}
 	return (
 		<>
-			<div className="masonary-poll-wrapper" >
-				<div className="masonary-background" style={{
+			<div className="masonry-poll-wrapper" >
+				<div className="masonry-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
 				<div className="poll-top-flex">
 					<Emoji emoji={props.emoji} set='apple' size={35} />
 					{props.isCreated ? deleteButton : shareAndStats}
 				</div>
-				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="masonry-poll-heading">{props.question}</div>
 				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
 				{props.answerOption.map((option, index) => (
