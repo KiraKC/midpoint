@@ -42,7 +42,7 @@ const customStyles = {
 		paddingTop: '30px',
 		paddingBottom: '30px',
 		paddingLeft: '40px',
-		backgroundColor: 'rgba(255,255,255, 0.6)',
+		backgroundColor: 'rgba(255,255,255, 0.1)',
 		backdropFilter: 'blur(20px)',
 		boxShadow: '0px 3px 6px rgba(0, 0, 0, 0.462), inset 0px 3px 12px rgba(255, 255, 255, 0.243)'
 	}

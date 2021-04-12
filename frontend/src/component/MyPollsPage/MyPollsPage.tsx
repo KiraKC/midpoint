@@ -5,7 +5,7 @@ import endpointUrl from "../../constants/Endpoint";
 import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
 import Poll from "../HomePage/Poll";
-import Modal from 'react-modal';
+import DeleteConfirmationModal from "./DeleteConfirmationModal";
 
 interface IMyPollsPageProps {
 	setIsLoginModalOpen: any,
@@ -21,30 +21,12 @@ function MyPollsPage(props: IMyPollsPageProps) {
 	const [refresh, setRefresh]: [boolean, any] = useState(false);
 	const [isDeleteModalOpen, setIsDeleteModalOpen]: [boolean, any] = useState(false);
 	const [confirmDelete, setConfirmDelete]: [boolean, any] = useState(false);
+	const [selectedPollId, setSelectedPollId]: [string, any] = useState('');
+	const [selectedPollQuestion, setSelectedPollQuestion]: [string, any] = useState('');
 
 	useEffect(() => {
 		requestPolls();
 	}, [refresh])
-
-	const customStyles = {
-		content: {
-			top: '50%',
-			left: '50%',
-			right: 'auto',
-			bottom: 'auto',
-			marginRight: '-50%',
-			width: 'min(650px, 85vw)',
-			height: 'max-content',
-			transform: 'translate(-50%, -50%)',
-			borderRadius: '30px',
-			paddingTop: '30px',
-			paddingBottom: '30px',
-			paddingLeft: '30px',
-			backgroundColor: 'rgba(255,255,255, 0.6)',
-			backdropFilter: 'blur(20px)',
-			boxShadow: 'rgb(0 0 0 / 46%) 0px 3px 6px, rgb(255 255 255 / 24%) 0px 3px 12px inset'
-		}
-	};
 
 	const requestPolls = async () => {
 		setDescription('fetching created polls from the server...')
@@ -84,7 +66,8 @@ function MyPollsPage(props: IMyPollsPageProps) {
 			answered={answeredPollIds.includes(poll.id) ? true : false}
 			answeredStats={answeredPollIds.includes(poll.id) ? stats[poll.id] : {}} numClicks={poll.numClicks}
 			isCreated={true} refreshCreatedPage={refresh} setRefreshCreatedPage={setRefresh} 
-			setIsDeleteModalOpen={setIsDeleteModalOpen} confirmDelete={confirmDelete} />
+			setIsDeleteModalOpen={setIsDeleteModalOpen} confirmDelete={confirmDelete} 
+			selectedPollId={selectedPollId} setSelectedPollId={setSelectedPollId} setSelectedPollQuestion={setSelectedPollQuestion} />
 	});
 
 	const breakpointColumnsObj = {
@@ -99,12 +82,8 @@ function MyPollsPage(props: IMyPollsPageProps) {
 
 	return (
 		<>
-			<Modal
-				isOpen={isDeleteModalOpen}
-				contentLabel="Login Modal"
-				style={customStyles}>
-					<div onClick={() => setConfirmDelete(true)}>confirm</div>
-			</Modal>
+			<DeleteConfirmationModal isModalOpen={isDeleteModalOpen} setIsModalOpen={setIsDeleteModalOpen}
+			setConfirmDelete={setConfirmDelete} question={selectedPollQuestion}/>
 			<div className="masonry-overall-wrapper">
 				<div className="page-title-wrapper-flex">
 					<div className="page-title">&nbsp;Created</div>

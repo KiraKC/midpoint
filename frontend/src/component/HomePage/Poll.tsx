@@ -26,6 +26,9 @@ interface PollProps {
 	setRefreshCreatedPage?: any,
 	setIsDeleteModalOpen?: any,
 	confirmDelete?: boolean,
+	selectedPollId?: string,
+	setSelectedPollId?: any,
+	setSelectedPollQuestion?: any
 }
 
 function Poll(props: PollProps) {
@@ -35,7 +38,7 @@ function Poll(props: PollProps) {
 	const [isShareModalOpen, setIsShareModalOpen]: [boolean, any] = useState(false);
 
 	useEffect(() => {
-		if (props.confirmDelete) {
+		if (props.confirmDelete && props.selectedPollId === props.id) {
 			handleDelete();
 		}
 	}, [props.confirmDelete])
@@ -153,7 +156,12 @@ function Poll(props: PollProps) {
 	}
 
 	const deleteButton = (
-		<button className="poll-corner-delete" onClick={() => props.setIsDeleteModalOpen(true)}>
+		<button className="poll-corner-delete"
+			onClick={() => {
+				props.setIsDeleteModalOpen(true);
+				props.setSelectedPollId(props.id);
+				props.setSelectedPollQuestion(props.question)
+			}}>
 			<span className="material-icons-outlined">delete</span>
 			<div style={{ marginTop: '1px', marginLeft: '2px' }}>DELETE</div>
 		</button>
@@ -166,7 +174,7 @@ function Poll(props: PollProps) {
 			</button>
 			<FacebookShareButton
 				children={<div className="poll-corner-icon"><span className="material-icons-outlined">share</span></div>}
-				url={endpointUrl + '/poll' + props.id}
+				url={'https://www.midpoint.fun/poll' + props.id}
 				quote={"Found this poll on MidPoint.Fun, let me know what you think!"}
 				hashtag={"#TakeThePoll"}
 				style={{ outline: 'none', border: 'none' }} />
@@ -175,16 +183,16 @@ function Poll(props: PollProps) {
 
 	if (props.answered === true && selectedOptionValue === '') {
 		return (
-			<div className="masonary-poll-wrapper" >
-				<div className="masonary-background" style={{
+			<div className="masonry-poll-wrapper" >
+				<div className="masonry-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
 				<div className="poll-top-flex">
 					<Emoji emoji={props.emoji} set='apple' size={35} />
 					{props.isCreated ? deleteButton : shareAndStats}
 				</div>
-				<div className="masonary-poll-heading">{props.question}</div>
-				<div className="selection-hint" style={{ marginBottom: '10px' }}>TOTAL RESPONSES: {props.numClicks}</div>
+				<div className="masonry-poll-heading">{props.question}</div>
+				<div className="selection-hint" >TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
 					<AnsweredOption key={index} id={option.id} value={option.value}
@@ -197,15 +205,15 @@ function Poll(props: PollProps) {
 	}
 	if (selectedOptionValue !== '') {
 		return (
-			<div className="masonary-poll-wrapper" >
-				<div className="masonary-background" style={{
+			<div className="masonry-poll-wrapper" >
+				<div className="masonry-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
 				<div className="poll-top-flex">
 					<Emoji emoji={props.emoji} set='apple' size={35} />
 					{props.isCreated ? deleteButton : shareAndStats}
 				</div>
-				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="masonry-poll-heading">{props.question}</div>
 				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks + 1}</div>
 				{props.imageUrl !== '' ? <img className="masonry-poll-img" src={props.imageUrl}></img> : ''}
 				{props.answerOption.map((option, index) => (
@@ -220,15 +228,15 @@ function Poll(props: PollProps) {
 	}
 	return (
 		<>
-			<div className="masonary-poll-wrapper" >
-				<div className="masonary-background" style={{
+			<div className="masonry-poll-wrapper" >
+				<div className="masonry-background" style={{
 					backgroundColor: `${props.color}`
 				}}></div>
 				<div className="poll-top-flex">
 					<Emoji emoji={props.emoji} set='apple' size={35} />
 					{props.isCreated ? deleteButton : shareAndStats}
 				</div>
-				<div className="masonary-poll-heading">{props.question}</div>
+				<div className="masonry-poll-heading">{props.question}</div>
 				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
 				{props.answerOption.map((option, index) => (
