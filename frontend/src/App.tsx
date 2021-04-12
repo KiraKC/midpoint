@@ -27,7 +27,6 @@ function App() {
 	const [isLoginModalOpen, setIsLoginModalOpen]: [boolean, any] = useState(false);
 	const [clearFeed, setClearFeed]: [boolean, any] = useState(false);
 
-
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged(function (user) {
 			if (user) {
@@ -47,9 +46,10 @@ function App() {
 
 	return (
 		<>
-			{console.log(isLoggedIn)}
 			<BrowserRouter>
 				<FirebaseAuthProvider firebase={firebase} {...firebaseConfig}>
+					<div id="background-color"></div>
+
 					<div id="website-wrapper">
 						<Header isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn}
 							fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
@@ -62,15 +62,15 @@ function App() {
 								{...pollProps} isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
 								fetchNewPoll={fetchNewPoll} setFetchNewPoll={setFetchNewPoll}
 								clearFeed={clearFeed} setClearFeed={setClearFeed}
-							  />} />
+							/>} />
 							<Route path="/history" element={<HistoryPage
 								isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-					      />} />
+							/>} />
 							<Route path="/my-polls" element={<MyPollsPage
 								isLoggedIn={isLoggedIn} setIsLoginModalOpen={setIsLoginModalOpen}
-								/>} />
-							<Route path="/search-result" element={<SearchPage searchString={searchString} 
-							setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn} />} />
+							/>} />
+							<Route path="/search-result" element={<SearchPage searchString={searchString}
+								setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn} />} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>

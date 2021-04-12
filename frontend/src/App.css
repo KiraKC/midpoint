@@ -1,21 +1,28 @@
 body,
 html {
 	background-color: black;
-	/* background-image: url("https://i.ibb.co/8xWS490/448138-PEVTIZ-120.jpg"); */
+	background-image: url("https://media.giphy.com/media/XGa7LjLlGE5V6CUFj1/giphy.gif");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: cover;
 }
-/* https://i.pinimg.com/originals/04/c7/91/04c79100ee1ec8fd4af045f466ff520a.jpg */
+/*  */
 
 #website-wrapper {
 	/* width: min(90vw, 1400px); */
 	width: 95vw;
 	margin-left: auto;
 	margin-right: auto;
-	
 }
 
+#background-color {
+	background-color: rgba(0, 0, 0, 0.7);
+	width: 100vw;
+	height: 100vh;
+	position: fixed;
+	margin-top: -30px;
+	z-index: 0;
+}
 /* width */
 ::-webkit-scrollbar {
 	margin-right: 10px;
