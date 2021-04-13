@@ -15,7 +15,7 @@ function StatsControlBox(props: IStatsControlBoxProps) {
 
 	return (
 		<div className="stats-control-box-wrapper">
-			<div className="control-box-heading">Insights by Metrics</div>
+			<div className="control-box-heading">Insights<br/>by Metrics</div>
 			<button onClick={() => handleClick("politicalLeaning")}
 			style={{backgroundColor: '#CF5C36'}}>
 				<Emoji emoji='classical_building' set='apple' size={20} />

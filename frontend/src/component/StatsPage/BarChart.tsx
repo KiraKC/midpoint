@@ -26,7 +26,7 @@ function BarChart(props: IBarChartProps) {
 				data={props.chartData.stats}
 				keys={props.chartData.identities}
 				indexBy="answerOptionValue"
-				margin={{ top: 18, right: 130, bottom: 90, left: 60 }}
+				margin={{ top: 30, right: 130, bottom: 90, left: 60 }}
 				padding={0.3}
 				valueScale={{ type: 'linear' }}
 				indexScale={{ type: 'band', round: true }}
