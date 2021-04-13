@@ -1,0 +1,12 @@
+.stats-bottom-panel-wrapper {
+  width: calc(100% - 60px);
+	border-radius: 20px;
+	position: relative;
+	z-index: 1;
+	padding: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	height: max-content;
+	color: white;
+}

@@ -37,7 +37,7 @@ public final class Constants {
         "#246A73"));
 
   // Constants for get stats (order matters when showing in legend)
-  public static final String UNIDENTIFIED = "Unidentified";
+  public static final String UNIDENTIFIED = "Undisclosed";
   public static final Map<String, String[]> USER_GROUPINGS = new HashMap<String, String[]>() {{
       put("education", new String[]{UNIDENTIFIED, "Elementary School", "Middle School", "High School", "Bachelors", "Masters", "PhD"});
       put("gender", new String[]{UNIDENTIFIED, "Male", "Female", "Others"});

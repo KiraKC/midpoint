@@ -7,8 +7,7 @@ import { randomUserMetaDataGrouping } from "../../constants/UserMetaData";
 import { useParams } from "react-router-dom";
 import BarChart from "./BarChart";
 import StatsBanner from "./StatsBanner";
-import { Bones } from "react-bones/lib";
-import Spinner from "../Common/Spinner";
+import StatsBottomPanel from "./StatsBottomPanel";
 
 interface IStatsPageProps {
 	setIsLoginModalOpen: any,
@@ -58,10 +57,10 @@ function StatsPage(props: IStatsPageProps) {
 
 	return (
 		<>
-
 			<div className="page-title-description">{description}</div>
 			{statistics ? <StatsBanner statistics={statistics} /> : ''}
-			{chartData ? <BarChart chartData={chartData} /> : ''}
+			{statistics ? <BarChart chartData={statistics.chartData} /> : ''}
+
 		</>
 	);
 }
