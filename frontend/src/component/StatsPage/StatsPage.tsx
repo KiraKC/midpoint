@@ -17,7 +17,6 @@ interface IStatsPageProps {
 function StatsPage(props: IStatsPageProps) {
 
 	const [description, setDescription]: [string, any] = useState('');
-	const [chartData, setChartData]: [string, any] = useState('');
 	const [userMetaDataGrouping, setUserMetaDataGrouping]: [string, any] = useState(randomUserMetaDataGrouping());
 	const [statistics, setStatistics]: [any, any] = useState(null)
 
@@ -29,7 +28,6 @@ function StatsPage(props: IStatsPageProps) {
 	}, [userMetaDataGrouping])
 
 	const requestStats = async () => {
-		setDescription('fetching created stats from the server...')
 		let toSend = {
 			pollId: pollId,
 			userMetaDataGrouping: userMetaDataGrouping
@@ -59,8 +57,10 @@ function StatsPage(props: IStatsPageProps) {
 		<>
 			<div className="page-title-description">{description}</div>
 			{statistics ? <StatsBanner statistics={statistics} /> : ''}
-			{statistics ? <BarChart chartData={statistics.chartData} /> : ''}
-
+			{statistics ? <StatsBottomPanel
+				chartData={statistics.chartData} poll={statistics.poll}
+				setUserMetaDataGrouping={setUserMetaDataGrouping} 
+				grouping={userMetaDataGrouping} /> : ''}
 		</>
 	);
 }

@@ -6,19 +6,17 @@ import StatsControlBox from "./StatsControlBox";
 
 interface IStatsBottomPanelProps {
 	chartData: any,
-  poll: IPoll
+	poll: IPoll,
+	setUserMetaDataGrouping: any,
+	grouping: string
 }
 
 function StatsBottomPanel(props: IStatsBottomPanelProps) {
 
 	return (
-		<div className="stats-bottom-panel-wrapper" style={{backgroundColor: props.poll.color}}>
-        <div className="stats-control-panel-wrapper" >
-          <StatsControlBox />
-        </div>
-        <div className="chart-wrapper" >
-          {props.chartData ? <BarChart chartData={props.chartData} /> : ''}
-        </div>
+		<div className="stats-bottom-panel-wrapper">
+			<StatsControlBox setUserMetaDataGrouping={props.setUserMetaDataGrouping} />
+			{props.chartData ? <BarChart chartData={props.chartData} grouping={props.grouping} /> : ''}
 		</div>
 	);
 }
