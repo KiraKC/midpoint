@@ -94,6 +94,28 @@ public class GetStatsHandler implements Route {
       variables.put("poll", poll);
 
       variables.put("categoriesRankedByCorrelation", rankedCategoriesToSend);
+
+      // provide mini-stats
+      // Initialize a map for counting the occurrence of every answer option
+      Map<String, Double> counts = new HashMap<>();
+      for (AnswerOption answerOption : poll.getAnswerOptions()) {
+        counts.put(answerOption.getId(), 0.0);
+      }
+
+      // count the number of responses for each answer option
+      for (PollResponse everyResponse : allPollResponses) {
+        counts.put(everyResponse.getAnswerOptionId(),
+              counts.get(everyResponse.getAnswerOptionId()) + 1);
+      }
+
+      // Send mini-stats to front end
+      Map<String, Double> miniStats = new HashMap<>();
+      for (AnswerOption answerOption : poll.getAnswerOptions()) {
+        double percentage = counts.get(answerOption.getId()) / allPollResponses.size();
+        miniStats.put(answerOption.getId(), percentage * Constants.PERCENTAGE);
+      }
+      variables.put("miniStats", miniStats);
+
       status = true;
 //      }
 
