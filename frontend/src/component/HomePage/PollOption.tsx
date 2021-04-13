@@ -6,16 +6,17 @@ interface MasonryOptionProps {
 	emoji: string,
 	value: string,
 	textColor: string,
-	isLoggedIn: boolean,
-	setIsLoginModalOpen: any,
-	clickHandler: any,
+	isLoggedIn?: boolean,
+	setIsLoginModalOpen?: any,
+	clickHandler?: any,
+	flexible?: boolean
 }
 
 function MasonryOption(props: MasonryOptionProps) {
 
 	return (
 		<button
-			className="option-wrapper"
+			className={props.flexible ? 'option-wrapper-flex' : 'option-wrapper'}
 			style={{ color: `${props.textColor}` }}
 			onClick={() => { props.clickHandler(props.id, props.value) }}>
 			<div style={{ marginTop: "1px" }}>

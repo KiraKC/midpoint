@@ -1,42 +1,71 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import endpointUrl from "../../constants/Endpoint";
-import IPoll from "../../interfaces/IPoll";
 import '../../styles/StatsPage/StatsBanner.css'
-import { randomUserMetaDataGrouping } from "../../constants/UserMetaData";
-import { useParams } from "react-router-dom";
-import BarChart from "./BarChart";
 import CategoryButtonMuted from "../Common/CategoryButtonMuted";
+import { findCategoryInfo } from "../../constants/Category";
+import { Emoji } from "emoji-mart";
+import { useMediaQuery } from 'react-responsive'
+import MasonryOption from "../HomePage/PollOption";
 
 interface IStatsBannerProps {
-	poll: IPoll
+	statistics: any
 }
 
 function StatsBanner(props: IStatsBannerProps) {
 
+	const getCategoryButton = () => {
+		const selectedCategory = props.statistics.categoriesRankedByCorrelation.slice(0, 3);
+		const categoryMetaData = [];
+		for (let i = 0; i < selectedCategory.length; i++) {
+			console.log(findCategoryInfo(selectedCategory[i]))
+			categoryMetaData.push(findCategoryInfo(selectedCategory[i]));
+		}
+		console.log(categoryMetaData)
+		return categoryMetaData;
+	}
+
+	const isSmallScreen = useMediaQuery({
+		query: '(max-width: 1100px)'
+	})
+
+	const isBigScreen = useMediaQuery({
+		query: '(min-width: 1100px)'
+	})
+
 	return (
-		<div className="banner-wrapper" style={{backgroundColor: props.poll.color}}>
+		<div className="banner-wrapper" style={{ backgroundColor: props.statistics.poll.color }}>
 			<div className="banner-left">
-				<div className="banner-supplement-heading">DETAILED STATISTICS FOR</div>
-				<div className="banner-main-heading">{props.poll.question}</div>
+				<div className="banner-supplement-heading">DETAILED STATISTICS FOR ...</div>
+				<Emoji emoji={props.statistics.poll.emoji} set='apple' size={34} />
+				<div className="banner-main-heading">
+					{props.statistics.poll.question}</div>
+				<div className="banner-options-wrapper">
+					{props.statistics.poll.answerOptions.map((option, index) => (
+						<MasonryOption key={index} id={option.id} value={option.value}
+							emoji={option.emoji} textColor={props.statistics.poll.color} flexible={true}
+						/>
+					))}
+				</div>
 				<div className="category-flex-wrapper">
 					<div className="category-text">Strongly correlated with: </div>
-					<CategoryButtonMuted text='hello' emoji='cop' />
-					<CategoryButtonMuted text='hello' emoji='cop' />
-					<CategoryButtonMuted text='hello' emoji='cop' />
-					{/* {
-						categories.map()
-					} */}
+					{getCategoryButton().map((e, i) => {
+						return <CategoryButtonMuted
+							key={i}
+							emoji={e.emoji}
+							text={e.text}
+						/>
+					})}
 				</div>
 			</div>
-
 			<button className="banner-icon">
 				<span className="material-icons-outlined">share</span>
 			</button>
-
 			<div className="banner-statics">
-				<div className="banner-number">6400</div>
-				<div className="banner-stats-text">Users have answered this question</div>
+				<div className="banner-number">{props.statistics.poll.numClicks}</div>
+				{isSmallScreen &&
+					<div className="banner-stats-text">Responses </div>
+				}
+				{isBigScreen &&
+					<div className="banner-stats-text">Users have answered this question</div>
+				}
 			</div>
 		</div>
 	);

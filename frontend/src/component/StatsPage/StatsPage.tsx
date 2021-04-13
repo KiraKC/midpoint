@@ -7,6 +7,8 @@ import { randomUserMetaDataGrouping } from "../../constants/UserMetaData";
 import { useParams } from "react-router-dom";
 import BarChart from "./BarChart";
 import StatsBanner from "./StatsBanner";
+import { Bones } from "react-bones/lib";
+import Spinner from "../Common/Spinner";
 
 interface IStatsPageProps {
 	setIsLoginModalOpen: any,
@@ -18,9 +20,9 @@ function StatsPage(props: IStatsPageProps) {
 	const [description, setDescription]: [string, any] = useState('');
 	const [chartData, setChartData]: [string, any] = useState('');
 	const [userMetaDataGrouping, setUserMetaDataGrouping]: [string, any] = useState(randomUserMetaDataGrouping());
-	const [poll, setPoll]: [IPoll, any] = useState(null)
-	
-	
+	const [statistics, setStatistics]: [any, any] = useState(null)
+
+
 	let { pollId } = useParams();
 
 	useEffect(() => {
@@ -44,9 +46,7 @@ function StatsPage(props: IStatsPageProps) {
 			endpointUrl + '/poll/stats', toSend, config)
 			.then(response => {
 				console.log(response.data);
-				
-				setChartData(response.data.chartData);
-				setPoll(response.data.poll)
+				setStatistics(response.data)
 				setDescription('');
 			})
 			.catch(e => {
@@ -58,9 +58,9 @@ function StatsPage(props: IStatsPageProps) {
 
 	return (
 		<>
-		
+
 			<div className="page-title-description">{description}</div>
-			{poll ? <StatsBanner poll={poll}/> : ''}
+			{statistics ? <StatsBanner statistics={statistics} /> : ''}
 			{chartData ? <BarChart chartData={chartData} /> : ''}
 		</>
 	);

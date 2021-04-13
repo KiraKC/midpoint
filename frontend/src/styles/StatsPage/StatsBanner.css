@@ -2,7 +2,7 @@
 	width: calc(100% - 60px);
 	border-radius: 20px;
 	position: relative;
-	z-index: 1;
+	z-index: 0;
 	padding: 30px;
 	display: flex;
 	align-items: center;
@@ -15,21 +15,29 @@
 	font-family: "Inter", sans-serif;
 	font-size: 1.1rem;
 	font-weight: 600;
+	margin-bottom: 20px;
+}
+
+.banner-left {
+	width: 100%;
 }
 
 .banner-main-heading {
 	font-family: "Inter", sans-serif;
 	font-size: 2.2rem;
-	max-width: 500px;
+	max-width: 70%;
 	font-weight: 700;
-	margin-top: 20px;
-	margin-bottom: 20px;
+	line-height: 2.6rem;
+	margin-bottom: 5px;
+
 }
 
 .category-text {
 	font-family: "Inter", sans-serif;
+	font-size: 1.1rem;
 	margin-right: 10px;
 }
+
 .category-flex-wrapper {
 	display: flex;
 	align-items: center;
@@ -57,6 +65,38 @@
 
 .banner-stats-text {
 	font-family: "Inter", sans-serif;
-	font-size: 1.4rem;
+	font-size: 1.1rem;
 	font-weight: 600;
+}
+
+.banner-options-wrapper {
+	display: flex;
+	width: 70%;
+	flex-wrap: wrap;
+	margin-bottom: 20px;
+}
+
+.banner-icon {
+	position: absolute;
+	right: 26px;
+	top: 26px;
+	background-color: transparent;
+	border: none;
+	color: white;
+	border-radius: 4px;
+	width: 35px;
+	height: 35px;
+	outline: none;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.banner-icon:hover {
+	background-color:rgba(255, 255, 255, 0.2);
+}
+
+.banner-icon:active {
+	background-color:rgba(255, 255, 255, 0.8);
+	color: black;
 }

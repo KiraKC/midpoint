@@ -205,6 +205,7 @@ function Poll(props: PollProps) {
 			</div>
 		)
 	}
+	
 	if (selectedOptionValue !== '') {
 		return (
 			<div className="masonry-poll-wrapper" >
