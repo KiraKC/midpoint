@@ -94,7 +94,7 @@ function Header(props) {
 								<span className="material-icons-outlined">
 								bookmark_added</span></button>
 							<button className="mobile-nav-link"
-								onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>
+								onClick={() => { props.isLoggedIn ? navigateAndClean('game') : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
 								sports_esports</span></button>
 							<button className="mobile-nav-link"
@@ -104,7 +104,7 @@ function Header(props) {
 							<button className="mobile-nav-link"
 								onClick={() => handleSignInStatus()}>
 								{props.isLoggedIn ? <span className="material-icons-outlined">exit_to_app</span> :
-									<span className="material-icons-outlined">lock</span>}
+									<span className="material-icons-outlined">login</span>}
 							</button>
 						</div>
 					</>

@@ -76,6 +76,8 @@ function App() {
 							<Route path="/stats/:pollId" element={<StatsPage
 								setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn}
 							/>} />
+							<Route path="/game" element={<GameStart
+							/>} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>
