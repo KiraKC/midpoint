@@ -18,7 +18,13 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DeletePollHandler implements Route {
-  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
+      .create();
+  private final Connection myConnection;
+
+  public DeletePollHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   @Override
   public Object handle(Request req, Response res) throws Exception {
@@ -33,11 +39,11 @@ public class DeletePollHandler implements Route {
       String userId = decodedToken.getUid();
 
       // check if user has already answered this poll
-      Poll poll = Connection.getPollById(pollId);
+      Poll poll = myConnection.getPollById(pollId);
       String creatorId = poll.getCreatorId();
       if (creatorId.equals(userId)) {
-        Connection.deleteResponses(pollId);
-        Connection.deletePoll(pollId);
+        myConnection.deleteResponses(pollId);
+        myConnection.deletePoll(pollId);
         status = true;
       } else {
         status = false;

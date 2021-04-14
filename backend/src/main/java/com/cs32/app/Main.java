@@ -60,12 +60,12 @@ public class Main {
     });
     // TODO: Change true back to false when finish populating the database for testing
     // Connections class for MongoDB related queries
-    Connection conn = new Connection(false);
+    Connection connection = new Connection(false);
 
     // Authentication using Firebase
     try {
-      URLConnection connection = new URL("https://www.midpoint.fun/firebase_config.json").openConnection();
-      InputStream response = connection.getInputStream();
+      URLConnection urlConnection = new URL("https://www.midpoint.fun/firebase_config.json").openConnection();
+      InputStream response = urlConnection.getInputStream();
 
       FirebaseOptions options = FirebaseOptions.builder()
             .setCredentials(GoogleCredentials.fromStream(response))
@@ -78,16 +78,16 @@ public class Main {
 
 //    Spark.externalStaticFileLocation("src/main/resources/static");
 //    Spark.exception(Exception.class, new ExceptionPrinter());
-    Spark.post("/user/get-suggested", new GetSuggestedPollsHandler());
-    Spark.post("/user/new", new NewUserHandler());
-    Spark.post("/poll/new", new NewPollHandler());
-    Spark.post("/poll/stats", new GetStatsHandler());
-    Spark.post("/poll/anon-answer", new AnonymousAnswerHandler());
-    Spark.post("/game/new-poll", new GetGamePollHandler());
-    Spark.post("/poll/check-off", new CheckOffHandler());
-    Spark.post("/poll/search", new SearchPollsHandler());
-    Spark.post("/user/answered-polls", new AnsweredPollsHandler());
-    Spark.post("/user/created-polls", new CreatedPollsHandler());
-    Spark.post("/poll/delete", new DeletePollHandler());
+    Spark.post("/user/get-suggested", new GetSuggestedPollsHandler(connection));
+    Spark.post("/user/new", new NewUserHandler(connection));
+    Spark.post("/poll/new", new NewPollHandler(connection));
+    Spark.post("/poll/stats", new GetStatsHandler(connection));
+    Spark.post("/poll/anon-answer", new AnonymousAnswerHandler(connection));
+    Spark.post("/game/new-poll", new GetGamePollHandler(connection));
+    Spark.post("/poll/check-off", new CheckOffHandler(connection));
+    Spark.post("/poll/search", new SearchPollsHandler(connection));
+    Spark.post("/user/answered-polls", new AnsweredPollsHandler(connection));
+    Spark.post("/user/created-polls", new CreatedPollsHandler(connection));
+    Spark.post("/poll/delete", new DeletePollHandler(connection));
   }
 }

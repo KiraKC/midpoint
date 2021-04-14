@@ -29,6 +29,11 @@ import java.util.Set;
 public class AnsweredPollsHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public AnsweredPollsHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   /**
    * The handle() method that does the job above.
@@ -50,12 +55,12 @@ public class AnsweredPollsHandler implements Route {
       String userIdToken = jsonReqObject.getString("userIdToken");
       FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
       String userId = decodedToken.getUid();
-      User user = Connection.getUserById(userId);
+      User user = myConnection.getUserById(userId);
       Set<String> answeredPolls = user.getAnsweredPolls().getSet();
 
       // Query for answeredPolls
       System.out.println("ANSWERED: " + answeredPolls);
-      List<Poll> pollsToSend = Connection.getPollsById(answeredPolls);
+      List<Poll> pollsToSend = myConnection.getPollsById(answeredPolls);
       System.out.println(pollsToSend.size());
 
       // Return the polls to the frontend as a JSON
@@ -67,7 +72,7 @@ public class AnsweredPollsHandler implements Route {
       // set list of createdPollIds
       for (Poll poll : pollsToSend) {
         poll.rendered();
-        Connection.updatePollNumRenders(poll);
+        myConnection.updatePollNumRenders(poll);
         if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
           // calculate mini-stats to send
           Map<String, Double> miniStat = new HashMap<>();
@@ -75,7 +80,7 @@ public class AnsweredPollsHandler implements Route {
             miniStat.put(answerOption.getId(), 0.0);
           }
           // count the number of responses for each answer option
-          List<PollResponse> allResponses = Connection.getResponses(poll.getId());
+          List<PollResponse> allResponses = myConnection.getResponses(poll.getId());
           for (PollResponse everyResponse : allResponses) {
             String answerOptionId = everyResponse.getAnswerOptionId();
             miniStat.put(answerOptionId, miniStat.get(answerOptionId) + 1);

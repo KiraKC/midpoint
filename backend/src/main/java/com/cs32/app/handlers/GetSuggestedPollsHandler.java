@@ -42,6 +42,11 @@ import java.util.Collections;
 public class GetSuggestedPollsHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public GetSuggestedPollsHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   /**
    * The handle() method that does the job above.
@@ -79,7 +84,7 @@ public class GetSuggestedPollsHandler implements Route {
         String userIdToken = jsonReqObject.getString("userIdToken");
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
         String userId = decodedToken.getUid();
-        User user = Connection.getUserById(userId);
+        User user = myConnection.getUserById(userId);
         userCatPts = user.getCategoryPoints();
         System.out.println("USER ANSWERED POLLS: ");
         System.out.println(user.getAnsweredPolls().getSet());
@@ -93,7 +98,7 @@ public class GetSuggestedPollsHandler implements Route {
       int previousQuerySize = 1;
       while (randomPolls.size() < numPollsRequested * Constants.NUM_QUERIED_POLLS_PER_REQUESTED
           && previousQuerySize != 0) {
-        List<Poll> newPolls = Connection.getRandomPolls(numPollsRequested
+        List<Poll> newPolls = myConnection.getRandomPolls(numPollsRequested
             * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
         for (int i = 0; i < newPolls.size(); i++) {
           System.out.println("considering poll: " + newPolls.get(i).getId());
@@ -154,7 +159,7 @@ public class GetSuggestedPollsHandler implements Route {
         for (Poll poll : pollsToSend) {
           // TODO: update poll's number of renders in MongoDB
           poll.rendered();
-          Connection.updatePollNumRenders(poll);
+          myConnection.updatePollNumRenders(poll);
         }
       }
 

@@ -28,15 +28,18 @@ public class PollResponse {
   private final String answerOptionId;
   @Expose
   private final UserMetaData userMetaData;
+  private final Connection myConnection;
 
   /**
    * Constructor for transforming a MongoDB document to a PollResponse object.
    * @param mongoPollResponse MongoDB document of a poll response
+   * @param connection connection to MongoDB
    */
-  public PollResponse(Document mongoPollResponse) {
+  public PollResponse(Document mongoPollResponse, Connection connection) {
     id = mongoPollResponse.getString("_id");
     pollId = mongoPollResponse.getString("pollId");
     answerOptionId = mongoPollResponse.getString("answerOptionId");
+    myConnection = connection;
 
     // putting user metadata into hashmap
     userMetaData = new UserMetaData((List<Document>) mongoPollResponse.get("userMetaData"));
@@ -45,19 +48,21 @@ public class PollResponse {
   /**
    * Constructor for transforming a Json object to a PollResponse object.
    * @param jsonReqObject Json object of a poll response
+   * @param connection connection to MongoDB
    * @throws JSONException Json exception
    * @throws MissingDBObjectException missing MongoDB object exception
    * @throws FirebaseAuthException firebase exception
    */
-  public PollResponse(JSONObject jsonReqObject) throws JSONException,
+  public PollResponse(JSONObject jsonReqObject, Connection connection) throws JSONException,
       MissingDBObjectException, FirebaseAuthException {
+    myConnection = connection;
     id = new ObjectId().toString();
     pollId = jsonReqObject.getString("pollId");
     answerOptionId = jsonReqObject.getString("answerOptionId");
     String userIdToken = jsonReqObject.getString("userIdToken");
     FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
     String userId = decodedToken.getUid();
-    User user = Connection.getUserById(userId);
+    User user = myConnection.getUserById(userId);
     System.out.println("USER: " + user.toBSON());
     userMetaData = user.getUserMetaData();
   }

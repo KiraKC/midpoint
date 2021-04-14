@@ -27,6 +27,12 @@ import java.util.Map;
 public class CheckOffHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public CheckOffHandler(Connection connection) {
+    myConnection = connection;
+  }
+
   /**
    * The handle() method that does the job above.
    * @param req a JSON object containing the user ID and the poll ID
@@ -47,13 +53,13 @@ public class CheckOffHandler implements Route {
       String userId = decodedToken.getUid();
 
       // check if user has already answered this poll
-      User user = Connection.getUserById(userId);
+      User user = myConnection.getUserById(userId);
       if (user.getAnsweredPolls().getSet().contains(pollId)) {
         alreadyAnswered = true;
         status = true;
       } else {
         // get poll
-        Poll poll = Connection.getPollById(pollId);
+        Poll poll = myConnection.getPollById(pollId);
 
         // Update user's list of answered polls
         user.answered(pollId);
@@ -79,7 +85,7 @@ public class CheckOffHandler implements Route {
         updateFields.append("answeredPolls", user.getAnsweredPolls().toBSON());
         updateFields.append("categoryPoints", userCatPts.toBSON());
         BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-        Connection.updateUsers(searchQuery, setQuery);
+        myConnection.updateUsers(searchQuery, setQuery);
 
         // TODO: update poll's number of clicks and category points in MongoDB
         poll.clicked();
@@ -88,7 +94,7 @@ public class CheckOffHandler implements Route {
         updateFields.append("numClicks", poll.getNumClicks());
         updateFields.append("catPts", poll.getCatPts().toBSON());
         setQuery = new BasicDBObject("$set", updateFields);
-        Connection.pollCollection.updateOne(searchQuery, setQuery);
+        myConnection.getPollCollection().updateOne(searchQuery, setQuery);
         System.out.println("Updating poll data SUCCESSFUL.");
 
         alreadyAnswered = false;

@@ -35,11 +35,11 @@ import java.util.Iterator;
  */
 public class Connection {
 
-  public static MongoClient mongoClient;
-  public static MongoDatabase mongoDatabase;
-  public static MongoCollection<Document> userCollection;
-  public static MongoCollection<Document> pollCollection;
-  public static MongoCollection<Document> responseCollection;
+  private final MongoClient mongoClient;
+  private final MongoDatabase mongoDatabase;
+  private final MongoCollection<Document> userCollection;
+  private final MongoCollection<Document> pollCollection;
+  private final MongoCollection<Document> responseCollection;
 
   /**
    * Constructor.
@@ -73,11 +73,27 @@ public class Connection {
   }
 
   /**
+   * Getter method for user collection.
+   * @return user collection
+   */
+  public MongoCollection<Document> getUserCollection() {
+    return userCollection;
+  }
+
+  /**
+   * Getter method for poll collection.
+   * @return poll collection
+   */
+  public MongoCollection<Document> getPollCollection() {
+    return pollCollection;
+  }
+
+  /**
    * Method for generating random polls.
    * @param numPolls num of polls to generate
    * @return a List of polls
    */
-  public static List<Poll> getRandomPolls(int numPolls) throws Exception {
+  public List<Poll> getRandomPolls(int numPolls) throws Exception {
     List<Poll> randomPolls = new ArrayList<>();
 
     // Randomly sample from the MongoDB collection
@@ -89,7 +105,7 @@ public class Connection {
     while (aggregateIterable.hasNext()) {
       // Create and add poll
       System.out.println(i++);
-      randomPolls.add(new Poll(aggregateIterable.next()));
+      randomPolls.add(new Poll(aggregateIterable.next(), this));
     }
 
     return randomPolls;
@@ -101,10 +117,10 @@ public class Connection {
    * @return a Poll object instantiated from a MongoDB document
    * @throws Exception exception
    */
-  public static Poll getPollById(String pollId) throws MissingDBObjectException {
+  public Poll getPollById(String pollId) throws MissingDBObjectException {
     Document document = pollCollection.find(Filters.eq("_id", pollId)).first();
     if (document != null) {
-      return (new Poll(document));
+      return (new Poll(document, this));
     } else {
       throw new MissingDBObjectException("Poll", "_id", pollId, "poll");
     }
@@ -115,11 +131,11 @@ public class Connection {
    * @param pollId poll ID
    * @return a list of PollResponse objects
    */
-  public static List<PollResponse> getResponses(String pollId) {
+  public List<PollResponse> getResponses(String pollId) {
     MongoCursor<Document> cursor = responseCollection.find(Filters.eq("pollId", pollId)).iterator();
     List<PollResponse> responses = new ArrayList<>();
     while (cursor.hasNext()) {
-      responses.add(new PollResponse(cursor.next()));
+      responses.add(new PollResponse(cursor.next(), this));
     }
     return responses;
   }
@@ -129,7 +145,7 @@ public class Connection {
    * @param pollResponse a PollResponse object
    * @return a boolean indicating whether the process is successful
    */
-  public static boolean addPollResponseToDB(PollResponse pollResponse) {
+  public boolean addPollResponseToDB(PollResponse pollResponse) {
     try {
       responseCollection.insertOne(pollResponse.toBSON());
       System.out.println("adding com.cs32.app.pollResponse to db was SUCCESSFUL");
@@ -146,7 +162,7 @@ public class Connection {
    * @param user a User object
    * @return a boolean indicating whether the process is successful
    */
-  public static boolean addUserToDB(User user) {
+  public boolean addUserToDB(User user) {
     try {
       System.out.println("USER: " + user.toBSON());
       userCollection.insertOne(user.toBSON());
@@ -165,7 +181,7 @@ public class Connection {
    * @return a User object instantiated from a MongoDB document
    * @throws MissingDBObjectException missing MongoDB object exception
    */
-  public static User getUserById(String id) throws MissingDBObjectException {
+  public User getUserById(String id) throws MissingDBObjectException {
     BasicDBObject query = new BasicDBObject();
     query.put("_id", id);
     MongoCursor<Document> cursor = userCollection.find(query).limit(1).iterator();
@@ -179,7 +195,7 @@ public class Connection {
    * Method for replacing a poll in MongoDB.
    * @param poll a Poll object
    */
-  public static void replacePoll(Poll poll) {
+  public void replacePoll(Poll poll) {
     pollCollection.replaceOne(Filters.eq("_id", poll.getId()), poll.toBSON());
   }
 
@@ -189,14 +205,14 @@ public class Connection {
    * @return a list of Poll objects
    * @throws Exception exception
    */
-  public static List<Poll> searchPolls(String searchString) throws Exception {
+  public List<Poll> searchPolls(String searchString) throws Exception {
     List<Poll> searchResults = new ArrayList<>();
     MongoCursor<Document> cursor = pollCollection.find(Filters.text(searchString))
           .projection(Projections.metaTextScore("score"))
           .sort(Sorts.metaTextScore("score")).iterator();
     while (cursor.hasNext()) {
       // Create and add poll
-      searchResults.add(new Poll(cursor.next()));
+      searchResults.add(new Poll(cursor.next(), this));
     }
     return searchResults;
   }
@@ -207,7 +223,7 @@ public class Connection {
    * @return a list of Poll objects
    * @throws Exception exception
    */
-  public static List<Poll> getPollsById(Set<String> pollIds) throws Exception {
+  public List<Poll> getPollsById(Set<String> pollIds) throws Exception {
     BasicDBObject query = new BasicDBObject();
     query.put("_id", new BasicDBObject("$in", pollIds));
 
@@ -215,7 +231,7 @@ public class Connection {
     MongoCursor<Document> cursor = pollCollection.find(query).iterator();
     while (cursor.hasNext()) {
       // Create and add poll
-      pollsFound.add(new Poll(cursor.next()));
+      pollsFound.add(new Poll(cursor.next(), this));
     }
     return pollsFound;
   }
@@ -224,17 +240,17 @@ public class Connection {
    * Method for updating a poll's number of renders.
    * @param poll a poll object
    */
-  public static void updatePollNumRenders(Poll poll) {
+  public void updatePollNumRenders(Poll poll) {
     BasicDBObject searchQuery = new BasicDBObject("_id", poll.getId());
     BasicDBObject updateFields = new BasicDBObject("numRenders", poll.getNumRenders());
     BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
     pollCollection.updateOne(searchQuery, setQuery);
   }
 
-  public static boolean deleteResponses(String pollId) throws FailedDBWriteException {
+  public boolean deleteResponses(String pollId) throws FailedDBWriteException {
     BasicDBObject query = new BasicDBObject();
     query.put("pollId", pollId);
-    DeleteResult deleteResult = Connection.responseCollection.deleteMany(query);
+    DeleteResult deleteResult = this.responseCollection.deleteMany(query);
     if (deleteResult.wasAcknowledged()) {
       return true;
     } else {
@@ -242,10 +258,10 @@ public class Connection {
     }
   }
 
-  public static boolean deletePoll(String pollId) throws FailedDBWriteException {
+  public boolean deletePoll(String pollId) throws FailedDBWriteException {
     BasicDBObject pollSearchQuery = new BasicDBObject();
     pollSearchQuery.put("_id", pollId);
-    DeleteResult deleteResult = Connection.pollCollection.deleteOne(pollSearchQuery);
+    DeleteResult deleteResult = this.pollCollection.deleteOne(pollSearchQuery);
     if (!deleteResult.wasAcknowledged()) {
       throw new FailedDBWriteException("response", "delete", "responseCollection");
     }
@@ -254,11 +270,12 @@ public class Connection {
     updateFields.append("createdPolls", pollId);
     updateFields.append("answeredPolls", pollId);
     BasicDBObject updateQuery = new BasicDBObject("$pull", updateFields);
-    Connection.updateUsers(userSearchQuery, updateQuery);
+    this.updateUsers(userSearchQuery, updateQuery);
     return true;
   }
 
-  public static boolean updateUsers(BasicDBObject searchQuery, BasicDBObject updateQuery) throws FailedDBWriteException {
+  public boolean updateUsers(BasicDBObject searchQuery, BasicDBObject updateQuery) throws
+      FailedDBWriteException {
     UpdateResult updateResult = userCollection.updateMany(searchQuery, updateQuery);
     if (updateResult.wasAcknowledged()) {
       System.out.println("Updating user data SUCCESSFUL.");
@@ -268,14 +285,14 @@ public class Connection {
     }
   }
 
-  public static void resetDatabase(String megaCreatorId) {
+  public void resetDatabase(String megaCreatorId) {
     try {
       // reset all user answeredPolls
       BasicDBObject searchQuery = new BasicDBObject();
       BasicDBObject updateFields = new BasicDBObject("answeredPolls", new AnsweredPolls().toBSON());
       updateFields.append("createdPolls", new CreatedPolls().toBSON());
       BasicDBObject updateQuery = new BasicDBObject("$pull", updateFields);
-      Connection.updateUsers(searchQuery, updateQuery);
+      this.updateUsers(searchQuery, updateQuery);
 
       // give all polls to megaUser
       CreatedPolls megaUsersCreatedPolls = new CreatedPolls();
@@ -283,7 +300,7 @@ public class Connection {
       List<Poll> allPolls = new ArrayList<>();
       List<String> allPollIds = new ArrayList<>();
       while (pollCursor.hasNext()) {
-        Poll newPoll = new Poll(pollCursor.next());
+        Poll newPoll = new Poll(pollCursor.next(), this);
         allPolls.add(newPoll);
         megaUsersCreatedPolls.add(newPoll.getId());
         allPollIds.add(newPoll.getId());
@@ -291,7 +308,7 @@ public class Connection {
       searchQuery = new BasicDBObject("_id", megaCreatorId);
       updateFields = new BasicDBObject("createdPolls", megaUsersCreatedPolls.toBSON());
       updateQuery = new BasicDBObject("$set", updateFields);
-      Connection.updateUsers(searchQuery, updateQuery);
+      this.updateUsers(searchQuery, updateQuery);
 
       // delete all responses by dropping collection
       responseCollection.drop();

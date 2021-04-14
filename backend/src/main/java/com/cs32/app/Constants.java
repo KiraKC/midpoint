@@ -1,6 +1,10 @@
 package com.cs32.app;
 
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Constants class.
@@ -31,20 +35,25 @@ public final class Constants {
   public static final int NUM_QUERIED_POLLS_PER_REQUESTED = 3;
   public static final double QUERY_RAND_POLLS_RELEVANCY_PORTION = 0.7;
   public static final double QUERY_RAND_POLLS_CLICK_RATE_PORTION = 0.2;
-  public static final List<String> ALL_COLORS = new ArrayList<>(Arrays.asList("#2274A5", "#D83282", "#0B5EA9", "#13BE8B",
-        "#494848", "#464D77", "#E26D5A", "#F24343", "#274690", "#7F5A83", "#B33951",
-        "#264779", "#B36A5E", "#344966", "#A4303F", "#CF5C36", "#70A288", "#2ABC88", "#86BBEC",
-        "#246A73"));
+  public static final List<String> ALL_COLORS = new ArrayList<>(Arrays.asList("#2274A5",
+      "#D83282", "#0B5EA9", "#13BE8B", "#494848", "#464D77", "#E26D5A", "#F24343", "#274690",
+      "#7F5A83", "#B33951", "#264779", "#B36A5E", "#344966", "#A4303F", "#CF5C36", "#70A288",
+      "#2ABC88", "#86BBEC", "#246A73"));
 
   // Constants for get stats (order matters when showing in legend)
   public static final String UNIDENTIFIED = "Undisclosed";
-  public static final Map<String, String[]> USER_GROUPINGS = new HashMap<String, String[]>() {{
-      put("education", new String[]{UNIDENTIFIED, "Elementary School", "Middle School", "High School", "Bachelors", "Masters", "PhD"});
+  public static final Map<String, String[]> USER_GROUPINGS = new HashMap<String, String[]>() {
+    {
+      put("education", new String[]{UNIDENTIFIED, "Elementary School", "Middle School",
+          "High School", "Bachelors", "Masters", "PhD"});
       put("gender", new String[]{UNIDENTIFIED, "Male", "Female", "Others"});
-      put("age", new String[]{UNIDENTIFIED, "0-9", "10-19", "20-29", "30-39", "40-49", "50-59", "60-69", "70-79", "80+"});
-      put("politicalLeaning", new String[]{UNIDENTIFIED, "Left Leaning", "Neutral", "Right Leaning"});
+      put("age", new String[]{UNIDENTIFIED, "0-9", "10-19", "20-29", "30-39", "40-49",
+          "50-59", "60-69", "70-79", "80+"});
+      put("politicalLeaning", new String[]{UNIDENTIFIED, "Left Leaning", "Neutral",
+          "Right Leaning"});
       put("maritalStatus", new String[]{UNIDENTIFIED, "Married", "Unmarried"});
-  }};
+    }
+  };
 
   // Percentage
   public static final double PERCENTAGE = 100.0;

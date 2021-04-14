@@ -21,6 +21,11 @@ import java.util.Map;
 public class NewUserHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public NewUserHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   /**
    * The handle() method that does the job above.
@@ -37,7 +42,7 @@ public class NewUserHandler implements Route {
       User user = new User(jsonReqObject);
 
       // add user to database
-      status = Connection.addUserToDB(user);
+      status = myConnection.addUserToDB(user);
     } catch (JSONException e) {
       e.printStackTrace();
       System.out.println("JSON request not properly formatted");

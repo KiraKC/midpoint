@@ -22,6 +22,11 @@ import java.util.HashSet;
 public class GetGamePollHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public GetGamePollHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   /**
    * The handle() method that does the job above.
@@ -33,7 +38,6 @@ public class GetGamePollHandler implements Route {
   @Override
   public Object handle(Request request, Response response) throws Exception {
     Map<String, Object> variables = new HashMap<>();
-
     boolean status;
 
     try {
@@ -48,9 +52,9 @@ public class GetGamePollHandler implements Route {
       }
 
       // Query for random poll
-      Poll pollToSend = Connection.getRandomPolls(1).get(0);
+      Poll pollToSend = myConnection.getRandomPolls(1).get(0);
       while (seenPollIds.contains(pollToSend.getId())) {
-        pollToSend = Connection.getRandomPolls(1).get(0);
+        pollToSend = myConnection.getRandomPolls(1).get(0);
       }
 
       // Return the poll to the frontend as a JSON

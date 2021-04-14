@@ -24,8 +24,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.cs32.app.database.Connection.pollCollection;
-
 /**
  * The handler which is responsible for the followings.
  * - creating and inserting new polls to MongoDB
@@ -34,6 +32,11 @@ import static com.cs32.app.database.Connection.pollCollection;
 public class NewPollHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public NewPollHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   /**
    * The handle() method that does the job above.
@@ -53,7 +56,7 @@ public class NewPollHandler implements Route {
       String userIdToken = jsonReqObject.getString("creatorId");
       FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
       String userId = decodedToken.getUid();
-      User user = Connection.getUserById(userId);
+      User user = myConnection.getUserById(userId);
       question = jsonReqObject.getString("question");
       emoji = jsonReqObject.getString("emoji");
       color = jsonReqObject.getString("color");
@@ -74,7 +77,8 @@ public class NewPollHandler implements Route {
       JSONArray jsonTaggedCategories = jsonReqObject.getJSONArray("taggedCategories");
       CategoryPoints newCategoryPoints = new CategoryPoints(jsonTaggedCategories);
 
-      Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints, color, imageUrl, user.getId());
+      Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints, color,
+          imageUrl, user.getId(), myConnection);
 
       System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
@@ -85,7 +89,7 @@ public class NewPollHandler implements Route {
       BasicDBObject updateFields = new BasicDBObject("createdPolls",
           user.getCreatedPolls().toBSON());
       BasicDBObject setQuery = new BasicDBObject("$set", updateFields);
-      Connection.userCollection.updateOne(searchQuery, setQuery);
+      myConnection.getUserCollection().updateOne(searchQuery, setQuery);
 
       variables.put("newPoll", newPoll);
     } catch (JSONException | MissingDBObjectException e) {
@@ -102,7 +106,7 @@ public class NewPollHandler implements Route {
 
   private boolean addPollToDB(Poll poll) {
     try {
-      pollCollection.insertOne(poll.toBSON());
+      myConnection.getPollCollection().insertOne(poll.toBSON());
       System.out.println("adding com.cs32.app.poll to db was SUCCESSFUL");
     } catch (Exception e) {
       e.printStackTrace();

@@ -33,6 +33,7 @@ public class Poll {
   @Expose
   private int numClicks;
   private String creatorId;
+  private final Connection myConnection;
 
   /**
    * Poll constructor.
@@ -42,8 +43,11 @@ public class Poll {
    * @param categoryPoints category points
    * @param color poll color
    * @param imageUrl image URL
+   * @param creatorId creator ID
+   * @param connection connection to MongoDB
    */
-  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints categoryPoints, String color, String imageUrl, String creatorId) {
+  public Poll(String question, String emoji, List<AnswerOption> answerOptions, CategoryPoints
+      categoryPoints, String color, String imageUrl, String creatorId, Connection connection) {
     this.id = new ObjectId().toString();
     this.question = question;
     this.emoji = emoji;
@@ -54,13 +58,15 @@ public class Poll {
     this.color = color;
     this.imageUrl = imageUrl;
     this.creatorId = creatorId;
+    this.myConnection = connection;
   }
 
   /**
    * Poll constructor that transforms a MongoDB document for a poll to a Poll object.
    * @param mongoPoll MongoDB document for a poll
+   * @param connection connection to MongoDB
    */
-  public Poll(Document mongoPoll) {
+  public Poll(Document mongoPoll, Connection connection) {
     // Get ID
     id = mongoPoll.getString("_id");
 
@@ -98,9 +104,13 @@ public class Poll {
     // get creatorId
     creatorId = mongoPoll.getString("creatorId");
 
+    // Set connection
+    myConnection = connection;
+
     // autofixing
     if (color == null || !Constants.ALL_COLORS.contains(color)) {
-      color = Constants.ALL_COLORS.get((int) Math.floor(Math.random() * Constants.ALL_COLORS.size()));
+      color = Constants.ALL_COLORS.get((int) Math.floor(Math.random()
+          * Constants.ALL_COLORS.size()));
       needsAutofixing = true;
     }
     if (imageUrl == null) {
@@ -110,7 +120,8 @@ public class Poll {
     if (creatorId == null) {
       BasicDBObject query = new BasicDBObject();
       query.put("createdPolls", id);
-      MongoCursor<Document> cursor = Connection.userCollection.find(query).limit(1).iterator();
+      MongoCursor<Document> cursor = myConnection.getUserCollection().find(query).limit(1)
+          .iterator();
       if (cursor.hasNext()) {
         creatorId = cursor.next().getString("_id");
       } else {
@@ -120,7 +131,7 @@ public class Poll {
       needsAutofixing = true;
     }
     if (needsAutofixing) {
-      Connection.replacePoll(this);
+      myConnection.replacePoll(this);
     }
   }
 

@@ -24,6 +24,11 @@ import java.util.Map;
 public class AnonymousAnswerHandler implements Route {
   private static final Gson GSON = new
       GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+  private final Connection myConnection;
+
+  public AnonymousAnswerHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   /**
    * The handle() method that does the job above.
@@ -51,14 +56,14 @@ public class AnonymousAnswerHandler implements Route {
     try {
       // Insert new response to MongoDB database
       JSONObject jsonReqObject = new JSONObject(request.body());
-      PollResponse pollResponse = new PollResponse(jsonReqObject);
-      Connection.addPollResponseToDB(pollResponse);
+      PollResponse pollResponse = new PollResponse(jsonReqObject, myConnection);
+      myConnection.addPollResponseToDB(pollResponse);
 
       // Get all answer options and all responses of the poll being answered
       String pollId = jsonReqObject.getString("pollId");
       variables.put("pollId", pollId);
-      List<AnswerOption> answerOptions = Connection.getPollById(pollId).getAnswerOptions();
-      List<PollResponse> allResponses = Connection.getResponses(pollId);
+      List<AnswerOption> answerOptions = myConnection.getPollById(pollId).getAnswerOptions();
+      List<PollResponse> allResponses = myConnection.getResponses(pollId);
 
       // Initialize a map for counting the occurrence of every answer option
       Map<String, Double> counts = new HashMap<>();

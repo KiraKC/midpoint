@@ -15,7 +15,11 @@ import spark.Route;
 
 import org.json.JSONObject;
 
-import java.util.*;
+import java.util.Map;
+import java.util.HashMap;
+import java.util.List;
+import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * The handler which is responsible for:
@@ -24,6 +28,11 @@ import java.util.*;
 public class GetStatsHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public GetStatsHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   @Override
   public Object handle(Request req, Response res) {
@@ -44,7 +53,7 @@ public class GetStatsHandler implements Route {
 //        status = false;
 //      } else {
       String userMetaDataGrouping = jsonReqObject.getString("userMetaDataGrouping");
-      Poll poll = Connection.getPollById(pollId);
+      Poll poll = myConnection.getPollById(pollId);
 
       // create and set up sub-map for each answer option
       for (AnswerOption answerOption : poll.getAnswerOptions()) {
@@ -58,7 +67,7 @@ public class GetStatsHandler implements Route {
       }
 
       // calculate number of responders for each userMetaData grouping
-      List<PollResponse> allPollResponses = Connection.getResponses(pollId);
+      List<PollResponse> allPollResponses = myConnection.getResponses(pollId);
       for (PollResponse pollResponse : allPollResponses) {
         String metaDataIdentity = pollResponse.getUserMetaData().get(userMetaDataGrouping);
         if (metaDataIdentity.equals("")) {
@@ -81,7 +90,8 @@ public class GetStatsHandler implements Route {
       chartData.put("identities", Constants.USER_GROUPINGS.get(userMetaDataGrouping));
 
       // calculate strongly correlated with
-      List<Map.Entry<String, Double>> categoriesRankedByCorrelation = new ArrayList<>(poll.getCatPts().getMap().entrySet());
+      List<Map.Entry<String, Double>> categoriesRankedByCorrelation = new
+          ArrayList<>(poll.getCatPts().getMap().entrySet());
       categoriesRankedByCorrelation.sort(Map.Entry.comparingByValue());
       Collections.reverse(categoriesRankedByCorrelation);
       List<String> rankedCategoriesToSend = new ArrayList<>();

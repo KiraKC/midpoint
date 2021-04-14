@@ -20,8 +20,10 @@ public class ComparatorTest {
   @Test
   public void testClickRateComparator() {
     ClickRateComparator comparator = new ClickRateComparator();
-    Poll p1 = new Poll("poll 1", "some emoji", new ArrayList<>(), new CategoryPoints(), "some color", "some image url", "some creator id");
-    Poll p2 = new Poll("poll 2", "some emoji", new ArrayList<>(), new CategoryPoints(), "some color", "some image url", "some creator id");
+    Poll p1 = new Poll("poll 1", "some emoji", new ArrayList<>(), new CategoryPoints(),
+        "some color", "some image url", "some creator id", null);
+    Poll p2 = new Poll("poll 2", "some emoji", new ArrayList<>(), new CategoryPoints(), "some color",
+        "some image url", "some creator id", null);
 
     // p1 and p2 both have starting click rate of 0
     assertEquals(comparator.compare(p1, p1), 0);
@@ -55,7 +57,8 @@ public class ComparatorTest {
     RelevancyComparator comparator = new RelevancyComparator(userCatPts);
 
     // Create a poll very very very related to the user
-    Poll p1 = new Poll("poll 1", "some emoji", new ArrayList<>(), userCatPts, "some color", "some image url", "some creator id");
+    Poll p1 = new Poll("poll 1", "some emoji", new ArrayList<>(), userCatPts,
+        "some color", "some image url", "some creator id", null);
 
     // Create a poll kind of related to the user
     List<String> p2Tags = new ArrayList<>();
@@ -63,7 +66,8 @@ public class ComparatorTest {
     p2Tags.add("politics");
     p2Tags.add("culture");
     CategoryPoints p2CatPts = new CategoryPoints(p2Tags);
-    Poll p2 = new Poll("poll 2", "some emoji", new ArrayList<>(), p2CatPts, "some color", "some image url", "some creator id");
+    Poll p2 = new Poll("poll 2", "some emoji", new ArrayList<>(), p2CatPts,
+        "some color", "some image url", "some creator id", null);
 
     // Create a poll not related to the user
     List<String> p3Tags = new ArrayList<>();
@@ -71,7 +75,8 @@ public class ComparatorTest {
     p3Tags.add("entertainment");
     p3Tags.add("food");
     CategoryPoints p3CatPts = new CategoryPoints(p3Tags);
-    Poll p3 = new Poll("poll 3", "some emoji", new ArrayList<>(), p3CatPts, "some color", "some image url", "some creator id");
+    Poll p3 = new Poll("poll 3", "some emoji", new ArrayList<>(), p3CatPts,
+        "some color", "some image url", "some creator id", null);
 
     // By relevancy, p1 > p2 > p3
     assertEquals(comparator.compare(p1, p1), 0);

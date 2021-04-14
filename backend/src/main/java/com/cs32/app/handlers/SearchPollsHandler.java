@@ -26,6 +26,11 @@ import java.util.ArrayList;
 public class SearchPollsHandler implements Route {
   private static final Gson GSON = new GsonBuilder().excludeFieldsWithoutExposeAnnotation()
       .create();
+  private final Connection myConnection;
+
+  public SearchPollsHandler(Connection connection) {
+    myConnection = connection;
+  }
 
   /**
    * The handle() method that does the job above.
@@ -46,7 +51,7 @@ public class SearchPollsHandler implements Route {
       // search for polls according to searchString
       String searchString = jsonReqObject.getString("searchString");
       System.out.println("SEARCH STRING: " + searchString);
-      List<Poll> searchResults = Connection.searchPolls(searchString);
+      List<Poll> searchResults = myConnection.searchPolls(searchString);
       System.out.println(searchResults);
       variables.put("searchResults", searchResults);
 
@@ -60,12 +65,12 @@ public class SearchPollsHandler implements Route {
         String userIdToken = jsonReqObject.getString("userIdToken");
         FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
         String userId = decodedToken.getUid();
-        User user = Connection.getUserById(userId);
+        User user = myConnection.getUserById(userId);
 
         // set list of answeredPollIds and createdPollIds
         for (Poll poll : searchResults) {
           poll.rendered();
-          Connection.updatePollNumRenders(poll);
+          myConnection.updatePollNumRenders(poll);
           if (user.getAnsweredPolls().getSet().contains(poll.getId())) {
             // add pollId to list of answeredPollIdsToSend
             answeredPollIdsToSend.add(poll.getId());
@@ -76,7 +81,7 @@ public class SearchPollsHandler implements Route {
               miniStat.put(answerOption.getId(), 0.0);
             }
             // count the number of responses for each answer option
-            List<PollResponse> allResponses = Connection.getResponses(poll.getId());
+            List<PollResponse> allResponses = myConnection.getResponses(poll.getId());
             for (PollResponse everyResponse : allResponses) {
               String answerOptionId = everyResponse.getAnswerOptionId();
               miniStat.put(answerOptionId, miniStat.get(answerOptionId) + 1);
