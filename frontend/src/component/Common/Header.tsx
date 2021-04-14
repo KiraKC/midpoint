@@ -96,7 +96,7 @@ function Header(props) {
 							<button className="mobile-nav-link"
 								onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
-									play_circle</span></button>
+								sports_esports</span></button>
 							<button className="mobile-nav-link"
 								onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
@@ -104,7 +104,7 @@ function Header(props) {
 							<button className="mobile-nav-link"
 								onClick={() => handleSignInStatus()}>
 								{props.isLoggedIn ? <span className="material-icons-outlined">exit_to_app</span> :
-									<span className="material-icons-outlined">face</span>}
+									<span className="material-icons-outlined">lock</span>}
 							</button>
 						</div>
 					</>
