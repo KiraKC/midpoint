@@ -4,9 +4,11 @@
 	width: 40vw;
     height: 70vh;
 	min-height: 26rem;
-	min-width: 15rem;
+	min-width: 17rem;
 	object-fit: cover;
 	background-color: white;
+	overflow-y: scroll;
+	overflow-x: hidden;
 }
 
 .game-wrapper-flex {
@@ -50,16 +52,29 @@
 
 }
 
-
 .game-option-grid{
 	display: grid;
 	justify-items: start;
 	align-items: center;
 	grid-gap: 1rem;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
 	height: 100%;
 	width: 90%;
-	margin: 2rem;
+	margin: 0rem;
+	margin-bottom: 2rem;
+}
+
+.game-poll-image {
+	width: 250px;
+	z-index: 5;
+	position: relative;
+	border-radius: 15px;
+}
+
+@media only screen and (max-width: 1000px) {
+	.game-poll-image {
+		display: none;
+		}
 }
 
 .game-option-button {
@@ -76,7 +91,7 @@
 	outline: none;
 	z-index: 4;
 	position: relative;
-	font-size:1.5vw;
+	font-size:1rem;
 	text-transform: uppercase;
 	font-family: "Inter", sans-serif;
 	color: white;
@@ -90,13 +105,14 @@
 
 .question-area{
 	margin: 2rem;
+	margin-bottom: 1rem;
 }
 
 .game-question-title-area{
 	display: flex;
 	align-items: flex-start;
 	align-content: space-around;
-	margin-bottom: 1rem;
+	margin-bottom: 0.5rem;
 	flex-wrap: wrap;
 }
 
@@ -105,9 +121,9 @@
 	color: black;
 	font-weight: 800;
 	font-size:1.5vw;
-	font-size: 2rem;
+	font-size:1.5rem;
 	width:80%;
-
+	
 }
 
 .question-emojis{
@@ -126,8 +142,9 @@
 	display: flex;
 	width: 100%;
 	flex-wrap: wrap;
-	height: 5vh;
-	overflow-y: scroll;
+	height: 4vh;
+	overflow-y: hidden;
+	margin-top: 0.5rem;
 }
 
 .dashboard{

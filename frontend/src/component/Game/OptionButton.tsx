@@ -16,8 +16,8 @@ function OptionButton(props) {
 
 	return (
 			<button className="game-option-button">
-				<Emoji emoji={'earth_asia'} set='apple' size={50} />
-				OPTION 1
+				<Emoji emoji={'earth_asia'} set='apple' size={30} />
+				What if the answer were long
 			</button>
 			
 

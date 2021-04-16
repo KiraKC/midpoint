@@ -88,19 +88,23 @@ function Header(props) {
 							<button className="mobile-nav-link"
 								onClick={() => { props.isLoggedIn ? navigateAndClean('history') : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
-									history</span></button>
+								history</span></button>
 							<button className="mobile-nav-link"
 								onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
-									outbox</span></button>
+								bookmark_added</span></button>
+							<button className="mobile-nav-link"
+								onClick={() => { props.isLoggedIn ? navigateAndClean('game') : props.setIsLoginModalOpen(true) }}>
+								<span className="material-icons-outlined">
+								sports_esports</span></button>
 							<button className="mobile-nav-link"
 								onClick={() => { props.isLoggedIn ? setIsPollModalOpen(true) : props.setIsLoginModalOpen(true) }}>
 								<span className="material-icons-outlined">
-									create</span></button>
+								add_circle_outline</span></button>
 							<button className="mobile-nav-link"
 								onClick={() => handleSignInStatus()}>
 								{props.isLoggedIn ? <span className="material-icons-outlined">exit_to_app</span> :
-									<span className="material-icons-outlined">face</span>}
+									<span className="material-icons-outlined">login</span>}
 							</button>
 						</div>
 					</>
@@ -121,6 +125,10 @@ function Header(props) {
 							<div className={location.pathname === '/my-polls' ? 'nav-text-link selected-nav' : 'nav-text-link'}
 								onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>
 								<Emoji emoji='writing_hand' set='apple' size={20} />&nbsp;created
+							</div>
+							<div className={(location.pathname === '/game')||(location.pathname === '/play')||(location.pathname === '/endgame') ? 'nav-text-link selected-nav' : 'nav-text-link'}
+								onClick={() => { props.isLoggedIn ? navigateAndClean('game') : props.setIsLoginModalOpen(true) }}>
+								<Emoji emoji='game_die' set='apple' size={20} />&nbsp;game
 							</div>
 							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
 						</div>
