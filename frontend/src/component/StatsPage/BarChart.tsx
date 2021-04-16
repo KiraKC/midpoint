@@ -13,7 +13,6 @@ import AutoSizer from "react-virtualized-auto-sizer";
 interface IBarChartProps {
 	chartData: any,
 	grouping: string
-
 }
 
 function BarChart(props: IBarChartProps) {
@@ -21,16 +20,18 @@ function BarChart(props: IBarChartProps) {
 	return (
 		<div className="barchart-wrapper">
 			<div className="barchart-heading">Categorized by <code>{props.grouping}</code></div>
-
 			<ResponsiveBar
+				enableLabel={false}
+				label={d => `${d.id}: ${d.value}`}
 				data={props.chartData.stats}
 				keys={props.chartData.identities}
 				indexBy="answerOptionValue"
-				margin={{ top: 30, right: 130, bottom: 90, left: 60 }}
+				margin={{ top: 30, right: 20, bottom: 80, left: 50 }}
 				padding={0.3}
 				valueScale={{ type: 'linear' }}
+				groupMode={'grouped'}
 				indexScale={{ type: 'band', round: true }}
-				colors={{ scheme: 'nivo' }}
+				colors={{ scheme: 'accent' }}
 				defs={[
 					{
 						id: 'dots',
@@ -84,7 +85,8 @@ function BarChart(props: IBarChartProps) {
 					legendPosition: 'middle',
 					legendOffset: -40
 				}}
-				labelSkipWidth={12}
+				borderRadius={2}
+				labelSkipWidth={200}
 				labelSkipHeight={12}
 				labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
 				legends={[
