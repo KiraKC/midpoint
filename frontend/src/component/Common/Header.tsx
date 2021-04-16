@@ -126,7 +126,7 @@ function Header(props) {
 								onClick={() => { props.isLoggedIn ? navigateAndClean('my-polls') : props.setIsLoginModalOpen(true) }}>
 								<Emoji emoji='writing_hand' set='apple' size={20} />&nbsp;created
 							</div>
-							<div className={location.pathname === '/game' ? 'nav-text-link selected-nav' : 'nav-text-link'}
+							<div className={(location.pathname === '/game')||(location.pathname === '/play')||(location.pathname === '/endgame') ? 'nav-text-link selected-nav' : 'nav-text-link'}
 								onClick={() => { props.isLoggedIn ? navigateAndClean('game') : props.setIsLoginModalOpen(true) }}>
 								<Emoji emoji='game_die' set='apple' size={20} />&nbsp;game
 							</div>
