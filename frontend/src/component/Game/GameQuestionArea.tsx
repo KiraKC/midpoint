@@ -19,16 +19,14 @@ function GameQuestionArea(props: IGameBoxProps) {
 
 	return (
 		<div className="question-area">
-			<div className="flex-horizontal question-image">
+			<div className="flex-horizontal wrap">
 				<div className="game-question-title-area">
 					<div className="question-emojis"><Emoji emoji={'smile'} set='apple' size={50} /> </div>
 					<div className="question-title">
 						HERE is where the question will go!
 					</div>
 				</div>	
-				<div>
 					<img className="game-poll-image" src={"https://cdn.searchenginejournal.com/wp-content/uploads/2019/08/c573bf41-6a7c-4927-845c-4ca0260aad6b-760x400.jpeg"}></img> 	{/*: ''} */}
-				</div>
 
 			</div>
 			<div className="gamebox-display-flex">

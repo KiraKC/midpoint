@@ -4,7 +4,7 @@
 	width: 40vw;
     height: 70vh;
 	min-height: 26rem;
-	min-width: 15rem;
+	min-width: 17rem;
 	object-fit: cover;
 	background-color: white;
 	overflow-y: scroll;
@@ -57,7 +57,7 @@
 	justify-items: start;
 	align-items: center;
 	grid-gap: 1rem;
-	grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
 	height: 100%;
 	width: 90%;
 	margin: 0rem;
@@ -65,11 +65,16 @@
 }
 
 .game-poll-image {
-	width: 100%;
+	width: 250px;
 	z-index: 5;
 	position: relative;
 	border-radius: 15px;
-	margin-bottom: 2px;
+}
+
+@media only screen and (max-width: 1000px) {
+	.game-poll-image {
+		display: none;
+		}
 }
 
 .game-option-button {
@@ -100,6 +105,7 @@
 
 .question-area{
 	margin: 2rem;
+	margin-bottom: 1rem;
 }
 
 .game-question-title-area{
@@ -117,7 +123,7 @@
 	font-size:1.5vw;
 	font-size:1.5rem;
 	width:80%;
-	margin-bottom: 1rem;
+	
 }
 
 .question-emojis{
@@ -136,8 +142,9 @@
 	display: flex;
 	width: 100%;
 	flex-wrap: wrap;
-	height: 5vh;
+	height: 4vh;
 	overflow-y: hidden;
+	margin-top: 0.5rem;
 }
 
 .dashboard{
@@ -188,13 +195,4 @@
 	justify-content: space-between;
 	align-items: center;
 	height: 100%;
-}
-
-.wrap{
-	flex-wrap:wrap;
-	-webkit-flex-wrap: wrap;
-}
-
-.question-image{
-
 }

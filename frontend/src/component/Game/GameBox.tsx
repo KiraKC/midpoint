@@ -36,13 +36,6 @@ function GameBox(props: IGameBoxProps) {
 							<OptionButton />
 							<OptionButton />
 							<OptionButton />
-							<OptionButton />
-							<OptionButton />
-							<OptionButton />
-							<OptionButton />
-							<OptionButton />
-							<OptionButton />
-							<OptionButton />
 
 					</div>
 				</div>
