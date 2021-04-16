@@ -78,6 +78,8 @@ function App() {
 							/>} />
 							<Route path="/game" element={<GameStart
 							/>} />
+							<Route path="/play" element={<GameBox
+							/>} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>

@@ -15,7 +15,6 @@ interface IGameBoxProps {
 }
 
 function GameBox(props: IGameBoxProps) {
-
 	return (
 			<div className="game-wrapper-flex">
 				<div className="game-box-rect">
@@ -30,12 +29,21 @@ function GameBox(props: IGameBoxProps) {
 				</div>
 			</div>
 				<div className="game-box-area flex-vertical">
-						<GameQuestionArea />
+						<GameQuestionArea /> 
+						{/* {props.imageUrl !== '' ? */}
 						<div className="game-option-grid">
 							<OptionButton />
 							<OptionButton />
 							<OptionButton />
 							<OptionButton />
+							<OptionButton />
+							<OptionButton />
+							<OptionButton />
+							<OptionButton />
+							<OptionButton />
+							<OptionButton />
+							<OptionButton />
+
 					</div>
 				</div>
 	
