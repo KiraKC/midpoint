@@ -26,8 +26,8 @@ function GameQuestionArea(props: IGameBoxProps) {
 						HERE is where the question will go!
 					</div>
 				</div>	
-					<img className="game-poll-image" src={"https://cdn.searchenginejournal.com/wp-content/uploads/2019/08/c573bf41-6a7c-4927-845c-4ca0260aad6b-760x400.jpeg"}></img> 	{/*: ''} */}
-
+					<img className="game-poll-image" src={"https://cdn.searchenginejournal.com/wp-content/uploads/2019/08/c573bf41-6a7c-4927-845c-4ca0260aad6b-760x400.jpeg"}></img>
+						{/* {props.imageUrl !== '' ? */}
 			</div>
 			<div className="gamebox-display-flex">
 				{/* props.categories */}

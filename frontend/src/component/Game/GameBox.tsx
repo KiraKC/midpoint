@@ -30,7 +30,6 @@ function GameBox(props: IGameBoxProps) {
 			</div>
 				<div className="game-box-area flex-vertical">
 						<GameQuestionArea /> 
-						{/* {props.imageUrl !== '' ? */}
 						<div className="game-option-grid">
 							<OptionButton />
 							<OptionButton />

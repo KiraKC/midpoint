@@ -17,6 +17,7 @@ import SearchPage from './component/SearchPage/SearchPage';
 import HistoryPage from './component/HistoryPage/HistoryPage';
 import MyPollsPage from './component/MyPollsPage/MyPollsPage';
 import StatsPage from './component/StatsPage/StatsPage';
+import GameEnd from './component/Game/GameEnd';
 
 function App() {
 
@@ -79,6 +80,8 @@ function App() {
 							<Route path="/game" element={<GameStart
 							/>} />
 							<Route path="/play" element={<GameBox
+							/>} />
+							<Route path="/endgame" element={<GameEnd
 							/>} />
 						</Routes>
 					</div>
