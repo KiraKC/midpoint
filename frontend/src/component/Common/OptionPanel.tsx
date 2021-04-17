@@ -13,7 +13,9 @@ interface IOptionPanelProps {
 	textFieldValue: string[],
 	setTextFieldValue: any,
 	optionHint: string[],
-	setOptionHint: any
+	setOptionHint: any,
+	questionEmojiOpen: boolean,
+	setQuestionEmojiOpen: any
 }
 
 function OptionPanel(props: IOptionPanelProps) {
@@ -29,7 +31,9 @@ function OptionPanel(props: IOptionPanelProps) {
 		textFieldValue: props.textFieldValue,
 		setTextFieldValue: props.setTextFieldValue,
 		optionHint: props.optionHint,
-		setOptionHint: props.setOptionHint
+		setOptionHint: props.setOptionHint,
+		questionEmojiOpen: props.questionEmojiOpen,
+		setQuestionEmojiOpen: props.setQuestionEmojiOpen
 	}
 
 	return (

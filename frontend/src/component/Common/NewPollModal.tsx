@@ -188,7 +188,9 @@ function NewPollModal(props: INewPollModal) {
 		numOfOptions: numOfOptions,
 		setNumOfOptions: setNumOfOptions,
 		optionHint: optionHint,
-		setOptionHint: setOptionHint
+		setOptionHint: setOptionHint,
+		questionEmojiOpen: questionEmojiOpen,
+		setQuestionEmojiOpen: setQuestionEmojiOpen
 	}
 
 	const handleIncrement = () => {
@@ -256,6 +258,25 @@ function NewPollModal(props: INewPollModal) {
 		}
 	}
 
+	const handleQuestionEmojiBox = () => {
+		if (!questionEmojiOpen) {
+			let isAnyOptionOpen = false;
+			for (let i = 0; i < isEmojiOpenArray.length; i++) {
+				if (isEmojiOpenArray[i]) {
+					isAnyOptionOpen = true
+				}
+			}
+			if (isAnyOptionOpen) {
+				let tempEmojiOpenArray = isEmojiOpenArray;
+				for (let i = 0; i < tempEmojiOpenArray.length; i++) {
+					tempEmojiOpenArray[i] = false;
+				}
+				setIsEmojiOpenArray([...tempEmojiOpenArray]);
+			}
+		}
+		setQuestionEmojiOpen(!questionEmojiOpen)
+	}
+
 	return (
 		<div>
 			<Modal
@@ -276,7 +297,7 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-section-heading">1. Enter a question</div>
 					<div className="poll-modal-input-module display-relative">
 						<button className="emoji-picker-button"
-							onClick={() => setQuestionEmojiOpen(!questionEmojiOpen)}
+							onClick={() => handleQuestionEmojiBox()}
 						>
 							<Emoji emoji={questionEmoji} set='apple' size={23} />
 						</button>
@@ -303,7 +324,7 @@ function NewPollModal(props: INewPollModal) {
 					<div className="poll-modal-input-module display-relative">
 						<input className="poll-image-url-input" type="text"
 							placeholder="Image URL, starts with https://"
-							onChange={(e) => handleImageUrl(e.target.value) }></input>
+							onChange={(e) => handleImageUrl(e.target.value)}></input>
 						<div className="poll-modal-image-url-hint"
 							style={{ color: (imageHint === 'IMAGE URL' ? 'black' : '#F24443') }}
 						>{imageHint}</div>

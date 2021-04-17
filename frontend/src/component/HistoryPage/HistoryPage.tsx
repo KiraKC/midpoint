@@ -43,7 +43,7 @@ function HistoryPage(props: IHistoryPageProps) {
 				})
 				.catch(e => {
 					console.log(e)
-					setDescription('oops, server is sleeping. try again later!');
+					setDescription('oops, server is sleeping. come back later or try re-authenticate!');
 				});
 		}
 	}

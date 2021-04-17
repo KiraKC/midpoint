@@ -10,7 +10,9 @@ interface IOptionItemProps {
 	textFieldValue: string[],
 	setTextFieldValue: any,
 	optionHint: string[],
-	setOptionHint: any
+	setOptionHint: any,
+	questionEmojiOpen: boolean,
+	setQuestionEmojiOpen: any
 }
 
 function OptionItem(props: IOptionItemProps) {
@@ -34,6 +36,9 @@ function OptionItem(props: IOptionItemProps) {
 	}
 
 	const handleEmojiOpen = (index: number) => {
+		if (props.questionEmojiOpen) {
+			props.setQuestionEmojiOpen(false);
+		}
 		let tempEmojiOpenArray = isEmojiOpenArray;
 		// close all other emoji picker
 		for (let i = 0; i < tempEmojiOpenArray.length; i++) {
