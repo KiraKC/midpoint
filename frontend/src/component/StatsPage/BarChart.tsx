@@ -17,21 +17,49 @@ interface IBarChartProps {
 
 function BarChart(props: IBarChartProps) {
 
+	const theme = {
+		background: "transparent",
+		axis: {
+			fontSize: "15px",
+			ticks: {
+				line: {
+					stroke: "#555555"
+				},
+				text: {
+					fill: "#ffffff",
+					fontSize: "15px"
+				}
+			},
+			legend: {
+				text: {
+					fill: "#aaaaaa"
+				}
+			}
+		},
+		grid: {
+			line: {
+				fontSize: "15px",
+				stroke: "#555555"
+			}
+		}
+	};
+
 	return (
 		<div className="barchart-wrapper">
 			<div className="barchart-heading">Categorized by <code>{props.grouping}</code></div>
 			<ResponsiveBar
 				enableLabel={false}
-				label={d => `${d.id}: ${d.value}`}
+				enableGridX={true}
+				enableGridY={true}
 				data={props.chartData.stats}
 				keys={props.chartData.identities}
 				indexBy="answerOptionValue"
-				margin={{ top: 30, right: 20, bottom: 80, left: 50 }}
+				margin={{ top: 40, right: 20, bottom: 140, left: 50 }}
 				padding={0.3}
 				valueScale={{ type: 'linear' }}
-				groupMode={'grouped'}
 				indexScale={{ type: 'band', round: true }}
-				colors={{ scheme: 'accent' }}
+				colors={{ scheme: 'paired' }}
+				theme={theme}
 				defs={[
 					{
 						id: 'dots',
@@ -70,10 +98,9 @@ function BarChart(props: IBarChartProps) {
 				axisTop={null}
 				axisRight={null}
 				axisBottom={{
-					tickSize: 5,
+					tickSize: 12,
 					tickPadding: 5,
-					tickRotation: 0,
-					legend: 'country',
+					tickRotation: 50,
 					legendPosition: 'middle',
 					legendOffset: 32
 				}}
@@ -81,41 +108,13 @@ function BarChart(props: IBarChartProps) {
 					tickSize: 5,
 					tickPadding: 5,
 					tickRotation: 0,
-					legend: 'food',
 					legendPosition: 'middle',
-					legendOffset: -40
+					legendOffset: -40,
 				}}
-				borderRadius={2}
+				borderRadius={5}
 				labelSkipWidth={200}
 				labelSkipHeight={12}
 				labelTextColor={{ from: 'color', modifiers: [['darker', 1.6]] }}
-				legends={[
-					{
-						dataFrom: 'keys',
-						anchor: 'bottom-right',
-						direction: 'column',
-						justify: false,
-						translateX: 120,
-						translateY: 0,
-						itemsSpacing: 2,
-						itemWidth: 100,
-						itemHeight: 20,
-						itemDirection: 'left-to-right',
-						itemOpacity: 0.85,
-						symbolSize: 20,
-						effects: [
-							{
-								on: 'hover',
-								style: {
-									itemOpacity: 1
-								}
-							}
-						]
-					}
-				]}
-				animate={true}
-				motionStiffness={90}
-				motionDamping={15}
 			/>
 		</div>
 	)
