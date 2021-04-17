@@ -110,8 +110,14 @@ public class GetStatsHandler implements Route {
 
       // Send mini-stats to front end
       Map<String, Double> miniStats = new HashMap<>();
+      int numResponses = allPollResponses.size();
       for (AnswerOption answerOption : poll.getAnswerOptions()) {
-        double percentage = counts.get(answerOption.getId()) / allPollResponses.size();
+        double percentage;
+        if (numResponses == 0) {
+          percentage = 0;
+        } else {
+          percentage = counts.get(answerOption.getId()) / allPollResponses.size();
+        }
         miniStats.put(answerOption.getId(), percentage * Constants.PERCENTAGE);
       }
       variables.put("miniStats", miniStats);
