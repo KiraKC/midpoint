@@ -93,7 +93,6 @@ public class AnonymousAnswerHandler implements Route {
     }
 
     variables.put("status", status);
-//    System.out.println(GSON.toJson(variables));
     return GSON.toJson(variables);
   }
 

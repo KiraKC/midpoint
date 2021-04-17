@@ -51,7 +51,6 @@ public class CategoryPoints {
     for (int i = 0; i < jsonTaggedCategories.length(); i++) {
       taggedCategories.add(jsonTaggedCategories.getString(i));
     }
-    System.out.println(taggedCategories);
     catPtsMap = new HashMap<>();
     for (String taggedCategory : taggedCategories) {
       catPtsMap.put(taggedCategory, Constants.INITIAL_NEW_POLL_CAT_PTS / taggedCategories.size());

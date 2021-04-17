@@ -97,8 +97,6 @@ public class CreatedPollsHandler implements Route {
 
       variables.put("answeredPollIds", answeredPollIdsToSend);
       variables.put("miniStats", miniStats);
-      System.out.println("MINISTATS");
-      System.out.println(miniStats);
       status = true;
     } catch (JSONException e) {
       e.printStackTrace();

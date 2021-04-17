@@ -54,9 +54,7 @@ public class AnsweredPollsHandler implements Route {
       Set<String> answeredPolls = user.getAnsweredPolls().getSet();
 
       // Query for answeredPolls
-      System.out.println("ANSWERED: " + answeredPolls);
       List<Poll> pollsToSend = Connection.getPollsById(answeredPolls);
-      System.out.println(pollsToSend.size());
 
       // Return the polls to the frontend as a JSON
       variables.put("answeredPolls", pollsToSend);
