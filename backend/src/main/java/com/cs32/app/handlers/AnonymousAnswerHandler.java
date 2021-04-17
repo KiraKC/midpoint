@@ -74,8 +74,14 @@ public class AnonymousAnswerHandler implements Route {
 
       // Send mini-stats to front end
       Map<String, Double> miniStats = new HashMap<>();
+      int numResponses = allResponses.size();
       for (AnswerOption answerOption : answerOptions) {
-        double percentage = counts.get(answerOption.getId()) / allResponses.size();
+        double percentage;
+        if (numResponses == 0) {
+          percentage = 0;
+        } else {
+          percentage = counts.get(answerOption.getId()) / allResponses.size();
+        }
         miniStats.put(answerOption.getId(), percentage * Constants.PERCENTAGE);
       }
       variables.put("miniStats", miniStats);
@@ -87,7 +93,7 @@ public class AnonymousAnswerHandler implements Route {
     }
 
     variables.put("status", status);
-    System.out.println(GSON.toJson(variables));
+//    System.out.println(GSON.toJson(variables));
     return GSON.toJson(variables);
   }
 
