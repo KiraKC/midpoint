@@ -39,6 +39,7 @@ function StatsPage(props: IStatsPageProps) {
 	}
 
 	const requestStats = async () => {
+		setDescription('Fetching poll statistics from the server...');
 		let toSend = {
 			pollId: pollId,
 			userMetaDataGrouping: userMetaDataGrouping
@@ -60,7 +61,7 @@ function StatsPage(props: IStatsPageProps) {
 			})
 			.catch(e => {
 				console.log(e)
-				setDescription('oops, server is sleeping. try again later!');
+				setDescription('Oops, server is sleeping. Come back later or try re-authenticate!');
 			});
 	}
 

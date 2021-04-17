@@ -1,0 +1,112 @@
+.option-wrapper {
+	width: 100%;
+	height: max-content;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 10px;
+	padding: 6px 15px;
+	margin-top: 12px;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+              0 2px 2px rgba(0,0,0,0.15), 
+              0 4px 4px rgba(0,0,0,0.15), 
+              0 8px 8px rgba(0,0,0,0.15);
+	border: none;
+	outline: none;
+	z-index: 4;
+	position: relative;
+	cursor: pointer;
+}
+
+.option-wrapper-flex {
+	width: max-content;
+	height: max-content;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.7);
+	border-radius: 10px;
+	padding: 6px 15px;
+	margin-top: 12px;
+	box-shadow: 0 1px 1px rgba(0,0,0,0.15), 
+              0 2px 2px rgba(0,0,0,0.15), 
+              0 4px 4px rgba(0,0,0,0.15), 
+              0 8px 8px rgba(0,0,0,0.15);
+	border: none;
+	outline: none;
+	z-index: 4;
+	position: relative;
+	cursor: pointer;
+	margin-right: 10px;
+}
+
+.option-wrapper:hover {background-color: white}
+
+.option-wrapper:active {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+.option-text {
+	display: inline-block;
+	width: fit-content;
+	word-break: break-word;
+	text-align: left;
+	font-family: "Inter", sans-serif;
+	margin-top: -1px;
+	margin-left: 10px;
+	font-size: 1.35rem;
+	font-weight: 700;
+	z-index: 4;
+}
+
+.option-text-answered {
+	display: inline-block;
+	width: fit-content;
+	flex: 1;
+	word-break: break-word;
+	text-align: left;
+	font-family: "Inter", sans-serif;
+	margin-top: -1px;
+	margin-left: 10px;
+	font-size: 1.35rem;
+	font-weight: 700;
+	z-index: 4;
+}
+
+.answered-option-wrapper {
+	width: 100%;
+	height: max-content;
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.65);
+	border-radius: 10px;
+	padding: 6px 15px;
+	margin-top: 12px;
+	border: none;
+	outline: none;
+	z-index: 4;
+	position: relative;
+}
+
+.answered-option-white-bar {
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.option-percentage {
+	font-family: "Inter", sans-serif;
+	margin-top: -1px;
+	margin-left: 10px;
+	font-size: 1.35rem;
+	font-weight: 700;
+	z-index: 4;
+	right: 15px;
+	width: max-content;
+}

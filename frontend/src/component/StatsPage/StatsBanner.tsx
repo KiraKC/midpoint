@@ -3,7 +3,9 @@ import CategoryButtonMuted from "../Common/CategoryButtonMuted";
 import { findCategoryInfo } from "../../constants/Category";
 import { Emoji } from "emoji-mart";
 import { useMediaQuery } from 'react-responsive'
-import MasonryOption from "../HomePage/PollOption";
+import PollOption from "../HomePage/PollOption";
+import React from 'react';
+import MutedPollOption from './MutedPollOption';
 
 interface IStatsBannerProps {
 	statistics: any
@@ -39,8 +41,8 @@ function StatsBanner(props: IStatsBannerProps) {
 					{props.statistics.poll.question}</div>
 				<div className="banner-options-wrapper">
 					{props.statistics.poll.answerOptions.map((option, index) => (
-						<MasonryOption key={index} id={option.id} value={option.value}
-							emoji={option.emoji} textColor={props.statistics.poll.color} flexible={true}
+						<MutedPollOption key={index} id={option.id} value={option.value}
+							emoji={option.emoji} textColor={props.statistics.poll.color}
 						/>
 					))}
 				</div>

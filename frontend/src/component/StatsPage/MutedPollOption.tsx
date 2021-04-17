@@ -1,23 +1,19 @@
 import '../../styles/HomePage/PollOption.css';
 import { Emoji } from 'emoji-mart'
 
-interface PollOptionProps {
+interface MutedPollOptionProps {
 	id: string,
 	emoji: string,
 	value: string,
 	textColor: string,
-	isLoggedIn: boolean,
-	setIsLoginModalOpen: any,
-	clickHandler: any,
 }
 
-function PollOption(props: PollOptionProps) {
+function MutedPollOption(props: MutedPollOptionProps) {
 
 	return (
 		<button
-			className='option-wrapper'
-			style={{ color: `${props.textColor}` }}
-			onClick={() => { props.clickHandler(props.id, props.value) }}>
+			className={'option-wrapper-flex'}
+			style={{ color: `${props.textColor}`, cursor: 'auto' }}>
 			<div style={{ marginTop: "1px" }}>
 				<Emoji emoji={props.emoji} set='apple' size={26} />
 			</div>
@@ -26,4 +22,4 @@ function PollOption(props: PollOptionProps) {
 	);
 }
 
-export default PollOption;
+export default MutedPollOption;
