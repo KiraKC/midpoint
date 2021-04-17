@@ -6,7 +6,7 @@ import firebase from 'firebase';
 import axios from 'axios';
 import endpointUrl from '../../constants/Endpoint';
 import AnsweredOption from './AnsweredOption';
-import MasonryOption from './PollOption';
+import PollOption from './PollOption';
 import { FacebookShareButton } from 'react-share';
 import { Navigate, useNavigate } from 'react-router';
 
@@ -243,7 +243,7 @@ function Poll(props: PollProps) {
 				<div className="selection-hint">TOTAL RESPONSES: {props.numClicks}</div>
 				{props.imageUrl !== '' ? (<img className="masonry-poll-img" src={props.imageUrl}></img>) : ''}
 				{props.answerOption.map((option, index) => (
-					<MasonryOption key={index} id={option.id} value={option.value}
+					<PollOption key={index} id={option.id} value={option.value}
 						emoji={option.emoji} textColor={props.color}
 						isLoggedIn={props.isLoggedIn} setIsLoginModalOpen={props.setIsLoginModalOpen}
 						clickHandler={handleResponseToPoll} />

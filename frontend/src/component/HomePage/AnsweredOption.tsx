@@ -1,4 +1,4 @@
-import '../../styles/HomePage/MasonryOption.css';
+import '../../styles/HomePage/PollOption.css';
 import { Emoji } from 'emoji-mart'
 
 interface IAnsweredOptionProps {
