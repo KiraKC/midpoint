@@ -67,7 +67,6 @@ public class NewPollHandler implements Route {
         String answerOptionString = jsonAnswerObject.getString("value");
         String answerOptionEmoji = jsonAnswerObject.getString("emoji");
         answerOptions.add(new AnswerOption(answerOptionString, answerOptionEmoji));
-        System.out.println(answerOptions.get(i).getValue());
       }
 
       // calculate initial values for categoryWrapper and initialize categoryWrapper
@@ -76,7 +75,6 @@ public class NewPollHandler implements Route {
 
       Poll newPoll = new Poll(question, emoji, answerOptions, newCategoryPoints, color, imageUrl, user.getId());
 
-      System.out.println(newPoll);
       status = this.addPollToDB(newPoll);
 
       // Update user's created polls in MongoDB

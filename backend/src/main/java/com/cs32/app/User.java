@@ -29,10 +29,8 @@ public class User {
   public User(JSONObject jsonReqObject) throws JSONException, FirebaseAuthException {
     // decrypt userId
     String userIdToken = jsonReqObject.getString("userIdToken");
-    System.out.println("USERIDTOKEN: " + userIdToken);
     FirebaseToken decodedToken = FirebaseAuth.getInstance().verifyIdToken(userIdToken);
     id = decodedToken.getUid();
-    System.out.println("USERID: " + id);
 
     // calculate and add user category points
     JSONArray jsonTaggedCategories = jsonReqObject.getJSONArray("selectedCategories");

@@ -11,7 +11,7 @@ function GameStart(props) {
 				<div className="start-section-heading">Hit the <br /> Midpoint Challenge</div>
 				<div className="start-details">
 					Midpoint is a platform where you can create custom surveys.
-					The statistics help you learn  about the ideas and opintions of the wider community.
+					The statistics help you learn about the ideas and opinions of the wider community.
 				</div>
 				<button className="start-button-submit" onClick={() => navigate('/play')}> Start</button>
 			</div>

@@ -88,7 +88,6 @@ public class Connection {
     int i = 0;
     while (aggregateIterable.hasNext()) {
       // Create and add poll
-      System.out.println(i++);
       randomPolls.add(new Poll(aggregateIterable.next()));
     }
 
@@ -148,7 +147,6 @@ public class Connection {
    */
   public static boolean addUserToDB(User user) {
     try {
-      System.out.println("USER: " + user.toBSON());
       userCollection.insertOne(user.toBSON());
       System.out.println("adding com.cs32.app.user to db was SUCCESSFUL, userId: " + user.getId());
     } catch (Exception e) {

@@ -81,8 +81,6 @@ public class GetSuggestedPollsHandler implements Route {
         String userId = decodedToken.getUid();
         User user = Connection.getUserById(userId);
         userCatPts = user.getCategoryPoints();
-        System.out.println("USER ANSWERED POLLS: ");
-        System.out.println(user.getAnsweredPolls().getSet());
         pollsToExclude.addAll(user.getAnsweredPolls().getSet());
       } else {
         userCatPts = new CategoryPoints(Arrays.asList(Constants.ALL_CATEGORIES));
@@ -96,9 +94,7 @@ public class GetSuggestedPollsHandler implements Route {
         List<Poll> newPolls = Connection.getRandomPolls(numPollsRequested
             * Constants.NUM_QUERIED_POLLS_PER_REQUESTED);
         for (int i = 0; i < newPolls.size(); i++) {
-          System.out.println("considering poll: " + newPolls.get(i).getId());
           if (pollsToExclude.contains(newPolls.get(i).getId())) {
-            System.out.println("removed poll");
             pollsToExclude.add(newPolls.get(i).getId());
             newPolls.remove(i);
             i--;
