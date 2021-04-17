@@ -1,7 +1,10 @@
 package com.cs32.app.handlers;
 
+import com.cs32.app.Constants;
 import com.cs32.app.database.Connection;
+import com.cs32.app.poll.AnswerOption;
 import com.cs32.app.poll.Poll;
+import com.cs32.app.poll.PollResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.json.JSONArray;
@@ -10,10 +13,7 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
-import java.util.Set;
-import java.util.Map;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * The handler which is responsible for the followings.
@@ -53,8 +53,38 @@ public class GetGamePollHandler implements Route {
         pollToSend = Connection.getRandomPolls(1).get(0);
       }
 
+      List<AnswerOption> answerOptions = pollToSend.getAnswerOptions();
+      List<PollResponse> allResponses = Connection.getResponses(pollToSend.getId());
+
+      // Initialize a map for counting the occurrence of every answer option
+      Map<String, Double> counts = new HashMap<>();
+      for (AnswerOption answerOption : answerOptions) {
+        counts.put(answerOption.getId(), 0.0);
+      }
+
+      // count the number of responses for each answer option
+      for (PollResponse everyResponse : allResponses) {
+        counts.put(everyResponse.getAnswerOptionId(),
+              counts.get(everyResponse.getAnswerOptionId()) + 1);
+      }
+
+      // Send mini-stats to front end
+      Map<String, Double> miniStats = new HashMap<>();
+      int numResponses = allResponses.size();
+      for (AnswerOption answerOption : answerOptions) {
+        double percentage;
+        if (numResponses == 0) {
+          percentage = 0;
+        } else {
+          percentage = counts.get(answerOption.getId()) / allResponses.size();
+        }
+        miniStats.put(answerOption.getId(), percentage * Constants.PERCENTAGE);
+      }
+      variables.put("miniStats", miniStats);
+      variables.put("answerOptions", answerOptions);
+
       // Return the poll to the frontend as a JSON
-      variables.put("gamePoll", pollToSend);
+      variables.put("poll", pollToSend);
       status = true;
     } catch (Exception e) {
       e.printStackTrace();
@@ -62,7 +92,6 @@ public class GetGamePollHandler implements Route {
       // TODO: send a failure response to frontend
       status = false;
     }
-
     variables.put("status", status);
     return GSON.toJson(variables);
   }
