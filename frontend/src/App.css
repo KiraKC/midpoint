@@ -74,4 +74,5 @@ html {
 	text-align: center;
 	color: white;
 	z-index: 0;
+	position: relative;
 }

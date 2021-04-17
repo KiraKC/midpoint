@@ -27,6 +27,17 @@ function StatsPage(props: IStatsPageProps) {
 		requestStats();
 	}, [userMetaDataGrouping])
 
+	const processAnswerOptions = (data: any) => {
+		const stats = data.chartData.stats;
+		for (let i = 0; i < stats.length; i++) {
+			let currOptions: string = stats[i].answerOptionValue;
+			if (currOptions.length > 10) {
+				stats[i].answerOptionValue = currOptions.substring(0, 9) + '...';
+
+			} 
+		}
+	}
+
 	const requestStats = async () => {
 		let toSend = {
 			pollId: pollId,
@@ -42,9 +53,10 @@ function StatsPage(props: IStatsPageProps) {
 		axios.post(
 			endpointUrl + '/poll/stats', toSend, config)
 			.then(response => {
-				console.log(response.data);
+				console.log(response.data.chartData);
+				processAnswerOptions(response.data)
 				setStatistics(response.data)
-				setDescription('');
+				setDescription('View user statistics of the selected poll.');
 			})
 			.catch(e => {
 				console.log(e)
@@ -55,7 +67,10 @@ function StatsPage(props: IStatsPageProps) {
 
 	return (
 		<>
-			<div className="page-title-description">{description}</div>
+		<div className="page-title-wrapper-flex">
+				<div className="page-title">&nbsp;Statistics</div>
+				<div className="page-title-description">{description}</div>
+			</div>
 			{statistics ? <StatsBanner statistics={statistics} /> : ''}
 			{statistics ? <StatsBottomPanel
 				chartData={statistics.chartData} poll={statistics.poll}
