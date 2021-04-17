@@ -46,6 +46,7 @@ public class SearchPollsHandler implements Route {
       // search for polls according to searchString
       String searchString = jsonReqObject.getString("searchString");
       List<Poll> searchResults = Connection.searchPolls(searchString);
+      variables.put("searchResults", searchResults);
 
       // instantiate list of answeredPollIds and createdPollIds
       List<String> answeredPollIdsToSend = new ArrayList<>();
