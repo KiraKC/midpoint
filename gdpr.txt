@@ -54,10 +54,6 @@ When polls are answered or created, we update related fields of the poll and the
 in our MongoDB database. There is no user-typed inputs involved in this part so this
 processing should be done safely.
 
-The only possible vulnerability we notice is our search bar. Even though only querying
-the database is happening during searching and no data is manipulated, anything could be
-typed into the search bar so there is a chance for NoSQL injection.
-
 ########################################################################################################################
 
 4. Let’s say that your database is compromised - what is the worst case scenario for
