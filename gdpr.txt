@@ -1,0 +1,53 @@
+1. If you are collecting user data, how do you inform your customers why you’re
+processing their data? Do you have mechanisms in place for users to deny consent
+of data processing? *
+
+We can have a message informing our customers why we're processing their data on
+our sign up page together with an agreement checkbox to make clear that:
+
+1) We collect user metadata (age, gender, marital status, education and political
+leaning) when a user signs up to support our poll statistics filtering feature
+(e.g. you can check to see what percentage of high school users prefers pizzas
+with pineapples).
+
+2) We record polls a user has answered or created to support our history page for
+the user and to support our suggestion algorithm.
+
+3) To protect user privacy, when recording a poll a user has answered, we only link
+the poll response with the user's metadata instead of the user's ID so that the
+user's response is not trackable.
+
+We currently don't have mechanisms in place for users to deny consent of data
+processing - we require sign-in for a user to use our web APP. However, we could
+create a visitor mode for users who deny consent of data processing. In this mode,
+
+1) Users do not need to sign in and we won't collect user metadata.
+
+2) We don't record polls a user has answered.
+
+3) Correspondingly, poll feed is random instead of being related to user interests,
+users in this mode could not view their history of answered polls, and users in this
+mode could not create polls (For better management, all created polls are linked with
+the user who created it. We wish to maintain a friendly online environment so the users
+should be responsible for what they have created.).
+
+########################################################################################################################
+
+2. If you are not directly processing user data, what data are you processing and
+why? Are your data processing techniques made clear to your users? How? *
+
+We do process user data directly.
+
+########################################################################################################################
+
+3. What data processing do you do, and how would you ensure that it is done safely,
+if you don’t already? How would you secure your project against possible malfunctions
+/crashes? *
+
+########################################################################################################################
+
+4. Let’s say that your database is compromised - what is the worst case scenario for
+your app? Your users? How do you protect against a breach? What steps have you taken
+to ensure that the data you’re storing in your database is protected? This could
+include protecting your inputs to avoid injection attacks, encrypting user data to
+avoid password leaks, etc. *
