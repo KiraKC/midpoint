@@ -2,8 +2,11 @@
 processing their data? Do you have mechanisms in place for users to deny consent
 of data processing? *
 
-We can have a message informing our customers why we're processing their data on
-our sign up page together with an agreement checkbox to make clear that:
+Currently, we have a message telling our users that their data/website usage is
+anonymized on the sign up page. We have also made fields optional so that users
+don't need to share all the information if they wish not to. Furthermore, we could 
+include an 'info' page informing our customers why and how we're processing their 
+data along with an agreement checkbox to make clear that:
 
 1) We collect user metadata (age, gender, marital status, education and political
 leaning) when a user signs up to support our poll statistics filtering feature
