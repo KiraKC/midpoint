@@ -1,0 +1,81 @@
+1. If you are collecting user data, how do you inform your customers why you’re
+processing their data? Do you have mechanisms in place for users to deny consent
+of data processing? *
+
+Currently, we have a message telling our users that their data/website usage is
+anonymized on the sign up page. We have also made fields optional so that users
+don't need to share all the information if they wish not to. Furthermore, we could 
+include an 'info' page informing our customers why and how we're processing their 
+data along with an agreement checkbox to make clear that:
+
+1) We collect user metadata (age, gender, marital status, education and political
+leaning) when a user signs up to support our poll statistics filtering feature
+(e.g. you can check to see what percentage of high school users prefers pizzas
+with pineapples).
+
+2) We record polls a user has answered or created to support our history page for
+the user and to support our suggestion algorithm.
+
+3) To protect user privacy, when recording a poll a user has answered, we only link
+the poll response with the user's metadata instead of the user's ID so that the
+user's response is not trackable.
+
+We currently don't have mechanisms in place for users to deny consent of data
+processing - we require sign-in for a user to use our web application. However, we could
+create a visitor mode for users who deny consent of data processing. In this mode,
+
+1) Users do not need to sign in and we won't collect user metadata.
+
+2) We don't record polls a user has answered.
+
+3) Correspondingly, poll feed is random instead of being related to user interests,
+users in this mode could not view their history of answered polls, and users in this
+mode could not create polls (For better management, all created polls are linked with
+the user who created it. We wish to maintain a friendly online environment so the users
+should be responsible for what they have created.).
+
+########################################################################################################################
+
+2. If you are not directly processing user data, what data are you processing and
+why? Are your data processing techniques made clear to your users? How? *
+
+We do process user data directly.
+
+########################################################################################################################
+
+3. What data processing do you do, and how would you ensure that it is done safely,
+if you don’t already? How would you secure your project against possible malfunctions
+/crashes? *
+
+When a user sign up, we store user log-in information (email and password) only using
+Firebase Authentication so that they are kept safe, and store user ID token (generated
+by Firebase Authentication) and user metadata in our MongoDB database. We check validity
+for all user-typed inputs on our sign-up page so that we can avoid possible NoSQL injection
+here.
+
+When polls are answered or created, we update related fields of the poll and the user
+in our MongoDB database. There is no user-typed inputs involved in this part so this
+processing should be done safely.
+
+########################################################################################################################
+
+4. Let’s say that your database is compromised - what is the worst case scenario for
+your app? Your users? How do you protect against a breach? What steps have you taken
+to ensure that the data you’re storing in your database is protected? This could
+include protecting your inputs to avoid injection attacks, encrypting user data to
+avoid password leaks, etc. *
+
+There is really no sensitive information stored in our database. If our database is
+compromised, the worst case scenario for our application would probably be that we lost
+all our polls and their statistics and we need to start accumulating polls all over
+again. It's definitely a good idea to back up our poll database every now and then in
+case the worst case scenario happens.
+
+We protect our users' log-in information using Firebase Authentication. Due to the nature
+of our web application, most of our user inputs are by clicking buttons or selecting drop-down
+lists, and there are only a few places for users to type in something (the sign-up page, the
+new poll page, and the search bar). To avoid NoSQL injection, we check validity for all user-typed
+inputs on our sign-up page. However, we have nothing to protect our new poll page and our search
+bar right now since there is no "correct" format for poll questions, poll options or things people
+want to search. Basically anything could be typed into these boxes so there is a chance for NoSQL
+injection and we definitely need to come with some solution to improve security here.
