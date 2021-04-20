@@ -7,15 +7,25 @@ import '../../styles/Game/GameBox.css'
 import { signOut } from '../../firebase/AuthMethods'
 import { Emoji } from "emoji-mart";
 import CategoryButton from "../Common/CategoryButton";
-import categoryArray from '../../constants/Category';
+import categoryArray, { findCategoryInfo } from '../../constants/Category';
+import CategoryButtonMuted from "../Common/CategoryButtonMuted";
+import IPoll from "../../interfaces/IPoll";
 
 interface IGameBoxProps {
-
+	relatedCategory: string[]
+	poll: IPoll
 }
 
 function GameQuestionArea(props: IGameBoxProps) {
 
-	const [categories, setCategories]: [string[], any] = useState([])
+	const getCategoryButton = () => {
+		const selectedCategory = props.relatedCategory.slice(0, 3);
+		const categoryMetaData = [];
+		for (let i = 0; i < selectedCategory.length; i++) {
+			categoryMetaData.push(findCategoryInfo(selectedCategory[i]));
+		}
+		return categoryMetaData;
+	}
 
 	return (
 		<div className="question-area">
@@ -23,33 +33,25 @@ function GameQuestionArea(props: IGameBoxProps) {
 				<div className="game-question-title-area">
 					<div className="question-emojis"><Emoji emoji={'smile'} set='apple' size={50} /> </div>
 					<div className="question-title">
-						HERE is where the question will go!
+						{props.poll.question}
 					</div>
-				</div>	
-					<img className="game-poll-image" src={"https://cdn.searchenginejournal.com/wp-content/uploads/2019/08/c573bf41-6a7c-4927-845c-4ca0260aad6b-760x400.jpeg"}></img>
-						{/* {props.imageUrl !== '' ? */}
+				</div>
+				{props.poll.imageUrl !== '' ?
+					<img className="game-poll-image"
+						src={props.poll.imageUrl}>
+					</img> : ''}
 			</div>
 			<div className="gamebox-display-flex">
 				{/* props.categories */}
-				{categoryArray.map((e, i) => (
-					<CategoryButton
+				{getCategoryButton().map((e, i) => {
+					return <CategoryButtonMuted
 						key={i}
 						emoji={e.emoji}
 						text={e.text}
-						highlightColor={e.highlightColor}
-						categories={categories}
-						setCategories={setCategories}
 					/>
-				))}
-				{/* {getCategoryButton().map((e, i) => {
-						return <CategoryButtonMuted
-							key={i}
-							emoji={e.emoji}
-							text={e.text}
-						/>
-					})} */}
+				})}
 			</div>
-			<div className="num-answers"> <b>props.number users</b> have answered </div>
+			<div className="num-answers"> <b>{props.poll.numClicks} users</b> have answered </div>
 		</div>
 
 	);

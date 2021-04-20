@@ -1,13 +1,9 @@
 .game-box-area {
 	z-index: 0;
 	border-radius: 0px 30px 30px 0px;
-	width: 40vw;
-    height: 70vh;
-	min-height: 26rem;
-	min-width: 17rem;
-	object-fit: cover;
+	height: 80%;
+	width: 70%;
 	background-color: white;
-	overflow-y: scroll;
 	overflow-x: hidden;
 }
 
@@ -15,24 +11,36 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	width: 70vw;
-	height: 70vh;
-	padding: 3rem;
+	width: 100%;
+	height: calc(100vh - 120px);
 	margin-left: auto;
 	margin-right: auto;
 }
 
+.game-box-scroll-wrapper {
+	height: 100%;
+	width: calc(100% - 60px);
+	padding-left: 30px;
+	padding-right: 30px;
+	margin-top: 30px;
+	padding-bottom: 3px;
+	margin-bottom: 27px;
+	overflow-y: scroll;
+	/* display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	justify-content: space-between; */
+}
+
 .game-box-rect {
 	background: rgba(255, 255, 255, 0.7);
-	border-radius: 30px  0px  0px 30px ;
+	border-radius: 30px 0px 0px 30px;
 	width: 15rem;
-    height: 70vh;
-	min-height: 26rem;
-	min-width: 11rem;
+	height: 80%;
+	min-width: 200px;
 	backdrop-filter: blur(5px);
 	/* backdrop-filter: blur(6px); */
 }
-
 
 .game-rect-heading {
 	padding-top: 2rem;
@@ -49,19 +57,16 @@
 	font-size: 0.8rem;
 	margin-top: 0.5rem;
 	margin-bottom: 1rem;
-
 }
 
-.game-option-grid{
+.game-option-grid {
 	display: grid;
 	justify-items: start;
 	align-items: center;
 	grid-gap: 1rem;
-	grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-	height: 100%;
-	width: 90%;
-	margin: 0rem;
-	margin-bottom: 2rem;
+	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	width: 100%;
+	margin-top: 20px;
 }
 
 .game-poll-image {
@@ -74,16 +79,16 @@
 @media only screen and (max-width: 1000px) {
 	.game-poll-image {
 		display: none;
-		}
+	}
 }
 
 .game-option-button {
 	width: 100%;
-	height: max-content;
+	height: 100%;
 	display: flex;
-	justify-content: space-evenly;
+	justify-content: flex-start;
 	align-items: center;
-	background-color: gainsboro;
+	background-color: rgb(184, 184, 184);
 	border-radius: 10px;
 	padding: 6px 15px;
 	box-shadow: 0 3px rgb(197, 197, 197);
@@ -91,24 +96,24 @@
 	outline: none;
 	z-index: 4;
 	position: relative;
-	font-size:1rem;
+	font-size: 1rem;
 	text-transform: uppercase;
 	font-family: "Inter", sans-serif;
 	color: white;
-	font-weight: 800;
-
+	font-weight: 700;
+	word-break: break-word;
+	text-align: left;
 }
 
-.game-option-button:active{
+.game-option-button:active {
 	box-shadow: 0 1px rgb(197, 197, 197);
 }
 
-.question-area{
-	margin: 2rem;
+.question-area {
 	margin-bottom: 1rem;
 }
 
-.game-question-title-area{
+.game-question-title-area {
 	display: flex;
 	align-items: flex-start;
 	align-content: space-around;
@@ -116,21 +121,20 @@
 	flex-wrap: wrap;
 }
 
-.question-title{
+.question-title {
 	font-family: "Inter", sans-serif;
 	color: black;
 	font-weight: 800;
-	font-size:1.5vw;
-	font-size:1.5rem;
-	width:80%;
-	
+	font-size: 1.5vw;
+	font-size: 1.5rem;
+	width: 80%;
 }
 
-.question-emojis{
+.question-emojis {
 	margin-right: 1rem;
 }
 
-.num-answers{
+.num-answers {
 	font-family: "Inter", sans-serif;
 	color: black;
 	font-weight: 500;
@@ -147,14 +151,14 @@
 	margin-top: 0.5rem;
 }
 
-.dashboard{
+.dashboard {
 	margin-right: 2rem;
 	margin-left: 2rem;
 	margin-top: 5rem;
 	margin-bottom: 2rem;
 }
 
-.userName{
+.userName {
 	font-family: "Inter", sans-serif;
 	color: black;
 	font-weight: 600;
@@ -163,36 +167,34 @@
 	text-transform: uppercase;
 }
 
-.current-score{
+.current-score {
 	font-family: "Inter", sans-serif;
 	color: black;
 	font-weight: 600;
 	font-size: 0.8rem;
 	margin-top: 0.5rem;
-	font-style:italic;
+	font-style: italic;
 	margin-right: 0.8rem;
 }
 
-.lives-left{
+.lives-left {
 	font-family: "Inter", sans-serif;
 	color: black;
 	font-weight: 600;
 	font-size: 0.8rem;
 	margin-top: 0.5rem;
-	font-style:italic;
+	font-style: italic;
 }
 
-.flex-horizontal{
+.flex-horizontal {
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-
 }
 
-.flex-vertical{
+.flex-vertical {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	align-items: center;
-	height: 100%;
+	align-items: flex-start;
 }

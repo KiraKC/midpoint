@@ -1,7 +1,7 @@
 import '../../styles/Game/GameEnd.css'
 import { Navigate, useNavigate } from 'react-router';
 
-function GameStart(props) {
+function GameEnd(props) {
 
 	const navigate = useNavigate()
 
@@ -27,4 +27,4 @@ function GameStart(props) {
 	);
 }
 
-export default GameStart;
+export default GameEnd;

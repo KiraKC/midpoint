@@ -9,7 +9,8 @@ import { signOut } from '../../firebase/AuthMethods'
 import { Emoji } from "emoji-mart";
 
 interface IGameBoxProps {
-
+	currHeart: number,
+	currPoint: number
 }
 
 function PlayerDashboard(props: IGameBoxProps) {
@@ -23,11 +24,12 @@ function PlayerDashboard(props: IGameBoxProps) {
 				<hr/>
 				<div className="flex-horizontal">
 					<div className="current-score">current score: </div>
-					<div> currScore </div>
+					<div> {props.currPoint} </div>
 				</div>
 				<div className="flex-horizontal">
 					<div className="lives-left"> lives left: </div>
-					<Emoji emoji={'heart'} set='apple' size={20} />
+					{props.currHeart}
+					{/* <Emoji emoji={'heart'} set='apple' size={20} /> */}
 				</div>
 			</div>
 

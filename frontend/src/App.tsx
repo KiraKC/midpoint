@@ -18,6 +18,7 @@ import HistoryPage from './component/HistoryPage/HistoryPage';
 import MyPollsPage from './component/MyPollsPage/MyPollsPage';
 import StatsPage from './component/StatsPage/StatsPage';
 import GameEnd from './component/Game/GameEnd';
+import Game from './component/Game/Game';
 
 function App() {
 
@@ -77,12 +78,7 @@ function App() {
 							<Route path="/stats/:pollId" element={<StatsPage
 								setIsLoginModalOpen={setIsLoginModalOpen} isLoggedIn={isLoggedIn}
 							/>} />
-							<Route path="/game" element={<GameStart
-							/>} />
-							<Route path="/play" element={<GameBox
-							/>} />
-							<Route path="/endgame" element={<GameEnd
-							/>} />
+							<Route path="/game" element={<Game />} />
 						</Routes>
 					</div>
 				</FirebaseAuthProvider>

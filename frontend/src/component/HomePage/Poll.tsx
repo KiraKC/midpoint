@@ -37,7 +37,7 @@ function Poll(props: PollProps) {
 	const [selectedOptionValue, setSelectedOptionValue]: [string, any] = useState('');
 	const [stats, setStats] = useState({})
 	const [isShareModalOpen, setIsShareModalOpen]: [boolean, any] = useState(false);
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (props.confirmDelete && props.selectedPollId === props.id) {
