@@ -5,15 +5,15 @@ import categoryArray, { findCategoryInfo } from '../../constants/Category';
 import CategoryButtonMuted from "../Common/CategoryButtonMuted";
 import IPoll from "../../interfaces/IPoll";
 
-interface IGameBoxProps {
-	relatedCategory: string[]
-	poll: IPoll
+interface IGameQuestionAreaProps {
+	poll: IPoll,
+	category: string[]
 }
 
-function GameQuestionArea(props: IGameBoxProps) {
+function GameQuestionArea(props: IGameQuestionAreaProps) {
 
 	const getCategoryButton = () => {
-		const selectedCategory = props.relatedCategory.slice(0, 3);
+		const selectedCategory = props.category.slice(0, 3);
 		const categoryMetaData = [];
 		for (let i = 0; i < selectedCategory.length; i++) {
 			categoryMetaData.push(findCategoryInfo(selectedCategory[i]));
@@ -25,7 +25,7 @@ function GameQuestionArea(props: IGameBoxProps) {
 		<div className="question-area">
 			<div className="flex-horizontal wrap">
 				<div className="game-question-title-area">
-					<div className="question-emojis"><Emoji emoji={'smile'} set='apple' size={40} /> </div>
+					<div className="question-emojis"><Emoji emoji={props.poll.emoji} set='apple' size={40} /> </div>
 					<div>
 						<div className="question-title">
 							{props.poll.question}
