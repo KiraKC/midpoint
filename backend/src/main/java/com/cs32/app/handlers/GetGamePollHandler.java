@@ -85,6 +85,19 @@ public class GetGamePollHandler implements Route {
 
       // Return the poll to the frontend as a JSON
       variables.put("poll", pollToSend);
+
+
+      // calculate strongly correlated with
+      List<Map.Entry<String, Double>> categoriesRankedByCorrelation = new ArrayList<>(pollToSend.getCatPts().getMap().entrySet());
+      categoriesRankedByCorrelation.sort(Map.Entry.comparingByValue());
+      Collections.reverse(categoriesRankedByCorrelation);
+      List<String> rankedCategoriesToSend = new ArrayList<>();
+      for (Map.Entry<String, Double> entry : categoriesRankedByCorrelation) {
+        rankedCategoriesToSend.add(entry.getKey());
+      }
+
+      variables.put("categoriesRankedByCorrelation", rankedCategoriesToSend);
+
       status = true;
     } catch (Exception e) {
       e.printStackTrace();
