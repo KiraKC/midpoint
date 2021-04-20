@@ -30,3 +30,19 @@
 	margin-right: 8px;
 	font-size: 0.9rem;
 }
+
+.category-button-muted-outline {
+	padding: 0px 10px;
+	background-color: white;
+	display: flex;
+	align-items: center;
+	justify-content:center;
+	color: black;
+	outline: none;
+	border-radius: 90px;
+	border: none;
+	font-family: "Inter", sans-serif;
+	font-weight: 700;
+	margin-right: 8px;
+	font-size: 0.9rem;
+}

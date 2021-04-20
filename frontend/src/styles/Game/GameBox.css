@@ -25,17 +25,13 @@
 	margin-top: 30px;
 	padding-bottom: 3px;
 	margin-bottom: 27px;
-	overflow-y: scroll;
-	/* display: flex;
-	flex-direction: column;
-	align-items: stretch;
-	justify-content: space-between; */
+	overflow-y: none;
 }
 
 .game-box-rect {
 	background: rgba(255, 255, 255, 0.7);
 	border-radius: 30px 0px 0px 30px;
-	width: 15rem;
+	width: 18rem;
 	height: 80%;
 	min-width: 200px;
 	backdrop-filter: blur(5px);
@@ -64,13 +60,13 @@
 	justify-items: start;
 	align-items: center;
 	grid-gap: 1rem;
-	grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 	width: 100%;
 	margin-top: 20px;
 }
 
 .game-poll-image {
-	width: 250px;
+	width: 200px;
 	z-index: 5;
 	position: relative;
 	border-radius: 15px;
@@ -83,26 +79,88 @@
 }
 
 .game-option-button {
+	height: 100%;
+	width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10px;
+    padding: 6px 15px;
+    margin-top: 12px;
+    box-shadow: 0 1px 1px rgb(0 0 0 / 15%), 0 2px 2px rgb(0 0 0 / 15%), 0 4px 4px rgb(0 0 0 / 15%), 0 8px 8px rgb(0 0 0 / 15%);
+    border: none;
+    outline: none;
+    z-index: 4;
+    position: relative;
+    cursor: pointer;
+	font-family: "Inter", sans-serif;
+	font-size: 1.35rem;
+    font-weight: 700;
+    z-index: 4;
+	word-break: break-word;
+}
+
+.game-option-button:hover {background-color: white}
+
+.game-option-button:active {
+  box-shadow: none;
+  transform: translateY(2px);
+}
+
+.answered-option-wrapper {
 	width: 100%;
 	height: 100%;
 	display: flex;
 	justify-content: flex-start;
 	align-items: center;
-	background-color: rgb(184, 184, 184);
+	background-color: rgba(255, 255, 255, 0.65);
 	border-radius: 10px;
 	padding: 6px 15px;
-	box-shadow: 0 3px rgb(197, 197, 197);
+	margin-top: 12px;
 	border: none;
 	outline: none;
 	z-index: 4;
 	position: relative;
-	font-size: 1rem;
-	text-transform: uppercase;
+}
+
+.option-text-answered {
+	display: inline-block;
+    width: -moz-fit-content;
+    width: fit-content;
+    word-break: break-word;
+    text-align: left;
+    font-family: "Inter", sans-serif;
+    margin-top: -1px;
+    margin-left: 10px;
+    font-size: 1.35rem;
+    font-weight: 700;
+    z-index: 4;
+}
+.answered-option-white-bar {
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: white;
+	border-radius: 10px;
+}
+
+.option-percentage {
 	font-family: "Inter", sans-serif;
-	color: white;
+	margin-top: -1px;
+	margin-left: 10px;
+	font-size: 1.35rem;
 	font-weight: 700;
-	word-break: break-word;
-	text-align: left;
+	z-index: 4;
+	right: 15px;
+	width: max-content;
+}
+
+.game-option-button-info {
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
 }
 
 .game-option-button:active {
@@ -123,11 +181,9 @@
 
 .question-title {
 	font-family: "Inter", sans-serif;
-	color: black;
 	font-weight: 800;
-	font-size: 1.5vw;
-	font-size: 1.5rem;
-	width: 80%;
+	font-size: 2rem;
+	max-width: 90%;
 }
 
 .question-emojis {
@@ -136,10 +192,16 @@
 
 .num-answers {
 	font-family: "Inter", sans-serif;
-	color: black;
 	font-weight: 500;
-	font-size: 0.9rem;
-	margin-top: 0.5rem;
+	font-size: 1rem;
+	margin-top: 10px;
+}
+
+.fineprint {
+	font-family: "Inter", sans-serif;
+	font-weight: 500;
+	font-size: 1rem;
+	margin-top: -3px;
 }
 
 .gamebox-display-flex {
@@ -149,6 +211,8 @@
 	height: 4vh;
 	overflow-y: hidden;
 	margin-top: 0.5rem;
+	align-items: center;
+
 }
 
 .dashboard {
@@ -162,19 +226,15 @@
 	font-family: "Inter", sans-serif;
 	color: black;
 	font-weight: 600;
-	font-size: 1rem;
+	font-size: 1.1rem;
 	margin-top: 0.5rem;
-	text-transform: uppercase;
 }
 
-.current-score {
+.dashboard-detail {
 	font-family: "Inter", sans-serif;
 	color: black;
 	font-weight: 600;
-	font-size: 0.8rem;
-	margin-top: 0.5rem;
-	font-style: italic;
-	margin-right: 0.8rem;
+	font-size: 1rem;
 }
 
 .lives-left {
@@ -189,7 +249,14 @@
 .flex-horizontal {
 	display: flex;
 	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.flex-horizontal-center {
+	display: flex;
+	justify-content: space-between;
 	align-items: center;
+	margin-bottom: 7px;
 }
 
 .flex-vertical {

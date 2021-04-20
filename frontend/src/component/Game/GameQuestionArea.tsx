@@ -31,9 +31,22 @@ function GameQuestionArea(props: IGameBoxProps) {
 		<div className="question-area">
 			<div className="flex-horizontal wrap">
 				<div className="game-question-title-area">
-					<div className="question-emojis"><Emoji emoji={'smile'} set='apple' size={50} /> </div>
-					<div className="question-title">
-						{props.poll.question}
+					<div className="question-emojis"><Emoji emoji={'smile'} set='apple' size={40} /> </div>
+					<div>
+						<div className="question-title">
+							{props.poll.question}
+						</div>
+						<div className="num-answers"> Number of Responses: {props.poll.numClicks}</div>
+						<div className="gamebox-display-flex">
+							{getCategoryButton().map((e, i) => {
+								return <CategoryButtonMuted
+									key={i}
+									emoji={e.emoji}
+									text={e.text}
+									outline={true}
+								/>
+							})}
+						</div>
 					</div>
 				</div>
 				{props.poll.imageUrl !== '' ?
@@ -41,17 +54,6 @@ function GameQuestionArea(props: IGameBoxProps) {
 						src={props.poll.imageUrl}>
 					</img> : ''}
 			</div>
-			<div className="gamebox-display-flex">
-				{/* props.categories */}
-				{getCategoryButton().map((e, i) => {
-					return <CategoryButtonMuted
-						key={i}
-						emoji={e.emoji}
-						text={e.text}
-					/>
-				})}
-			</div>
-			<div className="num-answers"> <b>{props.poll.numClicks} users</b> have answered </div>
 		</div>
 
 	);

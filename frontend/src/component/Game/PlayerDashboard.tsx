@@ -10,29 +10,35 @@ import { Emoji } from "emoji-mart";
 
 interface IGameBoxProps {
 	currHeart: number,
-	currPoint: number
+	currPoint: number,
 }
 
 function PlayerDashboard(props: IGameBoxProps) {
 	//props.numLives store in i or smth
-	return (
-			<div className="dashboard">
-				<div className="userName">
-				props.userName
-				</div>
+	let user = firebase.auth().currentUser.email;
 
-				<hr/>
-				<div className="flex-horizontal">
-					<div className="current-score">current score: </div>
-					<div> {props.currPoint} </div>
-				</div>
-				<div className="flex-horizontal">
-					<div className="lives-left"> lives left: </div>
-					{props.currHeart}
-					{/* <Emoji emoji={'heart'} set='apple' size={20} /> */}
+	const range = (from: number, to: number, step: number) =>
+		[...Array(Math.floor((to - from) / step) + 1)].map((_, i) => from + i * step);
+
+	return (
+		<div className="dashboard">
+			<div className="userName">
+				{user}
+			</div>
+			<hr style={{borderStyle: 'solid'}}/>
+			<div className="flex-horizontal-center">
+				<div className="dashboard-detail">Current Score: </div>
+				<div className="dashboard-detail"> {props.currPoint} </div>
+			</div>
+			<div className="flex-horizontal-center">
+				<div className="dashboard-detail"> Lives Left: </div>
+				<div>
+				{range(0, props.currHeart, 1).map((option, i) => (
+					<Emoji key={i} emoji={'heart'} set='apple' size={20} />
+				))}
 				</div>
 			</div>
-
+		</div>
 	);
 }
 

@@ -15,6 +15,7 @@ import IPoll from "../../interfaces/IPoll";
 import axios from "axios";
 import endpointUrl from "../../constants/Endpoint";
 import { resolve } from "node:url";
+import GameEnd from "./GameEnd";
 
 interface IGameBoxProps {
 
@@ -22,6 +23,7 @@ interface IGameBoxProps {
 
 function Game(props: IGameBoxProps) {
 	const [gameStarted, setGameStarted]: [boolean, any] = useState(false);
+	const [gameEnded, setGameEnded]: [boolean, any] = useState(false);
 	const [currPoint, setCurrPoint]: [number, any] = useState(0);
 	const [currHeart, setCurrHeart]: [number, any] = useState(3);
 	const [poll, setPoll]: [IPoll, any] = useState(null);
@@ -29,16 +31,17 @@ function Game(props: IGameBoxProps) {
 	const [fetchNewPoll, setFetchNewPoll]: [boolean, any] = useState(false);
 	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
 	const [selectedOptionId, setSelectedOptionId]: [string, any] = useState('');
-
-	useEffect(() => {
-		getNewPoll();
-	}, [fetchNewPoll]);
+	const [correctOptions, setCorrectOptions]: [string[], any] = useState([]);
 
 	useEffect(() => {
 		if (selectedOptionId !== '') {
 			handleOptionSelection();
 		}
 	}, [selectedOptionId])
+
+	useEffect(() => {
+		getNewPoll();
+	}, [])
 
 	const handleSeenPollIds = (id: string) => {
 		let tempSeenPollIds = seenPollIds;
@@ -59,27 +62,38 @@ function Game(props: IGameBoxProps) {
 		let viableOptions = [];
 		viableOptions.push(sortable[0][0])
 		for (let i = 0; i < sortable.length - 1; i++) {
-			if (sortable[i][1] === sortable[i+1][1]) {
-				viableOptions.push(sortable[i+1][0])
+			if (sortable[i][1] === sortable[i + 1][1]) {
+				viableOptions.push(sortable[i + 1][0])
 			} else {
 				break;
 			}
 		}
+		setCorrectOptions([...viableOptions])
 		// determine correctness of selected option
 		if (viableOptions.includes(selectedOptionId)) {
 			// correct
 			setCurrPoint(currPoint + 1);
-			setFetchNewPoll(!fetchNewPoll);
+			setTimeout(async () => {
+				await getNewPoll();
+				setSelectedOptionId('');
+			}, 2000);
 		} else {
 			// incorrect
 			setCurrHeart(currHeart - 1);
-			if (currHeart >= 0) {
-				setFetchNewPoll(!fetchNewPoll);
+			if (currHeart > 0) {
+				setTimeout(async () => {
+					await getNewPoll();
+					setSelectedOptionId('');
+				}, 2000);
+			} else {
+				setTimeout(async () => {
+					setGameEnded(true)
+				}, 2000);
 			}
 		}
 	}
 
-	const getNewPoll = () => {
+	const getNewPoll = async () => {
 		let toSend;
 		toSend = {
 			seenPollIds: seenPollIds
@@ -109,9 +123,17 @@ function Game(props: IGameBoxProps) {
 		setFetchNewPoll: setFetchNewPoll,
 		currPoint: currPoint,
 		currHeart: currHeart,
-		setSelectedOptionId: setSelectedOptionId
+		setSelectedOptionId: setSelectedOptionId,
+		selectedOptionId: selectedOptionId,
+		correctOptions: correctOptions,
+		miniStats: miniStats
 	}
-	
+
+	if (gameEnded) {
+		return (
+			<GameEnd />
+		)
+	}
 	if (gameStarted) {
 		return (
 			<GameBox {...gameBoxProps} />
