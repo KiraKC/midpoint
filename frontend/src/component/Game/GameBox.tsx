@@ -21,7 +21,8 @@ interface IGameBoxProps {
 	setSelectedOptionId: any,
 	selectedOptionId: string,
 	correctOptions: string[],
-	miniStats: any
+	miniStats: any,
+	category: string[]
 }
 
 function GameBox(props: IGameBoxProps) {
@@ -37,7 +38,7 @@ function GameBox(props: IGameBoxProps) {
 			</div>
 			<div className="game-box-area flex-vertical" style={{backgroundColor: `${props.poll.color}`, color: 'white'}}>
 				<div className="game-box-scroll-wrapper">
-					<GameQuestionArea relatedCategory={['entertainment', 'sports', 'music']} poll={props.poll} />
+					<GameQuestionArea category={props.category} poll={props.poll} />
 					<div className="game-option-grid">
 						{console.log(props.miniStats)}
 						{props.poll.answerOptions.map((option, index) => (

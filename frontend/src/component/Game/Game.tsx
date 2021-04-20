@@ -130,7 +130,8 @@ function Game(props: IGameBoxProps) {
 		setSelectedOptionId: setSelectedOptionId,
 		selectedOptionId: selectedOptionId,
 		correctOptions: correctOptions,
-		miniStats: miniStats
+		miniStats: miniStats,
+		category: category
 	}
 
 	if (gameEnded) {
