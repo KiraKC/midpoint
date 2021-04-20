@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ReactLoading, { LoadingType } from 'react-loading';
 import '../../styles/Common/LoginModal.css'
 import Modal from 'react-modal';
 

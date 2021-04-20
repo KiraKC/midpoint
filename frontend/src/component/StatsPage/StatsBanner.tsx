@@ -3,7 +3,6 @@ import CategoryButtonMuted from "../Common/CategoryButtonMuted";
 import { findCategoryInfo } from "../../constants/Category";
 import { Emoji } from "emoji-mart";
 import { useMediaQuery } from 'react-responsive'
-import PollOption from "../HomePage/PollOption";
 import React from 'react';
 import MutedPollOption from './MutedPollOption';
 

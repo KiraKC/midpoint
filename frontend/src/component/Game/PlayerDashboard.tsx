@@ -1,11 +1,7 @@
-import { FirebaseAuthProvider } from "@react-firebase/auth";
 import firebase from "firebase";
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import firebaseConfig from "../../firebase/FirebaseIndex";
+
 import '../../styles/Game/GameBox.css'
 
-import { signOut } from '../../firebase/AuthMethods'
 import { Emoji } from "emoji-mart";
 
 interface IGameBoxProps {

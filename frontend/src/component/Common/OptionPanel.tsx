@@ -1,6 +1,5 @@
 import React from "react";
 import '../../styles/Common/OptionPanel.css'
-import OptionButton from "./OptionButton";
 import OptionItem from "./OptionItem";
 
 interface IOptionPanelProps {
