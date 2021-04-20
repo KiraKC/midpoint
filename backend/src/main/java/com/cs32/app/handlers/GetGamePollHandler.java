@@ -49,7 +49,7 @@ public class GetGamePollHandler implements Route {
 
       // Query for random poll
       Poll pollToSend = Connection.getRandomPolls(1).get(0);
-      while (seenPollIds.contains(pollToSend.getId())) {
+      while (seenPollIds.contains(pollToSend.getId()) || pollToSend.getNumClicks() == 0) {
         pollToSend = Connection.getRandomPolls(1).get(0);
       }
 
