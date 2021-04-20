@@ -3,18 +3,19 @@ import { Navigate, useNavigate } from 'react-router';
 
 function GameEnd(props) {
 
-	const navigate = useNavigate()
-
 	return (
 		<div className="end-wrapper-flex">
-			<div className="end-rect" >
-				<div className="end-section-heading">TEARS OF JOY </div>
-				<div className="end-section-score">You finished a MidPoint Challenge!</div>
-				<div className="end-section-score"><b>score:</b> props.currScore
+			<div className="start-rect">
+				<div>
+					<div className="start-section-heading">You Finished<br/> A MidPoint Challenge! </div>
+					<div className="start-details">
+					<b>Highest Score: {props.currPoint}</b> <br/><br/>Becoming a master at guessing the majority answers? Hit the replay 😜
 				</div>
-				<button className="end-button-submit" onClick={() => navigate('/game')}> Replay</button>
+				</div>
+				<button className="start-button-submit" onClick={() => window.location.reload()}>PLAY AGAIN
+				<span className="material-icons-outlined">restart_alt</span></button>
 			</div>
-				<img className="end-picture" src="https://www.invaluable.com/blog/wp-content/uploads/2017/10/Invaluable-Roy-Lichtenstein-Hero.jpg"></img>
+				<img className="end-picture" src="https://artprep.weebly.com/uploads/2/8/4/9/28493185/5231829_orig.jpg"></img>
 		</div>
 
 	);

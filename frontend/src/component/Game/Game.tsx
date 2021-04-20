@@ -25,13 +25,14 @@ function Game(props: IGameBoxProps) {
 	const [gameStarted, setGameStarted]: [boolean, any] = useState(false);
 	const [gameEnded, setGameEnded]: [boolean, any] = useState(false);
 	const [currPoint, setCurrPoint]: [number, any] = useState(0);
-	const [currHeart, setCurrHeart]: [number, any] = useState(3);
+	const [currHeart, setCurrHeart]: [number, any] = useState(2);
 	const [poll, setPoll]: [IPoll, any] = useState(null);
 	const [miniStats, setMiniStats]: [any, any] = useState(null);
 	const [fetchNewPoll, setFetchNewPoll]: [boolean, any] = useState(false);
 	const [seenPollIds, setSeenPollIds]: [string[], any] = useState([]);
 	const [selectedOptionId, setSelectedOptionId]: [string, any] = useState('');
 	const [correctOptions, setCorrectOptions]: [string[], any] = useState([]);
+	const [category, setCategory]: [string[], any] = useState([]);
 
 	useEffect(() => {
 		if (selectedOptionId !== '') {
@@ -75,6 +76,7 @@ function Game(props: IGameBoxProps) {
 			setCurrPoint(currPoint + 1);
 			setTimeout(async () => {
 				await getNewPoll();
+				setCategory([]);
 				setSelectedOptionId('');
 			}, 2000);
 		} else {
@@ -83,6 +85,7 @@ function Game(props: IGameBoxProps) {
 			if (currHeart > 0) {
 				setTimeout(async () => {
 					await getNewPoll();
+					setCategory([]);
 					setSelectedOptionId('');
 				}, 2000);
 			} else {
@@ -110,6 +113,7 @@ function Game(props: IGameBoxProps) {
 				setPoll(response.data.poll);
 				handleSeenPollIds(response.data.poll.id);
 				setMiniStats(response.data.miniStats)
+				setCategory(response.data.categoriesRankedByCorrelation)
 			})
 			.catch(e => {
 				console.log(e)
@@ -131,7 +135,7 @@ function Game(props: IGameBoxProps) {
 
 	if (gameEnded) {
 		return (
-			<GameEnd />
+			<GameEnd currPoint={currPoint} />
 		)
 	}
 	if (gameStarted) {
