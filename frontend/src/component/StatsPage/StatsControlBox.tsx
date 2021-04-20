@@ -1,6 +1,5 @@
 import { Emoji } from 'emoji-mart';
 import React from 'react';
-import setOfUserMetaDataGroupings from '../../constants/UserMetaData';
 import '../../styles/StatsPage/StatsBottomPanel.css'
 
 interface IStatsControlBoxProps {

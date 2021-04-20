@@ -1,14 +1,9 @@
-import { FirebaseAuthProvider } from "@react-firebase/auth";
-import firebase from "firebase";
+
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router";
-import firebaseConfig from "../../firebase/FirebaseIndex";
+
 import '../../styles/Game/GameBox.css'
 
-import { signOut } from '../../firebase/AuthMethods'
-import GameQuestionArea from "../Game/GameQuestionArea"
-import OptionButton from "./GameOption"
-import PlayerDashboard from "../Game/PlayerDashboard"
+
 import GameStart from "./GameStart";
 import GameBox from "./GameBox";
 import IPoll from "../../interfaces/IPoll";

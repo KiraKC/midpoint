@@ -1,12 +1,6 @@
-import { FirebaseAuthProvider } from "@react-firebase/auth";
-import firebase from "firebase";
-import React, { useState } from "react";
-import { useNavigate } from "react-router";
-import firebaseConfig from "../../firebase/FirebaseIndex";
+
 import '../../styles/Game/GameBox.css'
-import { signOut } from '../../firebase/AuthMethods'
 import { Emoji } from "emoji-mart";
-import CategoryButton from "../Common/CategoryButton";
 import categoryArray, { findCategoryInfo } from '../../constants/Category';
 import CategoryButtonMuted from "../Common/CategoryButtonMuted";
 import IPoll from "../../interfaces/IPoll";

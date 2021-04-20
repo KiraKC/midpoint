@@ -1,14 +1,8 @@
-// install (please make sure versions match peerDependencies)
-// yarn add @nivo/core @nivo/bar
+
 import { Bar, ResponsiveBar } from '@nivo/bar'
-// make sure parent container have a defined height when using
-// responsive component, otherwise height will be 0 and
-// no chart will be rendered.
-// website examples showcase many properties,
-// you'll often use just a few of them.
+
 import '../../styles/StatsPage/StatsBottomPanel.css'
-import React from 'react';
-import AutoSizer from "react-virtualized-auto-sizer";
+
 
 interface IBarChartProps {
 	chartData: any,
