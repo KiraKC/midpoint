@@ -1,4 +1,3 @@
-import React from "react";
 import '../../styles/Common/OptionPanel.css'
 import OptionItem from "./OptionItem";
 

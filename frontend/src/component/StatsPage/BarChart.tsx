@@ -1,5 +1,5 @@
 
-import { Bar, ResponsiveBar } from '@nivo/bar'
+import { ResponsiveBar } from '@nivo/bar'
 
 import '../../styles/StatsPage/StatsBottomPanel.css'
 

@@ -1,5 +1,5 @@
 import { Emoji } from "emoji-mart";
-import React, { useState } from "react";
+import { useState } from "react";
 import '../../styles/Common/CategoryButton.css'
 
 interface ICategoryButtonProps {

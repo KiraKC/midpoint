@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useLocation, useNavigate } from "react-router";
 import '../../styles/Common/Header.css'
 import { signOut } from '../../firebase/AuthMethods'
@@ -82,7 +82,6 @@ function Header(props) {
 								navigate('home');
 								setTimeout(() => props.setFetchNewPoll(!props.fetchNewPoll), 100)
 							}} style={{ cursor: 'pointer' }}>midpoint.</a>
-							{/* <div className="nav-text-link" onClick={() => navigate('game')}>Game</div> */}
 						</div>
 						<div style={{ position: 'relative', display: 'flex', alignItems: 'center' }}>
 							<button className="mobile-nav-link"

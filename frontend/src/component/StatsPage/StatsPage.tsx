@@ -1,11 +1,9 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import endpointUrl from "../../constants/Endpoint";
-import IPoll from "../../interfaces/IPoll";
 import '../../styles/Common/LoginModal.css'
 import { randomUserMetaDataGrouping } from "../../constants/UserMetaData";
 import { useParams } from "react-router-dom";
-import BarChart from "./BarChart";
 import StatsBanner from "./StatsBanner";
 import StatsBottomPanel from "./StatsBottomPanel";
 

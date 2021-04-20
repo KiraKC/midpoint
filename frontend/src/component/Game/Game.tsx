@@ -1,15 +1,12 @@
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import '../../styles/Game/GameBox.css'
-
-
 import GameStart from "./GameStart";
 import GameBox from "./GameBox";
 import IPoll from "../../interfaces/IPoll";
 import axios from "axios";
 import endpointUrl from "../../constants/Endpoint";
-import { resolve } from "node:url";
 import GameEnd from "./GameEnd";
 
 interface IGameBoxProps {

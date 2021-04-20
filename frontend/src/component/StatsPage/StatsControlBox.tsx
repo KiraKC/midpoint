@@ -1,5 +1,4 @@
 import { Emoji } from 'emoji-mart';
-import React from 'react';
 import '../../styles/StatsPage/StatsBottomPanel.css'
 
 interface IStatsControlBoxProps {

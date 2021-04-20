@@ -1,5 +1,4 @@
 import '../../styles/Game/GameStart.css'
-import { Navigate, useNavigate } from 'react-router';
 
 function GameStart(props) {
 

@@ -1,5 +1,3 @@
-
-import React from "react";
 import '../../styles/Common/OptionPanel.css'
 
 interface IOptionButtonProps {

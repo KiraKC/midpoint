@@ -1,7 +1,7 @@
 
 import '../../styles/Game/GameBox.css'
 import { Emoji } from "emoji-mart";
-import categoryArray, { findCategoryInfo } from '../../constants/Category';
+import { findCategoryInfo } from '../../constants/Category';
 import CategoryButtonMuted from "../Common/CategoryButtonMuted";
 import IPoll from "../../interfaces/IPoll";
 

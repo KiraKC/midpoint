@@ -8,16 +8,12 @@ import firebase from "firebase/app";
 import firebaseConfig from "./firebase/FirebaseIndex"
 import {
 	FirebaseAuthProvider,
-	FirebaseAuthConsumer
 } from "@react-firebase/auth";
-import GameStart from './component/Game/GameStart';
 import IPoll from './interfaces/IPoll';
-import GameBox from './component/Game/GameBox';
 import SearchPage from './component/SearchPage/SearchPage';
 import HistoryPage from './component/HistoryPage/HistoryPage';
 import MyPollsPage from './component/MyPollsPage/MyPollsPage';
 import StatsPage from './component/StatsPage/StatsPage';
-import GameEnd from './component/Game/GameEnd';
 import Game from './component/Game/Game';
 
 function App() {

@@ -1,13 +1,11 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import { useState } from 'react';
 import Modal from 'react-modal';
-import { FirebaseAuthConsumer, FirebaseAuthProvider, IfFirebaseAuthed, IfFirebaseAuthedAnd } from '@react-firebase/auth';
+import { FirebaseAuthProvider } from '@react-firebase/auth';
 import firebase from 'firebase';
 import "firebase/auth";
 import firebaseConfig from "../../firebase/FirebaseIndex"
 import '../../styles/Common/LoginModal.css'
 import Spinner from './Spinner';
-import IPoll from '../../interfaces/IPoll';
 
 interface ILoginModalProps {
 	isModalOpen: boolean,
