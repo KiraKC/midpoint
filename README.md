@@ -2,21 +2,13 @@
 
 ### Team Members and Their Strengths and Weaknesses
 
-Xinzhe Chai\
-Strength: Front-end technologies (React, CSS), Exploring new packages\
-Weakness: Coming up with original design, Error Handling
+Xinzhe Chai
 
-Jacqueline Zhang\
-Strength: Algorithm, Math\
-Weakness: Can’t work late at night, Frontend, Good at creating null pointer exceptions
+Jacqueline Zhang
 
-Jinoo Hong\
-Strength: Algorithm and data structures, Some React background\
-Weakness: Can’t work early in the morning, Testing
+Jinoo Hong
 
-Kira Kelly Clarke\
-Strength: Front-end technologies (HTML, CSS), Design\
-Weakness: Backend, Algorithm
+Kira Kelly Clarke
 
 ### Project Idea 1
 The web app we are proposing attempts to allow users gauge where they stand on any given question compared to other web app users. These questions could be as trivial as “favorite soft drink” or as contentious as “pro-life vs pro-choice”. It also comes with a game section that allows the platform to be used in ice-breaker games.
